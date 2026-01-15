@@ -14,11 +14,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" 
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
-      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" 
-      crossorigin="anonymous" 
-      referrerpolicy="no-referrer">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         /* ===== MATCH LANDING PAGE DESIGN ===== */
         :root {
@@ -175,24 +172,45 @@
         }
 
         /* ===== LANGUAGE SYSTEM ===== */
-        [lang] {
-            display: none;
-        }
-        
-        body[data-lang="en"] [lang="en"],
-        body[data-lang="es"] [lang="es"] {
-            display: inline;
-        }
-        
-        body[data-lang="en"] [lang="es"],
-        body[data-lang="es"] [lang="en"] {
-            display: none;
-        }
-        
-        body[data-lang="en"] [lang="en"].block,
-        body[data-lang="es"] [lang="es"].block {
-            display: block;
-        }
+        /* ===== LANGUAGE SYSTEM ===== */
+/* Show English by default (no-JS fallback) */
+[lang="es"] {
+    display: none !important;
+}
+
+[lang="en"] {
+    display: inline;
+}
+
+[lang="en"].block {
+    display: block;
+}
+
+/* When JavaScript sets data-lang, override defaults */
+body[data-lang="es"] [lang="es"] {
+    display: inline !important;
+}
+
+body[data-lang="es"] [lang="es"].block {
+    display: block !important;
+}
+
+body[data-lang="es"] [lang="en"] {
+    display: none !important;
+}
+
+/* Override for when data-lang is "en" */
+body[data-lang="en"] [lang="en"] {
+    display: inline;
+}
+
+body[data-lang="en"] [lang="en"].block {
+    display: block;
+}
+
+body[data-lang="en"] [lang="es"] {
+    display: none;
+}
 
         .container {
             width: 100%;
