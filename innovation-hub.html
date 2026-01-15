@@ -172,45 +172,44 @@
         }
 
         /* ===== LANGUAGE SYSTEM ===== */
-        /* ===== LANGUAGE SYSTEM ===== */
-/* Show English by default (no-JS fallback) */
-[lang="es"] {
-    display: none !important;
-}
+        /* Show English by default (no-JS fallback) */
+        [lang="es"] {
+            display: none !important;
+        }
 
-[lang="en"] {
-    display: inline;
-}
+        [lang="en"] {
+            display: inline;
+        }
 
-[lang="en"].block {
-    display: block;
-}
+        [lang="en"].block {
+            display: block;
+        }
 
-/* When JavaScript sets data-lang, override defaults */
-body[data-lang="es"] [lang="es"] {
-    display: inline !important;
-}
+        /* When JavaScript sets data-lang, override defaults */
+        body[data-lang="es"] [lang="es"] {
+            display: inline !important;
+        }
 
-body[data-lang="es"] [lang="es"].block {
-    display: block !important;
-}
+        body[data-lang="es"] [lang="es"].block {
+            display: block !important;
+        }
 
-body[data-lang="es"] [lang="en"] {
-    display: none !important;
-}
+        body[data-lang="es"] [lang="en"] {
+            display: none !important;
+        }
 
-/* Override for when data-lang is "en" */
-body[data-lang="en"] [lang="en"] {
-    display: inline;
-}
+        /* Override for when data-lang is "en" */
+        body[data-lang="en"] [lang="en"] {
+            display: inline;
+        }
 
-body[data-lang="en"] [lang="en"].block {
-    display: block;
-}
+        body[data-lang="en"] [lang="en"].block {
+            display: block;
+        }
 
-body[data-lang="en"] [lang="es"] {
-    display: none;
-}
+        body[data-lang="en"] [lang="es"] {
+            display: none;
+        }
 
         .container {
             width: 100%;
@@ -353,7 +352,7 @@ body[data-lang="en"] [lang="es"] {
             white-space: nowrap;
         }
 
-        /* ===== LANGUAGE SWITCHER - MATCH LANDING PAGE ===== */
+        /* ===== LANGUAGE SWITCHER - IMPROVED POSITIONING ===== */
         .language-switcher {
             position: absolute;
             right: 60px;
@@ -369,9 +368,26 @@ body[data-lang="en"] [lang="es"] {
             z-index: 10;
         }
 
+        /* Desktop positioning - move to corner after CTA button */
         @media (min-width: 1024px) {
             .language-switcher {
-                right: 280px;
+                position: static;
+                transform: none;
+                margin-left: var(--spacing-sm);
+                order: 3; /* After nav-cta which is order: 2 */
+            }
+            
+            .desktop-nav {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-xs);
+                margin-left: auto;
+                order: 1;
+            }
+            
+            .nav-cta {
+                margin-left: var(--spacing-sm);
+                order: 2; /* CTA button comes before language switcher */
             }
         }
 
@@ -379,6 +395,12 @@ body[data-lang="en"] [lang="es"] {
             opacity: 1;
             transform: translateY(-50%) scale(1.05);
             box-shadow: var(--shadow-sm);
+        }
+
+        @media (min-width: 1024px) {
+            .language-switcher:hover {
+                transform: scale(1.05);
+            }
         }
 
         .lang-btn {
@@ -1284,12 +1306,6 @@ body[data-lang="en"] [lang="es"] {
             font-weight: 600;
             color: var(--medical-navy);
             margin-bottom: var(--spacing-sm);
-        }
-
-        .step-duration {
-            font-size: 0.875rem;
-            color: var(--slate-500);
-            margin-bottom: var(--spacing-lg);
         }
 
         /* ===== CONTACT SECTION ===== */
@@ -2343,12 +2359,12 @@ body[data-lang="en"] [lang="es"] {
         <div class="container">
             <div class="text-center mb-4">
                 <h2 class="fade-in">
-                    <span lang="en">How to Get Started</span>
-                    <span lang="es">Cómo Comenzar</span>
+                    <span lang="en">Collaboration Process</span>
+                    <span lang="es">Proceso de Colaboración</span>
                 </h2>
                 <p class="text-lead fade-in">
-                    <span lang="en">A straightforward process designed for efficient collaboration and rapid progress.</span>
-                    <span lang="es">Un proceso directo diseñado para colaboración eficiente y progreso rápido.</span>
+                    <span lang="en">A straightforward process designed for efficient collaboration and clinical impact.</span>
+                    <span lang="es">Un proceso directo diseñado para colaboración eficiente e impacto clínico.</span>
                 </p>
             </div>
             
@@ -2359,13 +2375,9 @@ body[data-lang="en"] [lang="es"] {
                         <span lang="en">Initial Exploration</span>
                         <span lang="es">Exploración Inicial</span>
                     </div>
-                    <div class="step-duration">
-                        <span lang="en">1-2 weeks</span>
-                        <span lang="es">1-2 semanas</span>
-                    </div>
                     <p class="text-subtle">
-                        <span lang="en">Share your project idea and explore collaboration opportunities with our clinical team.</span>
-                        <span lang="es">Comparta su idea de proyecto y explore oportunidades de colaboración con nuestro equipo clínico.</span>
+                        <span lang="en">Share your project concept and explore collaboration opportunities with our clinical innovation team.</span>
+                        <span lang="es">Comparta su concepto de proyecto y explore oportunidades de colaboración con nuestro equipo de innovación clínica.</span>
                     </p>
                 </div>
                 
@@ -2375,13 +2387,9 @@ body[data-lang="en"] [lang="es"] {
                         <span lang="en">Project Design</span>
                         <span lang="es">Diseño del Proyecto</span>
                     </div>
-                    <div class="step-duration">
-                        <span lang="en">2-4 weeks</span>
-                        <span lang="es">2-4 semanas</span>
-                    </div>
                     <p class="text-subtle">
-                        <span lang="en">Co-create detailed project plan, timelines, and success metrics with clinical and technical experts.</span>
-                        <span lang="es">Co-cree plan de proyecto detallado, cronogramas y métricas de éxito con expertos clínicos y técnicos.</span>
+                        <span lang="en">Co-create detailed project plan with clinical and technical experts, establishing clear objectives and success metrics.</span>
+                        <span lang="es">Co-crear plan de proyecto detallado con expertos clínicos y técnicos, estableciendo objetivos claros y métricas de éxito.</span>
                     </p>
                 </div>
                 
@@ -2391,13 +2399,9 @@ body[data-lang="en"] [lang="es"] {
                         <span lang="en">Execution & Development</span>
                         <span lang="es">Ejecución & Desarrollo</span>
                     </div>
-                    <div class="step-duration">
-                        <span lang="en">Project specific</span>
-                        <span lang="es">Específico del proyecto</span>
-                    </div>
                     <p class="text-subtle">
-                        <span lang="en">Implement the project with regular progress reviews and clinical feedback integration.</span>
-                        <span lang="es">Implemente el proyecto con revisiones regulares de progreso e integración de feedback clínico.</span>
+                        <span lang="en">Implement the project with regular progress reviews and continuous integration of clinical feedback.</span>
+                        <span lang="es">Implementar el proyecto con revisiones regulares de progreso e integración continua de feedback clínico.</span>
                     </p>
                 </div>
             </div>
@@ -2432,17 +2436,17 @@ body[data-lang="en"] [lang="es"] {
                         <i class="fas fa-envelope"></i>
                     </div>
                     <h3>
-                        <span lang="en">Innovation Inquiries</span>
-                        <span lang="es">Consultas de Innovación</span>
+                        <span lang="en">Innovation & Technology Inquiries</span>
+                        <span lang="es">Consultas de Innovación & Tecnología</span>
                     </h3>
                     <p class="text-lead">
                         <span lang="en">For project proposals, technology validation, and innovation partnerships:</span>
                         <span lang="es">Para propuestas de proyectos, validación tecnológica y colaboraciones de innovación:</span>
                     </p>
                     <div class="contact-details">
-                        <a href="mailto:neumologia.innovacion@huac.es" class="btn btn-primary mt-3">
+                        <a href="mailto:neumologia.innovation@gmail.com" class="btn btn-primary mt-3">
                             <i class="fas fa-paper-plane"></i>
-                            neumologia.innovacion@huac.es
+                            neumologia.innovation@gmail.com
                         </a>
                     </div>
                 </div>
@@ -2462,11 +2466,11 @@ body[data-lang="en"] [lang="es"] {
                     <div class="contact-details">
                         <a href="tel:+34881111800" class="btn btn-outline mt-3">
                             <i class="fas fa-phone"></i>
-                            +34 881 111 800
+                            +34 881 111 8XX
                         </a>
                         <p class="text-small mt-2">
-                            <span lang="en">Ask for Baraka Laiza, Biomedical Engineer</span>
-                            <span lang="es">Pregunte por Baraka Laiza, Ingeniera Biomédica</span>
+                            <span lang="en">Extension for Innovation Coordination</span>
+                            <span lang="es">Extensión para Coordinación de Innovación</span>
                         </p>
                     </div>
                 </div>
@@ -2527,7 +2531,7 @@ body[data-lang="en"] [lang="es"] {
                         <div class="contact-info">
                             <p><i class="fas fa-map-marker-alt"></i> As Xubias, 84, 15006 A Coruña</p>
                             <p><i class="fas fa-phone"></i> +34 881 111 800</p>
-                            <p><i class="fas fa-envelope"></i> neumologia.innovacion@huac.es</p>
+                            <p><i class="fas fa-envelope"></i> neumologia.innovation@gmail.com</p>
                         </div>
                     </div>
                 </div>
