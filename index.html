@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-lang="en">
 <head>
@@ -176,44 +177,45 @@
         }
 
         /* ===== LANGUAGE FIXES ===== */
-/* Show English by default (no-JS fallback) */
-[lang="es"] {
-    display: none !important;
-}
+        /* Show English by default (no-JS fallback) */
+        [lang="es"] {
+            display: none !important;
+        }
 
-[lang="en"] {
-    display: inline;
-}
+        [lang="en"] {
+            display: inline;
+        }
 
-[lang="en"].block {
-    display: block;
-}
+        [lang="en"].block {
+            display: block;
+        }
 
-/* When JavaScript sets data-lang, override defaults */
-body[data-lang="es"] [lang="es"] {
-    display: inline !important;
-}
+        /* When JavaScript sets data-lang, override defaults */
+        body[data-lang="es"] [lang="es"] {
+            display: inline !important;
+        }
 
-body[data-lang="es"] [lang="es"].block {
-    display: block !important;
-}
+        body[data-lang="es"] [lang="es"].block {
+            display: block !important;
+        }
 
-body[data-lang="es"] [lang="en"] {
-    display: none !important;
-}
+        body[data-lang="es"] [lang="en"] {
+            display: none !important;
+        }
 
-/* Override for when data-lang is "en" */
-body[data-lang="en"] [lang="en"] {
-    display: inline;
-}
+        /* Override for when data-lang is "en" */
+        body[data-lang="en"] [lang="en"] {
+            display: inline;
+        }
 
-body[data-lang="en"] [lang="en"].block {
-    display: block;
-}
+        body[data-lang="en"] [lang="en"].block {
+            display: block;
+        }
 
-body[data-lang="en"] [lang="es"] {
-    display: none;
-}
+        body[data-lang="en"] [lang="es"] {
+            display: none;
+        }
+        
         .container {
             width: 100%;
             max-width: 1200px;
@@ -295,6 +297,7 @@ body[data-lang="en"] [lang="es"] {
             height: 100%;
             position: relative;
             gap: var(--spacing-sm);
+            flex-wrap: nowrap;
         }
 
         /* ===== LOGO ===== */
@@ -349,12 +352,9 @@ body[data-lang="en"] [lang="es"] {
             white-space: nowrap;
         }
 
-        /* ===== LANGUAGE SWITCHER ===== */
+        /* ===== LANGUAGE SWITCHER - FIXED POSITIONING ===== */
         .language-switcher {
-            position: absolute;
-            right: 60px;
-            top: 50%;
-            transform: translateY(-50%);
+            position: relative;
             display: flex;
             background: var(--medical-white);
             border-radius: var(--radius-sm);
@@ -363,18 +363,35 @@ body[data-lang="en"] [lang="es"] {
             opacity: 0.8;
             transition: all 0.3s ease;
             z-index: 10;
+            margin-left: auto;
+            margin-right: var(--spacing-sm);
         }
 
         @media (min-width: 1024px) {
             .language-switcher {
+                position: absolute;
                 right: 280px;
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .language-switcher {
+                margin-left: auto;
             }
         }
 
         .language-switcher:hover {
             opacity: 1;
-            transform: translateY(-50%) scale(1.05);
             box-shadow: var(--shadow-sm);
+        }
+
+        @media (min-width: 1024px) {
+            .language-switcher:hover {
+                transform: translateY(-50%) scale(1.05);
+            }
         }
 
         .lang-btn {
@@ -412,6 +429,7 @@ body[data-lang="en"] [lang="es"] {
                 align-items: center;
                 gap: var(--spacing-xs);
                 margin-left: auto;
+                flex-shrink: 0;
             }
             
             .nav-item {
@@ -1354,7 +1372,7 @@ body[data-lang="en"] [lang="es"] {
                 </div>
             </a>
 
-            <!-- Language Switcher -->
+            <!-- Language Switcher - Fixed Positioning -->
             <div class="language-switcher">
                 <button class="lang-btn active" onclick="switchLanguage('en')" aria-label="English">
                     EN
@@ -1859,39 +1877,41 @@ body[data-lang="en"] [lang="es"] {
                 </div>
                 
                 <div class="contact-methods">
+                    <!-- CHANGED: Email now goes to Innovation (previously was Research) -->
                     <div class="contact-method fade-in">
                         <div class="contact-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <h3>
-                            <span lang="en">Research Inquiries</span>
-                            <span lang="es">Consultas de Investigación</span>
+                            <span lang="en">Innovation Inquiries</span>
+                            <span lang="es">Consultas de Innovación</span>
                         </h3>
                         <p class="text-lead">
-                            <span lang="en">For research partnerships, clinical trials, and academic collaboration:</span>
-                            <span lang="es">Para colaboraciones de investigación, ensayos clínicos y colaboración académica:</span>
+                            <span lang="en">For technology development, innovation partnerships, and workflow optimization:</span>
+                            <span lang="es">Para desarrollo tecnológico, colaboraciones de innovación y optimización de flujos de trabajo:</span>
                         </p>
                         <a href="mailto:neumologia.innovacion@huac.es" class="btn btn-primary mt-3">
                             <i class="fas fa-paper-plane"></i>
-                            neumologia.innovacion@huac.es
+                            neumologia.innovacion@xxx.es
                         </a>
                     </div>
                     
+                    <!-- CHANGED: Phone now goes to Clinical Studies (previously was Innovation) -->
                     <div class="contact-method fade-in">
                         <div class="contact-icon">
                             <i class="fas fa-phone"></i>
                         </div>
                         <h3>
-                            <span lang="en">Innovation Partnerships</span>
-                            <span lang="es">Colaboraciones de Innovación</span>
+                            <span lang="en">Clinical Research</span>
+                            <span lang="es">Investigación Clínica</span>
                         </h3>
                         <p class="text-lead">
-                            <span lang="en">For technology development, industry partnerships, and innovation projects:</span>
-                            <span lang="es">Para desarrollo tecnológico, colaboraciones industriales y proyectos de innovación:</span>
+                            <span lang="en">For research partnerships, clinical trials, and academic collaboration:</span>
+                            <span lang="es">Para colaboraciones de investigación, ensayos clínicos y colaboración académica:</span>
                         </p>
                         <a href="tel:+34881111800" class="btn btn-outline mt-3" style="color: white; border-color: white;">
                             <i class="fas fa-phone"></i>
-                            +34 881 111 800
+                            +34 881 111 8xx
                         </a>
                     </div>
                 </div>
@@ -1978,8 +1998,8 @@ body[data-lang="en"] [lang="es"] {
                         </h3>
                         <div class="contact-info">
                             <p><i class="fas fa-map-marker-alt"></i> As Xubias, 84, 15006 A Coruña</p>
-                            <p><i class="fas fa-phone"></i> +34 881 111 800</p>
-                            <p><i class="fas fa-envelope"></i> neumologia.innovacion@huac.es</p>
+                            <p><i class="fas fa-phone"></i> +34 881 111 8xx</p>
+                            <p><i class="fas fa-envelope"></i> neumologia.innovacion@xxx.es</p>
                         </div>
                     </div>
                 </div>
