@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===== PROFESSIONAL LANDING PAGE DESIGN ===== */
+               /* ===== PROFESSIONAL LANDING PAGE DESIGN ===== */
         :root {
             /* Modern Professional Medical Palette */
             --medical-navy: #2C3E50;
@@ -352,7 +352,7 @@
             white-space: nowrap;
         }
 
-        /* ===== LANGUAGE SWITCHER - FIXED POSITIONING ===== */
+        /* ===== LANGUAGE SWITCHER - FIXED ===== */
         .language-switcher {
             position: relative;
             display: flex;
@@ -652,7 +652,13 @@
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
-            padding: var(--spacing-xl) 0;
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                padding: var(--spacing-xl) var(--spacing-lg);
+            }
         }
 
         .hospital-badge {
@@ -692,6 +698,8 @@
             background: linear-gradient(135deg, rgba(52, 152, 219, 0.03), rgba(26, 188, 156, 0.03));
             border-radius: var(--radius-xl);
             border: 1px solid var(--slate-200);
+            overflow: visible;
+            position: relative;
         }
 
         .icon-diagram {
@@ -703,6 +711,7 @@
             max-width: 400px;
             height: 220px;
             margin: 0 auto;
+            overflow: visible;
         }
 
         .icon-circle {
@@ -748,12 +757,16 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             grid-column: 1;
             grid-row: 1;
+            justify-self: end;
+            margin-right: 10px;
         }
 
         .icon-circle.research {
             background: linear-gradient(135deg, var(--medical-accent), #16A085);
             grid-column: 3;
             grid-row: 1;
+            justify-self: start;
+            margin-left: 10px;
         }
 
         .icon-circle.patient {
@@ -761,6 +774,7 @@
             grid-column: 2;
             grid-row: 2;
             margin-top: 1rem;
+            justify-self: center;
         }
 
         .connection-line {
@@ -769,26 +783,27 @@
             height: 3px;
             border-radius: 2px;
             opacity: 0.6;
+            z-index: 1;
         }
 
         .line-1 {
-            width: 80px;
+            width: 110px;
             top: 45px;
-            left: 100px;
+            left: 90px;
             transform: rotate(-30deg);
         }
 
         .line-2 {
-            width: 80px;
+            width: 110px;
             top: 45px;
-            right: 100px;
+            right: 90px;
             transform: rotate(30deg);
         }
 
         .line-3 {
-            width: 60px;
+            width: 80px;
             top: 140px;
-            left: 170px;
+            left: 155px;
         }
 
         .icon-text {
@@ -803,6 +818,83 @@
             display: block;
             margin-bottom: 0.5rem;
             font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .collaboration-icon {
+                padding: 1.5rem;
+                margin: var(--spacing-lg) auto var(--spacing-xl);
+            }
+            
+            .icon-diagram {
+                max-width: 300px;
+                height: 180px;
+                gap: 1.5rem;
+            }
+            
+            .icon-circle {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5rem;
+            }
+            
+            .icon-circle.technology {
+                margin-right: 5px;
+            }
+            
+            .icon-circle.research {
+                margin-left: 5px;
+            }
+            
+            .line-1 {
+                width: 85px;
+                top: 35px;
+                left: 65px;
+            }
+            
+            .line-2 {
+                width: 85px;
+                top: 35px;
+                right: 65px;
+            }
+            
+            .line-3 {
+                width: 60px;
+                top: 110px;
+                left: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .icon-diagram {
+                max-width: 250px;
+                height: 150px;
+                gap: 1rem;
+            }
+            
+            .icon-circle {
+                width: 60px;
+                height: 60px;
+                font-size: 1.25rem;
+            }
+            
+            .line-1 {
+                width: 70px;
+                top: 30px;
+                left: 55px;
+            }
+            
+            .line-2 {
+                width: 70px;
+                top: 30px;
+                right: 55px;
+            }
+            
+            .line-3 {
+                width: 50px;
+                top: 90px;
+                left: 100px;
+            }
         }
 
         /* ===== BUTTONS ===== */
