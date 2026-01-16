@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===== PROFESSIONAL LANDING PAGE DESIGN ===== */
+                /* ===== PROFESSIONAL LANDING PAGE DESIGN ===== */
         :root {
             /* Modern Professional Medical Palette */
             --medical-navy: #2C3E50;
@@ -176,44 +176,45 @@
         }
 
         /* ===== LANGUAGE FIXES ===== */
-/* Show English by default (no-JS fallback) */
-[lang="es"] {
-    display: none !important;
-}
+        /* Show English by default (no-JS fallback) */
+        [lang="es"] {
+            display: none !important;
+        }
 
-[lang="en"] {
-    display: inline;
-}
+        [lang="en"] {
+            display: inline;
+        }
 
-[lang="en"].block {
-    display: block;
-}
+        [lang="en"].block {
+            display: block;
+        }
 
-/* When JavaScript sets data-lang, override defaults */
-body[data-lang="es"] [lang="es"] {
-    display: inline !important;
-}
+        /* When JavaScript sets data-lang, override defaults */
+        body[data-lang="es"] [lang="es"] {
+            display: inline !important;
+        }
 
-body[data-lang="es"] [lang="es"].block {
-    display: block !important;
-}
+        body[data-lang="es"] [lang="es"].block {
+            display: block !important;
+        }
 
-body[data-lang="es"] [lang="en"] {
-    display: none !important;
-}
+        body[data-lang="es"] [lang="en"] {
+            display: none !important;
+        }
 
-/* Override for when data-lang is "en" */
-body[data-lang="en"] [lang="en"] {
-    display: inline;
-}
+        /* Override for when data-lang is "en" */
+        body[data-lang="en"] [lang="en"] {
+            display: inline;
+        }
 
-body[data-lang="en"] [lang="en"].block {
-    display: block;
-}
+        body[data-lang="en"] [lang="en"].block {
+            display: block;
+        }
 
-body[data-lang="en"] [lang="es"] {
-    display: none;
-}
+        body[data-lang="en"] [lang="es"] {
+            display: none;
+        }
+
         .container {
             width: 100%;
             max-width: 1200px;
@@ -349,7 +350,7 @@ body[data-lang="en"] [lang="es"] {
             white-space: nowrap;
         }
 
-        /* ===== LANGUAGE SWITCHER ===== */
+        /* ===== LANGUAGE SWITCHER - FIXED POSITIONING ===== */
         .language-switcher {
             position: absolute;
             right: 60px;
@@ -365,16 +366,24 @@ body[data-lang="en"] [lang="es"] {
             z-index: 10;
         }
 
-        @media (min-width: 1024px) {
-            .language-switcher {
-                right: 280px;
-            }
-        }
-
         .language-switcher:hover {
             opacity: 1;
             transform: translateY(-50%) scale(1.05);
             box-shadow: var(--shadow-sm);
+        }
+
+        @media (min-width: 1024px) {
+            /* Desktop positioning - move to corner after CTA button */
+            .language-switcher {
+                position: static;
+                transform: none;
+                margin-left: var(--spacing-sm);
+                order: 6;
+            }
+            
+            .language-switcher:hover {
+                transform: scale(1.05);
+            }
         }
 
         .lang-btn {
