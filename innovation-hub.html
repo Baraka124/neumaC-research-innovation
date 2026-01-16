@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" data-lang="en">
 <head>
@@ -271,7 +270,7 @@
             }
         }
 
-        /* ===== HEADER - MOBILE FIXED ===== */
+        /* ===== HEADER - MATCH LANDING PAGE ===== */
         .superior-header {
             position: fixed;
             top: 0;
@@ -299,10 +298,9 @@
             height: 100%;
             position: relative;
             gap: var(--spacing-sm);
-            flex-wrap: nowrap;
         }
 
-        /* ===== LOGO ===== */
+        /* ===== LOGO - MATCH LANDING PAGE ===== */
         .logo {
             display: flex;
             align-items: center;
@@ -310,7 +308,6 @@
             text-decoration: none;
             transition: transform 0.3s ease;
             flex-shrink: 0;
-            z-index: 1003;
         }
 
         .logo:hover {
@@ -355,9 +352,12 @@
             white-space: nowrap;
         }
 
-        /* ===== LANGUAGE SWITCHER - MOBILE FIXED ===== */
+        /* ===== LANGUAGE SWITCHER - IMPROVED POSITIONING ===== */
         .language-switcher {
-            position: relative;
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             background: var(--medical-white);
             border-radius: var(--radius-sm);
@@ -366,22 +366,28 @@
             opacity: 0.8;
             transition: all 0.3s ease;
             z-index: 10;
-            margin-left: auto;
-            margin-right: var(--spacing-sm);
         }
 
-        .language-switcher:hover {
-            opacity: 1;
-            box-shadow: var(--shadow-sm);
-        }
-
+        /* Desktop positioning - move to corner after CTA button */
         @media (min-width: 1024px) {
             .language-switcher {
-                position: absolute;
-                right: 60px;
-                top: 50%;
-                transform: translateY(-50%);
-                margin: 0;
+                position: static;
+                transform: none;
+                margin-left: var(--spacing-sm);
+                order: 3; /* After nav-cta which is order: 2 */
+            }
+            
+            .desktop-nav {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-xs);
+                margin-left: auto;
+                order: 1;
+            }
+            
+            .nav-cta {
+                margin-left: var(--spacing-sm);
+                order: 2; /* CTA button comes before language switcher */
             }
         }
 
@@ -393,7 +399,7 @@
 
         @media (min-width: 1024px) {
             .language-switcher:hover {
-                transform: translateY(-50%) scale(1.05);
+                transform: scale(1.05);
             }
         }
 
@@ -421,7 +427,7 @@
             color: var(--medical-teal);
         }
 
-        /* ===== DESKTOP NAVIGATION ===== */
+        /* ===== DESKTOP NAVIGATION - MATCH LANDING PAGE ===== */
         .desktop-nav {
             display: none;
         }
@@ -481,7 +487,7 @@
             }
         }
 
-        /* ===== MOBILE MENU ===== */
+        /* ===== MOBILE MENU - MATCH LANDING PAGE ===== */
         .mobile-menu-toggle {
             display: flex;
             flex-direction: column;
@@ -642,7 +648,7 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* ===== BUTTONS ===== */
+        /* ===== BUTTONS - MATCH LANDING PAGE ===== */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -753,14 +759,14 @@
         .framework-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: var(--spacing-lg);
+            gap: var(--spacing-xl);
             margin-top: var(--spacing-xl);
         }
 
         @media (min-width: 768px) {
             .framework-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: var(--spacing-xl);
+                gap: var(--spacing-2xl);
             }
         }
 
@@ -960,25 +966,18 @@
             font-weight: 500;
         }
 
-        /* ===== ACTIVE PROJECTS SECTION - MOBILE FIXED ===== */
+        /* ===== ACTIVE PROJECTS SECTION ===== */
         .projects-section {
             background: var(--medical-white);
-        }
-
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            margin-top: var(--spacing-xl);
-            -webkit-overflow-scrolling: touch;
         }
 
         .projects-table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: var(--spacing-xl);
             border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow-md);
-            min-width: 600px; /* Minimum width for table */
         }
 
         .projects-table th {
@@ -1001,14 +1000,6 @@
 
         .projects-table tr:hover {
             background: var(--slate-50);
-        }
-
-        @media (max-width: 768px) {
-            .projects-table th,
-            .projects-table td {
-                padding: 1rem;
-                font-size: 0.875rem;
-            }
         }
 
         .project-category {
@@ -1132,18 +1123,6 @@
             flex-shrink: 0;
         }
 
-        @media (max-width: 768px) {
-            .capability-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: var(--spacing-md);
-            }
-            
-            .capability-icon {
-                align-self: center;
-            }
-        }
-
         .capability-tags {
             display: flex;
             gap: 0.5rem;
@@ -1217,18 +1196,11 @@
         .partnership-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: var(--spacing-lg);
+            gap: var(--spacing-xl);
             margin-top: var(--spacing-xl);
         }
 
         @media (min-width: 768px) {
-            .partnership-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--spacing-xl);
-            }
-        }
-
-        @media (min-width: 1024px) {
             .partnership-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
@@ -1288,19 +1260,12 @@
         .process-steps {
             display: grid;
             grid-template-columns: 1fr;
-            gap: var(--spacing-lg);
+            gap: var(--spacing-xl);
             margin-top: var(--spacing-xl);
             position: relative;
         }
 
         @media (min-width: 768px) {
-            .process-steps {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--spacing-xl);
-            }
-        }
-
-        @media (min-width: 1024px) {
             .process-steps {
                 grid-template-columns: repeat(3, 1fr);
             }
@@ -1398,7 +1363,7 @@
             color: var(--slate-600);
         }
 
-        /* ===== FOOTER ===== */
+        /* ===== FOOTER - MATCH LANDING PAGE ===== */
         .footer {
             background: var(--medical-navy);
             color: var(--medical-white);
