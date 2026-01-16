@@ -96,8 +96,9 @@
             --radius-xl: 16px;
             --radius-full: 9999px;
             
-            /* Header Height (match landing page) */
-            --header-height: 72px;
+            /* Header Height - Adjusted for mobile */
+            --header-height-desktop: 72px;
+            --header-height-mobile: 60px;
         }
 
         * {
@@ -109,6 +110,7 @@
         html {
             scroll-behavior: smooth;
             font-size: 16px;
+            -webkit-text-size-adjust: 100%; /* Prevent iOS zoom on orientation change */
         }
 
         body {
@@ -119,9 +121,17 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            padding-top: var(--header-height);
+            padding-top: var(--header-height-desktop);
             font-size: clamp(1rem, 1.5vw, 1.125rem);
             text-rendering: optimizeLegibility;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+
+        /* Mobile header adjustment */
+        @media (max-width: 768px) {
+            body {
+                padding-top: var(--header-height-mobile);
+            }
         }
 
         /* ===== ENHANCED TYPOGRAPHY ===== */
@@ -255,7 +265,12 @@
             }
             
             .text-lead {
-                font-size: clamp(1rem, 3vw, 1.125rem);
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            .container {
+                padding: 0 16px;
             }
         }
 
@@ -276,13 +291,19 @@
             top: 0;
             left: 0;
             right: 0;
-            height: var(--header-height);
+            height: var(--header-height-desktop);
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--slate-200);
             z-index: 1000;
             box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .superior-header {
+                height: var(--header-height-mobile);
+            }
         }
 
         .superior-header.scrolled {
@@ -298,6 +319,12 @@
             height: 100%;
             position: relative;
             gap: var(--spacing-sm);
+        }
+
+        @media (max-width: 1023px) {
+            .header-container {
+                padding-right: 0; /* Remove right padding for hamburger toggle */
+            }
         }
 
         /* ===== LOGO - MATCH LANDING PAGE ===== */
@@ -324,9 +351,19 @@
             flex-shrink: 0;
         }
 
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
         .logo-icon svg {
             width: 100%;
             height: 100%;
+            fill: currentColor;
+            stroke: currentColor;
+            vector-effect: non-scaling-stroke;
         }
 
         .logo-text {
@@ -344,6 +381,12 @@
             white-space: nowrap;
         }
 
+        @media (max-width: 768px) {
+            .logo-main {
+                font-size: 0.875rem;
+            }
+        }
+
         .logo-sub {
             font-size: 0.625rem;
             color: var(--slate-500);
@@ -352,12 +395,8 @@
             white-space: nowrap;
         }
 
-        /* ===== LANGUAGE SWITCHER - IMPROVED POSITIONING ===== */
+        /* ===== LANGUAGE SWITCHER - FIXED POSITIONING ===== */
         .language-switcher {
-            position: absolute;
-            right: 60px;
-            top: 50%;
-            transform: translateY(-50%);
             display: flex;
             background: var(--medical-white);
             border-radius: var(--radius-sm);
@@ -368,39 +407,38 @@
             z-index: 10;
         }
 
-        /* Desktop positioning - move to corner after CTA button */
-        @media (min-width: 1024px) {
-            .language-switcher {
-                position: static;
-                transform: none;
-                margin-left: var(--spacing-sm);
-                order: 3; /* After nav-cta which is order: 2 */
+        /* On mobile, hide from header (show in hamburger menu instead) */
+        @media (max-width: 1023px) {
+            .header-container .language-switcher {
+                display: none;
             }
-            
+        }
+
+        /* Desktop positioning - after CTA button */
+        @media (min-width: 1024px) {
             .desktop-nav {
                 display: flex;
                 align-items: center;
                 gap: var(--spacing-xs);
                 margin-left: auto;
+            }
+            
+            /* Structure: Logo → Desktop Nav → CTA Button → Language Switcher */
+            .nav-cta {
+                margin-left: var(--spacing-sm);
                 order: 1;
             }
             
-            .nav-cta {
+            .language-switcher {
                 margin-left: var(--spacing-sm);
-                order: 2; /* CTA button comes before language switcher */
+                order: 2;
             }
         }
 
         .language-switcher:hover {
             opacity: 1;
-            transform: translateY(-50%) scale(1.05);
+            transform: scale(1.05);
             box-shadow: var(--shadow-sm);
-        }
-
-        @media (min-width: 1024px) {
-            .language-switcher:hover {
-                transform: scale(1.05);
-            }
         }
 
         .lang-btn {
@@ -414,6 +452,15 @@
             color: var(--slate-600);
             min-width: 40px;
             text-align: center;
+        }
+
+        /* Improved tap targets on mobile */
+        @media (max-width: 768px) {
+            .lang-btn {
+                min-width: 44px;
+                min-height: 44px;
+                padding: 0.5rem 1rem;
+            }
         }
 
         .lang-btn.active {
@@ -470,7 +517,6 @@
             }
             
             .nav-cta {
-                margin-left: var(--spacing-sm);
                 background: linear-gradient(135deg, var(--medical-teal), var(--medical-accent));
                 color: var(--medical-white);
                 padding: 0.75rem 1.75rem;
@@ -479,6 +525,9 @@
                 text-decoration: none;
                 transition: all 0.3s ease;
                 white-space: nowrap;
+                border: none;
+                cursor: pointer;
+                font-family: inherit;
             }
             
             .nav-cta:hover {
@@ -504,6 +553,12 @@
             transition: all 0.3s ease;
             z-index: 1002;
             flex-shrink: 0;
+        }
+
+        @media (max-width: 1023px) {
+            .mobile-menu-toggle {
+                margin-left: auto; /* Push hamburger to the right */
+            }
         }
 
         @media (min-width: 1024px) {
@@ -565,6 +620,8 @@
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            padding-top: env(safe-area-inset-top, 0px); /* iPhone notch support */
+            padding-bottom: var(--spacing-lg);
         }
 
         .mobile-nav.active {
@@ -605,6 +662,7 @@
         .mobile-nav-links {
             padding: var(--spacing-lg);
             flex: 1;
+            padding-bottom: 0;
         }
 
         .mobile-nav-item {
@@ -623,6 +681,15 @@
             border-radius: var(--radius-lg);
             transition: all 0.3s ease;
             font-size: 1rem;
+            min-height: 44px; /* Apple recommended tap target size */
+        }
+
+        /* Mobile touch feedback */
+        @media (max-width: 768px) {
+            .mobile-nav-link:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
         }
 
         .mobile-nav-link:hover,
@@ -641,11 +708,30 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mobile touch feedback */
+        @media (max-width: 768px) {
+            .mobile-nav-cta:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
         }
 
         .mobile-nav-cta:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
+        }
+
+        /* Language switcher inside mobile menu */
+        .mobile-nav .language-switcher {
+            display: flex !important;
+            margin: var(--spacing-lg) auto;
+            width: fit-content;
         }
 
         /* ===== BUTTONS - MATCH LANDING PAGE ===== */
@@ -662,12 +748,30 @@
             border: none;
             font-size: 0.9375rem;
             gap: 0.5rem;
+            min-height: 44px; /* Apple recommended tap target size */
+        }
+
+        /* Mobile touch feedback */
+        @media (max-width: 768px) {
+            .btn:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
         }
 
         @media (max-width: 768px) {
             .btn {
                 padding: 0.75rem 1.5rem;
                 font-size: 0.875rem;
+            }
+            
+            .hero-section .btn {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                width: 100%;
+                margin-left: 0 !important;
+                margin-top: 12px;
             }
         }
 
@@ -708,6 +812,7 @@
         /* ===== HERO SECTION ===== */
         .hero-section {
             min-height: 80vh;
+            min-height: -webkit-fill-available; /* Fix iOS Safari 100vh */
             display: flex;
             align-items: center;
             background: linear-gradient(135deg, 
@@ -797,6 +902,7 @@
         .framework-icon {
             width: 80px;
             height: 80px;
+            aspect-ratio: 1/1; /* Maintain square ratio */
             border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
@@ -910,6 +1016,7 @@
         .disease-icon {
             width: 60px;
             height: 60px;
+            aspect-ratio: 1/1; /* Maintain square ratio */
             border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
@@ -964,11 +1071,28 @@
             border-radius: var(--radius-full);
             font-size: 0.75rem;
             font-weight: 500;
+            min-height: 44px; /* Better tap target */
+            display: inline-flex;
+            align-items: center;
         }
 
         /* ===== ACTIVE PROJECTS SECTION ===== */
         .projects-section {
             background: var(--medical-white);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 0 -1rem;
+            padding: 0 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (min-width: 769px) {
+            .table-container {
+                margin: 0;
+                padding: 0;
+            }
         }
 
         .projects-table {
@@ -978,6 +1102,13 @@
             border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow-md);
+            min-width: 600px; /* Minimum width for readability on mobile */
+        }
+
+        @media (min-width: 769px) {
+            .projects-table {
+                min-width: 100%;
+            }
         }
 
         .projects-table th {
@@ -1113,6 +1244,7 @@
         .capability-icon {
             width: 64px;
             height: 64px;
+            aspect-ratio: 1/1; /* Maintain square ratio */
             background: linear-gradient(135deg, var(--medical-teal), var(--medical-accent));
             border-radius: var(--radius-lg);
             display: flex;
@@ -1222,6 +1354,7 @@
         .partnership-icon {
             width: 56px;
             height: 56px;
+            aspect-ratio: 1/1; /* Maintain square ratio */
             background: rgba(255, 255, 255, 0.2);
             border-radius: var(--radius-lg);
             display: flex;
@@ -1344,6 +1477,7 @@
         .contact-icon {
             width: 64px;
             height: 64px;
+            aspect-ratio: 1/1; /* Maintain square ratio */
             background: var(--medical-teal-light);
             border-radius: var(--radius-lg);
             display: flex;
@@ -1448,6 +1582,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s ease, transform 0.6s ease;
+            will-change: opacity, transform; /* Performance hint */
         }
 
         .fade-in.visible {
@@ -1494,7 +1629,7 @@
                 </div>
             </a>
 
-            <!-- Language Switcher -->
+            <!-- Language Switcher (Hidden on mobile, shown in hamburger menu) -->
             <div class="language-switcher">
                 <button class="lang-btn active" onclick="switchLanguage('en')" aria-label="English">EN</button>
                 <button class="lang-btn" onclick="switchLanguage('es')" aria-label="Español">ES</button>
@@ -1616,6 +1751,14 @@
             <span lang="en">Start Collaboration</span>
             <span lang="es">Iniciar Colaboración</span>
         </a>
+        
+        <!-- Language switcher in mobile menu -->
+        <div style="padding: var(--spacing-lg); border-top: 1px solid var(--slate-200); margin-top: auto;">
+            <div class="language-switcher">
+                <button class="lang-btn active" onclick="switchLanguage('en')" aria-label="English">EN</button>
+                <button class="lang-btn" onclick="switchLanguage('es')" aria-label="Español">ES</button>
+            </div>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -2580,7 +2723,7 @@
             link.addEventListener('click', closeMobileMenu);
         });
 
-        // ===== LANGUAGE SWITCHING =====
+        // ===== ENHANCED LANGUAGE SWITCHING =====
         function switchLanguage(lang) {
             if (document.body.getAttribute('data-lang') === lang) return;
             
@@ -2592,6 +2735,7 @@
             
             document.body.setAttribute('data-lang', lang);
             
+            // Update all language buttons (header and mobile)
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.textContent.trim() === lang.toUpperCase()) {
@@ -2608,7 +2752,25 @@
             }, 50);
             
             localStorage.setItem('huac_language', lang);
+            
+            // Trigger resize to update any layout changes
+            window.dispatchEvent(new Event('resize'));
         }
+        
+        // Function to switch language and close mobile menu
+        function switchLanguageAndCloseMenu(lang) {
+            switchLanguage(lang);
+            closeMobileMenu();
+        }
+        
+        // Update language switcher buttons to use close function on mobile
+        document.querySelectorAll('.mobile-nav .lang-btn').forEach(btn => {
+            const originalOnClick = btn.getAttribute('onclick');
+            if (originalOnClick && originalOnClick.includes("switchLanguage('")) {
+                const lang = originalOnClick.includes("'en'") ? 'en' : 'es';
+                btn.setAttribute('onclick', `switchLanguageAndCloseMenu('${lang}')`);
+            }
+        });
         
         // ===== HEADER SCROLL BEHAVIOR =====
         const header = document.getElementById('mainHeader');
