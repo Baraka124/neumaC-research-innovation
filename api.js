@@ -116,10 +116,19 @@ async function loadResearchLines() {
 
     // ── INDEX grid ──
     if (indexGrid) {
+      // Show skeleton cards while rendering
+      indexGrid.innerHTML = Array(6).fill(`
+        <div class="line-item" style="pointer-events:none;">
+          <div class="line-top"><div class="line-num-pill" style="background:var(--ink-3);color:transparent;">00</div></div>
+          <div style="height:1rem;background:var(--ink-3);border-radius:3px;width:80%;margin-bottom:.5rem;animation:skeleton-pulse 1.4s ease-in-out infinite;"></div>
+          <div style="height:.7rem;background:var(--ink-3);border-radius:3px;width:50%;animation:skeleton-pulse 1.4s ease-in-out infinite;animation-delay:.1s;"></div>
+        </div>`).join('');
+      // Small delay to show skeleton, then replace with real data
+      await new Promise(r => setTimeout(r, 0));
       indexGrid.innerHTML = data.map(line => `
         <a href="clinical.html#research-lines" class="line-item">
           <div class="line-top">
-            <div class="line-num-badge">${String(line.line_number).padStart(2, '0')}</div>
+            <div class="line-num-pill">${String(line.line_number).padStart(2, '0')}</div>
             ${line.is_new ? `<span class="line-new"><span lang="en">New</span><span lang="es">Nueva</span></span>` : ''}
           </div>
           <div class="line-name">${escHtml(line.name)}</div>
@@ -365,26 +374,22 @@ function updateStat(id, value) {
 }
 
 async function loadLiveStats() {
-  // Only runs on index page to update the hero stat grid
   if (PAGE !== 'index') return;
   try {
-    // Use research-lines count for the "6 Research Lines" stat
-    // Trial count pulled from clinical-trials/website
-    const [linesRes, trialsRes] = await Promise.all([
-      apiFetch('/api/research-lines/website'),
-      apiFetch('/api/clinical-trials/website')
-    ]);
-    const lineCount  = linesRes.data?.length || 0;
-    const trialCount = trialsRes.data?.length || 0;
-
-    // Update hero stat grid — target elements by data-stat attribute
-    // Add data-stat="statResearchLines" etc. to your HTML stat elements, OR
-    // we patch the known hstat-num elements by index:
-    const hstats = document.querySelectorAll('.hstat-num');
-    if (hstats[0]) hstats[0].textContent = lineCount || '6';
-    if (hstats[1]) hstats[1].textContent = trialCount > 0 ? trialCount + '+' : '30+';
+    const linesRes = await apiFetch('/api/research-lines/website');
+    const lineCount = linesRes.data?.length || 0;
+    if (lineCount > 0) {
+      // Update right-panel first stat
+      const firstStat = document.querySelector('.hstat-num');
+      if (firstStat) firstStat.textContent = lineCount;
+      // Update hero strip
+      const stripLines = document.getElementById('heroStatLines');
+      if (stripLines) stripLines.textContent = lineCount;
+    }
+    // Do NOT update trials count from featured endpoint —
+    // it only returns featured_in_website=true records, not the full portfolio.
+    // "30+" is the correct static value for the full active trial portfolio.
   } catch (err) {
-    // Non-fatal — static fallback values remain
     console.warn('Live stats not available:', err.message);
   }
 }
