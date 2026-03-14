@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Innovation Hub | neumAC R&I | Área Sanitaria de A Coruña y Cee</title>
-  <meta name="description" content="Partner with neumAC R&I's Innovation Hub — clinical validation, technology co-development, and workflow integration in respiratory medicine." />
+  <title>Clinical Research | neumAC R&I | Área Sanitaria de A Coruña y Cee</title>
+  <meta name="description" content="Clinical research at neumAC R&I advancing pulmonary and thoracic medicine through rigorous trials across six specialized research lines." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -12,16 +12,15 @@
     :root {
       --ink:#0B0F14;--ink-2:#131920;--ink-3:#1C2430;--surface:#212C3A;
       --rule:rgba(255,255,255,0.07);--rule-light:rgba(255,255,255,0.12);
-      --gold:#C9A84C;--gold-dim:rgba(201,168,76,0.15);
+      --gold:#C9A84C;--gold-dim:rgba(201,168,76,0.15);--gold-glow:rgba(201,168,76,0.35);
       --teal:#3ABFBF;--teal-dim:rgba(58,191,191,0.12);
       --violet:#7C6FCF;--violet-dim:rgba(124,111,207,0.12);
-      --amber:#E09B3D;--amber-dim:rgba(224,155,61,0.12);
       --coral:#E05C4B;--coral-dim:rgba(224,92,75,0.12);
       --text-primary:#F0EDE8;--text-secondary:#9EA8B5;--text-muted:#5A6473;
       --ff-display:'Playfair Display',Georgia,serif;
       --ff-body:'DM Sans',system-ui,sans-serif;
       --ff-mono:'DM Mono',monospace;
-      --header-h:80px;--max-w:1200px;
+      --header-h:88px;--max-w:1200px;
       --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:24px;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -30,7 +29,7 @@
     img,svg{display:block;}
     a{color:inherit;text-decoration:none;}
     .display{font-family:var(--ff-display);font-weight:900;line-height:1.05;letter-spacing:-0.02em;color:var(--text-primary);}
-    .display.xl{font-size:clamp(2.5rem,5vw,4.25rem);}
+    .display.xl{font-size:clamp(2.5rem,5vw,4rem);}
     .display.lg{font-size:clamp(2rem,4vw,3rem);}
     .display.md{font-size:clamp(1.5rem,2.5vw,2rem);}
     .display.sm{font-size:clamp(1.2rem,1.8vw,1.5rem);}
@@ -38,15 +37,17 @@
     .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 2rem;}
     .section{padding:6rem 0;}
     @media(max-width:768px){.section{padding:4rem 0;}.container{padding:0 1.25rem;}}
-    #progress-bar{position:fixed;top:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--violet));z-index:2000;transition:width .1s linear;}
 
-    /* HEADER */
+    /* ── PROGRESS ── */
+    #progress-bar{position:fixed;top:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--teal));z-index:2000;transition:width .1s linear;}
+
+    /* ── HEADER ── */
     .header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(11,15,20,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--rule);z-index:1000;transition:background .3s;}
     .header.solid{background:rgba(11,15,20,0.97);}
     .header-inner{display:flex;align-items:center;justify-content:space-between;height:100%;gap:1.5rem;}
     .logo{display:flex;align-items:center;gap:.875rem;flex-shrink:0;}
-    .logo-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .logo-mark svg{width:21px;height:21px;}
+    .logo-mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .logo-mark svg{width:22px;height:22px;}
     .logo-wordmark{display:flex;flex-direction:column;}
     .logo-wordmark strong{font-family:var(--ff-display);font-size:.9rem;font-weight:700;color:var(--text-primary);line-height:1.2;}
     .logo-wordmark span{font-size:.58rem;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;}
@@ -58,8 +59,8 @@
     @media(min-width:1024px){.nav{display:flex;}}
     .nav a{padding:.5rem 1rem;font-size:.8125rem;font-weight:500;color:var(--text-secondary);border-radius:4px;transition:all .2s;white-space:nowrap;}
     .nav a:hover{color:var(--text-primary);background:var(--rule);}
-    .nav a.current{color:var(--violet);}
-    .nav .nav-cta{margin-left:.5rem;background:var(--gold);color:var(--ink);font-weight:600;padding:.5rem 1.125rem;border-radius:4px;font-size:.8125rem;}
+    .nav a.current{color:var(--teal);}
+    .nav .nav-cta{margin-left:.5rem;background:var(--gold);color:var(--ink);font-weight:600;padding:.5rem 1.125rem;border-radius:4px;font-size:.8125rem;letter-spacing:.01em;}
     .nav .nav-cta:hover{background:#dab857;}
     .mob-toggle{display:flex;flex-direction:column;gap:4.5px;background:none;border:none;cursor:pointer;padding:.5rem;width:38px;height:38px;justify-content:center;align-items:center;}
     @media(min-width:1024px){.mob-toggle{display:none;}}
@@ -75,11 +76,12 @@
     .mob-close{background:none;border:none;cursor:pointer;color:var(--text-secondary);}
     .mob-links{padding:1.5rem;flex:1;display:flex;flex-direction:column;gap:.25rem;}
     .mob-links a{display:flex;align-items:center;gap:.875rem;padding:.875rem 1rem;color:var(--text-secondary);border-radius:var(--r-md);transition:all .2s;font-size:.9375rem;}
-    .mob-links a:hover{background:var(--rule);color:var(--text-primary);}
-    .mob-links a.current{color:var(--violet);}
+    .mob-links a:hover,.mob-links a.current{background:var(--rule);color:var(--text-primary);}
+    .mob-links a.current{color:var(--teal);}
     .mob-cta{margin:1.5rem;padding:.875rem;text-align:center;background:var(--gold);color:var(--ink);font-weight:600;border-radius:var(--r-md);transition:.2s;font-size:.9rem;}
     .mob-cta:hover{background:#dab857;}
 
+    /* ── LANG RULES ── */
     [lang="es"]{display:none !important;}
     [lang="en"]{display:inline;}
     [lang="en"].blk{display:block;}
@@ -90,15 +92,50 @@
     body[data-lang="en"] [lang="en"].blk{display:block;}
     body[data-lang="en"] [lang="es"]{display:none;}
 
+    /* ── BUTTONS ── */
+    .btn-primary{display:inline-flex;align-items:center;gap:.4rem;background:var(--teal);color:var(--ink);font-weight:700;padding:.6rem 1.125rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;letter-spacing:.01em;}
+    .btn-primary:hover{background:#2fa8a8;transform:translateY(-1px);}
     .btn-gold{display:inline-flex;align-items:center;gap:.4rem;background:var(--gold);color:var(--ink);font-weight:700;padding:.6rem 1.125rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;letter-spacing:.01em;}
     .btn-gold:hover{background:#dab857;transform:translateY(-1px);}
-    .btn-violet{display:inline-flex;align-items:center;gap:.4rem;background:var(--violet);color:var(--text-primary);font-weight:700;padding:.6rem 1.125rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;}
-    .btn-violet:hover{background:#9083d8;transform:translateY(-1px);}
     .btn-ghost{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--rule-light);color:var(--text-primary);padding:.6rem 1.125rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:all .2s;}
     .btn-ghost:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.05);}
-    .btn-teal{display:inline-flex;align-items:center;gap:.4rem;background:var(--teal);color:var(--ink);font-weight:700;padding:.6rem 1.125rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;}
-    .btn-teal:hover{background:#2fa8a8;transform:translateY(-1px);}
 
+    /* ── HERO ── */
+    .hero{background:var(--ink-2);border-bottom:1px solid var(--rule);position:relative;overflow:hidden;padding:5rem 0 0;}
+    .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 100% at 30% 50%,black 30%,transparent 100%);}
+    .hero::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,var(--teal-dim) 0%,transparent 70%);top:-150px;right:-100px;pointer-events:none;}
+    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:3rem;}
+    @media(min-width:900px){.hero-inner{grid-template-columns:1fr 300px;align-items:start;}}
+    .breadcrumb{display:flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;}
+    .breadcrumb a{font-size:.8rem;color:var(--text-muted);transition:color .2s;}
+    .breadcrumb a:hover{color:var(--text-primary);}
+    .breadcrumb svg{width:10px;height:10px;color:var(--text-muted);flex-shrink:0;}
+    .breadcrumb span{font-size:.8rem;color:var(--teal);}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;border:1px solid rgba(58,191,191,0.3);background:var(--teal-dim);padding:.4rem .9rem;border-radius:3px;margin-bottom:1.5rem;}
+    .hero-eyebrow svg{width:12px;height:12px;}
+    .hero-title{margin-bottom:1.25rem;}
+    .hero-title em{font-style:italic;color:var(--teal);}
+    .hero-desc{font-size:1.0625rem;line-height:1.75;color:var(--text-secondary);max-width:580px;margin-bottom:2rem;}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:0;}
+
+    /* Hero stat panel */
+    .hero-stats{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;}
+    .hstat{background:var(--ink-3);padding:1.125rem 1.375rem;transition:background .2s;}
+    .hstat:hover{background:var(--surface);}
+    .hstat-num{font-family:var(--ff-display);font-size:1.625rem;font-weight:900;color:var(--teal);line-height:1;margin-bottom:.25rem;}
+    .hstat-label{font-size:.72rem;color:var(--text-muted);line-height:1.3;font-family:var(--ff-mono);}
+
+    /* Hero stat strip at bottom */
+    .hero-strip{border-top:1px solid var(--rule);background:var(--ink-3);margin-top:3rem;}
+    .hero-strip-inner{display:flex;flex-wrap:wrap;}
+    .hstrip-item{flex:1;min-width:140px;padding:1.375rem 1.75rem;border-right:1px solid var(--rule);}
+    .hstrip-item:last-child{border-right:none;}
+    .hstrip-num{font-family:var(--ff-display);font-size:1.5rem;font-weight:900;color:var(--teal);line-height:1;margin-bottom:.3rem;}
+    .hstrip-label{font-size:.68rem;font-family:var(--ff-mono);color:var(--text-muted);line-height:1.3;}
+    @media(max-width:640px){.hstrip-item{min-width:50%;border-bottom:1px solid var(--rule);}
+    .hstrip-item:nth-child(2n){border-right:none;} .hstrip-item:last-child,.hstrip-item:nth-last-child(2){border-bottom:none;}}
+
+    /* ── SECTION ── */
     .sec-head{margin-bottom:3.5rem;}
     .sec-head.center{text-align:center;}
     .sec-head.center p{max-width:580px;margin:1rem auto 0;}
@@ -106,158 +143,113 @@
     .sec-head h2{margin-top:.875rem;}
     .text-center{text-align:center;}
 
-    /* HERO */
-    .hero{background:var(--ink-2);border-bottom:1px solid var(--rule);position:relative;overflow:hidden;padding:5rem 0 4rem;}
-    .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 90% at 70% 50%,black 30%,transparent 100%);}
-    .hero::after{content:'';position:absolute;width:600px;height:500px;background:radial-gradient(circle,rgba(124,111,207,0.1) 0%,transparent 70%);top:-100px;right:-150px;pointer-events:none;}
-    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:3rem;}
-    @media(min-width:900px){.hero-inner{grid-template-columns:1fr 360px;align-items:center;}}
-    .breadcrumb{display:flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;}
-    .breadcrumb a{font-size:.8rem;color:var(--text-muted);transition:color .2s;}
-    .breadcrumb a:hover{color:var(--text-primary);}
-    .breadcrumb svg{width:10px;height:10px;color:var(--text-muted);flex-shrink:0;}
-    .breadcrumb span{font-size:.8rem;color:var(--violet);}
-    .hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;border:1px solid rgba(124,111,207,0.3);background:var(--violet-dim);padding:.4rem .9rem;border-radius:3px;margin-bottom:1.5rem;}
-    .hero-title em{font-style:italic;color:var(--gold);}
-    .hero-title{margin-bottom:1.25rem;}
-    .hero-desc{font-size:1.0625rem;line-height:1.75;color:var(--text-secondary);max-width:560px;margin-bottom:2rem;}
-    .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;}
-    .hero-framework{background:var(--ink-3);border:1px solid var(--rule-light);border-radius:var(--r-xl);padding:1.75rem;position:relative;}
-    .hero-framework::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--gold));border-radius:var(--r-xl) var(--r-xl) 0 0;}
-    .fw-steps{display:flex;flex-direction:column;gap:.625rem;margin-top:1.125rem;}
-    .fw-step{display:flex;align-items:center;gap:.875rem;padding:.75rem .9rem;background:var(--ink-2);border:1px solid var(--rule);border-radius:var(--r-md);transition:all .25s;}
-    .fw-step:hover{background:var(--surface);border-color:rgba(124,111,207,.2);}
-    .fw-num{width:26px;height:26px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff-mono);font-size:.65rem;font-weight:500;}
-    .fw-step:nth-child(1) .fw-num{background:var(--teal-dim);color:var(--teal);}
-    .fw-step:nth-child(2) .fw-num{background:var(--gold-dim);color:var(--gold);}
-    .fw-step:nth-child(3) .fw-num{background:var(--violet-dim);color:var(--violet);}
-    .fw-step:nth-child(4) .fw-num{background:var(--amber-dim);color:var(--amber);}
-    .fw-step-label{font-size:.8375rem;font-weight:500;color:var(--text-secondary);}
+    /* ══════════════════════════════════════════
+       RESEARCH LINES — editorial redesign
+    ══════════════════════════════════════════ */
+    .lines-bg{background:var(--ink);}
+    .line-card{background:var(--ink-2);border:1px solid var(--rule);border-radius:var(--r-xl);overflow:hidden;margin-bottom:1.25rem;transition:all .3s;position:relative;}
+    .line-card:hover{border-color:rgba(58,191,191,0.2);}
+
+    /* Ghost number — the editorial upgrade */
+    .line-ghost-num{position:absolute;top:.75rem;right:1.5rem;font-family:var(--ff-display);font-size:clamp(4rem,7vw,6rem);font-weight:900;color:var(--gold);opacity:.06;line-height:1;letter-spacing:-0.04em;pointer-events:none;transition:opacity .3s;user-select:none;}
+    .line-card:hover .line-ghost-num{opacity:.12;}
+
+    .line-head{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:start;padding:1.75rem 1.75rem 0;cursor:pointer;position:relative;z-index:1;}
+    @media(max-width:600px){.line-head{gap:1rem;padding:1.5rem 1.5rem 0;}}
+    .line-num{width:44px;height:44px;flex-shrink:0;background:var(--teal-dim);border:1px solid rgba(58,191,191,0.25);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-family:var(--ff-mono);font-size:.85rem;color:var(--teal);font-weight:500;margin-top:.2rem;}
+    .line-meta{flex:1;}
+    .line-coordinator{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-family:var(--ff-mono);color:var(--text-muted);margin-bottom:.5rem;}
+    .line-coordinator svg{width:11px;height:11px;}
+    .line-coordinator strong{color:var(--gold);}
+    .line-title{font-family:var(--ff-display);font-size:clamp(1.05rem,2vw,1.3rem);font-weight:700;color:var(--text-primary);line-height:1.3;margin-bottom:.625rem;}
+    .line-tags-preview{display:flex;flex-wrap:wrap;gap:.4rem;padding:0 1.75rem 1.25rem;position:relative;z-index:1;}
+    @media(max-width:600px){.line-tags-preview{padding:0 1.5rem 1.25rem;}}
+    .ltag{padding:.25rem .65rem;border-radius:3px;font-size:.65rem;font-family:var(--ff-mono);letter-spacing:.05em;border:1px solid rgba(58,191,191,0.2);color:rgba(58,191,191,0.7);}
+    .line-expand-toggle{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.75rem;cursor:pointer;transition:background .2s;border-top:1px solid var(--rule);position:relative;z-index:1;}
+    @media(max-width:600px){.line-expand-toggle{padding:.875rem 1.5rem;}}
+    .line-expand-toggle:hover{background:rgba(255,255,255,.02);}
+    .toggle-label{font-size:.75rem;font-family:var(--ff-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);display:flex;align-items:center;gap:.5rem;}
+    .toggle-label svg{width:13px;height:13px;}
+    .toggle-arrow{width:22px;height:22px;border:1px solid var(--rule-light);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .3s,background .2s;}
+    .toggle-arrow svg{width:11px;height:11px;color:var(--text-muted);}
+    .line-card.open .toggle-arrow{transform:rotate(180deg);background:var(--teal-dim);border-color:rgba(58,191,191,.3);}
+    .line-card.open .toggle-arrow svg{color:var(--teal);}
+    .line-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
+    .line-card.open .line-body{max-height:600px;}
+    .line-body-inner{padding:0 1.75rem 1.75rem;}
+    @media(max-width:600px){.line-body-inner{padding:0 1.5rem 1.5rem;}}
+    .line-desc{font-size:.9rem;line-height:1.75;color:var(--text-secondary);margin-bottom:1.25rem;padding-top:1.25rem;border-top:1px solid var(--rule);}
 
     /* ══════════════════════════════════════════
-       VISUAL PIPELINE — the key design upgrade
+       CLINICAL TRIALS TABLE
     ══════════════════════════════════════════ */
-    .pipeline-bg{background:var(--ink);}
+    .trials-bg{background:var(--ink-2);}
+    .filter-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.875rem;margin-bottom:1.75rem;background:var(--ink-3);border:1px solid var(--rule-light);border-radius:var(--r-lg);padding:1.25rem;}
+    .filter-grp label{display:block;font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.45rem;}
+    .filter-grp select{width:100%;background:var(--ink);border:1px solid var(--rule-light);border-radius:var(--r-md);padding:.575rem .8rem;color:var(--text-primary);font-family:var(--ff-body);font-size:.8125rem;transition:border .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235A6473' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;padding-right:2.25rem;}
+    .filter-grp select:focus{outline:none;border-color:var(--teal);}
+    .filter-grp select option{background:var(--ink-2);}
+    .search-wrap{position:relative;}
+    .search-wrap svg{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--text-muted);pointer-events:none;}
+    .filter-grp input[type="text"]{width:100%;background:var(--ink);border:1px solid var(--rule-light);border-radius:var(--r-md);padding:.575rem .8rem .575rem 2.125rem;color:var(--text-primary);font-family:var(--ff-body);font-size:.8125rem;transition:border .2s;}
+    .filter-grp input[type="text"]:focus{outline:none;border-color:var(--teal);}
+    .filter-grp input[type="text"]::placeholder{color:var(--text-muted);}
 
-    /* Horizontal connector (desktop only) */
-    .pipeline-track{position:relative;}
-    @media(min-width:900px){
-      .pipeline-track::before{
-        content:'';position:absolute;top:38px;
-        left:calc(12.5% + 26px);right:calc(12.5% + 26px);
-        height:2px;
-        background:linear-gradient(90deg,var(--teal),var(--gold),var(--violet),var(--amber));
-        opacity:.25;z-index:0;
-      }
-    }
-    .pipeline-stages{display:grid;grid-template-columns:1fr;gap:1.5rem;position:relative;z-index:1;}
-    @media(min-width:640px){.pipeline-stages{grid-template-columns:repeat(2,1fr);}}
-    @media(min-width:900px){.pipeline-stages{grid-template-columns:repeat(4,1fr);gap:0;}}
+    .trials-count-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;flex-wrap:wrap;gap:.75rem;}
+    .trials-count-bar span{font-size:.78rem;color:var(--text-muted);font-family:var(--ff-mono);}
+    .trials-count-bar strong{color:var(--teal);}
+    .trials-wrap{border:1px solid var(--rule-light);border-radius:var(--r-lg);overflow:hidden;}
+    .trials-scroll{overflow-x:auto;}
+    table.trials{width:100%;border-collapse:collapse;min-width:760px;}
+    .trials thead{background:var(--ink-3);}
+    .trials th{padding:.875rem 1.125rem;text-align:left;font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--rule-light);white-space:nowrap;}
+    .trials td{padding:1rem 1.125rem;border-bottom:1px solid var(--rule);vertical-align:middle;font-size:.8125rem;color:var(--text-secondary);}
+    .trials tbody tr:last-child td{border-bottom:none;}
+    .trials tbody tr{background:var(--ink-2);transition:background .15s;}
+    .trials tbody tr:hover td{background:var(--ink-3);}
+    .trial-protocol{font-family:var(--ff-mono);font-size:.7rem;color:var(--text-muted);white-space:nowrap;}
+    .trial-title{color:var(--text-primary);font-weight:500;line-height:1.4;}
+    .trial-line-tag{display:inline-block;padding:.22rem .55rem;border-radius:3px;font-size:.65rem;font-family:var(--ff-mono);border:1px solid var(--rule-light);color:var(--text-muted);white-space:nowrap;}
+    .phase-badge{display:inline-flex;align-items:center;padding:.22rem .55rem;border-radius:3px;font-size:.65rem;font-family:var(--ff-mono);letter-spacing:.05em;border:1px solid rgba(201,168,76,0.2);color:rgba(201,168,76,0.8);background:var(--gold-dim);white-space:nowrap;}
+    .status-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border-radius:20px;font-size:.68rem;font-weight:600;white-space:nowrap;}
+    .status-badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+    .status-badge.recruiting{background:rgba(58,191,191,.1);color:var(--teal);border:1px solid rgba(58,191,191,.2);}
+    .status-badge.recruiting::before{background:var(--teal);box-shadow:0 0 6px var(--teal);}
+    .status-badge.active{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2);}
+    .status-badge.active::before{background:var(--gold);}
+    .status-badge.completed{background:rgba(90,100,115,.15);color:var(--text-muted);border:1px solid var(--rule);}
+    .status-badge.completed::before{background:var(--text-muted);}
+    .status-badge.prep{background:rgba(124,111,207,.1);color:var(--violet);border:1px solid rgba(124,111,207,.2);}
+    .status-badge.prep::before{background:var(--violet);}
+    .no-results{padding:2.5rem;text-align:center;color:var(--text-muted);font-size:.875rem;display:none;}
+    .no-results svg{width:28px;height:28px;margin:0 auto .75rem;opacity:.3;}
+    .trials-footer{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:var(--ink-3);border-top:1px solid var(--rule);flex-wrap:wrap;gap:.875rem;}
+    .trials-footer-info{font-size:.72rem;font-family:var(--ff-mono);color:var(--text-muted);}
+    .trials-footer-db{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-family:var(--ff-mono);color:var(--text-muted);border:1px solid var(--rule-light);border-radius:3px;padding:.2rem .6rem;margin-top:.35rem;}
+    .trials-footer-db svg{width:10px;height:10px;color:var(--gold);}
 
-    .pipeline-stage{text-align:center;padding:0 .75rem;}
-    .stage-node{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;position:relative;z-index:2;}
-    .pipeline-stage:nth-child(1) .stage-node{background:var(--teal-dim);border:2px solid rgba(58,191,191,.5);box-shadow:0 0 24px rgba(58,191,191,.1);}
-    .pipeline-stage:nth-child(1) .stage-node svg{color:var(--teal);}
-    .pipeline-stage:nth-child(2) .stage-node{background:var(--gold-dim);border:2px solid rgba(201,168,76,.5);box-shadow:0 0 24px rgba(201,168,76,.1);}
-    .pipeline-stage:nth-child(2) .stage-node svg{color:var(--gold);}
-    .pipeline-stage:nth-child(3) .stage-node{background:var(--violet-dim);border:2px solid rgba(124,111,207,.5);box-shadow:0 0 24px rgba(124,111,207,.1);}
-    .pipeline-stage:nth-child(3) .stage-node svg{color:var(--violet);}
-    .pipeline-stage:nth-child(4) .stage-node{background:var(--amber-dim);border:2px solid rgba(224,155,61,.5);box-shadow:0 0 24px rgba(224,155,61,.1);}
-    .pipeline-stage:nth-child(4) .stage-node svg{color:var(--amber);}
-    .stage-step{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.5rem;}
-    .stage-title{font-family:var(--ff-display);font-size:1.075rem;font-weight:700;color:var(--text-primary);margin-bottom:.625rem;}
-    .stage-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.65;margin-bottom:1rem;}
-    .stage-list{list-style:none;text-align:left;padding:0 .5rem;}
-    .stage-list li{font-size:.78rem;color:var(--text-muted);padding:.2rem 0 .2rem 1rem;position:relative;}
-    .stage-list li::before{content:'·';position:absolute;left:0;color:var(--text-muted);font-size:1.2rem;line-height:1.1;}
+    /* ── TEAM ── */
+    .team-bg{background:var(--ink);}
+    .team-grid{display:grid;grid-template-columns:1fr;gap:1.25rem;}
+    @media(min-width:640px){.team-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(min-width:1024px){.team-grid{grid-template-columns:repeat(3,1fr);}}
+    .team-card{background:var(--ink-2);border:1px solid var(--rule);border-radius:var(--r-xl);padding:1.75rem;transition:all .3s;position:relative;overflow:hidden;}
+    .team-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),transparent);opacity:0;transition:opacity .3s;}
+    .team-card:hover{border-color:rgba(58,191,191,.2);transform:translateY(-3px);}
+    .team-card:hover::before{opacity:1;}
+    .team-avatar{width:48px;height:48px;border-radius:var(--r-md);background:var(--teal-dim);border:1px solid rgba(58,191,191,.2);display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--teal);margin-bottom:1.125rem;flex-shrink:0;}
+    .team-name{font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:.25rem;}
+    .team-role{font-size:.7rem;font-family:var(--ff-mono);color:var(--gold);letter-spacing:.06em;margin-bottom:.75rem;}
+    .team-line-tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;color:var(--text-muted);font-family:var(--ff-mono);border:1px solid var(--rule-light);padding:.22rem .55rem;border-radius:3px;margin-bottom:.875rem;}
+    .team-expertise{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.875rem;}
+    .team-tag{font-size:.63rem;font-family:var(--ff-mono);letter-spacing:.04em;padding:.2rem .5rem;border-radius:2px;border:1px solid var(--rule);color:var(--text-muted);}
 
-    /* Pipeline arrow connector (mobile/tablet) */
-    @media(max-width:899px){
-      .pipeline-stage:not(:last-child)::after{
-        content:'↓';display:block;text-align:center;
-        font-size:1.25rem;color:var(--text-muted);opacity:.3;margin-top:.5rem;
-      }
-    }
-
-    /* ══════════════════════════════════════════
-       PROJECTS — api.js target: id="projectsGrid"
-    ══════════════════════════════════════════ */
-    .projects-bg{background:var(--ink-2);}
-    .projects-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;}
-    @media(min-width:768px){.projects-grid{grid-template-columns:repeat(2,1fr);}}
-    .project-card{background:var(--ink-3);border:1px solid var(--rule);border-radius:var(--r-xl);padding:1.75rem;transition:all .3s;display:flex;flex-direction:column;position:relative;overflow:hidden;}
-    .project-card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-3px);}
-    .project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s;}
-    .project-card:nth-child(1)::before,.project-card.cat-device::before{background:linear-gradient(90deg,var(--teal),transparent);}
-    .project-card:nth-child(2)::before,.project-card.cat-digital::before{background:linear-gradient(90deg,var(--gold),transparent);}
-    .project-card:nth-child(3)::before,.project-card.cat-ai::before{background:linear-gradient(90deg,var(--violet),transparent);}
-    .project-card:nth-child(4)::before,.project-card.cat-surgical::before{background:linear-gradient(90deg,var(--coral),transparent);}
-    .project-card:hover::before{opacity:1;}
-    .project-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.875rem;}
-    .project-cat-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.22rem .6rem;border-radius:3px;font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;}
-    .project-cat-badge svg{width:9px;height:9px;}
-    .cat-device{background:var(--teal-dim);border:1px solid rgba(58,191,191,.2);color:var(--teal);}
-    .cat-digital{background:var(--gold-dim);border:1px solid rgba(201,168,76,.2);color:var(--gold);}
-    .cat-ai{background:var(--violet-dim);border:1px solid rgba(124,111,207,.2);color:var(--violet);}
-    .cat-surgical{background:var(--coral-dim);border:1px solid rgba(224,92,75,.2);color:var(--coral);}
-    .stage-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.22rem .6rem;border-radius:20px;font-size:.68rem;font-weight:600;flex-shrink:0;}
-    .stage-badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-    .stage-pilot{background:rgba(58,191,191,.1);color:var(--teal);border:1px solid rgba(58,191,191,.2);}
-    .stage-pilot::before{background:var(--teal);box-shadow:0 0 5px var(--teal);}
-    .stage-validation{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2);}
-    .stage-validation::before{background:var(--gold);}
-    .stage-dev{background:rgba(124,111,207,.1);color:var(--violet);border:1px solid rgba(124,111,207,.2);}
-    .stage-dev::before{background:var(--violet);}
-    .project-title{font-family:var(--ff-display);font-size:1.0625rem;font-weight:700;color:var(--text-primary);line-height:1.3;margin-bottom:.5rem;}
-    .project-desc{font-size:.875rem;color:var(--text-secondary);line-height:1.65;margin-bottom:1.125rem;flex:1;}
-    .project-needs-label{font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.4rem;}
-    .project-needs{display:flex;flex-wrap:wrap;gap:.35rem;}
-    .pneed{padding:.25rem .6rem;background:var(--ink-2);border:1px solid var(--rule-light);border-radius:3px;font-size:.7rem;font-family:var(--ff-mono);color:var(--text-muted);}
-
-    /* CAPABILITIES */
-    .cap-bg{background:var(--ink);}
-    .cap-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;}
-    @media(min-width:768px){.cap-grid{grid-template-columns:repeat(2,1fr);}}
-    .cap-card{background:var(--ink-2);border:1px solid var(--rule);border-radius:var(--r-xl);padding:2rem;transition:all .3s;}
-    .cap-card:hover{border-color:rgba(255,255,255,.12);transform:translateY(-2px);}
-    .cap-icon-row{display:flex;align-items:center;gap:.875rem;margin-bottom:1.375rem;}
-    .cap-icon{width:44px;height:44px;flex-shrink:0;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;}
-    .cap-icon svg{width:20px;height:20px;}
-    .cap-card:nth-child(1) .cap-icon{background:var(--teal-dim);} .cap-card:nth-child(1) .cap-icon svg{color:var(--teal);}
-    .cap-card:nth-child(2) .cap-icon{background:var(--violet-dim);} .cap-card:nth-child(2) .cap-icon svg{color:var(--violet);}
-    .cap-card:nth-child(3) .cap-icon{background:var(--gold-dim);} .cap-card:nth-child(3) .cap-icon svg{color:var(--gold);}
-    .cap-card:nth-child(4) .cap-icon{background:var(--amber-dim);} .cap-card:nth-child(4) .cap-icon svg{color:var(--amber);}
-    .cap-title{font-family:var(--ff-display);font-size:1.075rem;font-weight:700;color:var(--text-primary);}
-    .cap-desc{font-size:.875rem;color:var(--text-secondary);line-height:1.65;margin-bottom:1.125rem;}
-    .cap-pills{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.125rem;}
-    .cap-pill{padding:.22rem .6rem;border-radius:3px;font-size:.63rem;font-family:var(--ff-mono);letter-spacing:.05em;border:1px solid var(--rule-light);color:var(--text-muted);}
-    .cap-list{list-style:none;display:flex;flex-direction:column;gap:.35rem;}
-    .cap-list li{display:flex;align-items:flex-start;gap:.5rem;font-size:.875rem;color:var(--text-secondary);}
-    .cap-list li::before{content:'→';color:var(--text-muted);flex-shrink:0;margin-top:.05rem;font-size:.875rem;}
-
-    /* PARTNERSHIP MODELS */
-    .partner-bg{background:linear-gradient(160deg,var(--ink-3) 0%,var(--ink) 100%);position:relative;overflow:hidden;}
-    .partner-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:48px 48px;opacity:.4;}
-    .partner-bg::after{content:'';position:absolute;width:500px;height:400px;background:radial-gradient(circle,rgba(124,111,207,0.08) 0%,transparent 70%);bottom:-100px;right:-100px;pointer-events:none;}
-    .partner-inner{position:relative;z-index:1;}
-    .partner-models{display:grid;grid-template-columns:1fr;gap:1.5rem;}
-    @media(min-width:768px){.partner-models{grid-template-columns:repeat(3,1fr);}}
-    .pm-card{background:rgba(255,255,255,.04);border:1px solid var(--rule-light);border-radius:var(--r-xl);padding:2rem;transition:all .3s;}
-    .pm-card:hover{background:rgba(255,255,255,.07);transform:translateY(-3px);}
-    .pm-icon{width:44px;height:44px;border-radius:var(--r-md);background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin-bottom:1.375rem;}
-    .pm-icon svg{width:20px;height:20px;color:rgba(255,255,255,.8);}
-    .pm-title{font-family:var(--ff-display);font-size:1.2rem;font-weight:700;color:var(--text-primary);margin-bottom:.625rem;}
-    .pm-desc{font-size:.875rem;color:rgba(255,255,255,.7);line-height:1.65;margin-bottom:1.375rem;}
-    .pm-benefits{list-style:none;display:flex;flex-direction:column;gap:.45rem;}
-    .pm-benefits li{display:flex;align-items:flex-start;gap:.5rem;font-size:.875rem;color:rgba(255,255,255,.7);}
-    .pm-benefits li::before{content:'✓';color:var(--gold);flex-shrink:0;font-weight:700;}
-
-    /* CONTACT */
-    .contact-bg{background:var(--ink);border-top:1px solid var(--rule);}
+    /* ── CONTACT ── */
+    .contact-bg{background:var(--ink-2);}
     .contact-layout{display:grid;grid-template-columns:1fr;gap:3rem;}
     @media(min-width:900px){.contact-layout{grid-template-columns:1fr 1.2fr;align-items:start;}}
     .contact-info-list{display:flex;flex-direction:column;gap:.875rem;}
-    .cinfo{display:flex;align-items:flex-start;gap:.875rem;padding:1.125rem;background:var(--ink-2);border:1px solid var(--rule);border-radius:var(--r-md);transition:all .25s;}
+    .cinfo{display:flex;align-items:flex-start;gap:.875rem;padding:1.125rem;background:var(--ink-3);border:1px solid var(--rule);border-radius:var(--r-md);transition:all .25s;}
     .cinfo:hover{border-color:rgba(201,168,76,.2);}
     .cinfo-icon{width:34px;height:34px;flex-shrink:0;background:var(--gold-dim);border-radius:6px;display:flex;align-items:center;justify-content:center;}
     .cinfo-icon svg{width:15px;height:15px;color:var(--gold);}
@@ -265,23 +257,23 @@
     .cinfo-value{font-size:.875rem;color:var(--text-primary);line-height:1.5;}
     .cinfo-value a{color:var(--teal);transition:color .2s;}
     .cinfo-value a:hover{color:#6dd6d6;}
-    .form-card{background:var(--ink-2);border:1px solid var(--rule-light);border-radius:var(--r-xl);padding:2rem;position:relative;overflow:hidden;}
-    .form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--gold));}
+    .form-card{background:var(--ink-3);border:1px solid var(--rule-light);border-radius:var(--r-xl);padding:2rem;position:relative;overflow:hidden;}
+    .form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--gold));}
     .form-grid{display:grid;grid-template-columns:1fr;gap:1.125rem;}
     @media(min-width:600px){.form-grid{grid-template-columns:1fr 1fr;}}
     .form-grid .span-2{grid-column:1/-1;}
     .form-group label{display:block;font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.45rem;}
-    .form-group input,.form-group select,.form-group textarea{width:100%;background:var(--ink-3);border:1px solid var(--rule-light);border-radius:var(--r-md);padding:.7rem .9rem;color:var(--text-primary);font-family:var(--ff-body);font-size:.875rem;transition:border .2s;resize:vertical;}
+    .form-group input,.form-group select,.form-group textarea{width:100%;background:var(--ink-2);border:1px solid var(--rule-light);border-radius:var(--r-md);padding:.7rem .9rem;color:var(--text-primary);font-family:var(--ff-body);font-size:.875rem;transition:border .2s;resize:vertical;}
     .form-group input::placeholder,.form-group textarea::placeholder{color:var(--text-muted);}
-    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--violet);}
-    .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235A6473' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .875rem center;padding-right:2.25rem;background-color:var(--ink-3);}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--teal);}
+    .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235A6473' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .875rem center;padding-right:2.25rem;background-color:var(--ink-2);}
     .form-group select option{background:var(--ink-2);}
-    .form-success{display:none;margin-top:1.125rem;padding:.9rem 1.125rem;background:var(--violet-dim);border:1px solid rgba(124,111,207,.3);border-radius:var(--r-md);color:var(--violet);font-size:.875rem;text-align:center;}
+    .form-success{display:none;margin-top:1rem;padding:.875rem 1.125rem;background:var(--teal-dim);border:1px solid rgba(58,191,191,.3);border-radius:var(--r-md);color:var(--teal);font-size:.875rem;text-align:center;}
     .form-success.show{display:block;}
 
-    /* FOOTER */
-    .footer{background:var(--ink);border-top:1px solid var(--rule);padding:3.5rem 0 2rem;}
-    .footer-grid{display:grid;grid-template-columns:1fr;gap:2.5rem;margin-bottom:2.5rem;}
+    /* ── FOOTER ── */
+    .footer{background:var(--ink);border-top:1px solid var(--rule);padding:4rem 0 2rem;}
+    .footer-grid{display:grid;grid-template-columns:1fr;gap:2.5rem;margin-bottom:3rem;}
     @media(min-width:768px){.footer-grid{grid-template-columns:2fr 1fr 1fr;}}
     .footer-brand strong{font-family:var(--ff-display);font-size:1.075rem;color:var(--text-primary);display:block;margin-bottom:.5rem;}
     .footer-brand p{font-size:.875rem;color:var(--text-muted);line-height:1.65;}
@@ -294,6 +286,7 @@
     .footer-col address a:hover{color:var(--text-primary);}
     .footer-bottom{border-top:1px solid var(--rule);padding-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;font-size:.8rem;color:var(--text-muted);}
 
+    /* ── ANIMATIONS ── */
     .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
     .reveal.in{opacity:1;transform:none;}
     .reveal-d1{transition-delay:.1s;}
@@ -309,8 +302,7 @@
       <a href="index.html" class="logo">
         <div class="logo-mark">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3L12 14"/>
-            <path d="M5 9C3 9 2 11 2 13L2 18C2 20 4 22 6 22C8 22 9 20 9 18L9 12C9 10 10 9 12 9"/>
+            <path d="M12 3L12 14"/><path d="M5 9C3 9 2 11 2 13L2 18C2 20 4 22 6 22C8 22 9 20 9 18L9 12C9 10 10 9 12 9"/>
             <path d="M19 9C21 9 22 11 22 13L22 18C22 20 20 22 18 22C16 22 15 20 15 18L15 12C15 10 14 9 12 9"/>
             <circle cx="12" cy="3" r="1.2" fill="var(--gold)" stroke="none"/>
           </svg>
@@ -326,10 +318,10 @@
       </div>
       <nav class="nav">
         <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-        <a href="#pipeline"><span lang="en">Framework</span><span lang="es">Marco</span></a>
-        <a href="#projects" class="current"><span lang="en">Projects</span><span lang="es">Proyectos</span></a>
-        <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
-        <a href="#contact" class="nav-cta"><span lang="en">Partner With Us</span><span lang="es">Colaborar</span></a>
+        <a href="#research-lines" class="current"><span lang="en">Research Lines</span><span lang="es">Líneas</span></a>
+        <a href="#clinical-trials"><span lang="en">Clinical Trials</span><span lang="es">Ensayos</span></a>
+        <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Innovación</span></a>
+        <a href="#contact" class="nav-cta"><span lang="en">Collaborate</span><span lang="es">Colaborar</span></a>
       </nav>
       <button class="mob-toggle" id="mobToggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -345,235 +337,330 @@
     </div>
     <div class="mob-links">
       <a href="index.html" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <a href="#pipeline" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span lang="en">Framework</span><span lang="es">Marco</span></a>
-      <a href="#projects" class="current" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><rect x="2" y="3" width="6" height="6"/><rect x="9" y="3" width="6" height="6"/><rect x="16" y="3" width="6" height="6"/><rect x="2" y="11" width="6" height="6"/><rect x="9" y="11" width="6" height="6"/></svg><span lang="en">Projects</span><span lang="es">Proyectos</span></a>
-      <a href="clinical.html" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><span lang="en">Clinical Research</span><span lang="es">Investigación</span></a>
-      <a href="#contact" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span lang="en">Partner With Us</span><span lang="es">Colaborar</span></a>
+      <a href="#research-lines" class="current" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><rect x="3" y="10" width="5" height="11"/><rect x="9.5" y="4" width="5" height="17"/><rect x="16" y="7" width="5" height="14"/></svg><span lang="en">Research Lines</span><span lang="es">Líneas</span></a>
+      <a href="#clinical-trials" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg><span lang="en">Clinical Trials</span><span lang="es">Ensayos</span></a>
+      <a href="innovation.html" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg><span lang="en">Innovation Hub</span><span lang="es">Innovación</span></a>
+      <a href="#contact" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span lang="en">Collaborate</span><span lang="es">Colaborar</span></a>
     </div>
-    <a href="#contact" class="mob-cta" onclick="closeMob()"><span lang="en">Start a Partnership</span><span lang="es">Iniciar Colaboración</span></a>
+    <a href="#contact" class="mob-cta" onclick="closeMob()"><span lang="en">Start a Collaboration</span><span lang="es">Iniciar Colaboración</span></a>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO with stat strip at bottom -->
   <section class="hero" id="top">
-    <div class="container">
+    <div class="container" style="padding-bottom:0;">
       <div class="hero-inner">
-        <div>
-          <nav class="breadcrumb reveal">
-            <a href="index.html">neumAC R&amp;I</a>
+        <div style="padding-bottom:3rem;">
+          <nav class="breadcrumb reveal" aria-label="Breadcrumb">
+            <a href="index.html"><span lang="en">neumAC R&amp;I</span><span lang="es">neumAC I+I</span></a>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            <span><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></span>
+            <span><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></span>
           </nav>
           <div class="hero-eyebrow reveal">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
-            <span class="label" style="color:var(--violet);"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            <span class="label" style="color:var(--teal);"><span lang="en">Clinical Research Program</span><span lang="es">Programa de Investigación Clínica</span></span>
           </div>
           <h1 class="display xl hero-title reveal reveal-d1">
-            <span lang="en">From Clinical<br>Challenge to<br><em>Deployed Solution</em></span>
-            <span lang="es">Del Desafío<br>Clínico a la<br><em>Solución Desplegada</em></span>
+            <span lang="en">Six Research Lines.<br><em>One Mission.</em></span>
+            <span lang="es">Seis Líneas de Investigación.<br><em>Una Misión.</em></span>
           </h1>
           <p class="hero-desc reveal reveal-d2">
-            <span lang="en">We bridge the gap between unmet clinical needs in pulmonary medicine and validated, deployable technology. Whether you're building a medical device, AI diagnostic tool, or digital health platform — our clinical environment, patient cohort, and specialist team accelerate your path to market.</span>
-            <span lang="es">Cerramos la brecha entre necesidades clínicas no cubiertas en medicina pulmonar y tecnología validada. Nuestro entorno clínico, cohorte de pacientes y equipo especialista aceleran su camino al mercado.</span>
+            <span lang="en">Our clinical research program advances pulmonary and thoracic medicine through rigorous, coordinated investigation. Each line is led by a specialist coordinator running active trials in partnership with pharma, biotech, and academic institutions.</span>
+            <span lang="es">Nuestro programa avanza en medicina pulmonar y torácica mediante investigación rigurosa. Cada línea es liderada por un especialista ejecutando ensayos activos en colaboración con la industria e instituciones académicas.</span>
           </p>
           <div class="hero-actions reveal reveal-d3">
-            <a href="#projects" class="btn-violet">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="3" width="6" height="6"/><rect x="9" y="3" width="6" height="6"/><rect x="16" y="3" width="6" height="6"/><rect x="2" y="11" width="6" height="6"/><rect x="9" y="11" width="6" height="6"/></svg>
-              <span lang="en">Active Projects</span><span lang="es">Proyectos Activos</span>
+            <a href="#research-lines" class="btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><rect x="3" y="10" width="5" height="11"/><rect x="9.5" y="4" width="5" height="17"/><rect x="16" y="7" width="5" height="14"/></svg>
+              <span lang="en">Research Lines</span><span lang="es">Ver Líneas</span>
             </a>
-            <a href="#contact" class="btn-ghost">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-              <span lang="en">Propose a Partnership</span><span lang="es">Proponer Colaboración</span>
+            <a href="#clinical-trials" class="btn-ghost">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              <span lang="en">Active Trials</span><span lang="es">Ensayos Activos</span>
             </a>
           </div>
         </div>
-        <!-- Framework preview panel -->
-        <div class="hero-framework reveal reveal-d2">
-          <p class="label"><span lang="en">Our Innovation Process</span><span lang="es">Nuestro Proceso de Innovación</span></p>
-          <div class="fw-steps">
-            <div class="fw-step"><div class="fw-num">01</div><span class="fw-step-label"><span lang="en">Clinical Insight &amp; Need Identification</span><span lang="es">Identificación de Necesidad Clínica</span></span></div>
-            <div class="fw-step"><div class="fw-num">02</div><span class="fw-step-label"><span lang="en">Co-Development &amp; Prototyping</span><span lang="es">Co-Desarrollo y Prototipado</span></span></div>
-            <div class="fw-step"><div class="fw-num">03</div><span class="fw-step-label"><span lang="en">Clinical Validation &amp; Evidence</span><span lang="es">Validación Clínica y Evidencia</span></span></div>
-            <div class="fw-step"><div class="fw-num">04</div><span class="fw-step-label"><span lang="en">Integration &amp; Scale-Up</span><span lang="es">Integración y Escalado</span></span></div>
+        <!-- Right stats panel -->
+        <div class="hero-stats reveal reveal-d2" style="margin-bottom:3rem;">
+          <div class="hstat"><div class="hstat-num">6</div><div class="hstat-label"><span lang="en">Specialized Research Lines</span><span lang="es">Líneas de Investigación</span></div></div>
+          <div class="hstat"><div class="hstat-num">30+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Trials</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
+          <div class="hstat"><div class="hstat-num">6</div><div class="hstat-label"><span lang="en">Expert Line Coordinators</span><span lang="es">Coordinadores Especialistas</span></div></div>
+          <div class="hstat"><div class="hstat-num">GCP</div><div class="hstat-label"><span lang="en">INIBIC · Good Clinical Practice</span><span lang="es">INIBIC · Cumplimiento GCP</span></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Stat strip — integrated into hero, full width -->
+    <div class="hero-strip">
+      <div class="container">
+        <div class="hero-strip-inner">
+          <div class="hstrip-item">
+            <div class="hstrip-num">&lt;6w</div>
+            <div class="hstrip-label"><span lang="en">Avg. Site Initiation</span><span lang="es">Inicio de Sitio Medio</span></div>
+          </div>
+          <div class="hstrip-item">
+            <div class="hstrip-num">INIBIC</div>
+            <div class="hstrip-label"><span lang="en">GCP Infrastructure</span><span lang="es">Infraestructura GCP</span></div>
+          </div>
+          <div class="hstrip-item">
+            <div class="hstrip-num">SERGAS</div>
+            <div class="hstrip-label"><span lang="en">Network Scale-Up</span><span lang="es">Escalado en Red</span></div>
+          </div>
+          <div class="hstrip-item">
+            <div class="hstrip-num">CE MDR</div>
+            <div class="hstrip-label"><span lang="en">Regulatory Support</span><span lang="es">Soporte Regulatorio</span></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- VISUAL PIPELINE — the design upgrade -->
-  <section class="section pipeline-bg" id="pipeline">
-    <div class="container">
-      <div class="sec-head center reveal">
-        <p class="label"><span lang="en">Structured Approach</span><span lang="es">Enfoque Estructurado</span></p>
-        <h2 class="display lg"><span lang="en">Our Innovation Framework</span><span lang="es">Nuestro Marco de Innovación</span></h2>
-        <p><span lang="en">A proven four-phase methodology that transforms clinical challenges into market-ready solutions — with the hospital as the development and validation stage.</span><span lang="es">Una metodología de cuatro fases probada que transforma desafíos clínicos en soluciones listas para el mercado.</span></p>
-      </div>
-
-      <div class="pipeline-track">
-        <div class="pipeline-stages">
-          <div class="pipeline-stage reveal">
-            <div class="stage-node">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="8" r="5"/><path d="M12 13v2M8 21h8"/><path d="M12 6v4"/></svg>
-            </div>
-            <p class="stage-step"><span lang="en">Phase 01</span><span lang="es">Fase 01</span></p>
-            <h3 class="stage-title"><span lang="en">Clinical Insight</span><span lang="es">Conocimiento Clínico</span></h3>
-            <p class="stage-desc"><span lang="en">Identifying unmet needs through direct collaboration with respiratory specialists and structured patient engagement.</span><span lang="es">Identificar necesidades no cubiertas mediante colaboración directa con especialistas.</span></p>
-            <ul class="stage-list"><li><span lang="en">Clinical need assessment</span><span lang="es">Evaluación de necesidades</span></li><li><span lang="en">Workflow analysis</span><span lang="es">Análisis de flujos</span></li><li><span lang="en">Patient journey mapping</span><span lang="es">Mapeo del paciente</span></li></ul>
-          </div>
-          <div class="pipeline-stage reveal reveal-d1">
-            <div class="stage-node">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            </div>
-            <p class="stage-step"><span lang="en">Phase 02</span><span lang="es">Fase 02</span></p>
-            <h3 class="stage-title"><span lang="en">Co-Development</span><span lang="es">Co-Desarrollo</span></h3>
-            <p class="stage-desc"><span lang="en">Co-creating solutions with your team, ensuring clinical relevance at every prototyping iteration with embedded specialist feedback.</span><span lang="es">Co-creando soluciones garantizando relevancia clínica en cada iteración de prototipado.</span></p>
-            <ul class="stage-list"><li><span lang="en">Prototype development</span><span lang="es">Desarrollo de prototipos</span></li><li><span lang="en">Technical feasibility</span><span lang="es">Estudios de viabilidad</span></li><li><span lang="en">Iterative refinement</span><span lang="es">Refinamiento iterativo</span></li></ul>
-          </div>
-          <div class="pipeline-stage reveal reveal-d2">
-            <div class="stage-node">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-            </div>
-            <p class="stage-step"><span lang="en">Phase 03</span><span lang="es">Fase 03</span></p>
-            <h3 class="stage-title"><span lang="en">Clinical Validation</span><span lang="es">Validación Clínica</span></h3>
-            <p class="stage-desc"><span lang="en">Rigorous real-world testing with GCP-compliant infrastructure and our pre-phenotyped patient cohort to generate robust regulatory evidence.</span><span lang="es">Pruebas rigurosas con infraestructura GCP y cohorte de pacientes pre-fenotipados para generar evidencia regulatoria sólida.</span></p>
-            <ul class="stage-list"><li><span lang="en">Pilot &amp; feasibility studies</span><span lang="es">Estudios piloto</span></li><li><span lang="en">Clinical trials (CE/FDA)</span><span lang="es">Ensayos clínicos (CE/FDA)</span></li><li><span lang="en">Real-world evidence</span><span lang="es">Evidencia del mundo real</span></li></ul>
-          </div>
-          <div class="pipeline-stage reveal reveal-d3">
-            <div class="stage-node">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-            </div>
-            <p class="stage-step"><span lang="en">Phase 04</span><span lang="es">Fase 04</span></p>
-            <h3 class="stage-title"><span lang="en">Integration &amp; Scale</span><span lang="es">Integración y Escalado</span></h3>
-            <p class="stage-desc"><span lang="en">Supporting adoption into clinical workflows and building the evidence case for broader scale-up across the SERGAS network.</span><span lang="es">Apoyando la adopción en flujos clínicos y construyendo el caso para un escalado más amplio en la red SERGAS.</span></p>
-            <ul class="stage-list"><li><span lang="en">Workflow integration</span><span lang="es">Integración de flujos</span></li><li><span lang="en">Adoption strategies</span><span lang="es">Estrategias de adopción</span></li><li><span lang="en">SERGAS network scale-up</span><span lang="es">Escalado red SERGAS</span></li></ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ACTIVE PROJECTS — api.js target: id="projectsGrid" -->
-  <section class="section projects-bg" id="projects">
+  <!-- RESEARCH LINES — api.js target: id="researchLinesList" -->
+  <section class="section lines-bg" id="research-lines">
     <div class="container">
       <div class="sec-head reveal">
-        <p class="label"><span lang="en">Open Collaborations</span><span lang="es">Colaboraciones Abiertas</span></p>
-        <h2 class="display lg"><span lang="en">Active Development Projects</span><span lang="es">Proyectos de Desarrollo Activos</span></h2>
-        <p style="max-width:600px;"><span lang="en">Ongoing initiatives where external partners can contribute technical expertise, co-invest, or provide scale-up capabilities. Each has a defined partner entry point.</span><span lang="es">Iniciativas en curso donde socios externos pueden contribuir experiencia técnica, co-invertir o proporcionar capacidades de escalado. Cada una tiene un punto de entrada de socio definido.</span></p>
+        <p class="label"><span lang="en">Specialized Lines</span><span lang="es">Líneas Especializadas</span></p>
+        <h2 class="display lg"><span lang="en">Our Research Portfolio</span><span lang="es">Nuestro Portfolio de Investigación</span></h2>
+        <p><span lang="en">Each line represents a focused area of clinical expertise with an active pipeline of investigator-initiated and sponsored trials. Expand any line to explore its scope and capabilities.</span><span lang="es">Cada línea representa un área de experiencia clínica con un pipeline activo de ensayos. Expanda para ver su alcance y capacidades.</span></p>
       </div>
 
-      <!-- api.js replaces these static cards -->
-      <div class="projects-grid" id="projectsGrid">
-        <div class="project-card reveal">
-          <div class="project-top">
-            <span class="project-cat-badge cat-device"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M7 7h2l1 3 2-6 1 3h3"/></svg><span lang="en">Device</span><span lang="es">Dispositivo</span></span>
-            <span class="stage-badge stage-pilot"><span lang="en">Pilot Phase</span><span lang="es">Fase Piloto</span></span>
-          </div>
-          <h3 class="project-title"><span lang="en">Continuous Wearable Monitor for COPD Exacerbation Prediction</span><span lang="es">Monitor Portátil Continuo para Predicción de Exacerbaciones EPOC</span></h3>
-          <p class="project-desc"><span lang="en">Wearable sensor capturing SpO₂, respiratory rate, and activity patterns in COPD outpatients, feeding an ML model for 72-hour exacerbation risk scoring. 30-patient pilot underway. Seeking manufacturing and regulatory pathway partners for CE MDR submission.</span><span lang="es">Sensor portátil que captura SpO₂, frecuencia respiratoria y patrones de actividad en pacientes EPOC ambulatorios. Piloto de 30 pacientes en curso.</span></p>
-          <p class="project-needs-label"><span lang="en">Partner Needs</span><span lang="es">Necesidades del Socio</span></p>
-          <div class="project-needs"><span class="pneed">Manufacturing scale</span><span class="pneed">Regulatory (CE MDR)</span><span class="pneed">Investment</span></div>
-        </div>
-        <div class="project-card reveal reveal-d1">
-          <div class="project-top">
-            <span class="project-cat-badge cat-digital"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg><span lang="en">Digital Health</span><span lang="es">Salud Digital</span></span>
-            <span class="stage-badge stage-dev"><span lang="en">In Development</span><span lang="es">En Desarrollo</span></span>
-          </div>
-          <h3 class="project-title"><span lang="en">Biologic Therapy Decision Support for Severe Asthma</span><span lang="es">Soporte a Decisión de Biológicos en Asma Grave</span></h3>
-          <p class="project-desc"><span lang="en">Algorithm combining clinical phenotype, biomarker profile (FeNO, eosinophils, IgE, periostin), and patient-reported outcomes to guide biologic selection and monitor treatment response. Clinical protocol defined; ready for software development partnership.</span><span lang="es">Algoritmo que combina fenotipo clínico, perfil de biomarcadores y resultados del paciente para guiar la selección de biológicos y monitorizar la respuesta al tratamiento.</span></p>
-          <p class="project-needs-label"><span lang="en">Partner Needs</span><span lang="es">Necesidades del Socio</span></p>
-          <div class="project-needs"><span class="pneed">Software development</span><span class="pneed">UX / Product design</span><span class="pneed">SaMD pathway</span></div>
-        </div>
-        <div class="project-card reveal reveal-d1">
-          <div class="project-top">
-            <span class="project-cat-badge cat-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg><span lang="en">AI / ML</span><span lang="es">IA / ML</span></span>
-            <span class="stage-badge stage-validation"><span lang="en">Validation</span><span lang="es">Validación</span></span>
-          </div>
-          <h3 class="project-title"><span lang="en">AI-Assisted HRCT Pattern Recognition in ILD</span><span lang="es">Reconocimiento de Patrones TCAR en EPI Asistido por IA</span></h3>
-          <p class="project-desc"><span lang="en">Convolutional model trained on 3,200+ expert-annotated HRCT studies for early ILD sub-type classification and progression scoring. Entering prospective validation; seeking multi-centre data partnership and regulatory AI pathway expertise.</span><span lang="es">Modelo convolucional entrenado en más de 3.200 estudios TCAR anotados para clasificación de subtipos de EPI. Entrando en validación prospectiva.</span></p>
-          <p class="project-needs-label"><span lang="en">Partner Needs</span><span lang="es">Necesidades del Socio</span></p>
-          <div class="project-needs"><span class="pneed">Multi-centre data</span><span class="pneed">Algorithm optimisation</span><span class="pneed">AI regulatory pathway</span></div>
-        </div>
-        <div class="project-card reveal reveal-d2">
-          <div class="project-top">
-            <span class="project-cat-badge cat-surgical"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg><span lang="en">Surgical Tech</span><span lang="es">Tecnología Quirúrgica</span></span>
-            <span class="stage-badge stage-dev"><span lang="en">In Development</span><span lang="es">En Desarrollo</span></span>
-          </div>
-          <h3 class="project-title"><span lang="en">Intraoperative Navigation Aid for Sublobar Resection in Stage IA NSCLC</span><span lang="es">Apoyo de Navegación Intraoperatoria para Resección Sublobar en CPNM Estadio IA</span></h3>
-          <p class="project-desc"><span lang="en">Fluorescence-guided and augmented-reality overlay tools to support precise nodule localisation and margin assessment in VATS/RATS sublobar resection. Open to surgical technology companies for co-development and prospective study design.</span><span lang="es">Herramientas de guía por fluorescencia y realidad aumentada para localización precisa de nódulos en resección sublobar VATS/RATS. Abierto a empresas de tecnología quirúrgica.</span></p>
-          <p class="project-needs-label"><span lang="en">Partner Needs</span><span lang="es">Necesidades del Socio</span></p>
-          <div class="project-needs"><span class="pneed">Surgical navigation tech</span><span class="pneed">AR / fluorescence hardware</span><span class="pneed">Co-development</span></div>
-        </div>
-      </div><!-- /#projectsGrid -->
+      <!-- api.js injects into this container (id="researchLinesList") -->
+      <div id="researchLinesList">
 
-      <div class="text-center" style="margin-top:2rem;">
-        <a href="#contact" class="btn-violet">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          <span lang="en">Propose a New Project</span><span lang="es">Proponer un Nuevo Proyecto</span>
+        <!-- LINE 01 -->
+        <div class="line-card reveal" id="line-01">
+          <span class="line-ghost-num">01</span>
+          <div class="line-head" onclick="toggleLine('line-01')">
+            <div class="line-num">01</div>
+            <div class="line-meta">
+              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinadora:</span> <strong>Dra. Pilar Sanjuán</strong></div>
+              <h3 class="line-title"><span lang="en">Transplantation, Hypertension &amp; Diffuse Pulmonary Disease</span><span lang="es">Trasplante, Hipertensión y Enfermedad Difusa Pulmonar</span></h3>
+            </div>
+          </div>
+          <div class="line-tags-preview"><span class="ltag">Lung Transplantation</span><span class="ltag">PAH</span><span class="ltag">ILD / IPF</span><span class="ltag">Immunosuppression</span></div>
+          <div class="line-expand-toggle" onclick="toggleLine('line-01')">
+            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
+            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="line-body"><div class="line-body-inner">
+            <p class="line-desc"><span lang="en">Translational research in lung transplantation, pulmonary hypertension, and interstitial lung diseases: biomarkers, clinical-radiological phenotyping, and therapeutic optimisation. We run Phase II–IV trials for both sponsored and investigator-initiated studies, with access to one of Spain's largest lung transplant programs.</span><span lang="es">Investigación traslacional en trasplante pulmonar, hipertensión pulmonar y enfermedades intersticiales. Ejecutamos ensayos Fase II–IV tanto patrocinados como iniciados por investigadores.</span></p>
+          </div></div>
+        </div>
+
+        <!-- LINE 02 -->
+        <div class="line-card reveal reveal-d1" id="line-02">
+          <span class="line-ghost-num">02</span>
+          <div class="line-head" onclick="toggleLine('line-02')">
+            <div class="line-num">02</div>
+            <div class="line-meta">
+              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinadora:</span> <strong>Dra. Marina Blanco Aparicio</strong></div>
+              <h3 class="line-title"><span lang="en">Airway Diseases</span><span lang="es">Enfermedades de la Vía Aérea</span></h3>
+            </div>
+          </div>
+          <div class="line-tags-preview"><span class="ltag">COPD</span><span class="ltag">Asthma</span><span class="ltag">Bronchiectasis</span><span class="ltag">Biologics</span></div>
+          <div class="line-expand-toggle" onclick="toggleLine('line-02')">
+            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
+            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="line-body"><div class="line-body-inner">
+            <p class="line-desc"><span lang="en">Dedicated to improving diagnosis, treatment, and longitudinal management of airway diseases. Our work spans triple therapy optimisation in COPD, biologic therapy for severe asthma (anti-IL-5, anti-IL-13, anti-TSLP agents), exacerbation phenotyping, and inhaled microbiome research.</span><span lang="es">Dedicada a mejorar el diagnóstico, tratamiento y manejo longitudinal de las enfermedades de la vía aérea. Abarca triple terapia en EPOC, biológicos para asma grave, fenotipado de exacerbaciones e investigación del microbioma inhalado.</span></p>
+          </div></div>
+        </div>
+
+        <!-- LINE 03 -->
+        <div class="line-card reveal reveal-d1" id="line-03">
+          <span class="line-ghost-num">03</span>
+          <div class="line-head" onclick="toggleLine('line-03')">
+            <div class="line-num">03</div>
+            <div class="line-meta">
+              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinador:</span> <strong>Dr. Rachid Tazi</strong></div>
+              <h3 class="line-title"><span lang="en">Interventional Pneumology &amp; Lung Cancer</span><span lang="es">Neumología Intervencionista y Cáncer de Pulmón</span></h3>
+            </div>
+          </div>
+          <div class="line-tags-preview"><span class="ltag">Lung Cancer</span><span class="ltag">EBUS / Bronchoscopy</span><span class="ltag">Immunotherapy</span><span class="ltag">Targeted Therapy</span></div>
+          <div class="line-expand-toggle" onclick="toggleLine('line-03')">
+            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
+            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="line-body"><div class="line-body-inner">
+            <p class="line-desc"><span lang="en">Focused on minimally invasive bronchoscopic diagnostics and therapeutics, with a strong oncology component. We run clinical trials for targeted therapies in EGFR/ALK/ROS1-mutated NSCLC, checkpoint inhibitor regimens, and robotic bronchoscopy validation.</span><span lang="es">Enfocada en broncoscopia diagnóstica y terapéutica mínimamente invasiva con fuerte componente oncológico. Ensayos para terapias dirigidas en CPNM con mutaciones EGFR/ALK/ROS1 e inhibidores de checkpoint.</span></p>
+          </div></div>
+        </div>
+
+        <!-- LINE 04 -->
+        <div class="line-card reveal reveal-d2" id="line-04">
+          <span class="line-ghost-num">04</span>
+          <div class="line-head" onclick="toggleLine('line-04')">
+            <div class="line-num">04</div>
+            <div class="line-meta">
+              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinadora:</span> <strong>Dra. Angélica Consuegra</strong></div>
+              <h3 class="line-title"><span lang="en">Respiratory Failure, Critical Care &amp; Sleep Medicine</span><span lang="es">Insuficiencia Respiratoria, Cuidados Críticos y Medicina del Sueño</span></h3>
+            </div>
+          </div>
+          <div class="line-tags-preview"><span class="ltag">UCRI</span><span class="ltag">Chronic NIV</span><span class="ltag">Oxygen Therapy</span><span class="ltag">Sleep Medicine</span></div>
+          <div class="line-expand-toggle" onclick="toggleLine('line-04')">
+            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
+            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="line-body"><div class="line-body-inner">
+            <p class="line-desc"><span lang="en">UCRI, chronic non-invasive ventilation, oxygen therapy, and sleep medicine. Our trials investigate NIV optimisation protocols, long-term domiciliary NIV outcomes, HFNO strategies in acute respiratory failure, and sleep-disordered breathing phenotyping.</span><span lang="es">UCRI, ventilación no invasiva crónica, oxigenoterapia y medicina del sueño. Ensayos en protocolos de optimización de VNI, VNI domiciliaria a largo plazo y estrategias de OAF.</span></p>
+          </div></div>
+        </div>
+
+        <!-- LINE 05 -->
+        <div class="line-card reveal reveal-d2" id="line-05">
+          <span class="line-ghost-num">05</span>
+          <div class="line-head" onclick="toggleLine('line-05')">
+            <div class="line-num">05</div>
+            <div class="line-meta">
+              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinador:</span> <strong>Dr. Pedro J. Marcos</strong></div>
+              <h3 class="line-title"><span lang="en">Personalized Respiratory Medicine, Management &amp; Clinical Innovation</span><span lang="es">Medicina Respiratoria Personalizada, Gestión e Innovación Clínica</span></h3>
+            </div>
+          </div>
+          <div class="line-tags-preview"><span class="ltag">Biomarkers</span><span class="ltag">Precision Medicine</span><span class="ltag">Digital Health</span><span class="ltag">PROs</span></div>
+          <div class="line-expand-toggle" onclick="toggleLine('line-05')">
+            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
+            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="line-body"><div class="line-body-inner">
+            <p class="line-desc"><span lang="en">An integrative research line connecting biomarker discovery, precision treatment algorithms, healthcare management science, and clinical innovation. We study patient-reported outcomes, remote monitoring tools, telemedicine integration, and implementation science projects.</span><span lang="es">Línea integradora conectando descubrimiento de biomarcadores, algoritmos de precisión, ciencia de gestión sanitaria e innovación clínica.</span></p>
+          </div></div>
+        </div>
+
+        <!-- LINE 06 -->
+        <div class="line-card reveal reveal-d3" id="line-06">
+          <span class="line-ghost-num">06</span>
+          <div class="line-head" onclick="toggleLine('line-06')">
+            <div class="line-num">06</div>
+            <div class="line-meta">
+              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinadora:</span> <strong>Dra. María Delgado Roel</strong></div>
+              <h3 class="line-title"><span lang="en">Innovation in Thoracic Surgery</span><span lang="es">Innovación en Cirugía Torácica</span></h3>
+            </div>
+          </div>
+          <div class="line-tags-preview"><span class="ltag">VATS / RATS</span><span class="ltag">Lung Resection</span><span class="ltag">Thoracic Oncology</span><span class="ltag">ERATS</span></div>
+          <div class="line-expand-toggle" onclick="toggleLine('line-06')">
+            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
+            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="line-body"><div class="line-body-inner">
+            <p class="line-desc"><span lang="en">Led by the Thoracic Surgery Service, this line investigates minimally invasive surgical techniques (VATS and RATS), enhanced recovery after thoracic surgery (ERATS) protocols, perioperative outcome optimisation, and integration of new technologies in thoracic oncology.</span><span lang="es">Liderada por el Servicio de Cirugía Torácica. Investiga técnicas mínimamente invasivas (VATS y RATS), protocolos ERATS, optimización de resultados perioperatorios e integración de nuevas tecnologías en oncología torácica.</span></p>
+          </div></div>
+        </div>
+
+      </div><!-- /#researchLinesList -->
+    </div>
+  </section>
+
+  <!-- CLINICAL TRIALS — fully wired to api.js -->
+  <section class="section trials-bg" id="clinical-trials">
+    <div class="container">
+      <div class="sec-head reveal">
+        <p class="label"><span lang="en">Active Portfolio</span><span lang="es">Portfolio Activo</span></p>
+        <h2 class="display lg"><span lang="en">Clinical Trials</span><span lang="es">Ensayos Clínicos</span></h2>
+        <p><span lang="en">Live data from our research database. Filter by research line, phase, or status to find relevant studies. Contact us to request the full site qualification dossier.</span><span lang="es">Datos en tiempo real de nuestra base de datos de investigación. Filtre por línea, fase o estado para encontrar estudios relevantes.</span></p>
+      </div>
+
+      <!-- FILTERS — IDs match api.js exactly, option values match DB enums exactly -->
+      <div class="filter-bar reveal">
+        <div class="filter-grp">
+          <label><span lang="en">Research Line</span><span lang="es">Línea</span></label>
+          <select id="filterLine">
+            <option value="all"><span lang="en">All Lines</span></option>
+            <option value="01 — Transplantation">01 — Transplantation &amp; Diffuse</option>
+            <option value="02 — Airway">02 — Airway Diseases</option>
+            <option value="03 — Interventional">03 — Interventional &amp; Oncology</option>
+            <option value="04 — Critical Care">04 — Critical Care &amp; Sleep</option>
+            <option value="05 — Personalized">05 — Personalized Medicine</option>
+            <option value="06 — Thoracic Surgery">06 — Thoracic Surgery</option>
+          </select>
+        </div>
+        <div class="filter-grp">
+          <label><span lang="en">Phase</span><span lang="es">Fase</span></label>
+          <!-- Values match DB CHECK constraint exactly -->
+          <select id="filterPhase">
+            <option value="all">All Phases</option>
+            <option value="Phase I">Phase I</option>
+            <option value="Phase II">Phase II</option>
+            <option value="Phase III">Phase III</option>
+            <option value="Phase IV">Phase IV</option>
+          </select>
+        </div>
+        <div class="filter-grp">
+          <label><span lang="en">Status</span><span lang="es">Estado</span></label>
+          <!-- Values match DB CHECK constraint exactly -->
+          <select id="filterStatus">
+            <option value="all">All Status</option>
+            <option value="Reclutando">Recruiting</option>
+            <option value="Activo">Active (not recruiting)</option>
+            <option value="Completado">Completed</option>
+            <option value="En preparación">In Preparation</option>
+          </select>
+        </div>
+        <div class="filter-grp">
+          <label><span lang="en">Search</span><span lang="es">Buscar</span></label>
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="filterSearch" placeholder="Protocol ID or keyword…" />
+          </div>
+        </div>
+      </div>
+
+      <div class="trials-count-bar reveal">
+        <span><strong id="trialsCount">—</strong> <span lang="en">trials</span><span lang="es">ensayos</span></span>
+        <a href="#contact" class="btn-gold" style="font-size:.75rem;padding:.4rem .875rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+          <span lang="en">Request Dossier</span><span lang="es">Solicitar Dossier</span>
         </a>
       </div>
+
+      <div class="trials-wrap reveal">
+        <div class="trials-scroll">
+          <table class="trials">
+            <thead>
+              <tr>
+                <th><span lang="en">Protocol</span><span lang="es">Protocolo</span></th>
+                <th><span lang="en">Study Title</span><span lang="es">Título del Estudio</span></th>
+                <th><span lang="en">Line</span><span lang="es">Línea</span></th>
+                <th><span lang="en">Phase</span><span lang="es">Fase</span></th>
+                <th><span lang="en">Status</span><span lang="es">Estado</span></th>
+                <th><span lang="en">Sponsor</span><span lang="es">Promotor</span></th>
+              </tr>
+            </thead>
+            <!-- api.js renders rows here -->
+            <tbody id="trialsBody">
+              <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-muted);font-family:var(--ff-mono);font-size:.8125rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:24px;height:24px;margin:0 auto .75rem;display:block;opacity:.3;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
+                <span lang="en">Loading trials from database…</span><span lang="es">Cargando ensayos de la base de datos…</span>
+              </td></tr>
+            </tbody>
+          </table>
+          <div class="trials-footer">
+            <div>
+              <div class="trials-footer-info"><span lang="en">Showing <strong id="trialsShown" style="color:var(--teal);">—</strong> trials from live database</span><span lang="es">Mostrando <strong id="trialsShownEs" style="color:var(--teal);">—</strong> ensayos de la base de datos en vivo</span></div>
+              <div class="trials-footer-db">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
+                <span lang="en">Full portfolio managed in neumAC R&amp;I research system</span><span lang="es">Portfolio completo gestionado en el sistema de investigación neumAC I+I</span>
+              </div>
+            </div>
+            <a href="#contact" class="btn-ghost" style="font-size:.75rem;padding:.4rem .875rem;"><span lang="en">Request Full Dossier</span><span lang="es">Solicitar Dossier Completo</span></a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- CAPABILITIES -->
-  <section class="section cap-bg" id="capabilities">
+  <!-- TEAM -->
+  <section class="section team-bg" id="team">
     <div class="container">
       <div class="sec-head center reveal">
-        <p class="label"><span lang="en">What We Bring</span><span lang="es">Lo Que Aportamos</span></p>
-        <h2 class="display lg"><span lang="en">Our Innovation Capabilities</span><span lang="es">Nuestras Capacidades de Innovación</span></h2>
-        <p><span lang="en">The assets and expertise that make neumAC R&amp;I a high-value clinical innovation partner — beyond a simple trial site.</span><span lang="es">Los activos y experiencia que hacen de neumAC R&amp;I un socio de innovación clínica de alto valor.</span></p>
+        <p class="label"><span lang="en">Research Coordinators</span><span lang="es">Coordinadores de Investigación</span></p>
+        <h2 class="display lg"><span lang="en">Meet the Research Leads</span><span lang="es">Los Responsables de Investigación</span></h2>
+        <p><span lang="en">Each research line is directed by a clinician-scientist with extensive trial experience — your primary contact for partnership discussions within their domain.</span><span lang="es">Cada línea está dirigida por un médico-científico con amplia experiencia en ensayos, su contacto principal para discusiones de colaboración.</span></p>
       </div>
-      <div class="cap-grid">
-        <div class="cap-card reveal">
-          <div class="cap-icon-row"><div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg></div><div><p class="cap-title"><span lang="en">Clinical Data &amp; Biobank</span><span lang="es">Datos Clínicos y Biobanco</span></p><div class="cap-pills"><span class="cap-pill">Annotated</span><span class="cap-pill">Longitudinal</span><span class="cap-pill">GDPR-compliant</span></div></div></div>
-          <p class="cap-desc"><span lang="en">Curated, structured clinical datasets with expert annotations across all disease domains — ready for AI training, algorithm validation, and retrospective analysis.</span><span lang="es">Conjuntos de datos clínicos curados con anotaciones expertas en todos los dominios de enfermedad.</span></p>
-          <ul class="cap-list"><li><span lang="en">3,200+ annotated CT scans (ILD, lung cancer)</span><span lang="es">3.200+ TCs anotadas (EPI, cáncer de pulmón)</span></li><li><span lang="en">Longitudinal spirometry + biomarker cohorts</span><span lang="es">Cohortes longitudinales de espirometría y biomarcadores</span></li><li><span lang="en">Linked EHR data for outcomes research</span><span lang="es">Datos HCE vinculados para investigación de resultados</span></li></ul>
-        </div>
-        <div class="cap-card reveal reveal-d1">
-          <div class="cap-icon-row"><div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/><circle cx="19" cy="8" r="2.5"/><path d="M22 14c0-2-1.3-3-2.5-3"/></svg></div><div><p class="cap-title"><span lang="en">Specialist Clinical Team</span><span lang="es">Equipo Clínico Especialista</span></p><div class="cap-pills"><span class="cap-pill">6 Research Lines</span><span class="cap-pill">GCP certified</span></div></div></div>
-          <p class="cap-desc"><span lang="en">Direct access to respiratory and thoracic surgery specialists across all six research lines — providing clinical oversight, protocol design, and expert annotation.</span><span lang="es">Acceso directo a especialistas respiratorios y de cirugía torácica en las seis líneas de investigación.</span></p>
-          <ul class="cap-list"><li><span lang="en">Dedicated innovation co-PI per project</span><span lang="es">Co-IP de innovación dedicado por proyecto</span></li><li><span lang="en">Expert-labelled datasets &amp; validation review</span><span lang="es">Conjuntos de datos etiquetados por expertos</span></li><li><span lang="en">Regulatory pathway advisory</span><span lang="es">Asesoría en vías regulatorias</span></li></ul>
-        </div>
-        <div class="cap-card reveal reveal-d1">
-          <div class="cap-icon-row"><div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div><p class="cap-title"><span lang="en">Patient Recruitment</span><span lang="es">Reclutamiento de Pacientes</span></p><div class="cap-pills"><span class="cap-pill">High-volume</span><span class="cap-pill">Pre-phenotyped</span></div></div></div>
-          <p class="cap-desc"><span lang="en">A high-volume tertiary centre with pre-phenotyped patient registries across all target conditions — enabling rapid recruitment with streamlined ethics processes.</span><span lang="es">Centro terciario de alto volumen con registros de pacientes pre-fenotipados, permitiendo reclutamiento rápido.</span></p>
-          <ul class="cap-list"><li><span lang="en">Pre-screened registries per disease domain</span><span lang="es">Registros pre-cribados por dominio de enfermedad</span></li><li><span lang="en">Streamlined ethics &amp; consent processes</span><span lang="es">Procesos simplificados de ética y consentimiento</span></li><li><span lang="en">Site initiation avg. under 6 weeks</span><span lang="es">Inicio de sitio medio inferior a 6 semanas</span></li></ul>
-        </div>
-        <div class="cap-card reveal reveal-d2">
-          <div class="cap-icon-row"><div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><p class="cap-title"><span lang="en">Regulatory &amp; IP Support</span><span lang="es">Soporte Regulatorio y PI</span></p><div class="cap-pills"><span class="cap-pill">INIBIC</span><span class="cap-pill">MDR experience</span></div></div></div>
-          <p class="cap-desc"><span lang="en">INIBIC-backed research infrastructure with experienced navigation of CE MDR, FDA breakthrough device pathways, and AEMPS submission processes for medical devices and SaMD.</span><span lang="es">Infraestructura respaldada por INIBIC con experiencia en CE MDR, FDA y procesos ante AEMPS.</span></p>
-          <ul class="cap-list"><li><span lang="en">CE MDR &amp; IVDR technical file support</span><span lang="es">Soporte expedientes técnicos CE MDR e IVDR</span></li><li><span lang="en">IP framework for joint inventions</span><span lang="es">Marco de PI para invenciones conjuntas</span></li><li><span lang="en">SERGAS institutional endorsement pathway</span><span lang="es">Vía de aval institucional SERGAS</span></li></ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PARTNERSHIP MODELS -->
-  <section class="section partner-bg" id="partnership">
-    <div class="container partner-inner">
-      <div class="sec-head center reveal">
-        <p class="label"><span lang="en">How We Work Together</span><span lang="es">Cómo Trabajamos Juntos</span></p>
-        <h2 class="display lg"><span lang="en">Flexible Partnership Models</span><span lang="es">Modelos de Colaboración Flexibles</span></h2>
-        <p><span lang="en">We adapt to your project stage and strategic goals. All models are built around shared value creation and clear IP arrangements agreed upfront.</span><span lang="es">Nos adaptamos a la etapa de su proyecto con acuerdos de PI claros desde el inicio.</span></p>
-      </div>
-      <div class="partner-models">
-        <div class="pm-card reveal">
-          <div class="pm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-          <h3 class="pm-title"><span lang="en">Co-Development</span><span lang="es">Co-Desarrollo</span></h3>
-          <p class="pm-desc"><span lang="en">Joint development combining neumAC R&amp;I's clinical insight and patient access with your technical expertise. Suitable for early-stage projects requiring clinical co-design.</span><span lang="es">Desarrollo conjunto combinando el conocimiento clínico de neumAC R&amp;I con su experiencia técnica. Para proyectos en etapa temprana.</span></p>
-          <ul class="pm-benefits"><li><span lang="en">Shared intellectual property</span><span lang="es">Propiedad intelectual compartida</span></li><li><span lang="en">Dedicated joint project team</span><span lang="es">Equipo de proyecto conjunto</span></li><li><span lang="en">Shared risk and reward</span><span lang="es">Riesgo y recompensa compartidos</span></li><li><span lang="en">Faster time to clinical evidence</span><span lang="es">Tiempo más rápido a evidencia clínica</span></li></ul>
-        </div>
-        <div class="pm-card reveal reveal-d1">
-          <div class="pm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
-          <h3 class="pm-title"><span lang="en">Clinical Validation</span><span lang="es">Validación Clínica</span></h3>
-          <p class="pm-desc"><span lang="en">Testing and validating your existing technology with our patient populations and clinical protocols. Suitable for companies seeking real-world evidence or regulatory data.</span><span lang="es">Pruebas y validación de su tecnología con nuestras poblaciones de pacientes. Para empresas que buscan evidencia del mundo real.</span></p>
-          <ul class="pm-benefits"><li><span lang="en">Real-world evidence generation</span><span lang="es">Generación de evidencia real</span></li><li><span lang="en">CE / FDA pathway support</span><span lang="es">Soporte vía CE / FDA</span></li><li><span lang="en">Clinical protocol co-design</span><span lang="es">Co-diseño de protocolos</span></li><li><span lang="en">Joint publication opportunities</span><span lang="es">Oportunidades de publicación conjunta</span></li></ul>
-        </div>
-        <div class="pm-card reveal reveal-d2">
-          <div class="pm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-          <h3 class="pm-title"><span lang="en">Strategic Partnership</span><span lang="es">Colaboración Estratégica</span></h3>
-          <p class="pm-desc"><span lang="en">Ongoing collaboration across multiple projects with shared innovation goals in respiratory medicine. Suitable for companies seeking sustained presence in the SERGAS network.</span><span lang="es">Colaboración continua en múltiples proyectos. Para empresas que buscan presencia sostenida en la red SERGAS.</span></p>
-          <ul class="pm-benefits"><li><span lang="en">Priority access to clinical expertise</span><span lang="es">Acceso prioritario a experiencia clínica</span></li><li><span lang="en">Multi-project innovation pipeline</span><span lang="es">Pipeline de innovación multi-proyecto</span></li><li><span lang="en">Long-term relationship benefits</span><span lang="es">Beneficios de relación a largo plazo</span></li><li><span lang="en">Early access to new opportunities</span><span lang="es">Acceso temprano a nuevas oportunidades</span></li></ul>
-        </div>
+      <div class="team-grid">
+        <div class="team-card reveal"><div class="team-avatar">PS</div><div class="team-name">Dra. Pilar Sanjuán</div><div class="team-role"><span lang="en">Line 01 Coordinator</span><span lang="es">Coordinadora Línea 01</span></div><div class="team-line-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:9px;height:9px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span lang="en">Transplant, Hypertension &amp; Diffuse</span><span lang="es">Trasplante, HTP y Enf. Difusa</span></div><div class="team-expertise"><span class="team-tag">Lung Transplant</span><span class="team-tag">PAH</span><span class="team-tag">ILD</span></div></div>
+        <div class="team-card reveal reveal-d1"><div class="team-avatar">MBA</div><div class="team-name">Dra. Marina Blanco Aparicio</div><div class="team-role"><span lang="en">Line 02 Coordinator</span><span lang="es">Coordinadora Línea 02</span></div><div class="team-line-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:9px;height:9px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span lang="en">Airway Diseases</span><span lang="es">Enfermedades de la Vía Aérea</span></div><div class="team-expertise"><span class="team-tag">COPD</span><span class="team-tag">Severe Asthma</span><span class="team-tag">Biologics</span></div></div>
+        <div class="team-card reveal reveal-d1"><div class="team-avatar">RT</div><div class="team-name">Dr. Rachid Tazi</div><div class="team-role"><span lang="en">Line 03 Coordinator</span><span lang="es">Coordinador Línea 03</span></div><div class="team-line-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:9px;height:9px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span lang="en">Interventional &amp; Oncology</span><span lang="es">Intervencionismo y Oncología</span></div><div class="team-expertise"><span class="team-tag">NSCLC</span><span class="team-tag">EBUS</span><span class="team-tag">Immunotherapy</span></div></div>
+        <div class="team-card reveal reveal-d2"><div class="team-avatar">AC</div><div class="team-name">Dra. Angélica Consuegra</div><div class="team-role"><span lang="en">Line 04 Coordinator</span><span lang="es">Coordinadora Línea 04</span></div><div class="team-line-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:9px;height:9px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span lang="en">Resp. Failure, Critical Care &amp; Sleep</span><span lang="es">UCRI, VNI y Medicina del Sueño</span></div><div class="team-expertise"><span class="team-tag">UCRI</span><span class="team-tag">NIV</span><span class="team-tag">Sleep Medicine</span></div></div>
+        <div class="team-card reveal reveal-d2"><div class="team-avatar">PJM</div><div class="team-name">Dr. Pedro J. Marcos</div><div class="team-role"><span lang="en">Line 05 Coordinator</span><span lang="es">Coordinador Línea 05</span></div><div class="team-line-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:9px;height:9px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span lang="en">Personalized Medicine</span><span lang="es">Medicina Personalizada</span></div><div class="team-expertise"><span class="team-tag">Biomarkers</span><span class="team-tag">Digital Health</span><span class="team-tag">PROs</span></div></div>
+        <div class="team-card reveal reveal-d3"><div class="team-avatar">MDR</div><div class="team-name">Dra. María Delgado Roel</div><div class="team-role"><span lang="en">Line 06 Coordinator</span><span lang="es">Coordinadora Línea 06</span></div><div class="team-line-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:9px;height:9px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span lang="en">Innovation in Thoracic Surgery</span><span lang="es">Innovación en Cirugía Torácica</span></div><div class="team-expertise"><span class="team-tag">VATS / RATS</span><span class="team-tag">Thoracic Oncology</span><span class="team-tag">ERATS</span></div></div>
       </div>
     </div>
   </section>
@@ -582,57 +669,59 @@
   <section class="section contact-bg" id="contact">
     <div class="container">
       <div class="sec-head reveal">
-        <p class="label"><span lang="en">Get In Touch</span><span lang="es">Contáctenos</span></p>
-        <h2 class="display lg"><span lang="en">Start a Partnership</span><span lang="es">Iniciar una Colaboración</span></h2>
-        <p style="max-width:540px;"><span lang="en">Whether you have a specific project proposal or are simply exploring what's possible — our innovation team responds within 2 business days.</span><span lang="es">Ya sea que tenga una propuesta específica o esté explorando posibilidades, nuestro equipo responde en 2 días hábiles.</span></p>
+        <p class="label"><span lang="en">Work With Us</span><span lang="es">Trabaje Con Nosotros</span></p>
+        <h2 class="display lg"><span lang="en">Research Collaboration Inquiry</span><span lang="es">Consulta de Colaboración</span></h2>
+        <p style="max-width:560px;"><span lang="en">Whether you're qualifying our site for a sponsored study, exploring investigator-initiated partnerships, or requesting a feasibility assessment — our team responds within 2 business days.</span><span lang="es">Ya sea que esté calificando nuestro sitio o explorando colaboraciones, responderemos en 2 días hábiles.</span></p>
       </div>
       <div class="contact-layout">
         <div class="contact-info-list reveal">
-          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cinfo-label"><span lang="en">Innovation Office</span><span lang="es">Oficina de Innovación</span></div><div class="cinfo-value"><a href="mailto:innovacion@chuac.sergas.es">innovacion@chuac.sergas.es</a></div></div></div>
+          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cinfo-label"><span lang="en">Research Office</span><span lang="es">Oficina de Investigación</span></div><div class="cinfo-value"><a href="mailto:investigacion@chuac.sergas.es">investigacion@chuac.sergas.es</a></div></div></div>
           <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 19.79 19.79 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 19.79 19.79 0 002.81.7A2 2 0 0122 14.92z"/></svg></div><div><div class="cinfo-label"><span lang="en">Phone</span><span lang="es">Teléfono</span></div><div class="cinfo-value"><a href="tel:+34881111800">+34 881 111 800</a></div></div></div>
           <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cinfo-label"><span lang="en">Location</span><span lang="es">Ubicación</span></div><div class="cinfo-value">As Xubias, 84<br>15006 A Coruña, España</div></div></div>
-          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="cinfo-label"><span lang="en">Research Institute</span><span lang="es">Instituto de Investigación</span></div><div class="cinfo-value" style="font-size:.875rem;"><span lang="en">INIBIC · Instituto de Investigación Biomédica A Coruña · SERGAS · GCP compliant · MDR experience</span><span lang="es">INIBIC · Instituto de Investigación Biomédica A Coruña · SERGAS · Cumplimiento GCP · Experiencia MDR</span></div></div></div>
+          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="cinfo-label"><span lang="en">Research Institute</span><span lang="es">Instituto de Investigación</span></div><div class="cinfo-value" style="font-size:.8125rem;"><span lang="en">INIBIC · Instituto de Investigación Biomédica A Coruña · SERGAS · GCP compliant</span><span lang="es">INIBIC · Instituto de Investigación Biomédica A Coruña · SERGAS · Cumplimiento GCP</span></div></div></div>
         </div>
         <div class="form-card reveal reveal-d1">
-          <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a Project Proposal</span><span lang="es">Enviar una Propuesta de Proyecto</span></h3>
-          <form id="innovForm" novalidate>
+          <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send an Inquiry</span><span lang="es">Enviar una Consulta</span></h3>
+          <form id="researchForm" novalidate>
             <div class="form-grid">
-              <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" placeholder="Company / Institution" required /></div>
+              <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" placeholder="Pharma Corp, University…" required /></div>
               <div class="form-group"><label><span lang="en">Your Name</span><span lang="es">Su Nombre</span></label><input type="text" placeholder="Full name" required /></div>
               <div class="form-group span-2"><label><span lang="en">Email Address</span><span lang="es">Correo Electrónico</span></label><input type="email" placeholder="your@email.com" required /></div>
               <div class="form-group span-2">
-                <label><span lang="en">Technology / Project Type</span><span lang="es">Tipo de Tecnología / Proyecto</span></label>
+                <label><span lang="en">Research Line of Interest</span><span lang="es">Línea de Investigación</span></label>
                 <select>
-                  <option value="">Select…</option>
-                  <option>Medical device — wearable / sensor</option>
-                  <option>AI / ML algorithm for diagnostics</option>
-                  <option>Digital health / mobile app</option>
-                  <option>Software as a Medical Device (SaMD)</option>
-                  <option>Surgical technology / navigation</option>
-                  <option>EHR / workflow integration tool</option>
-                  <option>Other / exploratory</option>
+                  <option value="">Select a line…</option>
+                  <option value="01">01 — Transplantation, Hypertension &amp; Diffuse</option>
+                  <option value="02">02 — Airway Diseases</option>
+                  <option value="03">03 — Interventional &amp; Lung Cancer</option>
+                  <option value="04">04 — Respiratory Failure, Critical Care &amp; Sleep</option>
+                  <option value="05">05 — Personalized Medicine</option>
+                  <option value="06">06 — Innovation in Thoracic Surgery</option>
+                  <option value="all">Multiple / General Inquiry</option>
                 </select>
               </div>
               <div class="form-group span-2">
-                <label><span lang="en">Partnership Model Sought</span><span lang="es">Modelo de Colaboración Buscado</span></label>
+                <label><span lang="en">Nature of Inquiry</span><span lang="es">Tipo de Consulta</span></label>
                 <select>
                   <option value="">Select…</option>
-                  <option>Co-development</option>
-                  <option>Clinical validation only</option>
-                  <option>Strategic partnership</option>
-                  <option>Not sure yet — need guidance</option>
+                  <option>Sponsored clinical trial — site qualification</option>
+                  <option>Investigator-initiated study partnership</option>
+                  <option>Feasibility / site assessment</option>
+                  <option>Academic collaboration</option>
+                  <option>Capabilities dossier request</option>
+                  <option>Other</option>
                 </select>
               </div>
-              <div class="form-group span-2"><label><span lang="en">Brief Project Description</span><span lang="es">Descripción Breve del Proyecto</span></label><textarea rows="4" placeholder="Describe your technology, current development stage, and what you're looking for from neumAC R&I…"></textarea></div>
+              <div class="form-group span-2"><label><span lang="en">Message</span><span lang="es">Mensaje</span></label><textarea rows="4" placeholder="Please describe your inquiry or project in brief…"></textarea></div>
               <div class="form-group span-2" style="margin-bottom:0;">
-                <button type="submit" class="btn-gold" style="width:100%;padding:.875rem;justify-content:center;font-size:.9rem;">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
-                  <span lang="en">Submit Proposal</span><span lang="es">Enviar Propuesta</span>
+                <button type="submit" class="btn-gold" style="width:100%;padding:.875rem;justify-content:center;font-size:.875rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+                  <span lang="en">Submit Inquiry</span><span lang="es">Enviar Consulta</span>
                 </button>
               </div>
             </div>
           </form>
-          <div class="form-success" id="formSuccess"><span lang="en">✓ Received! Our innovation team will respond within 2 business days.</span><span lang="es">✓ ¡Recibido! Nuestro equipo de innovación responderá en 2 días hábiles.</span></div>
+          <div class="form-success" id="formSuccess"><span lang="en">✓ Received! Our research team will respond within 2 business days.</span><span lang="es">✓ ¡Recibido! Nuestro equipo responderá en 2 días hábiles.</span></div>
         </div>
       </div>
     </div>
@@ -642,9 +731,9 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-brand"><strong><span lang="en">Innovation Hub — neumAC R&amp;I</span><span lang="es">Centro de Innovación — neumAC I+I</span></strong><p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Bridging clinical expertise and technology for respiratory medicine innovation.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Conectando experiencia clínica y tecnología para la innovación en medicina respiratoria.</span></p></div>
-        <div class="footer-col"><h4><span lang="en">Navigate</span><span lang="es">Navegar</span></h4><ul><li><a href="index.html"><span lang="en">Home — neumAC R&amp;I</span><span lang="es">Inicio — neumAC I+I</span></a></li><li><a href="#pipeline"><span lang="en">Innovation Framework</span><span lang="es">Marco de Innovación</span></a></li><li><a href="#projects"><span lang="en">Active Projects</span><span lang="es">Proyectos Activos</span></a></li><li><a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a></li><li><a href="#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a></li></ul></div>
-        <div class="footer-col"><h4><span lang="en">Contact</span><span lang="es">Contacto</span></h4><address><p>As Xubias, 84<br>15006 A Coruña, España</p><p style="margin-top:.625rem;"><a href="tel:+34881111800">+34 881 111 800</a></p><p><a href="mailto:innovacion@chuac.sergas.es">innovacion@chuac.sergas.es</a></p></address></div>
+        <div class="footer-brand"><strong><span lang="en">Clinical Research — neumAC R&amp;I</span><span lang="es">Investigación Clínica — neumAC I+I</span></strong><p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Advancing respiratory and thoracic medicine through rigorous clinical investigation.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Avanzando en medicina respiratoria y torácica mediante investigación clínica rigurosa.</span></p></div>
+        <div class="footer-col"><h4><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></h4><ul><li><a href="#research-lines"><span lang="en">01 — Transplantation &amp; Diffuse</span><span lang="es">01 — Trasplante y Difusa</span></a></li><li><a href="#research-lines"><span lang="en">02 — Airway Diseases</span><span lang="es">02 — Vía Aérea</span></a></li><li><a href="#research-lines"><span lang="en">03 — Interventional &amp; Oncology</span><span lang="es">03 — Intervencionismo</span></a></li><li><a href="#research-lines"><span lang="en">04 — Critical Care &amp; Sleep</span><span lang="es">04 — UCRI y Sueño</span></a></li><li><a href="#research-lines"><span lang="en">05 — Personalized Medicine</span><span lang="es">05 — Med. Personalizada</span></a></li><li><a href="#research-lines"><span lang="en">06 — Thoracic Surgery</span><span lang="es">06 — Cirugía Torácica</span></a></li></ul></div>
+        <div class="footer-col"><h4><span lang="en">Contact</span><span lang="es">Contacto</span></h4><address><p>As Xubias, 84<br>15006 A Coruña, España</p><p style="margin-top:.5rem;"><a href="tel:+34881111800">+34 881 111 800</a></p><p><a href="mailto:investigacion@chuac.sergas.es">investigacion@chuac.sergas.es</a></p></address></div>
       </div>
       <div class="footer-bottom">
         <span>© 2025 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee.</span>
@@ -679,11 +768,12 @@
       a.addEventListener('click',e=>{
         const id=a.getAttribute('href').slice(1);if(!id)return;
         const el=document.getElementById(id);if(!el)return;
-        e.preventDefault();window.scrollTo({top:el.offsetTop-88,behavior:'smooth'});
+        e.preventDefault();window.scrollTo({top:el.offsetTop-96,behavior:'smooth'});
         try{history.pushState(null,'','#'+id);}catch(x){}
       });
     });
-    document.getElementById('innovForm').addEventListener('submit',e=>{
+    function toggleLine(id){const c=document.getElementById(id);if(c)c.classList.toggle('open');}
+    document.getElementById('researchForm').addEventListener('submit',e=>{
       e.preventDefault();
       document.getElementById('formSuccess').classList.add('show');
       e.target.reset();
