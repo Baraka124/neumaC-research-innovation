@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-lang="en">
 <head>
+  <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>neumAC R&I — Respiratory Medicine Research & Innovation · Área Sanitaria de A Coruña y Cee</title>
@@ -21,7 +22,7 @@
       --ff-display:'Playfair Display',Georgia,serif;
       --ff-body:'DM Sans',system-ui,sans-serif;
       --ff-mono:'DM Mono',monospace;
-      --header-h:88px;--max-w:1200px;
+      --header-h:88px;--max-w:1280px;
       --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:24px;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -46,14 +47,13 @@
     .header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(11,15,20,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--rule);z-index:1000;transition:background .3s;}
     .header.solid{background:rgba(11,15,20,0.97);}
     .header-inner{display:flex;align-items:center;justify-content:space-between;height:100%;gap:1.5rem;}
-    .logo{display:flex;align-items:center;gap:.875rem;flex-shrink:0;}
-    .logo-mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s;}
-    .logo:hover .logo-mark{border-color:#dab857;}
-    .logo-mark svg{width:22px;height:22px;}
-    .logo-wordmark{display:flex;flex-direction:column;}
-    .logo-wordmark strong{font-family:var(--ff-display);font-size:.95rem;font-weight:700;color:var(--text-primary);line-height:1.2;}
-    .logo-wordmark span{font-size:.58rem;color:var(--text-muted);letter-spacing:.07em;text-transform:uppercase;margin-top:1px;}
-    .lang-sw{display:flex;align-items:center;background:var(--ink-3);border:1px solid var(--rule);border-radius:20px;padding:3px;gap:0;flex-shrink:0;}
+    .logo{display:flex;align-items:center;gap:0;flex-shrink:0;text-decoration:none;}
+    .logo-neun{font-family:'DM Sans',system-ui,sans-serif;font-size:1.45rem;font-weight:700;color:#2BB5D8;letter-spacing:-.03em;line-height:1;}
+    .logo-sep{width:1px;height:32px;background:rgba(255,255,255,.18);margin:0 .875rem;flex-shrink:0;}
+    .logo-inst{display:flex;flex-direction:column;justify-content:center;gap:1px;}
+    .logo-inst span{font-family:'DM Sans',system-ui,sans-serif;font-size:.525rem;font-weight:500;color:rgba(255,255,255,.48);letter-spacing:.1em;text-transform:uppercase;line-height:1.45;}
+    .logo:hover .logo-neun{color:#3ec8e8;}
+    .logo:hover    .lang-sw{display:flex;align-items:center;background:var(--ink-3);border:1px solid var(--rule);border-radius:20px;padding:3px;gap:0;flex-shrink:0;}
     .lang-sw button{background:transparent;border:none;cursor:pointer;padding:.24rem .65rem;font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);transition:all .2s;border-radius:16px;line-height:1.4;}
     .lang-sw button.active{background:var(--gold);color:var(--ink);font-weight:700;}
     .lang-sw button:not(.active):hover{color:var(--text-primary);}
@@ -216,20 +216,7 @@
     .dual-card.clinical .dual-list li::before{color:var(--teal);}
     .dual-card.innovation .dual-list li::before{color:var(--violet);}
 
-    /* ══════════════════════════════════════════
-       NUMBERS STRIP — tighter, more intentional
-    ══════════════════════════════════════════ */
-    .numbers-bg{background:var(--ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
-    .numbers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--r-xl);overflow:hidden;}
-    @media(min-width:768px){.numbers-grid{grid-template-columns:repeat(4,1fr);}}
-    .nstat{background:var(--ink-2);padding:2.5rem 2rem;text-align:center;transition:background .2s;}
-    .nstat:hover{background:var(--surface);}
-    .nstat-num{font-family:var(--ff-display);font-size:clamp(2.5rem,4.5vw,3.5rem);font-weight:900;line-height:1;margin-bottom:.5rem;}
-    .nstat:nth-child(1) .nstat-num{color:var(--gold);}
-    .nstat:nth-child(2) .nstat-num{color:var(--teal);}
-    .nstat:nth-child(3) .nstat-num{color:var(--violet);}
-    .nstat:nth-child(4) .nstat-num{color:var(--amber);}
-    .nstat-label{font-size:.78rem;color:var(--text-muted);line-height:1.4;font-family:var(--ff-mono);}
+    /* numbers-strip styles removed */
 
     /* ══════════════════════════════════════════
        INSTITUTION STRIP
@@ -339,18 +326,12 @@
   <!-- HEADER -->
   <header class="header" id="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo" aria-label="neumAC R&I Home">
-        <div class="logo-mark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3L12 14"/>
-            <path d="M5 9C3 9 2 11 2 13L2 18C2 20 4 22 6 22C8 22 9 20 9 18L9 12C9 10 10 9 12 9"/>
-            <path d="M19 9C21 9 22 11 22 13L22 18C22 20 20 22 18 22C16 22 15 20 15 18L15 12C15 10 14 9 12 9"/>
-            <circle cx="12" cy="3" r="1.2" fill="var(--gold)" stroke="none"/>
-          </svg>
-        </div>
-        <div class="logo-wordmark">
-          <strong>neumAC R&amp;I</strong>
-          <span>Área Sanitaria · A Coruña y Cee</span>
+      <a href="index.html" class="logo" aria-label="neumAC R&amp;I Home">
+        <span class="logo-neun">neumAC</span>
+        <span class="logo-sep" aria-hidden="true"></span>
+        <div class="logo-inst">
+          <span>Área Sanitaria de</span>
+          <span>A Coruña y Cee</span>
         </div>
       </a>
       <div class="lang-sw" role="group" aria-label="Language">
@@ -584,30 +565,6 @@
     </div>
   </section>
 
-  <!-- NUMBERS STRIP -->
-  <section class="numbers-bg" style="padding:4rem 0;">
-    <div class="container">
-      <div class="numbers-grid reveal">
-        <div class="nstat">
-          <div class="nstat-num">6</div>
-          <div class="nstat-label"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></div>
-        </div>
-        <div class="nstat">
-          <div class="nstat-num">30+</div>
-          <div class="nstat-label"><span lang="en">Active &amp; Recruiting Trials</span><span lang="es">Ensayos Activos y Reclutando</span></div>
-        </div>
-        <div class="nstat">
-          <div class="nstat-num">3,200+</div>
-          <div class="nstat-label"><span lang="en">Annotated CT Studies</span><span lang="es">TCs Anotadas</span></div>
-        </div>
-        <div class="nstat">
-          <div class="nstat-num">&lt;6w</div>
-          <div class="nstat-label"><span lang="en">Average Site Initiation</span><span lang="es">Inicio de Sitio Medio</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- INSTITUTION -->
   <section class="institution-bg" style="padding:5rem 0;" id="institution">
     <div class="container">
@@ -671,7 +628,7 @@
       </div>
       <div class="contact-layout">
         <div class="contact-info-list reveal">
-          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cinfo-label"><span lang="en">General Enquiries</span><span lang="es">Consultas Generales</span></div><div class="cinfo-value"><a href="mailto:investigacion@chuac.sergas.es">investigacion@chuac.sergas.es</a></div></div></div>
+          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cinfo-label"><span lang="en">General Enquiries</span><span lang="es">Consultas Generales</span></div><div class="cinfo-value"><a href="/cdn-cgi/l/email-protection#553c3b233026213c3234363c3a3b15363d2034367b2630273234267b3026"><span class="__cf_email__" data-cfemail="b1d8dfc7d4c2c5d8d6d0d2d8dedff1d2d9c4d0d29fc2d4c3d6d0c29fd4c2">[email&#160;protected]</span></a></div></div></div>
           <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 19.79 19.79 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 19.79 19.79 0 002.81.7A2 2 0 0122 14.92z"/></svg></div><div><div class="cinfo-label"><span lang="en">Phone</span><span lang="es">Teléfono</span></div><div class="cinfo-value"><a href="tel:+34881111800">+34 881 111 800</a></div></div></div>
           <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cinfo-label"><span lang="en">Location</span><span lang="es">Ubicación</span></div><div class="cinfo-value">As Xubias, 84<br>15006 A Coruña, España</div></div></div>
           <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="cinfo-label"><span lang="en">Research Institute</span><span lang="es">Instituto de Investigación</span></div><div class="cinfo-value" style="font-size:.8125rem;"><span lang="en">INIBIC · Instituto de Investigación Biomédica A Coruña<br>SERGAS · GCP compliant · MDR experience</span><span lang="es">INIBIC · Instituto de Investigación Biomédica A Coruña<br>SERGAS · Cumplimiento GCP · Experiencia MDR</span></div></div></div>
@@ -736,13 +693,13 @@
           <address>
             <p>As Xubias, 84<br>15006 A Coruña, España</p>
             <p style="margin-top:.5rem;"><a href="tel:+34881111800">+34 881 111 800</a></p>
-            <p><a href="mailto:investigacion@chuac.sergas.es">investigacion@chuac.sergas.es</a></p>
+            <p><a href="/cdn-cgi/l/email-protection#fa93948c9f898e939d9b99939594ba99928f9b99d4899f889d9b89d49f89"><span class="__cf_email__" data-cfemail="deb7b0a8bbadaab7b9bfbdb7b1b09ebdb6abbfbdf0adbbacb9bfadf0bbad">[email&#160;protected]</span></a></p>
             <p style="margin-top:.5rem;color:var(--text-muted);font-size:.78rem;">INIBIC · Instituto de Investigación Biomédica A Coruña</p>
           </address>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2025 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee.</span>
+        <span>© 2026 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee.</span>
         <span style="display:flex;align-items:center;gap:.625rem;font-family:var(--ff-mono);font-size:.7rem;">
           <span style="color:var(--text-muted);">INIBIC · SERGAS · GCP</span>
         </span>
@@ -750,7 +707,7 @@
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     let _busy=false;
     function setLang(l){
       if(document.body.dataset.lang===l||_busy)return;
@@ -793,13 +750,4 @@
       setTimeout(()=>document.getElementById('formSuccess').classList.remove('show'),7000);
     });
     const io=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-    },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-    // Restore language preference
-    try{const l=localStorage.getItem('huac_lang');if(l==='es')setLang('es');}catch(e){}
-  </script>
-  <!-- Live data from backend -->
-  <script src="api.js"></script>
-</body>
-</html>
+      entries.forEach(e=>{if(
