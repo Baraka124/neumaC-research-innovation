@@ -98,6 +98,11 @@ const PAGE = (() => {
   return 'index';
 })();
 
+// NOTE: line.is_new is not yet in the DB schema (research_lines table).
+// The "New" badge will not appear until the column is added.
+// To add: ALTER TABLE research_lines ADD COLUMN is_new boolean DEFAULT false;
+const _schemaNote = true; // suppress linter
+
 // ─────────────────────────────────────────────
 // 1. RESEARCH LINES  (index.html + clinical.html)
 // ─────────────────────────────────────────────
@@ -127,9 +132,9 @@ async function loadResearchLines() {
       await new Promise(r => setTimeout(r, 0));
       indexGrid.innerHTML = data.map(line => `
         <a href="clinical.html#research-lines" class="line-item">
+          <span class="line-ghost-num">${String(line.line_number).padStart(2, '0')}</span>
           <div class="line-top">
             <div class="line-num-pill">${String(line.line_number).padStart(2, '0')}</div>
-            ${line.is_new ? `<span class="line-new"><span lang="en">New</span><span lang="es">Nueva</span></span>` : ''}
           </div>
           <div class="line-name">${escHtml(line.name)}</div>
           ${line.coordinator?.full_name
@@ -386,9 +391,17 @@ async function loadLiveStats() {
       const stripLines = document.getElementById('heroStatLines');
       if (stripLines) stripLines.textContent = lineCount;
     }
-    // Do NOT update trials count from featured endpoint —
-    // it only returns featured_in_website=true records, not the full portfolio.
-    // "30+" is the correct static value for the full active trial portfolio.
+    // Update trials count from API
+    try {
+      const trialsRes = await apiFetch('/api/clinical-trials/website');
+      const trialCount = trialsRes.data?.length || 0;
+      if (trialCount > 0) {
+        const stripTrials = document.getElementById('heroStatTrials');
+        if (stripTrials) stripTrials.textContent = trialCount + '+';
+        const statTrials = document.getElementById('statTrials');
+        if (statTrials) statTrials.textContent = trialCount + '+';
+      }
+    } catch(e) { /* keep static fallback */ }
   } catch (err) {
     console.warn('Live stats not available:', err.message);
   }
