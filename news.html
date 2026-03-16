@@ -357,7 +357,12 @@
   // Helper
   function escHtml(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
   function fmtDate(d){if(!d)return'';const dt=new Date(d);return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
-  function drLastName(fullName){if(!fullName)return'';const p=(fullName||'').trim().split(' ');return'Dr. '+p[p.length-1];}
+  function drLastName(fullName){
+    if(!fullName)return'';
+    const p=(fullName||'').trim().split(/\s+/).filter(Boolean);
+    if(p.length>=3){return'Dr. '+p[p.length-2];}
+    return'Dr. '+p[p.length-1];
+  }
 
   // Filter state
   let allPosts=[], activeType='', activeLine='';
@@ -388,10 +393,11 @@
   function renderFeatured(p){
     const img = p.featured_image_url
       ? `<div class="feat-img"><img src="${escHtml(p.featured_image_url)}" alt="" loading="lazy"/></div>`
-      : `<div class="feat-img"><svg class="feat-img-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>`;
+      : '';
+    const gridStyle = p.featured_image_url ? '' : 'grid-template-columns:1fr;';
     const wc = p.word_count ? `<span class="wc-bar-wrap"><span class="wc-bar"><span class="wc-fill" style="width:${Math.min(100,Math.round((p.word_count/400)*100))}%"></span></span>${p.word_count}w</span>` : '';
     const line = p.research_line ? `<span class="pm-dot"></span><span class="pm-line">L${p.research_line.line_number}</span>` : '';
-    return `<div class="post-feat reveal">
+    return `<div class="post-feat reveal" style="${gridStyle}">
       <div>
         <div class="type-badge tb-${p.post_type}">${p.post_type==='update'?'Update':p.post_type==='article'?'Article':'Publication'}</div>
         <div class="post-title">${escHtml(p.title)}</div>
