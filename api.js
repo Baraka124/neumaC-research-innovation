@@ -95,10 +95,8 @@ const PAGE = (() => {
   const p = location.pathname.split('/').pop() || 'index.html';
   if (p.startsWith('clinical'))   return 'clinical';
   if (p.startsWith('innovation')) return 'innovation';
-  return 'index';
-})();
-
-// NOTE: line.is_new is not yet in the DB schema (research_lines table).
+  if (p.startsWith('news'))       return 'news';
+  return 'index'; (research_lines table).
 // The "New" badge will not appear until the column is added.
 // To add: ALTER TABLE research_lines ADD COLUMN is_new boolean DEFAULT false;
 const _schemaNote = true; // suppress linter
@@ -432,6 +430,36 @@ function animateNewRows() {
 }
 
 // ─────────────────────────────────────────────
+// 4. NEWS POSTS  (news.html)
+// ─────────────────────────────────────────────
+
+async function loadNews(filters = {}) {
+  const feed = document.getElementById('newsFeed');
+  if (!feed) return;
+
+  // Show skeleton while loading
+  feed.innerHTML = Array(4).fill('').map((_, i) => `
+    <div class="news-skel" style="padding:1.5rem;border-bottom:1px solid var(--rule);opacity:${1 - i * 0.15}">
+      <div class="news-skel-row" style="width:60px;height:14px;margin-bottom:12px;border-radius:3px;background:var(--ink-3);animation:skeleton-pulse 1.4s ease-in-out infinite;animation-delay:${i * 0.1}s;"></div>
+      <div class="news-skel-row" style="width:85%;height:18px;margin-bottom:8px;border-radius:3px;background:var(--ink-3);animation:skeleton-pulse 1.4s ease-in-out infinite;animation-delay:${i * 0.1 + 0.05}s;"></div>
+      <div class="news-skel-row" style="width:55%;height:12px;border-radius:3px;background:var(--ink-3);animation:skeleton-pulse 1.4s ease-in-out infinite;animation-delay:${i * 0.1 + 0.1}s;"></div>
+    </div>`).join('');
+
+  const params = new URLSearchParams();
+  if (filters.type && filters.type !== 'all') params.set('type', filters.type);
+  if (filters.line) params.set('line', filters.line);
+
+  try {
+    const { data } = await apiFetch(`/api/news/website?${params}`);
+    window._newsAllPosts = data || [];
+    if (typeof window.renderFeed === 'function') window.renderFeed();
+  } catch (err) {
+    console.error('News load failed:', err);
+    setError(feed, 'Could not load posts. Please try again later.');
+  }
+}
+
+// ─────────────────────────────────────────────
 // INIT — runs on DOMContentLoaded
 // ─────────────────────────────────────────────
 
@@ -449,6 +477,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     case 'innovation':
       loadProjects();
+      break;
+
+    case 'news':
+      loadNews();
       break;
   }
 });
