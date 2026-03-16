@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-lang="en">
 <head>
+  <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>Clinical Research | neumAC R&I | Área Sanitaria de A Coruña y Cee</title>
@@ -20,7 +21,7 @@
       --ff-display:'Playfair Display',Georgia,serif;
       --ff-body:'DM Sans',system-ui,sans-serif;
       --ff-mono:'DM Mono',monospace;
-      --header-h:88px;--max-w:1200px;
+      --header-h:88px;--max-w:1280px;
       --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:24px;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -45,13 +46,12 @@
     .header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(11,15,20,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--rule);z-index:1000;transition:background .3s;}
     .header.solid{background:rgba(11,15,20,0.97);}
     .header-inner{display:flex;align-items:center;justify-content:space-between;height:100%;gap:1.5rem;}
-    .logo{display:flex;align-items:center;gap:.875rem;flex-shrink:0;}
-    .logo-mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .logo-mark svg{width:22px;height:22px;}
-    .logo-wordmark{display:flex;flex-direction:column;}
-    .logo-wordmark strong{font-family:var(--ff-display);font-size:.9rem;font-weight:700;color:var(--text-primary);line-height:1.2;}
-    .logo-wordmark span{font-size:.58rem;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;}
-    .lang-sw{display:flex;align-items:center;background:var(--ink-3);border:1px solid var(--rule);border-radius:20px;padding:3px;gap:0;flex-shrink:0;}
+    .logo{display:flex;align-items:center;gap:0;flex-shrink:0;text-decoration:none;}
+    .logo-neun{font-family:'DM Sans',system-ui,sans-serif;font-size:1.45rem;font-weight:700;color:#2BB5D8;letter-spacing:-.03em;line-height:1;}
+    .logo-sep{width:1px;height:32px;background:rgba(255,255,255,.18);margin:0 .875rem;flex-shrink:0;}
+    .logo-inst{display:flex;flex-direction:column;justify-content:center;gap:1px;}
+    .logo-inst span{font-family:'DM Sans',system-ui,sans-serif;font-size:.525rem;font-weight:500;color:rgba(255,255,255,.48);letter-spacing:.1em;text-transform:uppercase;line-height:1.45;}
+    .logo:hover .logo-neun{color:#3ec8e8;}    .lang-sw{display:flex;align-items:center;background:var(--ink-3);border:1px solid var(--rule);border-radius:20px;padding:3px;gap:0;flex-shrink:0;}
     .lang-sw button{background:transparent;border:none;cursor:pointer;padding:.22rem .6rem;font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);transition:all .2s;border-radius:16px;line-height:1.4;}
     .lang-sw button.active{background:var(--gold);color:var(--ink);font-weight:700;}
     .lang-sw button:not(.active):hover{color:var(--text-primary);}
@@ -299,17 +299,12 @@
 
   <header class="header" id="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <div class="logo-mark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3L12 14"/><path d="M5 9C3 9 2 11 2 13L2 18C2 20 4 22 6 22C8 22 9 20 9 18L9 12C9 10 10 9 12 9"/>
-            <path d="M19 9C21 9 22 11 22 13L22 18C22 20 20 22 18 22C16 22 15 20 15 18L15 12C15 10 14 9 12 9"/>
-            <circle cx="12" cy="3" r="1.2" fill="var(--gold)" stroke="none"/>
-          </svg>
-        </div>
-        <div class="logo-wordmark">
-          <strong>neumAC R&amp;I</strong>
-          <span>Área Sanitaria · A Coruña y Cee</span>
+      <a href="index.html" class="logo" aria-label="neumAC R&amp;I Home">
+        <span class="logo-neun">neumAC</span>
+        <span class="logo-sep" aria-hidden="true"></span>
+        <div class="logo-inst">
+          <span>Área Sanitaria de</span>
+          <span>A Coruña y Cee</span>
         </div>
       </a>
       <div class="lang-sw">
@@ -675,7 +670,7 @@
       </div>
       <div class="contact-layout">
         <div class="contact-info-list reveal">
-          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cinfo-label"><span lang="en">Research Office</span><span lang="es">Oficina de Investigación</span></div><div class="cinfo-value"><a href="mailto:investigacion@chuac.sergas.es">investigacion@chuac.sergas.es</a></div></div></div>
+          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cinfo-label"><span lang="en">Research Office</span><span lang="es">Oficina de Investigación</span></div><div class="cinfo-value"><a href="/cdn-cgi/l/email-protection#ee8780988b9d9a87898f8d878180ae8d869b8f8dc09d8b9c898f9dc08b9d"><span class="__cf_email__" data-cfemail="bcd5d2cad9cfc8d5dbdddfd5d3d2fcdfd4c9dddf92cfd9cedbddcf92d9cf">[email&#160;protected]</span></a></div></div></div>
           <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 19.79 19.79 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 19.79 19.79 0 002.81.7A2 2 0 0122 14.92z"/></svg></div><div><div class="cinfo-label"><span lang="en">Phone</span><span lang="es">Teléfono</span></div><div class="cinfo-value"><a href="tel:+34881111800">+34 881 111 800</a></div></div></div>
           <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cinfo-label"><span lang="en">Location</span><span lang="es">Ubicación</span></div><div class="cinfo-value">As Xubias, 84<br>15006 A Coruña, España</div></div></div>
           <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="cinfo-label"><span lang="en">Research Institute</span><span lang="es">Instituto de Investigación</span></div><div class="cinfo-value" style="font-size:.8125rem;"><span lang="en">INIBIC · Instituto de Investigación Biomédica A Coruña · SERGAS · GCP compliant</span><span lang="es">INIBIC · Instituto de Investigación Biomédica A Coruña · SERGAS · Cumplimiento GCP</span></div></div></div>
@@ -733,16 +728,16 @@
       <div class="footer-grid">
         <div class="footer-brand"><strong><span lang="en">Clinical Research — neumAC R&amp;I</span><span lang="es">Investigación Clínica — neumAC I+I</span></strong><p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Advancing respiratory and thoracic medicine through rigorous clinical investigation.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Avanzando en medicina respiratoria y torácica mediante investigación clínica rigurosa.</span></p></div>
         <div class="footer-col"><h4><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></h4><ul><li><a href="#research-lines"><span lang="en">01 — Transplantation &amp; Diffuse</span><span lang="es">01 — Trasplante y Difusa</span></a></li><li><a href="#research-lines"><span lang="en">02 — Airway Diseases</span><span lang="es">02 — Vía Aérea</span></a></li><li><a href="#research-lines"><span lang="en">03 — Interventional &amp; Oncology</span><span lang="es">03 — Intervencionismo</span></a></li><li><a href="#research-lines"><span lang="en">04 — Critical Care &amp; Sleep</span><span lang="es">04 — UCRI y Sueño</span></a></li><li><a href="#research-lines"><span lang="en">05 — Personalized Medicine</span><span lang="es">05 — Med. Personalizada</span></a></li><li><a href="#research-lines"><span lang="en">06 — Thoracic Surgery</span><span lang="es">06 — Cirugía Torácica</span></a></li></ul></div>
-        <div class="footer-col"><h4><span lang="en">Contact</span><span lang="es">Contacto</span></h4><address><p>As Xubias, 84<br>15006 A Coruña, España</p><p style="margin-top:.5rem;"><a href="tel:+34881111800">+34 881 111 800</a></p><p><a href="mailto:investigacion@chuac.sergas.es">investigacion@chuac.sergas.es</a></p></address></div>
+        <div class="footer-col"><h4><span lang="en">Contact</span><span lang="es">Contacto</span></h4><address><p>As Xubias, 84<br>15006 A Coruña, España</p><p style="margin-top:.5rem;"><a href="tel:+34881111800">+34 881 111 800</a></p><p><a href="/cdn-cgi/l/email-protection#7c15120a190f08151b1d1f1513123c1f14091d1f520f190e1b1d0f52190f"><span class="__cf_email__" data-cfemail="771e19011204031e1016141e181937141f02161459041205101604591204">[email&#160;protected]</span></a></p></address></div>
       </div>
       <div class="footer-bottom">
-        <span>© 2025 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee.</span>
+        <span>© 2026 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee.</span>
         <a href="index.html" style="color:var(--text-muted);transition:color .2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'">← <span lang="en">Back to neumAC R&amp;I</span><span lang="es">Volver a neumAC I+I</span></a>
       </div>
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     let _busy=false;
     function setLang(l){
       if(document.body.dataset.lang===l||_busy)return;
@@ -779,12 +774,4 @@
       e.target.reset();
       setTimeout(()=>document.getElementById('formSuccess').classList.remove('show'),7000);
     });
-    const io=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-    },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-    try{const l=localStorage.getItem('huac_lang');if(l==='es')setLang('es');}catch(e){}
-  </script>
-  <script src="api.js"></script>
-</body>
-</html>
+    cons
