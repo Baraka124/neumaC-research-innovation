@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0"/>
+  <title>News & Updates | neumAC R&I | Área Sanitaria de A Coruña y Cee</title>
+  <meta name="description" content="Research updates, trial milestones, publications and department news from neumAC R&I — curated by the team, short by design."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --ink:#0B0F14;--ink-2:#131920;--ink-3:#1C2430;--surface:#212C3A;
+      --rule:rgba(255,255,255,0.07);--rule-light:rgba(255,255,255,0.12);
+      --gold:#C9A84C;--gold-dim:rgba(201,168,76,0.15);
+      --teal:#3ABFBF;--teal-dim:rgba(58,191,191,0.12);
+      --violet:#7C6FCF;--violet-dim:rgba(124,111,207,0.12);
+      --amber:#E09B3D;
+      --text-primary:#F0EDE8;--text-secondary:#9EA8B5;--text-muted:#5A6473;
+      --ff-display:'Playfair Display',Georgia,serif;
+      --ff-body:'DM Sans',system-ui,sans-serif;
+      --ff-mono:'DM Mono',monospace;
+      --header-h:68px;--max-w:1280px;
+      --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:24px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--ff-body);background:var(--ink);color:var(--text-primary);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-top:var(--header-h);}
+    img,svg{display:block;}
+    a{color:inherit;text-decoration:none;}
+    .label{font-family:var(--ff-mono);font-size:.6875rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);}
+    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 2rem;}
+    @media(max-width:768px){.container{padding:0 1.25rem;}}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+    .reveal.in{opacity:1;transform:none;}
+    .reveal-d1{transition-delay:.08s;}
+    .reveal-d2{transition-delay:.16s;}
+    #progress-bar{position:fixed;top:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--teal));z-index:2000;transition:width .1s linear;}
+
+    /* HEADER */
+    .header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(11,15,20,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);z-index:1000;transition:background .3s;}
+    .header.solid{background:rgba(11,15,20,0.98);}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;height:100%;gap:2rem;}
+    .logo{display:flex;align-items:center;gap:0;flex-shrink:0;text-decoration:none;}
+    .logo-neun{font-family:'DM Sans',system-ui,sans-serif;font-size:1.35rem;font-weight:700;color:#0B9ED9;letter-spacing:-.03em;line-height:1;}
+    .logo-sep{width:1px;height:28px;background:rgba(255,255,255,.14);margin:0 .875rem;flex-shrink:0;}
+    .logo-inst{display:flex;flex-direction:column;justify-content:center;gap:2px;}
+    .logo-inst span{font-family:'DM Sans',system-ui,sans-serif;font-size:.5rem;font-weight:500;color:rgba(255,255,255,.38);letter-spacing:.1em;text-transform:uppercase;line-height:1.4;}
+    .logo:hover .logo-neun{color:#2bb5d8;}
+    .lang-sw{display:flex;align-items:center;gap:0;flex-shrink:0;}
+    .lang-sw button{background:transparent;border:none;cursor:pointer;padding:.25rem .5rem;font-family:var(--ff-mono);font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);transition:color .2s;line-height:1;}
+    .lang-sw button.active{color:rgba(255,255,255,.92);}
+    .lang-sw button:not(.active):hover{color:rgba(255,255,255,.55);}
+    .lang-sw-div{width:1px;height:12px;background:rgba(255,255,255,.14);flex-shrink:0;}
+    .nav{display:none;align-items:center;gap:.15rem;margin-left:auto;}
+    @media(min-width:1024px){.nav{display:flex;}}
+    .nav a{padding:.45rem .9rem;font-size:.8rem;font-weight:500;color:rgba(255,255,255,.55);border-radius:4px;transition:all .2s;white-space:nowrap;}
+    .nav a:hover{color:rgba(255,255,255,.92);background:rgba(255,255,255,.05);}
+    .nav a.current{color:var(--gold);}
+    .nav .nav-cta{margin-left:.75rem;background:var(--gold);color:var(--ink);font-weight:600;padding:.45rem 1.125rem;border-radius:4px;font-size:.8rem;transition:background .2s;}
+    .nav .nav-cta:hover{background:#dab857;}
+    .mob-toggle{display:flex;flex-direction:column;gap:4.5px;background:none;border:none;cursor:pointer;padding:.5rem;width:38px;height:38px;justify-content:center;align-items:center;}
+    @media(min-width:1024px){.mob-toggle{display:none;}}
+    .mob-toggle span{width:18px;height:1.5px;background:var(--text-primary);transition:all .3s;transform-origin:center;display:block;}
+    .mob-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+    .mob-toggle.open span:nth-child(2){opacity:0;}
+    .mob-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+    .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:900;opacity:0;visibility:hidden;transition:all .3s;}
+    .mob-overlay.open{opacity:1;visibility:visible;}
+    .mob-drawer{position:fixed;top:0;right:-280px;width:260px;max-width:85vw;height:100%;background:var(--ink-2);z-index:950;transition:right .3s;display:flex;flex-direction:column;border-left:1px solid var(--rule);}
+    .mob-drawer.open{right:0;}
+    .mob-head{padding:1.5rem;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;}
+    .mob-close{background:none;border:none;cursor:pointer;color:var(--text-secondary);}
+    .mob-links{padding:1.5rem;flex:1;display:flex;flex-direction:column;gap:.25rem;}
+    .mob-links a{display:flex;align-items:center;gap:.875rem;padding:.875rem 1rem;color:var(--text-secondary);border-radius:var(--r-md);transition:all .2s;font-size:.9375rem;}
+    .mob-links a:hover{background:var(--rule);color:var(--text-primary);}
+    .mob-links a.current{color:var(--gold);}
+    .mob-cta{margin:1.5rem;padding:.875rem;text-align:center;background:var(--gold);color:var(--ink);font-weight:600;border-radius:var(--r-md);font-size:.9rem;}
+
+    [lang="es"]{display:none!important;}
+    [lang="en"]{display:inline;}
+    [lang="en"].blk{display:block;}
+    body[data-lang="es"] [lang="es"]{display:inline!important;}
+    body[data-lang="es"] [lang="es"].blk{display:block!important;}
+    body[data-lang="es"] [lang="en"]{display:none!important;}
+
+    /* PAGE HERO */
+    .pg-hero{background:var(--ink-2);border-bottom:1px solid var(--rule);padding:3.5rem 0 2.5rem;}
+    .pg-hero-kicker{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+    .pg-hero-kicker-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);}
+    .pg-hero-title{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3rem);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:.875rem;}
+    .pg-hero-title em{font-style:italic;color:var(--gold);}
+    .pg-hero-sub{font-size:1rem;color:var(--text-secondary);max-width:520px;line-height:1.7;}
+
+    /* FILTER BAR */
+    .filter-strip{background:var(--ink);border-bottom:1px solid var(--rule);padding:.875rem 0;position:sticky;top:var(--header-h);z-index:100;}
+    .filter-inner{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;}
+    .flt{font-size:.7rem;font-weight:600;padding:.35rem .875rem;border-radius:20px;cursor:pointer;letter-spacing:.04em;border:1px solid var(--rule-light);color:var(--text-muted);background:transparent;transition:all .2s;font-family:var(--ff-mono);}
+    .flt.on,.flt:hover{color:var(--text-primary);}
+    .flt.on{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+    .flt-teal.on{background:var(--teal-dim);color:var(--teal);border-color:rgba(58,191,191,.3);}
+    .flt-update.on{background:rgba(201,168,76,.12);color:var(--gold);border-color:rgba(201,168,76,.3);}
+    .flt-pub.on{background:var(--violet-dim);color:var(--violet);border-color:rgba(124,111,207,.3);}
+
+    /* MAIN LAYOUT */
+    .news-layout{display:grid;grid-template-columns:1fr 280px;gap:0;min-height:60vh;}
+    @media(max-width:900px){.news-layout{grid-template-columns:1fr;}}
+    .news-feed{border-right:1px solid var(--rule);}
+    @media(max-width:900px){.news-feed{border-right:none;}}
+
+    /* TYPE BADGES */
+    .type-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.22rem .6rem;border-radius:3px;margin-bottom:.625rem;}
+    .tb-update{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2);}
+    .tb-article{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(58,191,191,.2);}
+    .tb-publication{background:var(--violet-dim);color:var(--violet);border:1px solid rgba(124,111,207,.25);}
+
+    /* FEATURED POST */
+    .post-feat{padding:2rem;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr 200px;gap:1.75rem;cursor:pointer;transition:background .2s;}
+    .post-feat:hover{background:var(--ink-3);}
+    @media(max-width:640px){.post-feat{grid-template-columns:1fr;}}
+    .feat-img{border-radius:var(--r-lg);border:1px solid var(--rule-light);background:var(--ink-3);display:flex;align-items:center;justify-content:center;min-height:120px;}
+    .feat-img img{width:100%;height:160px;object-fit:cover;border-radius:var(--r-lg);}
+    .feat-img-ph{width:28px;height:28px;opacity:.2;}
+    .post-title{font-family:var(--ff-display);font-size:1.1rem;font-weight:700;color:var(--text-primary);line-height:1.3;margin-bottom:.625rem;}
+    .post-excerpt{font-size:.875rem;color:var(--text-secondary);line-height:1.65;margin-bottom:.875rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+    .post-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;font-size:.7rem;font-family:var(--ff-mono);color:var(--text-muted);}
+    .pm-dot{width:3px;height:3px;border-radius:50%;background:var(--rule-light);}
+    .pm-line{color:var(--teal);}
+    .wc-bar-wrap{display:inline-flex;align-items:center;gap:.35rem;}
+    .wc-bar{width:28px;height:2px;background:rgba(255,255,255,.1);border-radius:1px;overflow:hidden;display:inline-block;}
+    .wc-fill{height:100%;border-radius:1px;background:var(--teal);}
+
+    /* STANDARD POST ROW */
+    .post-row{padding:1.25rem 1.5rem;border-bottom:1px solid var(--rule);display:flex;gap:1rem;cursor:pointer;transition:background .2s;}
+    .post-row:hover{background:var(--ink-3);}
+    .pr-body{flex:1;min-width:0;}
+    .pr-img{width:72px;height:72px;border-radius:var(--r-md);flex-shrink:0;background:var(--ink-3);border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;}
+    .pr-img img{width:100%;height:100%;object-fit:cover;border-radius:var(--r-md);}
+    .pr-title{font-family:var(--ff-display);font-size:.9375rem;font-weight:700;color:var(--text-primary);line-height:1.3;margin-bottom:.375rem;}
+
+    /* UPDATE STRIP */
+    .update-strip{padding:.875rem 1.5rem;border-bottom:1px solid var(--rule);display:flex;gap:.875rem;align-items:flex-start;transition:background .2s;}
+    .update-strip:hover{background:var(--ink-3);}
+    .update-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:.35rem;flex-shrink:0;}
+    .update-text{font-size:.8125rem;color:var(--text-secondary);line-height:1.55;flex:1;}
+    .update-text strong{color:var(--text-primary);font-weight:600;}
+    .update-age{font-size:.65rem;font-family:var(--ff-mono);color:var(--text-muted);flex-shrink:0;margin-top:.1rem;}
+
+    /* PUBLICATION CARD */
+    .pub-card{padding:1.125rem 1.5rem;border-bottom:1px solid var(--rule);transition:background .2s;}
+    .pub-card:hover{background:var(--ink-3);}
+    .pub-journal{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--violet);margin-bottom:.375rem;font-family:var(--ff-mono);}
+    .pub-title{font-size:.875rem;font-weight:600;color:var(--text-primary);line-height:1.4;margin-bottom:.375rem;}
+    .pub-authors{font-size:.75rem;color:var(--text-muted);margin-bottom:.5rem;}
+    .pub-doi{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;color:var(--violet);font-family:var(--ff-mono);transition:color .2s;}
+    .pub-doi:hover{color:#9083d8;}
+    .pub-doi svg{width:10px;height:10px;}
+
+    /* EMPTY / LOADING */
+    .feed-empty,.feed-loading{padding:4rem 2rem;text-align:center;color:var(--text-muted);font-size:.875rem;font-family:var(--ff-mono);}
+    .feed-empty svg,.feed-loading svg{margin:0 auto .875rem;opacity:.3;}
+
+    /* SIDEBAR */
+    .news-sidebar{padding:1.5rem;}
+    @media(max-width:900px){.news-sidebar{border-top:1px solid var(--rule);}}
+    .sb-section{margin-bottom:1.5rem;}
+    .sb-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-bottom:.875rem;font-family:var(--ff-mono);}
+    .sb-stat{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--rule);}
+    .sb-stat:last-child{border-bottom:none;}
+    .sb-stat-n{font-size:1.125rem;font-weight:700;color:var(--gold);font-family:var(--ff-mono);}
+    .sb-stat-l{font-size:.72rem;color:var(--text-muted);}
+    .sb-rule{height:1px;background:var(--rule);margin:1.25rem 0;}
+    .sb-tag{display:inline-flex;align-items:center;margin:0 .25rem .3rem 0;font-size:.65rem;font-family:var(--ff-mono);padding:.2rem .55rem;border-radius:3px;border:1px solid var(--rule-light);color:var(--text-muted);background:rgba(255,255,255,.02);cursor:pointer;transition:all .2s;}
+    .sb-tag:hover{color:var(--text-primary);border-color:var(--rule-light);}
+    .sb-policy{font-size:.78rem;color:var(--text-muted);line-height:1.7;}
+    .sb-policy strong{color:var(--text-secondary);}
+
+    /* LINE FILTER PILLS (generated by JS) */
+    .line-pill{display:inline-flex;align-items:center;gap:.35rem;margin:0 .35rem .35rem 0;font-size:.65rem;font-family:var(--ff-mono);padding:.22rem .6rem;border-radius:3px;border:1px solid var(--rule-light);color:var(--text-muted);cursor:pointer;transition:all .2s;}
+    .line-pill:hover,.line-pill.on{color:var(--teal);border-color:rgba(58,191,191,.3);background:var(--teal-dim);}
+
+    /* FOOTER */
+    .footer{background:var(--ink);border-top:1px solid var(--rule);padding:3rem 0 1.5rem;margin-top:4rem;}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;font-size:.78rem;color:var(--text-muted);flex-wrap:wrap;}
+  </style>
+</head>
+<body data-lang="en">
+<div id="progress-bar"></div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo" aria-label="neumAC R&I Home">
+      <span class="logo-neun">neumAC</span>
+      <span class="logo-sep" aria-hidden="true"></span>
+      <div class="logo-inst"><span>Área Sanitaria de</span><span>A Coruña y Cee</span></div>
+    </a>
+    <div style="display:flex;align-items:center;gap:16px">
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+        <a href="clinical.html"><span lang="en">Clinical Trials</span><span lang="es">Ensayos</span></a>
+        <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Innovación</span></a>
+        <a href="news.html" class="current"><span lang="en">News</span><span lang="es">Noticias</span></a>
+        <a href="index.html#contact" class="nav-cta"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+      </nav>
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button class="active" onclick="setLang('en')" aria-pressed="true">EN</button>
+        <span class="lang-sw-div" aria-hidden="true"></span>
+        <button onclick="setLang('es')" aria-pressed="false">ES</button>
+      </div>
+      <button class="mob-toggle" id="mobToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="mob-overlay" id="mobOverlay"></div>
+<nav class="mob-drawer" id="mobDrawer">
+  <div class="mob-head">
+    <span class="label">neumAC R&amp;I</span>
+    <button class="mob-close" id="mobClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="mob-links">
+    <a href="index.html" onclick="closeMob()"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+    <a href="clinical.html" onclick="closeMob()"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
+    <a href="innovation.html" onclick="closeMob()"><span lang="en">Innovation Hub</span><span lang="es">Innovación</span></a>
+    <a href="news.html" class="current" onclick="closeMob()"><span lang="en">News</span><span lang="es">Noticias</span></a>
+  </div>
+  <a href="index.html#contact" class="mob-cta" onclick="closeMob()"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="pg-hero">
+  <div class="container">
+    <div class="pg-hero-kicker reveal">
+      <span class="pg-hero-kicker-dot"></span>
+      <span lang="en">Department News &amp; Research Updates</span>
+      <span lang="es">Noticias y Actualizaciones</span>
+    </div>
+    <h1 class="pg-hero-title reveal reveal-d1">
+      <span lang="en">From the Department.<br><em>Direct &amp; Concise.</em></span>
+      <span lang="es">Del Departamento.<br><em>Directo y Conciso.</em></span>
+    </h1>
+    <p class="pg-hero-sub reveal reveal-d2">
+      <span lang="en">Research updates, trial milestones, publications and department news — curated by the neumAC R&I team. Short by design.</span>
+      <span lang="es">Actualizaciones de investigación, hitos de ensayos, publicaciones y noticias del departamento.</span>
+    </p>
+  </div>
+</section>
+
+<!-- FILTER STRIP -->
+<div class="filter-strip" id="filterStrip">
+  <div class="container filter-inner">
+    <button class="flt on" data-type="">
+      <span lang="en">All</span><span lang="es">Todo</span>
+    </button>
+    <button class="flt flt-teal" data-type="article">
+      <span lang="en">Articles</span><span lang="es">Artículos</span>
+    </button>
+    <button class="flt flt-update" data-type="update">
+      <span lang="en">Updates</span><span lang="es">Actualizaciones</span>
+    </button>
+    <button class="flt flt-pub" data-type="publication">
+      <span lang="en">Publications</span><span lang="es">Publicaciones</span>
+    </button>
+    <div id="linePills" style="display:flex;flex-wrap:wrap;gap:0;margin-left:auto;"></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container" style="padding-top:0;padding-bottom:0;">
+  <div class="news-layout">
+
+    <!-- FEED -->
+    <div class="news-feed" id="newsFeed">
+      <div class="feed-loading">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        <p><span lang="en">Loading posts…</span><span lang="es">Cargando…</span></p>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="news-sidebar" id="newsSidebar">
+      <div class="sb-section">
+        <div class="sb-label"><span lang="en">Portfolio</span><span lang="es">Portfolio</span></div>
+        <div class="sb-stat"><span class="sb-stat-l"><span lang="en">Articles</span><span lang="es">Artículos</span></span><span class="sb-stat-n" id="sbArticles">—</span></div>
+        <div class="sb-stat"><span class="sb-stat-l"><span lang="en">Updates</span><span lang="es">Actualizaciones</span></span><span class="sb-stat-n" id="sbUpdates">—</span></div>
+        <div class="sb-stat"><span class="sb-stat-l"><span lang="en">Publications</span><span lang="es">Publicaciones</span></span><span class="sb-stat-n" id="sbPubs">—</span></div>
+      </div>
+      <div class="sb-rule"></div>
+      <div class="sb-section">
+        <div class="sb-label"><span lang="en">Research Lines</span><span lang="es">Líneas</span></div>
+        <div id="sbLines" style="display:flex;flex-wrap:wrap;"></div>
+      </div>
+      <div class="sb-rule"></div>
+      <div class="sb-section">
+        <div class="sb-label"><span lang="en">Retention policy</span><span lang="es">Política de retención</span></div>
+        <div class="sb-policy">
+          <strong lang="en">Updates</strong><strong lang="es">Actualizaciones</strong>
+          <span lang="en"> archive after 90 days.</span><span lang="es"> se archivan a los 90 días.</span><br><br>
+          <strong lang="en">Articles</strong><strong lang="es">Artículos</strong>
+          <span lang="en"> persist 18 months then prompt for renewal.</span><span lang="es"> persisten 18 meses.</span><br><br>
+          <strong lang="en">Publications</strong><strong lang="es">Publicaciones</strong>
+          <span lang="en"> never expire.</span><span lang="es"> no caducan.</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee.</span>
+      <span style="font-family:var(--ff-mono);font-size:.7rem;">INIBIC · SERGAS · GCP</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Lang
+  function setLang(l){
+    if(document.body.dataset.lang===l)return;
+    document.body.dataset.lang=l;
+    document.querySelectorAll('.lang-sw button').forEach(b=>{
+      const on=b.textContent.trim()===l.toUpperCase();
+      b.classList.toggle('active',on);
+      b.setAttribute('aria-pressed',on);
+    });
+    try{localStorage.setItem('huac_lang',l);}catch(e){}
+  }
+
+  // Mobile
+  const tog=document.getElementById('mobToggle'),drw=document.getElementById('mobDrawer'),ovl=document.getElementById('mobOverlay');
+  function openMob(){tog.classList.add('open');drw.classList.add('open');ovl.style.cssText='opacity:1;visibility:visible';document.body.style.overflow='hidden';}
+  function closeMob(){tog.classList.remove('open');drw.classList.remove('open');ovl.style.cssText='';document.body.style.overflow='';}
+  tog.addEventListener('click',openMob);
+  document.getElementById('mobClose').addEventListener('click',closeMob);
+  ovl.addEventListener('click',closeMob);
+
+  // Scroll
+  const hdr=document.getElementById('header'),prg=document.getElementById('progress-bar');
+  window.addEventListener('scroll',()=>{
+    hdr.classList.toggle('solid',scrollY>20);
+    const tot=document.documentElement.scrollHeight-innerHeight;
+    prg.style.width=(tot>0?scrollY/tot*100:0)+'%';
+  },{passive:true});
+
+  // Reveal
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Helper
+  function escHtml(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function fmtDate(d){if(!d)return'';const dt=new Date(d);return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
+  function drLastName(fullName){if(!fullName)return'';const p=(fullName||'').trim().split(' ');return'Dr. '+p[p.length-1];}
+
+  // Filter state
+  let allPosts=[], activeType='', activeLine='';
+
+  function renderFeed(){
+    const feed=document.getElementById('newsFeed');
+    let posts=allPosts.filter(p=>{
+      if(activeType && p.post_type!==activeType) return false;
+      if(activeLine && p.research_line?.id!==activeLine) return false;
+      return true;
+    });
+
+    if(!posts.length){
+      feed.innerHTML=`<div class="feed-empty"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>${document.body.dataset.lang==='es'?'No hay publicaciones.':'No posts found.'}</p></div>`;
+      return;
+    }
+
+    // Featured = first article or first post
+    const featured = posts.find(p=>p.post_type==='article') || posts[0];
+    const rest = posts.filter(p=>p.id!==featured.id);
+
+    feed.innerHTML = renderFeatured(featured) + rest.map(renderPost).join('');
+
+    // Re-observe
+    feed.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  }
+
+  function renderFeatured(p){
+    const img = p.featured_image_url
+      ? `<div class="feat-img"><img src="${escHtml(p.featured_image_url)}" alt="" loading="lazy"/></div>`
+      : `<div class="feat-img"><svg class="feat-img-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>`;
+    const wc = p.word_count ? `<span class="wc-bar-wrap"><span class="wc-bar"><span class="wc-fill" style="width:${Math.min(100,Math.round((p.word_count/400)*100))}%"></span></span>${p.word_count}w</span>` : '';
+    const line = p.research_line ? `<span class="pm-dot"></span><span class="pm-line">L${p.research_line.line_number}</span>` : '';
+    return `<div class="post-feat reveal">
+      <div>
+        <div class="type-badge tb-${p.post_type}">${p.post_type==='update'?'Update':p.post_type==='article'?'Article':'Publication'}</div>
+        <div class="post-title">${escHtml(p.title)}</div>
+        ${p.body?`<div class="post-excerpt">${escHtml(p.body)}</div>`:''}
+        <div class="post-meta">
+          ${p.author?`<span>${drLastName(p.author.full_name)}</span><span class="pm-dot"></span>`:''}
+          <span>${fmtDate(p.published_at||p.created_at)}</span>
+          ${line}${wc?`<span class="pm-dot"></span>${wc}`:''}
+        </div>
+      </div>${img}</div>`;
+  }
+
+  function renderPost(p){
+    if(p.post_type==='update') return renderUpdate(p);
+    if(p.post_type==='publication') return renderPub(p);
+    // article
+    const img = p.featured_image_url
+      ? `<div class="pr-img"><img src="${escHtml(p.featured_image_url)}" alt="" loading="lazy"/></div>`
+      : `<div class="pr-img"><svg style="width:18px;height:18px;opacity:.2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg></div>`;
+    const line = p.research_line ? `<span class="pm-dot"></span><span class="pm-line">L${p.research_line.line_number}</span>` : '';
+    const wc = p.word_count?`<span class="pm-dot"></span><span>${p.word_count}w</span>`:'';
+    return `<div class="post-row reveal">
+      <div class="pr-body">
+        <div class="type-badge tb-article">Article</div>
+        <div class="pr-title">${escHtml(p.title)}</div>
+        <div class="post-meta">
+          ${p.author?`<span>${drLastName(p.author.full_name)}</span><span class="pm-dot"></span>`:''}
+          <span>${fmtDate(p.published_at||p.created_at)}</span>${line}${wc}
+        </div>
+      </div>${img}</div>`;
+  }
+
+  function renderUpdate(p){
+    const age = fmtDate(p.published_at||p.created_at);
+    const line = p.research_line ? `<strong>${escHtml(p.research_line.name.split('—').pop().trim())||'L'+p.research_line.line_number}:</strong> ` : '';
+    return `<div class="update-strip reveal">
+      <div class="update-dot"></div>
+      <div class="update-text">${line}${escHtml(p.title)}${p.body?` — ${escHtml(p.body)}`:''}
+        ${p.author?`<span style="color:var(--text-muted);font-size:.7rem;font-family:var(--ff-mono);"> — ${drLastName(p.author.full_name)}</span>`:''}</div>
+      <div class="update-age">${age}</div></div>`;
+  }
+
+  function renderPub(p){
+    const line = p.research_line ? `<span style="color:var(--text-muted);font-size:.65rem;"> · Line ${p.research_line.line_number}</span>` : '';
+    return `<div class="pub-card reveal">
+      <div class="pub-journal">${escHtml(p.journal_name||'Journal')}${line}</div>
+      <div class="pub-title">${escHtml(p.title)}</div>
+      ${p.authors_text?`<div class="pub-authors">${escHtml(p.authors_text)}</div>`:''}
+      ${p.doi?`<a class="pub-doi" href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        DOI ${escHtml(p.doi)}</a>`:''}
+    </div>`;
+  }
+
+  function updateSidebar(posts){
+    document.getElementById('sbArticles').textContent = posts.filter(p=>p.post_type==='article').length;
+    document.getElementById('sbUpdates').textContent  = posts.filter(p=>p.post_type==='update').length;
+    document.getElementById('sbPubs').textContent     = posts.filter(p=>p.post_type==='publication').length;
+    // Line pills
+    const lines = {};
+    posts.forEach(p=>{ if(p.research_line) lines[p.research_line.id]=p.research_line; });
+    const lEl = document.getElementById('sbLines');
+    lEl.innerHTML = Object.values(lines).sort((a,b)=>a.line_number-b.line_number).map(l=>`
+      <span class="line-pill" data-line="${l.id}" onclick="setLineFilter('${l.id}')">
+        L${l.line_number} <span style="opacity:.55;font-size:.6rem">${escHtml((l.name||'').split(' ').slice(0,3).join(' '))}…</span>
+      </span>`).join('');
+    // Also populate sidebar line pills in filter strip
+    const lp = document.getElementById('linePills');
+    lp.innerHTML = Object.values(lines).sort((a,b)=>a.line_number-b.line_number).map(l=>`
+      <button class="line-pill" data-line="${l.id}" onclick="setLineFilter('${l.id}')">L${l.line_number}</button>`).join('');
+  }
+
+  function setTypeFilter(t){
+    activeType = t;
+    document.querySelectorAll('.flt').forEach(b=>{
+      b.classList.toggle('on', b.dataset.type===t);
+    });
+    renderFeed();
+  }
+
+  function setLineFilter(id){
+    activeLine = activeLine===id ? '' : id;
+    document.querySelectorAll('.line-pill').forEach(p=>{
+      p.classList.toggle('on', p.dataset.line===activeLine);
+    });
+    renderFeed();
+  }
+
+  document.querySelectorAll('.flt').forEach(b=>{
+    b.addEventListener('click',()=>setTypeFilter(b.dataset.type||''));
+  });
+
+  // Load — called by api.js after DOMContentLoaded
+  window.renderFeed = function() {
+    const posts = window._newsAllPosts || [];
+    allPosts = posts;
+    updateSidebar(posts);
+    renderFeed();
+  };
+
+  // Fallback if api.js hasn't loaded yet
+  document.addEventListener('DOMContentLoaded', async () => {
+    // api.js handles loading via loadNews() → sets window._newsAllPosts → calls window.renderFeed()
+    // This timeout is a safety net only
+    setTimeout(() => {
+      if (!window._newsAllPosts) {
+        document.getElementById('newsFeed').innerHTML =
+          `<div class="feed-empty"><p>Loading…</p></div>`;
+      }
+    }, 5000);
+  });
+</script>
+<script src="api.js"></script>
+</body>
+</html>
