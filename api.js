@@ -96,10 +96,10 @@ const PAGE = (() => {
   if (p.startsWith('clinical'))   return 'clinical';
   if (p.startsWith('innovation')) return 'innovation';
   if (p.startsWith('news'))       return 'news';
-  return 'index'; (research_lines table).
-// The "New" badge will not appear until the column is added.
-// To add: ALTER TABLE research_lines ADD COLUMN is_new boolean DEFAULT false;
-const _schemaNote = true; // suppress linter
+  return 'index';
+})();
+
+// NOTE: line.is_new not yet in DB schema — New badge won't show until added.
 
 // ─────────────────────────────────────────────
 // 1. RESEARCH LINES  (index.html + clinical.html)
