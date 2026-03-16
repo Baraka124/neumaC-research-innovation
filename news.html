@@ -484,8 +484,8 @@
     b.addEventListener('click',()=>setTypeFilter(b.dataset.type||''));
   });
 
-  // Load — called by api.js after DOMContentLoaded
-  window.renderFeed = function() {
+  // Called by api.js once data is ready
+  window.onNewsLoaded = function() {
     const posts = window._newsAllPosts || [];
     allPosts = posts;
     updateSidebar(posts);
