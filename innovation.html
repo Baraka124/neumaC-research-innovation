@@ -22,7 +22,7 @@
       --ff-display:'Playfair Display',Georgia,serif;
       --ff-body:'DM Sans',system-ui,sans-serif;
       --ff-mono:'DM Mono',monospace;
-      --header-h:88px;--max-w:1280px;
+      --header-h:68px;--max-w:1280px;
       --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:24px;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -46,15 +46,16 @@
     .header.solid{background:rgba(11,15,20,0.97);}
     .header-inner{display:flex;align-items:center;justify-content:space-between;height:100%;gap:1.5rem;}
     .logo{display:flex;align-items:center;gap:0;flex-shrink:0;text-decoration:none;}
-    .logo-neun{font-family:'DM Sans',system-ui,sans-serif;font-size:1.45rem;font-weight:700;color:#2BB5D8;letter-spacing:-.03em;line-height:1;}
+    .logo-neun{font-family:'DM Sans',system-ui,sans-serif;font-size:1.35rem;font-weight:700;color:#0B9ED9;letter-spacing:-.03em;line-height:1;}
     .logo-sep{width:1px;height:32px;background:rgba(255,255,255,.18);margin:0 .875rem;flex-shrink:0;}
     .logo-inst{display:flex;flex-direction:column;justify-content:center;gap:1px;}
     .logo-inst span{font-family:'DM Sans',system-ui,sans-serif;font-size:.525rem;font-weight:500;color:rgba(255,255,255,.48);letter-spacing:.1em;text-transform:uppercase;line-height:1.45;}
-    .logo:hover .logo-neun{color:#3ec8e8;}
-    .lang-sw{display:flex;align-items:center;background:var(--ink-3);border:1px solid var(--rule);border-radius:20px;padding:3px;gap:0;flex-shrink:0;}
-    .lang-sw button{background:transparent;border:none;cursor:pointer;padding:.22rem .6rem;font-family:var(--ff-mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);transition:all .2s;border-radius:16px;line-height:1.4;}
-    .lang-sw button.active{background:var(--gold);color:var(--ink);font-weight:700;}
-    .lang-sw button:not(.active):hover{color:var(--text-primary);}
+    .logo:hover .logo-neun{font-family:'DM Sans',system-ui,sans-serif;font-size:1.35rem;font-weight:700;color:#0B9ED9;letter-spacing:-.03em;line-height:1;}
+    .lang-sw{display:flex;align-items:center;gap:0;flex-shrink:0;}
+    .lang-sw button{background:transparent;border:none;cursor:pointer;padding:.25rem .5rem;font-family:var(--ff-mono);font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);transition:color .2s;line-height:1;}
+    .lang-sw button.active{color:rgba(255,255,255,.92);}
+    .lang-sw button:not(.active):hover{color:rgba(255,255,255,.55);}
+    .lang-sw-div{width:1px;height:12px;background:rgba(255,255,255,.14);flex-shrink:0;}
     .nav{display:none;align-items:center;gap:.15rem;margin-left:auto;}
     @media(min-width:1024px){.nav{display:flex;}}
     .nav a{padding:.5rem 1rem;font-size:.8125rem;font-weight:500;color:var(--text-secondary);border-radius:4px;transition:all .2s;white-space:nowrap;}
@@ -315,9 +316,10 @@
           <span>A Coruña y Cee</span>
         </div>
       </a>
-      <div class="lang-sw">
-        <button class="active" onclick="setLang('en')">EN</button>
-        <button onclick="setLang('es')">ES</button>
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button class="active" onclick="setLang('en')" aria-pressed="true">EN</button>
+        <span class="lang-sw-div" aria-hidden="true"></span>
+        <button onclick="setLang('es')" aria-pressed="false">ES</button>
       </div>
       <nav class="nav">
         <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
@@ -353,15 +355,6 @@
     <div class="container">
       <div class="hero-inner">
         <div>
-          <nav class="breadcrumb reveal">
-            <a href="index.html">neumAC R&amp;I</a>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            <span><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></span>
-          </nav>
-          <div class="hero-eyebrow reveal">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
-            <span class="label" style="color:var(--violet);"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></span>
-          </div>
           <h1 class="display xl hero-title reveal reveal-d1">
             <span lang="en">From Clinical<br>Challenge to<br><em>Deployed Solution</em></span>
             <span lang="es">Del Desafío<br>Clínico a la<br><em>Solución Desplegada</em></span>
@@ -684,4 +677,14 @@
       e.target.reset();
       setTimeout(()=>document.getElementById('formSuccess').classList.remove('show'),7000);
     });
-    const io=new Int
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    // Restore language preference
+    try{const l=localStorage.getItem('huac_lang');if(l==='es')setLang('es');}catch(e){}
+  </script>
+  <!-- Live data from backend -->
+  <script src="api.js"></script>
+</body>
+</html>
