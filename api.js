@@ -452,7 +452,7 @@ async function loadNews(filters = {}) {
   try {
     const { data } = await apiFetch(`/api/news/website?${params}`);
     window._newsAllPosts = data || [];
-    if (typeof window.renderFeed === 'function') window.renderFeed();
+    if (typeof window.onNewsLoaded === 'function') window.onNewsLoaded();
   } catch (err) {
     console.error('News load failed:', err);
     setError(feed, 'Could not load posts. Please try again later.');
