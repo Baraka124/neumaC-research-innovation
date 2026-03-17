@@ -431,63 +431,116 @@
     .ps-divider-label svg{ width:11px;height:11px;opacity:.6; }
 
     /* Hero photo card */
+    /* Photo hero container */
     .ps-hero{
       position:relative;overflow:hidden;cursor:pointer;
       border-radius:var(--r-xl);border:1px solid rgba(255,255,255,.06);
     }
+
+    /* Gallery wrapper — shows one image at a time */
+    .ps-gallery{ position:relative;width:100%;height:520px;overflow:hidden; }
+    .ps-gallery-track{
+      display:flex;height:100%;
+      transition:transform .5s cubic-bezier(.4,0,.2,1);
+    }
+    .ps-gallery-slide{
+      min-width:100%;height:100%;flex-shrink:0;position:relative;
+    }
     .ps-hero-img{
-      width:100%;height:480px;object-fit:cover;display:block;
+      width:100%;height:100%;object-fit:cover;display:block;
       transition:transform .6s cubic-bezier(.4,0,.2,1);
     }
-    .ps-hero:hover .ps-hero-img{ transform:scale(1.02); }
+    .ps-hero:hover .ps-gallery-track:not(.sliding) .ps-hero-img{
+      transform:scale(1.02);
+    }
     .ps-hero-placeholder{
-      width:100%;height:480px;
+      width:100%;height:520px;
       background:linear-gradient(135deg,#1C2430 0%,#131920 50%,#1a2535 100%);
       display:flex;align-items:center;justify-content:center;
     }
-    .ps-hero-overlay{
-      position:absolute;inset:0;
-      background:linear-gradient(
-        to top,
-        rgba(5,10,18,.95) 0%,
-        rgba(5,10,18,.7)  30%,
-        rgba(5,10,18,.25) 60%,
-        transparent       85%
-      );
-      transition:opacity .3s;
+
+    /* Subtle corner vignette — not full overlay */
+    .ps-hero-vignette{
+      position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(ellipse at 0% 100%, rgba(5,10,18,.7) 0%, transparent 55%),
+        radial-gradient(ellipse at 100% 0%, rgba(5,10,18,.2) 0%, transparent 40%);
     }
-    .ps-hero:hover .ps-hero-overlay{ opacity:.9; }
-    .ps-hero-content{
-      position:absolute;bottom:0;left:0;right:0;
-      padding:2.5rem 2rem;
+
+    /* Glass info card — bottom left corner */
+    .ps-glass-card{
+      position:absolute;bottom:1.5rem;left:1.5rem;
+      max-width:min(480px,calc(100% - 3rem));
+      background:rgba(8,14,26,.72);
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:12px;padding:1rem 1.25rem;
+      pointer-events:none;
     }
     .ps-badge{
       display:inline-flex;align-items:center;gap:.4rem;
-      font-size:.6rem;font-weight:700;text-transform:uppercase;
-      letter-spacing:.1em;padding:.25rem .7rem;border-radius:3px;
-      background:rgba(255,255,255,.12);color:rgba(255,255,255,.92);
-      border:1px solid rgba(255,255,255,.22);
-      backdrop-filter:blur(6px);margin-bottom:.875rem;
+      font-size:.58rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.1em;padding:.2rem .6rem;border-radius:3px;
+      background:rgba(255,255,255,.1);color:rgba(255,255,255,.88);
+      border:1px solid rgba(255,255,255,.2);margin-bottom:.625rem;
     }
     .ps-badge svg{ width:9px;height:9px; }
     .ps-hero-title{
       font-family:var(--ff-display);
-      font-size:clamp(1.375rem,3vw,2rem);
-      font-weight:900;line-height:1.2;letter-spacing:-.02em;
-      color:#fff;margin-bottom:.625rem;
-      text-shadow:0 2px 16px rgba(0,0,0,.6);
-      max-width:680px;
-    }
-    .ps-hero-caption{
-      font-size:.9375rem;color:rgba(255,255,255,.78);
-      line-height:1.7;max-width:580px;margin-bottom:.875rem;
+      font-size:clamp(1rem,2vw,1.3125rem);
+      font-weight:700;line-height:1.25;letter-spacing:-.015em;
+      color:#fff;margin-bottom:.5rem;
     }
     .ps-hero-meta{
-      display:flex;align-items:center;gap:.625rem;
-      font-size:.68rem;font-family:var(--ff-mono);
-      color:rgba(255,255,255,.58);
+      display:flex;align-items:center;gap:.5rem;
+      font-size:.65rem;font-family:var(--ff-mono);
+      color:rgba(255,255,255,.65);
     }
-    .ps-meta-dot{ width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.35); }
+    .ps-meta-dot{ width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.4); }
+    .ps-read-hint{
+      display:inline-flex;align-items:center;gap:.3rem;
+      font-size:.6rem;font-family:var(--ff-mono);
+      color:rgba(255,255,255,.42);margin-top:.5rem;
+    }
+    .ps-read-hint svg{ width:9px;height:9px; }
+
+    /* Gallery dot nav */
+    .ps-dots{
+      position:absolute;bottom:1.5rem;right:1.5rem;
+      display:flex;gap:.375rem;align-items:center;
+    }
+    .ps-dot{
+      width:6px;height:6px;border-radius:50%;
+      background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.18);
+      cursor:pointer;transition:all .2s;
+    }
+    .ps-dot.active{
+      background:#fff;width:18px;border-radius:3px;
+    }
+    /* Gallery arrows */
+    .ps-arrow{
+      position:absolute;top:50%;transform:translateY(-50%);
+      width:36px;height:36px;border-radius:50%;
+      background:rgba(8,14,26,.65);backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.15);
+      color:rgba(255,255,255,.85);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .2s;z-index:10;
+    }
+    .ps-arrow:hover{ background:rgba(8,14,26,.88);border-color:rgba(255,255,255,.35); }
+    .ps-arrow svg{ width:14px;height:14px; }
+    .ps-arrow-l{ left:.875rem; }
+    .ps-arrow-r{ right:.875rem; }
+    .ps-arrow[hidden]{ display:none; }
+    /* Image counter */
+    .ps-counter{
+      position:absolute;top:.875rem;right:.875rem;
+      font-size:.6rem;font-family:var(--ff-mono);font-weight:600;
+      color:rgba(255,255,255,.82);padding:.2rem .55rem;border-radius:3px;
+      background:rgba(8,14,26,.65);backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .ps-hero-caption{ display:none; }
 
     /* Grid of smaller photo stories */
     .ps-grid{
@@ -1121,13 +1174,20 @@
       </div>`;
 
     if(p.post_type==='photo_story'){
-      const featImg = p.featured_image_url
-        ? `<img class="art-feat-img" src="${escHtml(p.featured_image_url)}" alt="" loading="lazy" style="height:420px;">`
-        : '';
+      const imgs = (p.featured_image_url||'').split(',').map(s=>s.trim()).filter(Boolean);
+      const gallery = imgs.length > 1
+        ? `<div style="display:flex;flex-direction:column;gap:12px;margin-bottom:1.75rem;">
+            ${imgs.map((url,i)=>`<img src="${escHtml(url)}" alt="" loading="${i===0?'eager':'lazy'}"
+              style="width:100%;max-height:460px;object-fit:cover;border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.08);">`).join('')}
+           </div>`
+        : imgs.length===1
+          ? `<img src="${escHtml(imgs[0])}" alt="" loading="eager"
+              style="width:100%;max-height:480px;object-fit:cover;border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.08);margin-bottom:1.75rem;">`
+          : '';
       return eyebrow
         + `<div class="art-title">${escHtml(p.title)}</div>`
         + byline
-        + featImg
+        + gallery
         + (p.body?`<div class="art-body"><p>${escHtml(p.body)}</p></div>`:'')
         + footer;
     }
@@ -1203,30 +1263,97 @@
     return `<div class="ps-hero-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`;
   }
 
+  // Parse comma-separated image URLs
+  function parseImages(url){
+    if(!url) return [];
+    return url.split(',').map(s=>s.trim()).filter(Boolean);
+  }
+
   function renderPhotoHero(p){
     const date   = fmtDate(p.published_at||p.created_at);
     const author = p.author ? drLastName(p.author.full_name) : '';
     const line   = p.research_line ? `<span class="ps-meta-dot"></span><span>L${p.research_line.line_number}</span>` : '';
-    const img    = p.featured_image_url
-      ? `<img class="ps-hero-img" src="${escHtml(p.featured_image_url)}" alt="" loading="lazy">`
-      : `<div class="ps-hero-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`;
+    const imgs   = parseImages(p.featured_image_url);
+    const pid    = 'psg-'+p.id.replace(/-/g,'').slice(0,8);
+    const multi  = imgs.length > 1;
+
+    const slides = imgs.length
+      ? imgs.map((url,i)=>`
+          <div class="ps-gallery-slide">
+            <img class="ps-hero-img" src="${escHtml(url)}" alt="" loading="${i===0?'eager':'lazy'}">
+          </div>`).join('')
+      : `<div class="ps-gallery-slide ps-hero-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+            </svg>
+         </div>`;
+
+    const dots = multi
+      ? `<div class="ps-dots" id="${pid}-dots">${imgs.map((_,i)=>`<div class="ps-dot${i===0?' active':''}" onclick="event.stopPropagation();psGoto('${pid}',${i})"></div>`).join('')}</div>`
+      : '';
+
+    const arrows = multi ? `
+      <button class="ps-arrow ps-arrow-l" id="${pid}-prev" onclick="event.stopPropagation();psSlide('${pid}',-1)" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="ps-arrow ps-arrow-r" id="${pid}-next" onclick="event.stopPropagation();psSlide('${pid}',1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>` : '';
+
+    const counter = multi
+      ? `<div class="ps-counter" id="${pid}-counter">1 / ${imgs.length}</div>`
+      : '';
 
     return `<div class="ps-hero reveal" data-post-id="${p.id}" onclick="openArticle('${p.id}')">
-      ${img}
-      <div class="ps-hero-overlay"></div>
-      <div class="ps-hero-content">
-        <div class="ps-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Photo Story
-        </div>
-        <div class="ps-hero-title">${escHtml(p.title)}</div>
-        ${p.body?`<div class="ps-hero-caption">${escHtml(p.body)}</div>`:''}
-        <div class="ps-hero-meta">
-          ${author?`<span>${author}</span><span class="ps-meta-dot"></span>`:''}
-          <span>${date}</span>${line}
+      <div class="ps-gallery" id="${pid}" data-idx="0" data-total="${imgs.length}">
+        <div class="ps-gallery-track" id="${pid}-track">${slides}</div>
+        <div class="ps-hero-vignette"></div>
+        ${arrows}${dots}${counter}
+        <div class="ps-glass-card">
+          <div class="ps-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Photo Story${multi?` · ${imgs.length} photos`:''}
+          </div>
+          <div class="ps-hero-title">${escHtml(p.title)}</div>
+          <div class="ps-hero-meta">
+            ${author?`<span>${author}</span><span class="ps-meta-dot"></span>`:''}
+            <span>${date}</span>${line}
+          </div>
+          <div class="ps-read-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Read full story
+          </div>
         </div>
       </div>
     </div>`;
+  }
+
+  // Gallery navigation
+  const _psState = {};
+  function psGoto(pid, idx){
+    const gallery = document.getElementById(pid);
+    if(!gallery) return;
+    const total = parseInt(gallery.dataset.total)||1;
+    idx = Math.max(0, Math.min(total-1, idx));
+    _psState[pid] = idx;
+    const track = document.getElementById(pid+'-track');
+    if(track) track.style.transform = `translateX(-${idx*100}%)`;
+    // Update dots
+    document.querySelectorAll(`#${pid}-dots .ps-dot`).forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // Update arrows
+    const prev = document.getElementById(pid+'-prev');
+    const next = document.getElementById(pid+'-next');
+    if(prev) prev.hidden = idx===0;
+    if(next) next.hidden = idx===total-1;
+    // Update counter
+    const counter = document.getElementById(pid+'-counter');
+    if(counter) counter.textContent = `${idx+1} / ${total}`;
+  }
+  function psSlide(pid, dir){
+    const gallery = document.getElementById(pid);
+    if(!gallery) return;
+    const cur = _psState[pid]||0;
+    psGoto(pid, cur+dir);
   }
 
   function renderPhotoGridItem(p, idx){
