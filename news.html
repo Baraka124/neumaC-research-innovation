@@ -192,7 +192,147 @@
     /* FOOTER */
     .footer{background:var(--ink);border-top:1px solid var(--rule);padding:3rem 0 1.5rem;margin-top:4rem;}
     .footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;font-size:.78rem;color:var(--text-muted);flex-wrap:wrap;}
-  </style>
+
+    /* ═══════════════════════════════════════════════════════
+       READER PANEL — Option 1: slide-in alongside feed
+    ═══════════════════════════════════════════════════════ */
+    .reader-panel{
+      position:fixed;top:var(--header-h);right:-480px;width:440px;
+      height:calc(100vh - var(--header-h));
+      background:#0e1620;border-left:1px solid rgba(255,255,255,.08);
+      z-index:500;transition:right .38s cubic-bezier(.4,0,.2,1);
+      display:flex;flex-direction:column;overflow:hidden;
+    }
+    .reader-panel.open{right:0;}
+    @media(max-width:900px){
+      .reader-panel{
+        width:100%;right:0;top:auto;bottom:-100%;
+        height:92vh;border-left:none;border-top:1px solid rgba(255,255,255,.1);
+        border-radius:16px 16px 0 0;transition:bottom .38s cubic-bezier(.4,0,.2,1);
+      }
+      .reader-panel.open{bottom:0;right:0;}
+    }
+    .reader-overlay{
+      position:fixed;inset:0;top:var(--header-h);background:rgba(0,0,0,0);
+      z-index:499;pointer-events:none;transition:background .38s;
+    }
+    .reader-overlay.open{background:rgba(0,0,0,.45);pointer-events:all;}
+
+    /* Reading progress bar */
+    .rdr-progress{height:2px;background:rgba(255,255,255,.06);flex-shrink:0;}
+    .rdr-progress-fill{height:100%;width:0%;transition:width .1s linear;}
+    .rdr-progress-fill.teal{background:var(--teal);}
+    .rdr-progress-fill.gold{background:var(--gold);}
+    .rdr-progress-fill.violet{background:var(--violet);}
+
+    /* Panel header */
+    .rdr-hdr{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.875rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.06);
+      flex-shrink:0;
+    }
+    .rdr-hdr-left{display:flex;align-items:center;gap:.625rem;}
+    .rdr-close{
+      width:30px;height:30px;border-radius:6px;border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      font-size:14px;transition:all .2s;flex-shrink:0;
+    }
+    .rdr-close:hover{background:rgba(255,255,255,.1);color:var(--text-primary);}
+    .rdr-mins{font-size:.65rem;font-family:var(--ff-mono);color:rgba(255,255,255,.25);}
+    @media(max-width:900px){
+      .rdr-hdr{padding-top:.5rem;}
+      .rdr-mob-handle{width:36px;height:3px;border-radius:2px;background:rgba(255,255,255,.15);margin:0 auto 2px;}
+    }
+
+    /* Scrollable reading area */
+    .rdr-body{
+      flex:1;overflow-y:auto;padding:2rem 1.75rem 3rem;
+      scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent;
+    }
+    .rdr-body::-webkit-scrollbar{width:4px;}
+    .rdr-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px;}
+
+    /* Reading typography */
+    .rdr-eyebrow{display:flex;align-items:center;gap:.625rem;margin-bottom:1.125rem;}
+    .rdr-title{
+      font-family:var(--ff-display);font-size:1.4375rem;font-weight:700;
+      color:var(--text-primary);line-height:1.22;letter-spacing:-.02em;
+      margin-bottom:1rem;
+    }
+    .rdr-byline{
+      display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;
+      font-size:.7rem;font-family:var(--ff-mono);color:rgba(255,255,255,.35);
+      padding-bottom:1.125rem;margin-bottom:1.375rem;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    .rdr-byline-author{
+      display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.6);
+    }
+    .rdr-avatar{
+      width:24px;height:24px;border-radius:50%;
+      background:rgba(58,191,191,.15);border:1px solid rgba(58,191,191,.25);
+      display:flex;align-items:center;justify-content:center;
+      font-size:.6rem;font-weight:700;color:var(--teal);font-family:var(--ff-mono);
+      flex-shrink:0;
+    }
+    .rdr-dot{width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.2);}
+
+    /* Article body text — full reading experience */
+    .rdr-content{max-width:58ch;}
+    .rdr-content p{
+      font-size:1rem;line-height:1.9;color:rgba(255,255,255,.78);
+      margin-bottom:1.375rem;font-family:var(--ff-body);
+    }
+    .rdr-content p:first-child{
+      font-size:1.0625rem;color:rgba(255,255,255,.85);
+      line-height:1.85;
+    }
+    .rdr-content p:last-child{margin-bottom:0;}
+
+    /* Update body in reader */
+    .rdr-update-body{
+      font-size:.9375rem;line-height:1.85;color:rgba(255,255,255,.72);
+      border-left:3px solid var(--gold);padding-left:1rem;
+    }
+
+    /* Publication in reader */
+    .rdr-pub-journal{
+      font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--violet);font-family:var(--ff-mono);margin-bottom:.5rem;
+    }
+    .rdr-pub-authors{
+      font-size:.875rem;color:rgba(255,255,255,.45);font-style:italic;
+      line-height:1.6;margin-bottom:1rem;
+    }
+    .rdr-pub-doi{
+      display:inline-flex;align-items:center;gap:.375rem;
+      font-size:.75rem;color:var(--violet);font-family:var(--ff-mono);
+      padding:.5rem .875rem;border:1px solid rgba(124,111,207,.25);
+      border-radius:6px;background:rgba(124,111,207,.06);transition:all .2s;
+    }
+    .rdr-pub-doi:hover{background:rgba(124,111,207,.12);border-color:rgba(124,111,207,.4);}
+
+    /* Feed item active state */
+    .post-feat.reading,.post-row.reading,.update-strip.reading,.pub-card.reading{
+      background:rgba(255,255,255,.03);
+    }
+    .post-feat.reading{border-left-color:var(--gold);}
+    .post-feat,.post-row,.update-strip,.pub-card{cursor:pointer;}
+
+    /* Smart excerpt — "Read more" toggle */
+    .excerpt-full{display:none;}
+    .read-more-hint{
+      display:inline-flex;align-items:center;gap:.3rem;
+      font-size:.7rem;font-family:var(--ff-mono);color:rgba(255,255,255,.25);
+      margin-top:.375rem;transition:color .2s;cursor:pointer;
+    }
+    .post-feat:hover .read-more-hint,
+    .post-row:hover .read-more-hint{color:var(--teal);}
+    .read-more-hint svg{width:10px;height:10px;transition:transform .2s;}
+    .post-feat:hover .read-more-hint svg,
+    .post-row:hover .read-more-hint svg{transform:translateX(2px);}
+    </style>
 </head>
 <body data-lang="en">
 <div id="progress-bar"></div>
@@ -312,6 +452,27 @@
 </div>
 
 <!-- FOOTER -->
+
+<!-- READER OVERLAY -->
+<div class="reader-overlay" id="readerOverlay" onclick="closeReader()"></div>
+
+<!-- READER PANEL -->
+<div class="reader-panel" id="readerPanel" role="complementary" aria-label="Article reader">
+  <div class="rdr-progress"><div class="rdr-progress-fill" id="rdrProgress"></div></div>
+  <div class="rdr-hdr">
+    <div class="rdr-hdr-left">
+      <div class="rdr-mob-handle" style="display:none" id="rdrHandle"></div>
+      <span class="rdr-mins" id="rdrMins"></span>
+    </div>
+    <button class="rdr-close" onclick="closeReader()" aria-label="Close reader" title="Close (Esc)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="rdr-body" id="rdrBody">
+    <!-- content injected by JS -->
+  </div>
+</div>
+
 <footer class="footer">
   <div class="container">
     <div class="footer-bottom">
@@ -398,18 +559,28 @@
     feed.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   }
 
+  // Smart excerpt: first 2 sentences, ending on full stop
+  function smartExcerpt(text, maxSentences=2){
+    if(!text) return '';
+    const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+    return sentences.slice(0, maxSentences).join(' ').trim();
+  }
+
   function renderFeatured(p){
     const readMins = p.word_count ? Math.max(1,Math.round(p.word_count/200)) : null;
     const wc = p.word_count ? `<span class="wc-bar-wrap"><span class="wc-bar"><span class="wc-fill" style="width:${Math.min(100,Math.round((p.word_count/400)*100))}%"></span></span>${p.word_count}w</span>` : '';
     const line = p.research_line ? `<span class="pm-dot"></span><span class="pm-line">L${p.research_line.line_number}</span>` : '';
+    const excerpt = smartExcerpt(p.body, 2);
+    const hasMore = p.body && p.body.length > excerpt.length + 10;
     const img = p.featured_image_url ? `<img src="${escHtml(p.featured_image_url)}" alt="" loading="lazy" style="width:100%;height:200px;object-fit:cover;border-radius:var(--r-lg);margin-top:1rem;border:1px solid var(--rule-light);">` : '';
-    return `<div class="post-feat reveal">
+    return `<div class="post-feat reveal" data-post-id="${p.id}" onclick="openReader('${p.id}')">
       <div class="post-eyebrow">
         <span class="type-badge tb-${p.post_type}">${p.post_type==='update'?'Update':p.post_type==='article'?'Article':'Publication'}</span>
         ${readMins?`<span class="read-time">~${readMins} min read</span>`:''}
       </div>
       <div class="feat-title">${escHtml(p.title)}</div>
-      ${p.body?`<div class="post-excerpt">${escHtml(p.body)}</div>`:''}
+      ${excerpt?`<div class="post-excerpt">${escHtml(excerpt)}</div>`:''}
+      ${hasMore?`<span class="read-more-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Read full article</span>`:''}
       <div class="post-meta">
         ${p.author?`<span class="pm-author">${drLastName(p.author.full_name)}</span><span class="pm-dot"></span>`:''}
         <span>${fmtDate(p.published_at||p.created_at)}</span>
@@ -428,7 +599,7 @@
     const line = p.research_line ? `<span class="pm-dot"></span><span class="pm-line">L${p.research_line.line_number}</span>` : '';
     const wc = p.word_count?`<span class="pm-dot"></span><span>${p.word_count}w</span>`:'';
     const readMins = p.word_count ? Math.max(1,Math.round(p.word_count/200)) : null;
-    return `<div class="post-row reveal">
+    return `<div class="post-row reveal" data-post-id="${p.id}" onclick="openReader('${p.id}')">
       <div class="pr-body">
         <div class="post-eyebrow">
           <span class="type-badge tb-article">Article</span>
@@ -447,7 +618,7 @@
     const lineTag = p.research_line ? `<span class="update-line-pill">L${p.research_line.line_number}</span>` : '';
     const authorTag = p.author ? `<span class="upd-author">${drLastName(p.author.full_name)}</span>` : '';
     const dotTag = (lineTag||authorTag) ? `<span class="upd-dot"></span>` : '';
-    return `<div class="update-strip reveal">
+    return `<div class="update-strip reveal" data-post-id="${p.id}" onclick="openReader('${p.id}')">
       <div class="upd-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
       </div>
@@ -462,7 +633,7 @@
   function renderPub(p){
     const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
     const line = p.research_line ? `<span style="font-size:.6rem;color:rgba(255,255,255,.2);font-family:var(--ff-mono);"> · Line ${p.research_line.line_number}</span>` : '';
-    return `<div class="pub-card reveal">
+    return `<div class="pub-card reveal" data-post-id="${p.id}" onclick="openReader('${p.id}')">
       <div class="pub-eyebrow">
         <span class="type-badge tb-publication">Publication</span>
         <span class="pub-journal">${escHtml(p.journal_name||'Journal')}</span>
@@ -513,6 +684,147 @@
   document.querySelectorAll('.flt').forEach(b=>{
     b.addEventListener('click',()=>setTypeFilter(b.dataset.type||''));
   });
+
+
+  // ─── READER PANEL ─────────────────────────────────────────────────
+  let activePostId = null;
+
+  function openReader(id){
+    const post = allPosts.find(p=>p.id===id);
+    if(!post) return;
+    activePostId = id;
+
+    // Render content
+    document.getElementById('rdrBody').innerHTML = renderReaderContent(post);
+    // Set progress colour
+    const prog = document.getElementById('rdrProgress');
+    prog.className = 'rdr-progress-fill ' + (post.post_type==='article'?'teal':post.post_type==='update'?'gold':'violet');
+    prog.style.width = '0%';
+    // Set reading time label
+    const mins = post.word_count ? Math.max(1,Math.round(post.word_count/200)) : null;
+    document.getElementById('rdrMins').textContent = mins ? `~${mins} min read` : '';
+
+    // Show panel
+    document.getElementById('readerPanel').classList.add('open');
+    document.getElementById('readerOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Show mobile handle
+    const isMob = window.innerWidth <= 900;
+    document.getElementById('rdrHandle').style.display = isMob ? 'block' : 'none';
+
+    // Highlight active feed item
+    document.querySelectorAll('[data-post-id]').forEach(el=>{
+      el.classList.toggle('reading', el.dataset.postId===id);
+    });
+
+    // Track scroll for progress bar
+    const body = document.getElementById('rdrBody');
+    body.scrollTop = 0;
+    body.onscroll = () => {
+      const max = body.scrollHeight - body.clientHeight;
+      prog.style.width = (max>0 ? Math.round(body.scrollTop/max*100) : 0)+'%';
+    };
+  }
+
+  function closeReader(){
+    document.getElementById('readerPanel').classList.remove('open');
+    document.getElementById('readerOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    document.querySelectorAll('[data-post-id]').forEach(el=>el.classList.remove('reading'));
+    activePostId = null;
+  }
+
+  // Esc key closes panel
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && activePostId) closeReader(); });
+
+  function getInitials(name){
+    if(!name) return '?';
+    const parts = (name||'').trim().split(/\s+/).filter(w=>w.replace('.','').length>1);
+    if(parts.length>=2) return (parts[0][0]+(parts[parts.length-1][0])).toUpperCase();
+    return name[0].toUpperCase();
+  }
+
+  // Render paragraphs from body text
+  function bodyToParagraphs(text){
+    if(!text) return '';
+    // Split on double newlines or single newlines, wrap each in <p>
+    const chunks = text.split(/\n{2,}/).map(s=>s.trim()).filter(Boolean);
+    if(chunks.length <= 1) {
+      // Single block — split into ~3 sentence paragraphs for readability
+      const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+      const paras = [];
+      for(let i=0;i<sentences.length;i+=3){
+        paras.push(sentences.slice(i,i+3).join(' ').trim());
+      }
+      return paras.map(p=>`<p>${escHtml(p)}</p>`).join('');
+    }
+    return chunks.map(p=>`<p>${escHtml(p)}</p>`).join('');
+  }
+
+  function renderReaderContent(p){
+    const typeLabel = p.post_type==='update'?'Update':p.post_type==='article'?'Article':'Publication';
+    const typeCls   = p.post_type==='update'?'tb-update':p.post_type==='article'?'tb-article':'tb-publication';
+    const date = fmtDate(p.published_at||p.created_at);
+    const mins = p.word_count ? Math.max(1,Math.round(p.word_count/200)) : null;
+    const initials = p.author ? getInitials(p.author.full_name) : '';
+    const lineBadge = p.research_line
+      ? `<span class="update-line-pill" style="font-size:.65rem">L${p.research_line.line_number} ${escHtml((p.research_line.name||'').split(' ').slice(0,2).join(' '))}</span>`
+      : '';
+
+    if(p.post_type==='publication'){
+      return `
+        <div class="rdr-eyebrow">
+          <span class="type-badge ${typeCls}">${typeLabel}</span>
+          ${lineBadge}
+        </div>
+        <div class="rdr-title">${escHtml(p.title)}</div>
+        <div class="rdr-byline">
+          ${p.author?`<div class="rdr-byline-author"><div class="rdr-avatar">${initials}</div>${p.author.full_name}</div><span class="rdr-dot"></span>`:''}
+          <span>${date}</span>
+        </div>
+        ${p.journal_name?`<div class="rdr-pub-journal">${escHtml(p.journal_name)}</div>`:''}
+        ${p.authors_text?`<div class="rdr-pub-authors">${escHtml(p.authors_text)}</div>`:''}
+        ${p.doi?`<a class="rdr-pub-doi" href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          DOI ${escHtml(p.doi)}</a>`:''}`;
+    }
+
+    if(p.post_type==='update'){
+      return `
+        <div class="rdr-eyebrow">
+          <span class="type-badge ${typeCls}">${typeLabel}</span>
+          ${lineBadge}
+        </div>
+        <div class="rdr-title">${escHtml(p.title)}</div>
+        <div class="rdr-byline">
+          ${p.author?`<div class="rdr-byline-author"><div class="rdr-avatar">${initials}</div>${p.author.full_name}</div><span class="rdr-dot"></span>`:''}
+          <span>${date}</span>
+          ${mins?`<span class="rdr-dot"></span><span>${mins} min read</span>`:''}
+        </div>
+        ${p.body?`<div class="rdr-update-body">${escHtml(p.body)}</div>`:''}`;
+    }
+
+    // Article
+    const featImg = p.featured_image_url
+      ? `<img src="${escHtml(p.featured_image_url)}" alt="" loading="lazy" style="width:100%;height:220px;object-fit:cover;border-radius:var(--r-lg);margin-bottom:1.5rem;border:1px solid rgba(255,255,255,.08);">`
+      : '';
+    return `
+      <div class="rdr-eyebrow">
+        <span class="type-badge ${typeCls}">${typeLabel}</span>
+        ${lineBadge}
+      </div>
+      <div class="rdr-title">${escHtml(p.title)}</div>
+      <div class="rdr-byline">
+        ${p.author?`<div class="rdr-byline-author"><div class="rdr-avatar">${initials}</div>${p.author.full_name}</div><span class="rdr-dot"></span>`:''}
+        <span>${date}</span>
+        ${mins?`<span class="rdr-dot"></span><span>~${mins} min read</span>`:''}
+        ${p.word_count?`<span class="rdr-dot"></span><span>${p.word_count}w</span>`:''}
+      </div>
+      ${featImg}
+      <div class="rdr-content">${bodyToParagraphs(p.body)}</div>`;
+  }
+  // ─── END READER PANEL ─────────────────────────────────────────────
 
   // Called by api.js once data is ready
   window.onNewsLoaded = function() {
