@@ -193,146 +193,225 @@
     .footer{background:var(--ink);border-top:1px solid var(--rule);padding:3rem 0 1.5rem;margin-top:4rem;}
     .footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;font-size:.78rem;color:var(--text-muted);flex-wrap:wrap;}
 
+  
     /* ═══════════════════════════════════════════════════════
-       READER PANEL — Option 1: slide-in alongside feed
+       ARTICLE READER — Option A: feed transforms to article
     ═══════════════════════════════════════════════════════ */
-    .reader-panel{
-      position:fixed;top:var(--header-h);right:-480px;width:440px;
-      height:calc(100vh - var(--header-h));
-      background:#0e1620;border-left:1px solid rgba(255,255,255,.08);
-      z-index:500;transition:right .38s cubic-bezier(.4,0,.2,1);
-      display:flex;flex-direction:column;overflow:hidden;
-    }
-    .reader-panel.open{right:0;}
-    @media(max-width:900px){
-      .reader-panel{
-        width:100%;right:0;top:auto;bottom:-100%;
-        height:92vh;border-left:none;border-top:1px solid rgba(255,255,255,.1);
-        border-radius:16px 16px 0 0;transition:bottom .38s cubic-bezier(.4,0,.2,1);
-      }
-      .reader-panel.open{bottom:0;right:0;}
-    }
-    .reader-overlay{
-      position:fixed;inset:0;top:var(--header-h);background:rgba(0,0,0,0);
-      z-index:499;pointer-events:none;transition:background .38s;
-    }
-    .reader-overlay.open{background:rgba(0,0,0,.45);pointer-events:all;}
 
-    /* Reading progress bar */
-    .rdr-progress{height:2px;background:rgba(255,255,255,.06);flex-shrink:0;}
-    .rdr-progress-fill{height:100%;width:0%;transition:width .1s linear;}
-    .rdr-progress-fill.teal{background:var(--teal);}
-    .rdr-progress-fill.gold{background:var(--gold);}
-    .rdr-progress-fill.violet{background:var(--violet);}
+    /* When reading — hide hero, filter, sidebar. Show reader. */
+    body.reading-mode .pg-hero{ display:none; }
+    body.reading-mode .filter-strip{ display:none; }
+    body.reading-mode .news-layout{ display:block; }
+    body.reading-mode .news-sidebar{ display:none; }
+    body.reading-mode .news-feed{ border-right:none; }
+    body.reading-mode #newsFeed{ display:none; }
 
-    /* Panel header */
-    .rdr-hdr{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:.875rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.06);
-      flex-shrink:0;
+    /* Reading chrome — sticky top bar */
+    .art-chrome{
+      display:none;position:sticky;top:var(--header-h);z-index:100;
+      background:rgba(11,15,20,.96);backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      align-items:center;justify-content:space-between;
+      padding:0 0;height:48px;
     }
-    .rdr-hdr-left{display:flex;align-items:center;gap:.625rem;}
-    .rdr-close{
-      width:30px;height:30px;border-radius:6px;border:1px solid rgba(255,255,255,.1);
-      background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);
-      cursor:pointer;display:flex;align-items:center;justify-content:center;
-      font-size:14px;transition:all .2s;flex-shrink:0;
+    body.reading-mode .art-chrome{ display:flex; }
+    .art-chrome-inner{
+      width:100%;max-width:var(--max-w);margin:0 auto;
+      padding:0 2rem;display:flex;align-items:center;
+      justify-content:space-between;gap:1rem;
     }
-    .rdr-close:hover{background:rgba(255,255,255,.1);color:var(--text-primary);}
-    .rdr-mins{font-size:.65rem;font-family:var(--ff-mono);color:rgba(255,255,255,.25);}
-    @media(max-width:900px){
-      .rdr-hdr{padding-top:.5rem;}
-      .rdr-mob-handle{width:36px;height:3px;border-radius:2px;background:rgba(255,255,255,.15);margin:0 auto 2px;}
+    .art-back-btn{
+      display:inline-flex;align-items:center;gap:.5rem;
+      font-size:.75rem;font-family:var(--ff-mono);font-weight:600;
+      color:rgba(255,255,255,.45);cursor:pointer;
+      padding:.375rem .75rem;border-radius:6px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);
+      transition:all .2s;letter-spacing:.03em;flex-shrink:0;
     }
+    .art-back-btn:hover{ color:var(--text-primary);border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08); }
+    .art-back-btn svg{ width:12px;height:12px; }
+    .art-chrome-title{
+      font-size:.8125rem;font-weight:600;color:rgba(255,255,255,.5);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      max-width:500px;letter-spacing:-.01em;
+    }
+    .art-nav-btns{ display:flex;gap:.375rem;flex-shrink:0; }
+    .art-nav-btn{
+      display:inline-flex;align-items:center;gap:.35rem;
+      font-size:.7rem;font-family:var(--ff-mono);
+      color:rgba(255,255,255,.35);cursor:pointer;
+      padding:.3rem .7rem;border-radius:6px;
+      border:1px solid rgba(255,255,255,.08);
+      background:transparent;transition:all .2s;white-space:nowrap;
+    }
+    .art-nav-btn:hover{ color:var(--text-primary);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.05); }
+    .art-nav-btn:disabled{ opacity:.25;cursor:default; }
+    .art-nav-btn svg{ width:11px;height:11px; }
 
-    /* Scrollable reading area */
-    .rdr-body{
-      flex:1;overflow-y:auto;padding:2rem 1.75rem 3rem;
-      scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent;
+    /* Reading progress bar — below chrome */
+    .art-progress-bar{
+      display:none;height:2px;background:rgba(255,255,255,.06);
+      position:sticky;top:calc(var(--header-h) + 48px);z-index:99;
     }
-    .rdr-body::-webkit-scrollbar{width:4px;}
-    .rdr-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px;}
+    body.reading-mode .art-progress-bar{ display:block; }
+    .art-progress-fill{
+      height:100%;width:0%;
+      transition:width .08s linear;
+    }
+    .art-progress-fill.teal{ background:var(--teal); }
+    .art-progress-fill.gold{ background:var(--gold); }
+    .art-progress-fill.violet{ background:var(--violet); }
+
+    /* Article reader surface */
+    #articleReader{
+      display:none;
+      max-width:768px;margin:0 auto;
+      padding:3rem 2rem 6rem;
+      animation:art-fade-in .35s ease;
+    }
+    body.reading-mode #articleReader{ display:block; }
+    @keyframes art-fade-in{
+      from{opacity:0;transform:translateY(16px);}
+      to{opacity:1;transform:none;}
+    }
+    @media(max-width:768px){ #articleReader{ padding:2rem 1.25rem 4rem; } }
 
     /* Reading typography */
-    .rdr-eyebrow{display:flex;align-items:center;gap:.625rem;margin-bottom:1.125rem;}
-    .rdr-title{
-      font-family:var(--ff-display);font-size:1.4375rem;font-weight:700;
-      color:var(--text-primary);line-height:1.22;letter-spacing:-.02em;
-      margin-bottom:1rem;
+    .art-eyebrow{ display:flex;align-items:center;gap:.625rem;margin-bottom:1.25rem;flex-wrap:wrap; }
+    .art-line-badge{
+      font-size:.65rem;font-weight:700;padding:.2rem .55rem;
+      border-radius:3px;background:rgba(58,191,191,.08);
+      color:var(--teal);border:1px solid rgba(58,191,191,.18);
+      font-family:var(--ff-mono);letter-spacing:.04em;
     }
-    .rdr-byline{
-      display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;
-      font-size:.7rem;font-family:var(--ff-mono);color:rgba(255,255,255,.35);
-      padding-bottom:1.125rem;margin-bottom:1.375rem;
-      border-bottom:1px solid rgba(255,255,255,.07);
+    .art-read-time{ font-size:.65rem;font-family:var(--ff-mono);color:rgba(255,255,255,.25); }
+    .art-title{
+      font-family:var(--ff-display);
+      font-size:clamp(1.625rem,3.5vw,2.25rem);
+      font-weight:900;line-height:1.18;letter-spacing:-.025em;
+      color:var(--text-primary);margin-bottom:1.25rem;
     }
-    .rdr-byline-author{
-      display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.6);
+    .art-byline{
+      display:flex;flex-wrap:wrap;align-items:center;gap:.625rem;
+      font-size:.75rem;font-family:var(--ff-mono);color:rgba(255,255,255,.35);
+      padding-bottom:1.375rem;margin-bottom:1.75rem;
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
-    .rdr-avatar{
-      width:24px;height:24px;border-radius:50%;
-      background:rgba(58,191,191,.15);border:1px solid rgba(58,191,191,.25);
+    .art-byline-author{
+      display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.65);font-weight:500;
+    }
+    .art-avatar{
+      width:28px;height:28px;border-radius:50%;flex-shrink:0;
       display:flex;align-items:center;justify-content:center;
-      font-size:.6rem;font-weight:700;color:var(--teal);font-family:var(--ff-mono);
-      flex-shrink:0;
+      font-size:.6rem;font-weight:700;font-family:var(--ff-mono);
     }
-    .rdr-dot{width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.2);}
+    .art-avatar.teal{ background:rgba(58,191,191,.15);border:1px solid rgba(58,191,191,.25);color:var(--teal); }
+    .art-avatar.gold{ background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.25);color:var(--gold); }
+    .art-avatar.violet{ background:rgba(124,111,207,.15);border:1px solid rgba(124,111,207,.25);color:var(--violet); }
+    .art-byline-dot{ width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.2); }
 
-    /* Article body text — full reading experience */
-    .rdr-content{max-width:58ch;}
-    .rdr-content p{
-      font-size:1rem;line-height:1.9;color:rgba(255,255,255,.78);
-      margin-bottom:1.375rem;font-family:var(--ff-body);
-    }
-    .rdr-content p:first-child{
-      font-size:1.0625rem;color:rgba(255,255,255,.85);
-      line-height:1.85;
-    }
-    .rdr-content p:last-child{margin-bottom:0;}
-
-    /* Update body in reader */
-    .rdr-update-body{
-      font-size:.9375rem;line-height:1.85;color:rgba(255,255,255,.72);
-      border-left:3px solid var(--gold);padding-left:1rem;
+    /* Featured image */
+    .art-feat-img{
+      width:100%;max-height:380px;object-fit:cover;
+      border-radius:var(--r-lg);margin-bottom:2rem;
+      border:1px solid rgba(255,255,255,.08);
     }
 
-    /* Publication in reader */
-    .rdr-pub-journal{
-      font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-      color:var(--violet);font-family:var(--ff-mono);margin-bottom:.5rem;
+    /* Article body */
+    .art-body p{
+      font-family:var(--ff-body);
+      font-size:1.0625rem;line-height:1.9;
+      color:rgba(255,255,255,.78);
+      margin-bottom:1.5rem;
+      max-width:65ch;
     }
-    .rdr-pub-authors{
-      font-size:.875rem;color:rgba(255,255,255,.45);font-style:italic;
-      line-height:1.6;margin-bottom:1rem;
+    .art-body p:first-child{
+      font-size:1.125rem;line-height:1.85;
+      color:rgba(255,255,255,.88);
     }
-    .rdr-pub-doi{
-      display:inline-flex;align-items:center;gap:.375rem;
-      font-size:.75rem;color:var(--violet);font-family:var(--ff-mono);
-      padding:.5rem .875rem;border:1px solid rgba(124,111,207,.25);
-      border-radius:6px;background:rgba(124,111,207,.06);transition:all .2s;
-    }
-    .rdr-pub-doi:hover{background:rgba(124,111,207,.12);border-color:rgba(124,111,207,.4);}
+    .art-body p:last-child{ margin-bottom:0; }
 
-    /* Feed item active state */
-    .post-feat.reading,.post-row.reading,.update-strip.reading,.pub-card.reading{
-      background:rgba(255,255,255,.03);
+    /* Update reader */
+    .art-update-body{
+      font-size:1.0625rem;line-height:1.9;
+      color:rgba(255,255,255,.75);
+      border-left:3px solid var(--gold);
+      padding:1rem 1.25rem;
+      background:rgba(201,168,76,.04);
+      border-radius:0 var(--r-md) var(--r-md) 0;
+      max-width:65ch;
     }
-    .post-feat.reading{border-left-color:var(--gold);}
-    .post-feat,.post-row,.update-strip,.pub-card{cursor:pointer;}
 
-    /* Smart excerpt — "Read more" toggle */
-    .excerpt-full{display:none;}
+    /* Publication reader */
+    .art-pub-journal{
+      font-size:.75rem;font-weight:700;letter-spacing:.1em;
+      text-transform:uppercase;color:var(--violet);
+      font-family:var(--ff-mono);margin-bottom:.625rem;
+    }
+    .art-pub-authors{
+      font-size:.9375rem;color:rgba(255,255,255,.5);
+      font-style:italic;line-height:1.7;margin-bottom:1.375rem;max-width:60ch;
+    }
+    .art-pub-doi{
+      display:inline-flex;align-items:center;gap:.5rem;
+      font-size:.8125rem;color:var(--violet);font-family:var(--ff-mono);
+      padding:.625rem 1rem;border:1px solid rgba(124,111,207,.25);
+      border-radius:8px;background:rgba(124,111,207,.06);
+      transition:all .2s;text-decoration:none;
+    }
+    .art-pub-doi:hover{ background:rgba(124,111,207,.12);border-color:rgba(124,111,207,.4); }
+    .art-pub-doi svg{ width:13px;height:13px; }
+
+    /* Prev / Next at bottom */
+    .art-footer{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-top:3.5rem;padding-top:2rem;
+      border-top:1px solid rgba(255,255,255,.08);gap:1rem;
+    }
+    .art-footer-nav{
+      display:flex;flex-direction:column;gap:.375rem;max-width:44%;cursor:pointer;
+    }
+    .art-footer-nav:hover .art-footer-nav-title{ color:var(--text-primary); }
+    .art-footer-nav-label{
+      font-size:.65rem;font-family:var(--ff-mono);color:rgba(255,255,255,.25);
+      display:flex;align-items:center;gap:.375rem;letter-spacing:.05em;
+    }
+    .art-footer-nav-label svg{ width:10px;height:10px; }
+    .art-footer-nav-title{
+      font-size:.875rem;font-weight:600;color:rgba(255,255,255,.55);
+      line-height:1.35;transition:color .2s;
+    }
+    .art-footer-back{
+      font-size:.75rem;font-family:var(--ff-mono);
+      color:rgba(255,255,255,.3);cursor:pointer;
+      padding:.5rem 1rem;border-radius:6px;
+      border:1px solid rgba(255,255,255,.08);transition:all .2s;
+    }
+    .art-footer-back:hover{ color:var(--text-primary);border-color:rgba(255,255,255,.2); }
+
+    /* Feed cards — clickable affordance */
+    .post-feat,.post-row,.update-strip,.pub-card{ cursor:pointer; }
+    .post-feat:hover .feat-title,
+    .post-row:hover .pr-title{ color:var(--teal); }
+    .update-strip:hover .upd-title{ color:var(--gold); }
+    .pub-card:hover .pub-title{ color:var(--violet); }
+    .post-feat,.post-row,.update-strip,.pub-card{ transition:background .2s; }
+    .post-feat:hover,.post-row:hover,.update-strip:hover,.pub-card:hover{
+      background:rgba(255,255,255,.02);
+    }
     .read-more-hint{
-      display:inline-flex;align-items:center;gap:.3rem;
-      font-size:.7rem;font-family:var(--ff-mono);color:rgba(255,255,255,.25);
-      margin-top:.375rem;transition:color .2s;cursor:pointer;
+      display:inline-flex;align-items:center;gap:.35rem;
+      font-size:.7rem;font-family:var(--ff-mono);color:rgba(255,255,255,.2);
+      margin-top:.5rem;transition:color .2s;
     }
+    .read-more-hint svg{ width:10px;height:10px;transition:transform .2s; }
     .post-feat:hover .read-more-hint,
-    .post-row:hover .read-more-hint{color:var(--teal);}
-    .read-more-hint svg{width:10px;height:10px;transition:transform .2s;}
+    .post-row:hover .read-more-hint{ color:var(--teal); }
     .post-feat:hover .read-more-hint svg,
-    .post-row:hover .read-more-hint svg{transform:translateX(2px);}
-    </style>
+    .post-row:hover .read-more-hint svg{ transform:translateX(3px); }
+
+  </style>
 </head>
 <body data-lang="en">
 <div id="progress-bar"></div>
@@ -410,6 +489,32 @@
   </div>
 </div>
 
+<!-- READING CHROME — visible only in reading-mode -->
+<div class="art-chrome" id="artChrome">
+  <div class="art-chrome-inner">
+    <button class="art-back-btn" onclick="closeArticle()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      <span lang="en">Back to feed</span><span lang="es">Volver</span>
+    </button>
+    <div class="art-chrome-title" id="artChromeTitle"></div>
+    <div class="art-nav-btns">
+      <button class="art-nav-btn" id="artPrevBtn" onclick="navigatePost(-1)" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        <span lang="en">Prev</span><span lang="es">Ant.</span>
+      </button>
+      <button class="art-nav-btn" id="artNextBtn" onclick="navigatePost(1)" disabled>
+        <span lang="en">Next</span><span lang="es">Sig.</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="art-progress-bar"><div class="art-progress-fill" id="artProgressFill"></div></div>
+
+<!-- ARTICLE READER — injected by JS -->
+<div id="articleReader"></div>
+
+
 <!-- MAIN -->
 <div class="container" style="padding-top:0;padding-bottom:0;">
   <div class="news-layout">
@@ -452,26 +557,6 @@
 </div>
 
 <!-- FOOTER -->
-
-<!-- READER OVERLAY -->
-<div class="reader-overlay" id="readerOverlay" onclick="closeReader()"></div>
-
-<!-- READER PANEL -->
-<div class="reader-panel" id="readerPanel" role="complementary" aria-label="Article reader">
-  <div class="rdr-progress"><div class="rdr-progress-fill" id="rdrProgress"></div></div>
-  <div class="rdr-hdr">
-    <div class="rdr-hdr-left">
-      <div class="rdr-mob-handle" style="display:none" id="rdrHandle"></div>
-      <span class="rdr-mins" id="rdrMins"></span>
-    </div>
-    <button class="rdr-close" onclick="closeReader()" aria-label="Close reader" title="Close (Esc)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-  <div class="rdr-body" id="rdrBody">
-    <!-- content injected by JS -->
-  </div>
-</div>
 
 <footer class="footer">
   <div class="container">
@@ -573,7 +658,7 @@
     const excerpt = smartExcerpt(p.body, 2);
     const hasMore = p.body && p.body.length > excerpt.length + 10;
     const img = p.featured_image_url ? `<img src="${escHtml(p.featured_image_url)}" alt="" loading="lazy" style="width:100%;height:200px;object-fit:cover;border-radius:var(--r-lg);margin-top:1rem;border:1px solid var(--rule-light);">` : '';
-    return `<div class="post-feat reveal" data-post-id="${p.id}" onclick="openReader('${p.id}')">
+    return `<div class="post-feat reveal" data-post-id="${p.id}" onclick="openArticle('${p.id}')">
       <div class="post-eyebrow">
         <span class="type-badge tb-${p.post_type}">${p.post_type==='update'?'Update':p.post_type==='article'?'Article':'Publication'}</span>
         ${readMins?`<span class="read-time">~${readMins} min read</span>`:''}
@@ -599,7 +684,7 @@
     const line = p.research_line ? `<span class="pm-dot"></span><span class="pm-line">L${p.research_line.line_number}</span>` : '';
     const wc = p.word_count?`<span class="pm-dot"></span><span>${p.word_count}w</span>`:'';
     const readMins = p.word_count ? Math.max(1,Math.round(p.word_count/200)) : null;
-    return `<div class="post-row reveal" data-post-id="${p.id}" onclick="openReader('${p.id}')">
+    return `<div class="post-row reveal" data-post-id="${p.id}" onclick="openArticle('${p.id}')">
       <div class="pr-body">
         <div class="post-eyebrow">
           <span class="type-badge tb-article">Article</span>
@@ -618,7 +703,7 @@
     const lineTag = p.research_line ? `<span class="update-line-pill">L${p.research_line.line_number}</span>` : '';
     const authorTag = p.author ? `<span class="upd-author">${drLastName(p.author.full_name)}</span>` : '';
     const dotTag = (lineTag||authorTag) ? `<span class="upd-dot"></span>` : '';
-    return `<div class="update-strip reveal" data-post-id="${p.id}" onclick="openReader('${p.id}')">
+    return `<div class="update-strip reveal" data-post-id="${p.id}" onclick="openArticle('${p.id}')">
       <div class="upd-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
       </div>
@@ -633,7 +718,7 @@
   function renderPub(p){
     const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
     const line = p.research_line ? `<span style="font-size:.6rem;color:rgba(255,255,255,.2);font-family:var(--ff-mono);"> · Line ${p.research_line.line_number}</span>` : '';
-    return `<div class="pub-card reveal" data-post-id="${p.id}" onclick="openReader('${p.id}')">
+    return `<div class="pub-card reveal" data-post-id="${p.id}" onclick="openArticle('${p.id}')">
       <div class="pub-eyebrow">
         <span class="type-badge tb-publication">Publication</span>
         <span class="pub-journal">${escHtml(p.journal_name||'Journal')}</span>
@@ -686,145 +771,213 @@
   });
 
 
-  // ─── READER PANEL ─────────────────────────────────────────────────
+  // ─── ARTICLE READER — Option A: feed transforms to article ─────────
+
   let activePostId = null;
-
-  function openReader(id){
-    const post = allPosts.find(p=>p.id===id);
-    if(!post) return;
-    activePostId = id;
-
-    // Render content
-    document.getElementById('rdrBody').innerHTML = renderReaderContent(post);
-    // Set progress colour
-    const prog = document.getElementById('rdrProgress');
-    prog.className = 'rdr-progress-fill ' + (post.post_type==='article'?'teal':post.post_type==='update'?'gold':'violet');
-    prog.style.width = '0%';
-    // Set reading time label
-    const mins = post.word_count ? Math.max(1,Math.round(post.word_count/200)) : null;
-    document.getElementById('rdrMins').textContent = mins ? `~${mins} min read` : '';
-
-    // Show panel
-    document.getElementById('readerPanel').classList.add('open');
-    document.getElementById('readerOverlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-
-    // Show mobile handle
-    const isMob = window.innerWidth <= 900;
-    document.getElementById('rdrHandle').style.display = isMob ? 'block' : 'none';
-
-    // Highlight active feed item
-    document.querySelectorAll('[data-post-id]').forEach(el=>{
-      el.classList.toggle('reading', el.dataset.postId===id);
-    });
-
-    // Track scroll for progress bar
-    const body = document.getElementById('rdrBody');
-    body.scrollTop = 0;
-    body.onscroll = () => {
-      const max = body.scrollHeight - body.clientHeight;
-      prog.style.width = (max>0 ? Math.round(body.scrollTop/max*100) : 0)+'%';
-    };
-  }
-
-  function closeReader(){
-    document.getElementById('readerPanel').classList.remove('open');
-    document.getElementById('readerOverlay').classList.remove('open');
-    document.body.style.overflow = '';
-    document.querySelectorAll('[data-post-id]').forEach(el=>el.classList.remove('reading'));
-    activePostId = null;
-  }
-
-  // Esc key closes panel
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && activePostId) closeReader(); });
 
   function getInitials(name){
     if(!name) return '?';
     const parts = (name||'').trim().split(/\s+/).filter(w=>w.replace('.','').length>1);
     if(parts.length>=2) return (parts[0][0]+(parts[parts.length-1][0])).toUpperCase();
-    return name[0].toUpperCase();
+    return (name[0]||'?').toUpperCase();
   }
 
-  // Render paragraphs from body text
   function bodyToParagraphs(text){
     if(!text) return '';
-    // Split on double newlines or single newlines, wrap each in <p>
     const chunks = text.split(/\n{2,}/).map(s=>s.trim()).filter(Boolean);
-    if(chunks.length <= 1) {
-      // Single block — split into ~3 sentence paragraphs for readability
-      const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-      const paras = [];
-      for(let i=0;i<sentences.length;i+=3){
-        paras.push(sentences.slice(i,i+3).join(' ').trim());
-      }
+    if(chunks.length<=1){
+      const sentences = text.match(/[^.!?]+[.!?]+/g)||[text];
+      const paras=[];
+      for(let i=0;i<sentences.length;i+=3) paras.push(sentences.slice(i,i+3).join(' ').trim());
       return paras.map(p=>`<p>${escHtml(p)}</p>`).join('');
     }
     return chunks.map(p=>`<p>${escHtml(p)}</p>`).join('');
   }
 
-  function renderReaderContent(p){
+  function getFilteredPosts(){
+    return allPosts.filter(p=>{
+      if(activeType && p.post_type!==activeType) return false;
+      if(activeLine && p.research_line?.id!==activeLine) return false;
+      return true;
+    });
+  }
+
+  function openArticle(id){
+    const post = allPosts.find(p=>p.id===id);
+    if(!post) return;
+    activePostId = id;
+
+    // Render article
+    document.getElementById('articleReader').innerHTML = renderArticleContent(post);
+
+    // Enter reading mode
+    document.body.classList.add('reading-mode');
+    window.scrollTo({top:0,behavior:'smooth'});
+
+    // Update chrome
+    document.getElementById('artChromeTitle').textContent = post.title;
+    const fill = document.getElementById('artProgressFill');
+    const typeClass = post.post_type==='article'?'teal':post.post_type==='update'?'gold':'violet';
+    fill.className = 'art-progress-fill ' + typeClass;
+    fill.style.width = '0%';
+
+    // Update prev/next
+    updateNavButtons(id);
+
+    // URL hash for shareability
+    try{ history.pushState({postId:id}, '', '#'+id); }catch(e){}
+
+    // Track scroll for progress
+    const onScroll = ()=>{
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      // Only count from article start
+      const artTop = document.getElementById('articleReader').offsetTop;
+      const artProgress = Math.max(0, scrolled - artTop);
+      const artTotal = Math.max(1, total - artTop);
+      fill.style.width = Math.min(100, Math.round(artProgress/artTotal*100))+'%';
+    };
+    window._artScrollHandler = onScroll;
+    window.addEventListener('scroll', onScroll, {passive:true});
+  }
+
+  function closeArticle(){
+    document.body.classList.remove('reading-mode');
+    activePostId = null;
+    document.getElementById('artProgressFill').style.width = '0%';
+    window.scrollTo({top:0,behavior:'smooth'});
+    if(window._artScrollHandler){
+      window.removeEventListener('scroll', window._artScrollHandler);
+      window._artScrollHandler = null;
+    }
+    try{ history.pushState(null,'','#'); }catch(e){}
+  }
+
+  function navigatePost(dir){
+    const posts = getFilteredPosts();
+    const idx = posts.findIndex(p=>p.id===activePostId);
+    const next = posts[idx+dir];
+    if(next) openArticle(next.id);
+  }
+
+  function updateNavButtons(id){
+    const posts = getFilteredPosts();
+    const idx = posts.findIndex(p=>p.id===id);
+    const prevBtn = document.getElementById('artPrevBtn');
+    const nextBtn = document.getElementById('artNextBtn');
+    if(prevBtn) prevBtn.disabled = idx<=0;
+    if(nextBtn) nextBtn.disabled = idx>=posts.length-1;
+  }
+
+  // Keyboard nav
+  document.addEventListener('keydown', e=>{
+    if(!activePostId) return;
+    if(e.key==='Escape') closeArticle();
+    if(e.key==='ArrowLeft') navigatePost(-1);
+    if(e.key==='ArrowRight') navigatePost(1);
+  });
+
+  // Handle browser back/forward
+  window.addEventListener('popstate', e=>{
+    if(e.state?.postId) openArticle(e.state.postId);
+    else if(activePostId) closeArticle();
+  });
+
+  // On load — if URL has a hash matching a post id, open it
+  function checkUrlHash(){
+    const hash = location.hash.slice(1);
+    if(hash && allPosts.find(p=>p.id===hash)) openArticle(hash);
+  }
+
+  function renderArticleContent(p){
     const typeLabel = p.post_type==='update'?'Update':p.post_type==='article'?'Article':'Publication';
     const typeCls   = p.post_type==='update'?'tb-update':p.post_type==='article'?'tb-article':'tb-publication';
+    const avatarCls = p.post_type==='update'?'gold':p.post_type==='article'?'teal':'violet';
     const date = fmtDate(p.published_at||p.created_at);
     const mins = p.word_count ? Math.max(1,Math.round(p.word_count/200)) : null;
     const initials = p.author ? getInitials(p.author.full_name) : '';
     const lineBadge = p.research_line
-      ? `<span class="update-line-pill" style="font-size:.65rem">L${p.research_line.line_number} ${escHtml((p.research_line.name||'').split(' ').slice(0,2).join(' '))}</span>`
+      ? `<span class="art-line-badge">L${p.research_line.line_number} — ${escHtml((p.research_line.name||'').split(' ').slice(0,3).join(' '))}</span>`
       : '';
 
+    const eyebrow = `
+      <div class="art-eyebrow">
+        <span class="type-badge ${typeCls}">${typeLabel}</span>
+        ${lineBadge}
+        ${mins?`<span class="art-read-time">~${mins} min read</span>`:''}
+      </div>`;
+
+    const byline = `
+      <div class="art-byline">
+        ${p.author?`
+          <div class="art-byline-author">
+            <div class="art-avatar ${avatarCls}">${initials}</div>
+            ${escHtml(p.author.full_name)}
+          </div>
+          <span class="art-byline-dot"></span>`:''}
+        <span>${date}</span>
+        ${p.word_count?`<span class="art-byline-dot"></span><span>${p.word_count}w</span>`:''}
+      </div>`;
+
+    // Footer prev/next
+    const posts = getFilteredPosts();
+    const idx = posts.findIndex(q=>q.id===p.id);
+    const prev = posts[idx-1];
+    const next = posts[idx+1];
+    const footer = `
+      <div class="art-footer">
+        ${prev?`
+          <div class="art-footer-nav" onclick="openArticle('${prev.id}')">
+            <div class="art-footer-nav-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+              Previous
+            </div>
+            <div class="art-footer-nav-title">${escHtml(prev.title)}</div>
+          </div>`:`<div></div>`}
+        <div class="art-footer-back" onclick="closeArticle()">↩ Back to feed</div>
+        ${next?`
+          <div class="art-footer-nav" onclick="openArticle('${next.id}')" style="text-align:right">
+            <div class="art-footer-nav-label" style="justify-content:flex-end">
+              Next
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="art-footer-nav-title">${escHtml(next.title)}</div>
+          </div>`:`<div></div>`}
+      </div>`;
+
     if(p.post_type==='publication'){
-      return `
-        <div class="rdr-eyebrow">
-          <span class="type-badge ${typeCls}">${typeLabel}</span>
-          ${lineBadge}
-        </div>
-        <div class="rdr-title">${escHtml(p.title)}</div>
-        <div class="rdr-byline">
-          ${p.author?`<div class="rdr-byline-author"><div class="rdr-avatar">${initials}</div>${p.author.full_name}</div><span class="rdr-dot"></span>`:''}
-          <span>${date}</span>
-        </div>
-        ${p.journal_name?`<div class="rdr-pub-journal">${escHtml(p.journal_name)}</div>`:''}
-        ${p.authors_text?`<div class="rdr-pub-authors">${escHtml(p.authors_text)}</div>`:''}
-        ${p.doi?`<a class="rdr-pub-doi" href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          DOI ${escHtml(p.doi)}</a>`:''}`;
+      return eyebrow
+        + `<div class="art-title">${escHtml(p.title)}</div>`
+        + byline
+        + (p.journal_name?`<div class="art-pub-journal">${escHtml(p.journal_name)}</div>`:'')
+        + (p.authors_text?`<div class="art-pub-authors">${escHtml(p.authors_text)}</div>`:'')
+        + (p.doi?`<a class="art-pub-doi" href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            DOI ${escHtml(p.doi)}</a>`:'')
+        + footer;
     }
 
     if(p.post_type==='update'){
-      return `
-        <div class="rdr-eyebrow">
-          <span class="type-badge ${typeCls}">${typeLabel}</span>
-          ${lineBadge}
-        </div>
-        <div class="rdr-title">${escHtml(p.title)}</div>
-        <div class="rdr-byline">
-          ${p.author?`<div class="rdr-byline-author"><div class="rdr-avatar">${initials}</div>${p.author.full_name}</div><span class="rdr-dot"></span>`:''}
-          <span>${date}</span>
-          ${mins?`<span class="rdr-dot"></span><span>${mins} min read</span>`:''}
-        </div>
-        ${p.body?`<div class="rdr-update-body">${escHtml(p.body)}</div>`:''}`;
+      return eyebrow
+        + `<div class="art-title">${escHtml(p.title)}</div>`
+        + byline
+        + (p.body?`<div class="art-update-body">${escHtml(p.body)}</div>`:'')
+        + footer;
     }
 
     // Article
     const featImg = p.featured_image_url
-      ? `<img src="${escHtml(p.featured_image_url)}" alt="" loading="lazy" style="width:100%;height:220px;object-fit:cover;border-radius:var(--r-lg);margin-bottom:1.5rem;border:1px solid rgba(255,255,255,.08);">`
+      ? `<img class="art-feat-img" src="${escHtml(p.featured_image_url)}" alt="" loading="lazy">`
       : '';
-    return `
-      <div class="rdr-eyebrow">
-        <span class="type-badge ${typeCls}">${typeLabel}</span>
-        ${lineBadge}
-      </div>
-      <div class="rdr-title">${escHtml(p.title)}</div>
-      <div class="rdr-byline">
-        ${p.author?`<div class="rdr-byline-author"><div class="rdr-avatar">${initials}</div>${p.author.full_name}</div><span class="rdr-dot"></span>`:''}
-        <span>${date}</span>
-        ${mins?`<span class="rdr-dot"></span><span>~${mins} min read</span>`:''}
-        ${p.word_count?`<span class="rdr-dot"></span><span>${p.word_count}w</span>`:''}
-      </div>
-      ${featImg}
-      <div class="rdr-content">${bodyToParagraphs(p.body)}</div>`;
+    return eyebrow
+      + `<div class="art-title">${escHtml(p.title)}</div>`
+      + byline
+      + featImg
+      + `<div class="art-body">${bodyToParagraphs(p.body)}</div>`
+      + footer;
   }
-  // ─── END READER PANEL ─────────────────────────────────────────────
+
+  // ─── END ARTICLE READER ──────────────────────────────────────────
 
   // Called by api.js once data is ready
   window.onNewsLoaded = function() {
@@ -832,6 +985,7 @@
     allPosts = posts;
     updateSidebar(posts);
     renderFeed();
+    checkUrlHash();
   };
 
   // Fallback if api.js hasn't loaded yet
