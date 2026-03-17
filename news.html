@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0"/>
   <title>News & Updates | neumAC R&I | Área Sanitaria de A Coruña y Cee</title>
   <meta name="description" content="Research updates, trial milestones, publications and department news from neumAC R&I — curated by the team, short by design."/>
+  <link rel="canonical" href="https://neumac.es/news.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="neumAC R&I"/>
+  <meta property="og:url" content="https://neumac.es/news.html"/>
+  <meta property="og:title" content="News & Updates | neumAC R&I"/>
+  <meta property="og:description" content="Research updates, trial milestones, publications and department news from neumAC R&I — the Área Sanitaria de A Coruña y Cee respiratory medicine research programme."/>
+  <meta property="og:image" content="https://neumac.es/og-news.jpg"/>
+  <meta property="og:locale" content="en_GB"/>
+  <meta property="og:locale:alternate" content="es_ES"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="News & Updates | neumAC R&I"/>
+  <meta name="twitter:description" content="Research updates, trial milestones, publications and department news from neumAC R&I — the Área Sanitaria de A Coruña y Cee respiratory medicine research programme."/>
+  <meta name="twitter:image" content="https://neumac.es/og-news.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -459,48 +472,58 @@
       display:flex;align-items:center;justify-content:center;
     }
 
-    /* Subtle corner vignette — not full overlay */
+    /* Deep bottom vignette — gives text a home without boxing it */
     .ps-hero-vignette{
       position:absolute;inset:0;pointer-events:none;
-      background:
-        radial-gradient(ellipse at 0% 100%, rgba(5,10,18,.7) 0%, transparent 55%),
-        radial-gradient(ellipse at 100% 0%, rgba(5,10,18,.2) 0%, transparent 40%);
+      background:linear-gradient(
+        to top,
+        rgba(4,8,18,.88) 0%,
+        rgba(4,8,18,.55) 22%,
+        rgba(4,8,18,.15) 45%,
+        transparent      65%
+      );
     }
 
-    /* Glass info card — bottom left corner */
+    /* Editorial text — sits on the vignette, no box */
     .ps-glass-card{
-      position:absolute;bottom:1.5rem;left:1.5rem;
-      max-width:min(480px,calc(100% - 3rem));
-      background:rgba(8,14,26,.72);
-      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:12px;padding:1rem 1.25rem;
+      position:absolute;bottom:0;left:0;right:0;
+      padding:2rem 2rem 1.75rem;
       pointer-events:none;
     }
+
+    /* Camera icon + "Photo Story" as a hairline label — not a pill */
     .ps-badge{
-      display:inline-flex;align-items:center;gap:.4rem;
-      font-size:.58rem;font-weight:700;text-transform:uppercase;
-      letter-spacing:.1em;padding:.2rem .6rem;border-radius:3px;
-      background:rgba(255,255,255,.1);color:rgba(255,255,255,.88);
-      border:1px solid rgba(255,255,255,.2);margin-bottom:.625rem;
+      display:inline-flex;align-items:center;gap:.45rem;
+      font-size:.6rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.18em;color:rgba(255,255,255,.58);
+      margin-bottom:.75rem;
     }
-    .ps-badge svg{ width:9px;height:9px; }
+    .ps-badge svg{ width:10px;height:10px;opacity:.7; }
+
+    /* Large editorial title */
     .ps-hero-title{
       font-family:var(--ff-display);
-      font-size:clamp(1rem,2vw,1.3125rem);
-      font-weight:700;line-height:1.25;letter-spacing:-.015em;
-      color:#fff;margin-bottom:.5rem;
+      font-size:clamp(1.1875rem,2.5vw,1.625rem);
+      font-weight:800;line-height:1.2;letter-spacing:-.02em;
+      color:#fff;margin-bottom:.625rem;
+      text-shadow:0 1px 8px rgba(0,0,0,.4);
+      max-width:640px;
     }
+
+    /* Author + date — mono, subtle */
     .ps-hero-meta{
       display:flex;align-items:center;gap:.5rem;
       font-size:.65rem;font-family:var(--ff-mono);
-      color:rgba(255,255,255,.65);
+      color:rgba(255,255,255,.58);
     }
-    .ps-meta-dot{ width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.4); }
+    .ps-meta-dot{ width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.35); }
+
+    /* Arrow hint — very subtle, right-aligned */
     .ps-read-hint{
-      display:inline-flex;align-items:center;gap:.3rem;
-      font-size:.6rem;font-family:var(--ff-mono);
-      color:rgba(255,255,255,.42);margin-top:.5rem;
+      display:inline-flex;align-items:center;gap:.35rem;
+      font-size:.6rem;font-family:var(--ff-mono);letter-spacing:.06em;
+      color:rgba(255,255,255,.38);margin-top:.625rem;
+      text-transform:uppercase;
     }
     .ps-read-hint svg{ width:9px;height:9px; }
 
