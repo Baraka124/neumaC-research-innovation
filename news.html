@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en"> 
+<html lang="en" data-lang="en">
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8"/>
@@ -283,6 +283,10 @@
       padding:3rem 2rem 6rem;
       animation:art-fade-in .35s ease;
     }
+    /* Photo story reader — no top padding, hero starts immediately */
+    #articleReader.reader--photo{
+      padding-top:0;
+    }
     body.reading-mode #articleReader{ display:block; }
     @keyframes art-fade-in{
       from{opacity:0;transform:translateY(16px);}
@@ -429,6 +433,7 @@
        PHOTO STORIES — Concept A: Cinematic full-bleed
     ═══════════════════════════════════════════════════════ */
     .photo-stories-section{ margin-top:0; }
+    body.reading-mode .photo-stories-section{ display:none; }
 
     .ps-divider{
       display:flex;align-items:center;gap:1.25rem;
@@ -699,6 +704,131 @@
       border-radius:var(--r-xl);
     }
     .ps-empty svg{ margin:0 auto .875rem;opacity:.2; }
+
+    /* ── PHOTO STORY READER ──────────────────────────────────── */
+
+    /* Full-bleed hero image at the top — no padding, edge to edge */
+    .ps-reader-hero{
+      position:relative;
+      width:calc(100% + 4rem);   /* break out of 768px container padding */
+      margin-left:-2rem;
+      overflow:hidden;
+      border-radius:0;
+      margin-bottom:0;
+    }
+    @media(max-width:768px){
+      .ps-reader-hero{ width:calc(100% + 2.5rem);margin-left:-1.25rem; }
+    }
+    .ps-reader-hero-img{
+      width:100%;
+      max-height:520px;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* Glass caption bar — sits over the bottom of the hero */
+    .ps-reader-caption-bar{
+      position:absolute;bottom:0;left:0;right:0;
+      background:linear-gradient(to top, rgba(4,8,18,.92) 0%, rgba(4,8,18,.6) 60%, transparent 100%);
+      padding:2.5rem 2rem 1.5rem;
+    }
+    .ps-reader-caption-title{
+      font-family:var(--ff-display);
+      font-size:clamp(1.375rem,3vw,2rem);
+      font-weight:900;line-height:1.2;letter-spacing:-.02em;
+      color:#fff;margin-bottom:.5rem;
+      text-shadow:0 2px 12px rgba(0,0,0,.5);
+    }
+    .ps-reader-caption-meta{
+      display:flex;align-items:center;gap:.625rem;
+      font-size:.72rem;font-family:var(--ff-mono);
+      color:rgba(255,255,255,.68);
+    }
+    .ps-reader-caption-dot{
+      width:2px;height:2px;border-radius:50%;
+      background:rgba(255,255,255,.4);
+    }
+
+    /* Additional images strip */
+    .ps-reader-gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:6px;
+      margin:1.5rem 0 2rem;
+      width:calc(100% + 4rem);
+      margin-left:-2rem;
+    }
+    @media(max-width:768px){
+      .ps-reader-gallery{ width:calc(100% + 2.5rem);margin-left:-1.25rem; }
+    }
+    .ps-reader-gallery img{
+      width:100%;height:260px;object-fit:cover;display:block;
+      cursor:pointer;transition:opacity .2s;
+    }
+    .ps-reader-gallery img:hover{ opacity:.85; }
+
+    /* Single extra image */
+    .ps-reader-img-single{
+      width:calc(100% + 4rem);margin-left:-2rem;
+      max-height:420px;object-fit:cover;display:block;
+      margin-bottom:1.75rem;
+    }
+    @media(max-width:768px){
+      .ps-reader-img-single{ width:calc(100% + 2.5rem);margin-left:-1.25rem; }
+    }
+
+    /* Caption body — styled as a pull quote */
+    .ps-reader-body{
+      font-size:1.0625rem;line-height:1.9;
+      color:rgba(255,255,255,.8);
+      border-left:3px solid rgba(255,255,255,.15);
+      padding:1rem 1.25rem;
+      margin:1.5rem 0 0;
+      font-style:italic;
+      max-width:65ch;
+    }
+
+    /* Photo story chrome — no title (image carries it), just type badge + nav */
+    .ps-chrome-badge{
+      display:inline-flex;align-items:center;gap:.4rem;
+      font-size:.6rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.14em;color:rgba(255,255,255,.6);
+      font-family:var(--ff-mono);
+    }
+    .ps-chrome-badge svg{ width:10px;height:10px; }
+
+    /* Lightbox overlay for tapping gallery images */
+    .ps-lightbox{
+      position:fixed;inset:0;z-index:9999;
+      background:rgba(0,0,0,.94);
+      display:flex;align-items:center;justify-content:center;
+      cursor:zoom-out;
+      animation:lb-in .2s ease;
+    }
+    @keyframes lb-in{ from{opacity:0}to{opacity:1} }
+    .ps-lightbox img{
+      max-width:94vw;max-height:94vh;
+      object-fit:contain;border-radius:4px;
+      cursor:default;
+    }
+    .ps-lightbox-close{
+      position:absolute;top:1.25rem;right:1.25rem;
+      width:40px;height:40px;border-radius:50%;
+      background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+      color:#fff;font-size:18px;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:background .2s;
+    }
+    .ps-lightbox-close:hover{ background:rgba(255,255,255,.2); }
+    .ps-photo-count{
+      display:inline-flex;align-items:center;gap:.35rem;
+      font-size:.65rem;font-family:var(--ff-mono);
+      color:rgba(255,255,255,.5);
+      padding:.2rem .55rem;border-radius:3px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.1);
+    }
+    .ps-photo-count svg{ width:10px;height:10px; }
   </style>
 </head>
 <body data-lang="en">
@@ -1126,16 +1256,36 @@
     activePostId = id;
 
     // Render article
-    document.getElementById('articleReader').innerHTML = renderArticleContent(post);
+    const reader = document.getElementById('articleReader');
+    reader.innerHTML = renderArticleContent(post);
+
+    // Photo stories get edge-to-edge treatment
+    if(post.post_type==='photo_story'){
+      reader.classList.add('reader--photo');
+    } else {
+      reader.classList.remove('reader--photo');
+    }
 
     // Enter reading mode
     document.body.classList.add('reading-mode');
     window.scrollTo({top:0,behavior:'smooth'});
 
-    // Update chrome
-    document.getElementById('artChromeTitle').textContent = post.title;
+    // Update chrome — photo stories get a badge instead of a title
+    const chromeTitle = document.getElementById('artChromeTitle');
+    if(post.post_type==='photo_story'){
+      chromeTitle.innerHTML = `<span class="ps-chrome-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        Photo Story
+      </span>`;
+    } else {
+      chromeTitle.textContent = post.title;
+    }
     const fill = document.getElementById('artProgressFill');
-    const typeClass = post.post_type==='article'?'teal':post.post_type==='update'?'gold':'violet';
+    const typeClass = post.post_type==='article'?'teal':post.post_type==='update'?'gold':post.post_type==='photo_story'?'teal':'violet';
     fill.className = 'art-progress-fill ' + typeClass;
     fill.style.width = '0%';
 
@@ -1278,21 +1428,63 @@
 
     if(p.post_type==='photo_story'){
       const imgs = (p.featured_image_url||'').split(',').map(s=>s.trim()).filter(Boolean);
-      const gallery = imgs.length > 1
-        ? `<div style="display:flex;flex-direction:column;gap:12px;margin-bottom:1.75rem;">
-            ${imgs.map((url,i)=>`<img src="${escHtml(url)}" alt="" loading="${i===0?'eager':'lazy'}"
-              style="width:100%;max-height:460px;object-fit:cover;border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.08);">`).join('')}
-           </div>`
-        : imgs.length===1
-          ? `<img src="${escHtml(imgs[0])}" alt="" loading="eager"
-              style="width:100%;max-height:480px;object-fit:cover;border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.08);margin-bottom:1.75rem;">`
+      const hero = imgs[0] || '';
+      const extras = imgs.slice(1);
+      const author = p.author ? drLastName(p.author.full_name) : '';
+      const photoCount = imgs.length > 1
+        ? `<span class="ps-photo-count">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            ${imgs.length} photos
+          </span>`
+        : '';
+
+      // Hero image full-bleed with title/meta overlaid
+      const heroHtml = hero
+        ? `<div class="ps-reader-hero">
+            <img class="ps-reader-hero-img" src="${escHtml(hero)}" alt="${escHtml(p.title)}" loading="eager">
+            <div class="ps-reader-caption-bar">
+              <div style="display:flex;align-items:center;gap:.625rem;margin-bottom:.625rem;">
+                <span class="type-badge tb-article" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.88);border-color:rgba(255,255,255,.2);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="9" height="9">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                  Photo Story
+                </span>
+                ${lineBadge}
+                ${photoCount}
+              </div>
+              <div class="ps-reader-caption-title">${escHtml(p.title)}</div>
+              <div class="ps-reader-caption-meta">
+                ${author?`<span>${author}</span><span class="ps-reader-caption-dot"></span>`:''}
+                <span>${date}</span>
+              </div>
+            </div>
+          </div>`
+        : `<div class="art-title">${escHtml(p.title)}</div>`;
+
+      // Extra images — grid if 2+, single full-bleed if 1
+      const extrasHtml = extras.length > 1
+        ? `<div class="ps-reader-gallery">
+            ${extras.map((url,i)=>`<img src="${escHtml(url)}" alt="" loading="lazy"
+              onclick="openLightbox('${escHtml(url)}')">`).join('')}
+          </div>`
+        : extras.length===1
+          ? `<img class="ps-reader-img-single" src="${escHtml(extras[0])}" alt="" loading="lazy"
+              onclick="openLightbox('${escHtml(extras[0])}')">`
           : '';
-      return eyebrow
-        + `<div class="art-title">${escHtml(p.title)}</div>`
-        + byline
-        + gallery
-        + (p.body?`<div class="art-body"><p>${escHtml(p.body)}</p></div>`:'')
-        + footer;
+
+      // Caption as a pull-quote style block
+      const captionHtml = p.body
+        ? `<div class="ps-reader-body">${escHtml(p.body)}</div>`
+        : '';
+
+      return heroHtml + extrasHtml + captionHtml + footer;
     }
 
     if(p.post_type==='publication'){
@@ -1487,6 +1679,22 @@
     </div>`;
   }
   // ─── END PHOTO STORIES ───────────────────────────────────────────
+
+  // ── LIGHTBOX for gallery images ─────────────────────────────
+  function openLightbox(url){
+    const lb = document.createElement('div');
+    lb.className = 'ps-lightbox';
+    lb.innerHTML = `
+      <button class="ps-lightbox-close" onclick="this.parentNode.remove()">×</button>
+      <img src="${url}" alt="">
+    `;
+    lb.addEventListener('click', e => { if(e.target === lb) lb.remove(); });
+    document.addEventListener('keydown', function esc(e){
+      if(e.key==='Escape'){ lb.remove(); document.removeEventListener('keydown',esc); }
+    });
+    document.body.appendChild(lb);
+  }
+  // ── END LIGHTBOX ──────────────────────────────────────────────
 
   // Called by api.js once data is ready
   window.onNewsLoaded = function() {
