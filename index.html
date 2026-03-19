@@ -36,7 +36,7 @@
       --ff-body:'DM Sans',system-ui,sans-serif;
       --ff-mono:'DM Mono',monospace;
       /* Layout */
-      --header-h:64px;--max-w:1280px;
+      --header-h:68px;--max-w:1400px;
       --r-sm:4px;--r-md:8px;--r-lg:12px;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -55,8 +55,8 @@
     .eyebrow.light{color:var(--accent-2);}
 
     /* Layout */
-    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 2.5rem;}
-    @media(max-width:768px){.container{padding:0 1.25rem;}}
+    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 3.5rem;}
+    @media(max-width:768px){.container{padding:0 1.5rem;}}
     .section{padding:7rem 0;}
     @media(max-width:768px){.section{padding:4.5rem 0;}}
 
@@ -217,6 +217,14 @@
 
     /* ── RESEARCH LINES — editorial list ── */
     .lines-section{background:var(--off-white);border-top:1px solid var(--rule-l);}
+    /* Loading state for api.js-rendered grids */
+    .lines-grid-new:empty::after,.lines-grid-new[data-loading]::after{
+      content:'';display:block;grid-column:1/-1;
+      height:4px;background:linear-gradient(90deg,transparent,var(--teal-lt),transparent);
+      background-size:200% 100%;animation:shimmer-slide 1.5s ease-in-out infinite;
+      border-radius:2px;
+    }
+    @keyframes shimmer-slide{0%{background-position:200% 0}100%{background-position:-200% 0}}
     .lt-new{
       font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
       padding:.18rem .5rem;border-radius:3px;
@@ -224,16 +232,27 @@
       white-space:nowrap;vertical-align:middle;
     }
     /* 2-column editorial grid — clean, not repetitive */
+    /* Research lines — flex 2-col at desktop, single col on mobile */
     .lines-grid-new{
       display:grid;grid-template-columns:1fr 1fr;
-      gap:1px;background:var(--mid-grey);
-      border:1px solid var(--mid-grey);border-radius:var(--r-lg);overflow:hidden;
+      border:1px solid var(--mid-grey);border-radius:var(--r-lg);
+      overflow:hidden;background:var(--white);
     }
-    @media(max-width:640px){.lines-grid-new{grid-template-columns:1fr;}}
+    @media(max-width:640px){.lines-grid-new{grid-template-columns:1fr;}}}
     .line-card{
       background:var(--white);padding:1.75rem 2rem;
       display:flex;align-items:flex-start;gap:1.25rem;
       transition:background .15s;cursor:pointer;text-decoration:none;
+      border-bottom:1px solid var(--mid-grey);border-right:1px solid var(--mid-grey);
+    }
+    /* Kill right border on odd items (right column) */
+    .line-card:nth-child(even){border-right:none;}
+    /* Kill bottom border on last two */
+    .line-card:nth-last-child(-n+2){border-bottom:none;}
+    @media(max-width:640px){
+      .line-card:nth-child(even){border-right:1px solid var(--mid-grey);}
+      .line-card:nth-last-child(-n+1){border-bottom:none;}
+      .line-card:nth-last-child(2){border-bottom:1px solid var(--mid-grey);}
     }
     .line-card:hover{background:var(--teal-lt);}
     .line-num{
@@ -258,9 +277,9 @@
 
     /* ── TWO PATHS — horizontal editorial layout ── */
     .paths-section{background:#0F2E2E;color:var(--text-on-dark);}
-    .paths-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--rule-d);border:1px solid var(--rule-d);border-radius:var(--r-lg);overflow:hidden;}
-    @media(min-width:768px){.paths-grid{grid-template-columns:1fr 1fr;}}
-    .path-card{background:#1F4040;padding:3rem 2.5rem;display:flex;flex-direction:column;gap:1.25rem;transition:background .2s;}
+    .paths-grid{display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);overflow:hidden;}
+    @media(min-width:768px){.paths-grid{flex-direction:row;}}
+    .path-card{background:#1A3E3E;padding:3rem 2.75rem;display:flex;flex-direction:column;gap:1.25rem;flex:1;transition:background .2s;}
     .path-card:hover{background:var(--navy-3);}
     .path-accent-line{width:32px;height:2px;border-radius:2px;}
     .path-card.clinical .path-accent-line{background:var(--accent-2);}
@@ -278,14 +297,14 @@
 
     /* ── INSTITUTION STRIP ── */
     .inst-section{background:var(--white);border-top:1px solid var(--rule-l);border-bottom:1px solid var(--rule-l);}
-    .inst-inner{display:grid;grid-template-columns:1fr;gap:3rem;align-items:center;}
-    @media(min-width:768px){.inst-inner{grid-template-columns:1fr 1fr;gap:5rem;}}
+    .inst-inner{display:flex;flex-direction:column;gap:3rem;}
+    @media(min-width:768px){.inst-inner{flex-direction:row;gap:5rem;align-items:flex-start;}.inst-text{flex:1.1;}.inst-badges{flex:1;}}
     .inst-text p{font-size:.9375rem;line-height:1.75;color:var(--text-on-light-2);margin-top:1rem;}
     .inst-badges{display:flex;flex-direction:column;gap:.75rem;}
     .inst-badge{
       display:flex;align-items:center;gap:1rem;
       padding:1rem 1.25rem;background:white;
-      border:1px solid var(--rule-l);border-radius:var(--r-md);
+      border-bottom:1px solid var(--mid-grey);border-right:1px solid var(--mid-grey);border-radius:var(--r-md);
       transition:border-color .2s;
     }
     .inst-badge:hover{border-color:var(--accent);}
@@ -299,18 +318,23 @@
     .inst-badge-full{font-family:var(--ff-mono);font-size:.6rem;color:var(--text-on-light-3);letter-spacing:.05em;margin-top:2px;}
 
     /* ── PARTNERS ── */
-    .partners-section{background:var(--off-white);}
-    .partner-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--rule-l);border:1px solid var(--rule-l);border-radius:var(--r-lg);overflow:hidden;}
-    @media(min-width:640px){.partner-grid{grid-template-columns:repeat(3,1fr);}}
-    .partner-card{background:white;padding:2rem 1.75rem;display:flex;flex-direction:column;gap:1rem;transition:background .2s;}
-    .partner-card:hover{background:var(--white);}
-    .pc-num{font-family:var(--ff-mono);font-size:.625rem;color:var(--text-on-light-3);letter-spacing:.1em;}
-    .pc-title{font-family:var(--ff-display);font-size:1.0625rem;font-weight:700;color:var(--text-on-light);}
-    .pc-desc{font-size:.875rem;line-height:1.7;color:var(--text-on-light-2);}
-    .pc-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:auto;}
-    .pc-tag{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .55rem;border-radius:3px;background:var(--blue-lt);color:var(--accent);border:1px solid rgba(11,94,174,.15);}
-    .pc-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.8125rem;font-weight:600;color:var(--accent);margin-top:.75rem;transition:gap .2s;}
-    .pc-link:hover{gap:.65rem;}
+    .partners-section{background:var(--white);}
+    .partner-list{display:flex;flex-direction:column;}
+    .partner-row{
+      display:flex;align-items:flex-start;gap:3rem;
+      padding:2.25rem 0;border-bottom:1px solid var(--rule-l);
+      transition:background .15s;
+    }
+    .partner-row:first-child{border-top:1px solid var(--rule-l);}
+    @media(max-width:640px){.partner-row{flex-direction:column;gap:1rem;}}
+    .pr-num{font-family:var(--ff-mono);font-size:.65rem;font-weight:600;color:var(--text-on-light-3);letter-spacing:.1em;width:1.75rem;flex-shrink:0;padding-top:.25rem;}
+    .pr-body{flex:1;min-width:0;}
+    .pr-title{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:var(--text-on-light);margin-bottom:.5rem;}
+    .pr-desc{font-size:.9rem;line-height:1.75;color:var(--text-on-light-2);max-width:640px;}
+    .pr-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.875rem;}
+    .pr-tag{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .55rem;border-radius:3px;background:var(--teal-lt);color:var(--accent);border:1px solid rgba(0,153,153,.2);}
+    .pr-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.8125rem;font-weight:600;color:var(--accent);margin-top:1rem;transition:gap .2s;}
+    .pr-link:hover{gap:.65rem;}
 
     /* ── CONTACT ── */
     .contact-section{background:var(--navy);}
@@ -387,10 +411,9 @@
       .pstat{padding:1.25rem 1rem;}
       .pstat-num{font-size:1.75rem;}
       .lines-grid-new{grid-template-columns:1fr;}
-      .paths-grid{grid-template-columns:1fr;}
+
       .path-card{padding:2rem 1.5rem;}
       .inst-inner{grid-template-columns:1fr;gap:2rem;}
-      .partner-grid{grid-template-columns:1fr;}
       .contact-layout{grid-template-columns:1fr;}
       .form-grid{grid-template-columns:1fr;}
       .form-group.span-2{grid-column:span 1;}
@@ -410,7 +433,7 @@
       .path-card{padding:1.5rem 1.25rem;}
       .partner-card{padding:1.5rem 1.25rem;}
       .form-card{padding:1.5rem;}
-      .container{padding:0 1rem;}
+      .container{padding:0 1.25rem;}
       /* Touch targets */
       .mob-toggle{width:44px;height:44px;}
       .lang-sw button{padding:.3rem .5rem;min-height:32px;}
@@ -516,7 +539,7 @@
           </div>
           <h1 class="display xl hero-title reveal reveal-d1" id="heroTitle">
             <span lang="en">Respiratory Medicine.<br>Carefully Investigated.<br><em>Openly Innovated.</em></span>
-            <span lang="es">Medicina Respiratoria.<br>Investigada con Cuidado.<br><em>Innovada Abiertamente.</em></span>
+            <span lang="es">Medicina Respiratoria.<br>Investigada con Dedicación.<br><em>Innovada Abiertamente.</em></span>
           </h1>
           <p class="hero-desc reveal reveal-d2">
             <span lang="en">Six research lines, active clinical trials, and an open Innovation Hub — at the Área Sanitaria de A Coruña y Cee, supported by INIBIC.</span>
@@ -563,11 +586,11 @@
             <div class="panel-stat-row">
               <div class="pstat">
                 <div class="pstat-num">6</div>
-                <div class="pstat-label"><span lang="en">Specialist Leads</span><span lang="es">Especialistas Líderes</span></div>
+                <div class="pstat-label"><span lang="en">Specialist Leads</span><span lang="es">Especialistas Coordinadores</span></div>
               </div>
               <div class="pstat">
                 <div class="pstat-num">&lt;6<span style="font-size:1rem;color:var(--accent-2);">w</span></div>
-                <div class="pstat-label"><span lang="en">Avg. Site Initiation</span><span lang="es">Inicio Promedio</span></div>
+                <div class="pstat-label"><span lang="en">Avg. Site Initiation</span><span lang="es">Activación media del centro</span></div>
               </div>
             </div>
             <div class="panel-nav">
@@ -591,9 +614,9 @@
   <section class="section lines-section" id="research-lines">
     <div class="container">
       <div class="sec-head reveal">
-        <p class="eyebrow"><span lang="en">Our Portfolio</span><span lang="es">Nuestro Portfolio</span></p>
+        <p class="eyebrow"><span lang="en">Our Portfolio</span><span lang="es">Nuestro Programa</span></p>
         <h2 class="display lg"><span lang="en">Six Research Lines</span><span lang="es">Seis Líneas de Investigación</span></h2>
-        <p><span lang="en">Each line is coordinated by a senior specialist running active trials and collaborative studies.</span><span lang="es">Cada línea está coordinada por un especialista senior ejecutando ensayos activos y estudios colaborativos.</span></p>
+        <p><span lang="en">Each line is coordinated by a senior specialist running active trials and collaborative studies.</span><span lang="es">Cada línea está dirigida por un especialista que lidera ensayos activos y estudios multicéntricos colaborativos.</span></p>
       </div>
 
       <div class="lines-grid-new reveal" id="researchLinesGrid">
@@ -669,14 +692,14 @@
   <section class="section paths-section" id="two-pillars">
     <div class="container">
       <div class="sec-head reveal">
-        <p class="eyebrow light"><span lang="en">Two Ways to Engage</span><span lang="es">Dos Formas de Colaborar</span></p>
+        <p class="eyebrow light"><span lang="en">Two Ways to Engage</span><span lang="es">Dos Vías de Colaboración</span></p>
         <h2 class="display lg" style="color:var(--text-on-dark);margin-top:.75rem;">
           <span lang="en">Research &amp; Innovation,<br>Side by Side</span>
           <span lang="es">Investigación e Innovación,<br>Lado a Lado</span>
         </h2>
         <p style="color:var(--text-on-dark-2);">
           <span lang="en">Whether your interest is clinical investigation or co-developing technology solutions, neumAC R&I offers a clear pathway.</span>
-          <span lang="es">Tanto si le interesa la investigación clínica como el co-desarrollo tecnológico, neumAC I+I ofrece una vía clara.</span>
+          <span lang="es">Tanto si su interés es la investigación clínica como el codesarrollo tecnológico, neumAC I+I dispone de un itinerario claro.</span>
         </p>
       </div>
 
@@ -684,30 +707,30 @@
         <div class="path-card clinical">
           <div class="path-accent-line"></div>
           <div class="path-eyebrow"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></div>
-          <h3 class="path-title"><span lang="en">Active Trials Across Six Specialisms</span><span lang="es">Ensayos Activos en Seis Especialidades</span></h3>
-          <p class="path-desc"><span lang="en">From Phase I–IV sponsored trials to investigator-initiated studies and academic collaborations — supported by INIBIC's GCP-compliant infrastructure.</span><span lang="es">Desde ensayos patrocinados Fase I–IV hasta estudios iniciados por investigadores, respaldados por la infraestructura GCP del INIBIC.</span></p>
+          <h3 class="path-title"><span lang="en">Active Trials Across Six Specialisms</span><span lang="es">Programa de Ensayos Clínicos en Seis Áreas</span></h3>
+          <p class="path-desc"><span lang="en">From Phase I–IV sponsored trials to investigator-initiated studies and academic collaborations — supported by INIBIC's GCP-compliant infrastructure.</span><span lang="es">Desde ensayos patrocinados de Fase I a IV hasta estudios iniciados por investigadores y colaboraciones académicas, con respaldo de la infraestructura GCP del INIBIC.</span></p>
           <ul class="path-list">
-            <li><span lang="en">Pre-phenotyped patient registries across all disease areas</span><span lang="es">Registros de pacientes pre-fenotipados en todas las áreas</span></li>
-            <li><span lang="en">Site initiation average under 6 weeks</span><span lang="es">Iniciación de sitio media inferior a 6 semanas</span></li>
-            <li><span lang="en">INIBIC-backed regulatory and ethics support</span><span lang="es">Soporte regulatorio y ético respaldado por INIBIC</span></li>
+            <li><span lang="en">Pre-phenotyped patient registries across all disease areas</span><span lang="es">Registros de pacientes pre-fenotipados en todas las áreas terapéuticas</span></li>
+            <li><span lang="en">Site initiation average under 6 weeks</span><span lang="es">Activación media del centro clínico: menos de 6 semanas</span></li>
+            <li><span lang="en">INIBIC-backed regulatory and ethics support</span><span lang="es">Asesoramiento regulatorio y ético con respaldo del INIBIC</span></li>
           </ul>
           <a href="clinical.html" class="path-btn">
-            <span lang="en">View Research Programme</span><span lang="es">Ver Programa de Investigación</span>
+            <span lang="en">View Research Programme</span><span lang="es">Consultar el Programa de Investigación</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
         <div class="path-card innovation">
           <div class="path-accent-line"></div>
           <div class="path-eyebrow"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></div>
-          <h3 class="path-title"><span lang="en">From Clinical Challenge to Deployed Solution</span><span lang="es">Del Desafío Clínico a la Solución Desplegada</span></h3>
-          <p class="path-desc"><span lang="en">Our Innovation Hub bridges unmet pulmonary clinical needs and validated technology — for medtech companies, AI developers, and digital health platforms entering the SERGAS network.</span><span lang="es">Nuestro Centro de Innovación conecta necesidades clínicas no cubiertas y tecnología validada para MedTech, IA y salud digital que accede a la red SERGAS.</span></p>
+          <h3 class="path-title"><span lang="en">From Clinical Challenge to Deployed Solution</span><span lang="es">De la Necesidad Clínica a la Solución Aplicada</span></h3>
+          <p class="path-desc"><span lang="en">Our Innovation Hub bridges unmet pulmonary clinical needs and validated technology — for medtech companies, AI developers, and digital health platforms entering the SERGAS network.</span><span lang="es">Nuestro Centro de Innovación conecta necesidades clínicas no atendidas con tecnología validada, facilitando el acceso de empresas de tecnología médica, inteligencia artificial y salud digital a la red asistencial del SERGAS.</span></p>
           <ul class="path-list">
-            <li><span lang="en">Four-phase framework: Insight → Co-Dev → Validation → Scale</span><span lang="es">Marco en cuatro fases: Conocimiento → Co-Dev → Validación → Escalado</span></li>
-            <li><span lang="en">Active co-development projects open to new partners</span><span lang="es">Proyectos de co-desarrollo abiertos a nuevos socios</span></li>
-            <li><span lang="en">CE MDR, SaMD, and AEMPS pathway support via INIBIC</span><span lang="es">Soporte CE MDR, SaMD y AEMPS a través del INIBIC</span></li>
+            <li><span lang="en">Four-phase framework: Insight → Co-Dev → Validation → Scale</span><span lang="es">Marco de trabajo en cuatro fases: Identificación → Codesarrollo → Validación → Escalado</span></li>
+            <li><span lang="en">Active co-development projects open to new partners</span><span lang="es">Proyectos activos de codesarrollo abiertos a nuevos socios</span></li>
+            <li><span lang="en">CE MDR, SaMD, and AEMPS pathway support via INIBIC</span><span lang="es">Asesoramiento en CE MDR, SaMD y AEMPS a través del INIBIC</span></li>
           </ul>
           <a href="innovation.html" class="path-btn" style="color:var(--teal-2);">
-            <span lang="en">Explore Innovation Hub</span><span lang="es">Explorar Centro de Innovación</span>
+            <span lang="en">Explore Innovation Hub</span><span lang="es">Conocer el Centro de Innovación</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -720,9 +743,9 @@
     <div class="container">
       <div class="inst-inner">
         <div class="inst-text reveal">
-          <p class="eyebrow"><span lang="en">Institutional Backbone</span><span lang="es">Respaldo Institucional</span></p>
+          <p class="eyebrow"><span lang="en">Institutional Backbone</span><span lang="es">Marco Institucional</span></p>
           <h2 class="display lg" style="margin-top:.75rem;"><span lang="en">Backed by INIBIC &amp; SERGAS</span><span lang="es">Respaldado por INIBIC y SERGAS</span></h2>
-          <p><span lang="en">Our research and innovation programme operates under INIBIC — Instituto de Investigación Biomédica de A Coruña — providing regulatory, ethical, and scientific infrastructure for high-quality clinical partnerships. Our position within SERGAS enables scale-up pathways across the Galician health network.</span><span lang="es">Nuestro programa opera bajo el paraguas del INIBIC, que proporciona infraestructura regulatoria, ética y científica. Nuestra posición en SERGAS permite el escalado en la red sanitaria gallega.</span></p>
+          <p><span lang="en">Our research and innovation programme operates under INIBIC — Instituto de Investigación Biomédica de A Coruña — providing regulatory, ethical, and scientific infrastructure for high-quality clinical partnerships. Our position within SERGAS enables scale-up pathways across the Galician health network.</span><span lang="es">El programa opera bajo el marco del INIBIC — Instituto de Investigación Biomédica de A Coruña —, que aporta la infraestructura regulatoria, ética y científica necesaria para la investigación clínica de calidad. Nuestra integración en el SERGAS facilita el escalado de proyectos en toda la red sanitaria gallega.</span></p>
         </div>
         <div class="inst-badges reveal reveal-d1">
           <div class="inst-badge">
@@ -762,32 +785,60 @@
   <section class="section partners-section" id="partners">
     <div class="container">
       <div class="sec-head center reveal">
-        <p class="eyebrow"><span lang="en">Who We Work With</span><span lang="es">Con Quién Trabajamos</span></p>
+        <p class="eyebrow"><span lang="en">Who We Work With</span><span lang="es">Con quién colaboramos</span></p>
         <h2 class="display lg" style="margin-top:.75rem;"><span lang="en">Partnership Pathways</span><span lang="es">Vías de Colaboración</span></h2>
-        <p><span lang="en">We work with pharmaceutical companies, medtech and digital health innovators, and academic institutions — each through a tailored engagement model.</span><span lang="es">Trabajamos con empresas farmacéuticas, innovadores MedTech y salud digital, e instituciones académicas, a través de modelos de colaboración personalizados.</span></p>
+        <p><span lang="en">We work with pharmaceutical companies, medtech and digital health innovators, and academic institutions — each through a tailored engagement model.</span><span lang="es">Colaboramos con la industria farmacéutica, empresas de tecnología médica y salud digital, e instituciones académicas y de investigación, adaptando el modelo de colaboración a cada perfil.</span></p>
       </div>
-      <div class="partner-grid reveal">
-        <div class="partner-card">
-          <div class="pc-num">01</div>
-          <h3 class="pc-title"><span lang="en">Pharma &amp; Biotech</span><span lang="es">Farmacéutica y Biotecnología</span></h3>
-          <p class="pc-desc"><span lang="en">Sponsor or co-investigate Phase II–IV trials across all respiratory disease lines. We offer rapid site qualification, pre-phenotyped patient cohorts, and GCP-compliant execution with INIBIC support.</span><span lang="es">Patrocine o co-investigue ensayos Fase II–IV en todas las líneas de enfermedades respiratorias con apoyo del INIBIC.</span></p>
-          <div class="pc-tags"><span class="pc-tag">Phase II–IV</span><span class="pc-tag">Site Qualification</span><span class="pc-tag">CRO collaboration</span></div>
-          <a href="clinical.html#contact" class="pc-link"><span lang="en">Explore Clinical Trials</span><span lang="es">Explorar Ensayos Clínicos</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <div class="partner-list reveal">
+
+        <div class="partner-row">
+          <div class="pr-num">01</div>
+          <div class="pr-body">
+            <div class="pr-title"><span lang="en">Pharma &amp; Biotech</span><span lang="es">Industria Farmacéutica y Biotecnología</span></div>
+            <p class="pr-desc">
+              <span lang="en">Sponsor or co-investigate Phase II–IV trials across our respiratory disease lines. We offer rapid site qualification, pre-phenotyped patient cohorts, and GCP-compliant execution supported by INIBIC.</span>
+              <span lang="es">Posibilidad de patrocinio o co-investigación en ensayos de Fase II–IV en todas nuestras líneas de enfermedad respiratoria. Ofrecemos cualificación rápida del centro, cohortes de pacientes pre-fenotipados y ejecución con cumplimiento GCP bajo el paraguas del INIBIC.</span>
+            </p>
+            <div class="pr-tags"><span class="pr-tag">Fase II–IV</span><span class="pr-tag">Site Qualification</span><span class="pr-tag">CRO</span></div>
+            <a href="clinical.html#contact" class="pr-link">
+              <span lang="en">Explore Clinical Trials</span><span lang="es">Consultar Programa de Ensayos</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
-        <div class="partner-card">
-          <div class="pc-num">02</div>
-          <h3 class="pc-title"><span lang="en">MedTech &amp; Digital Health</span><span lang="es">MedTech y Salud Digital</span></h3>
-          <p class="pc-desc"><span lang="en">Co-develop, validate, and scale medical devices, AI diagnostic tools, SaMD, and digital health platforms within our clinical environment through our structured four-phase pathway.</span><span lang="es">Co-desarrolle, valide y escale dispositivos médicos, herramientas de diagnóstico IA, SaMD y plataformas de salud digital en nuestro entorno clínico.</span></p>
-          <div class="pc-tags"><span class="pc-tag">CE MDR / SaMD</span><span class="pc-tag">Co-development</span><span class="pc-tag">AI validation</span></div>
-          <a href="innovation.html#contact" class="pc-link"><span lang="en">Explore Innovation Hub</span><span lang="es">Explorar Centro de Innovación</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+
+        <div class="partner-row">
+          <div class="pr-num">02</div>
+          <div class="pr-body">
+            <div class="pr-title"><span lang="en">MedTech &amp; Digital Health</span><span lang="es">Tecnología Médica y Salud Digital</span></div>
+            <p class="pr-desc">
+              <span lang="en">Co-develop, validate, and scale medical devices, AI diagnostic tools, SaMD, and digital health platforms within our clinical environment through our structured four-phase pathway.</span>
+              <span lang="es">Desarrollo conjunto, validación clínica y escalado de dispositivos médicos, herramientas de diagnóstico basadas en IA, SaMD y plataformas de salud digital, dentro de nuestro entorno clínico y a través de un itinerario estructurado en cuatro fases.</span>
+            </p>
+            <div class="pr-tags"><span class="pr-tag">CE MDR / SaMD</span><span class="pr-tag">Codesarrollo</span><span class="pr-tag">Validación IA</span></div>
+            <a href="innovation.html#contact" class="pr-link">
+              <span lang="en">Explore Innovation Hub</span><span lang="es">Conocer el Centro de Innovación</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
-        <div class="partner-card">
-          <div class="pc-num">03</div>
-          <h3 class="pc-title"><span lang="en">Academic &amp; Research</span><span lang="es">Académico e Investigador</span></h3>
-          <p class="pc-desc"><span lang="en">Join investigator-initiated studies, multi-centre academic consortia, and translational research programmes. Access our annotated clinical datasets, biobanked specimens, and specialist co-author network.</span><span lang="es">Únase a estudios iniciados por investigadores, consorcios académicos multicéntricos y programas de investigación traslacional.</span></p>
-          <div class="pc-tags"><span class="pc-tag">IIS / Academia</span><span class="pc-tag">Biobank access</span><span class="pc-tag">Co-authorship</span></div>
-          <a href="clinical.html#contact" class="pc-link"><span lang="en">Explore Research Collaboration</span><span lang="es">Explorar Colaboración</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+
+        <div class="partner-row">
+          <div class="pr-num">03</div>
+          <div class="pr-body">
+            <div class="pr-title"><span lang="en">Academic &amp; Research Institutions</span><span lang="es">Instituciones Académicas y de Investigación</span></div>
+            <p class="pr-desc">
+              <span lang="en">Join investigator-initiated studies, multi-centre academic consortia, and translational research programmes. Access our annotated clinical datasets, biobanked specimens, and specialist co-author network.</span>
+              <span lang="es">Participación en estudios iniciados por investigadores, consorcios académicos multicéntricos y programas de investigación traslacional. Acceso a nuestras bases de datos clínicas anotadas, muestras biobancadas y red de co-autoría especializada.</span>
+            </p>
+            <div class="pr-tags"><span class="pr-tag">IIS / Academia</span><span class="pr-tag">Biobanco</span><span class="pr-tag">Co-autoría</span></div>
+            <a href="clinical.html#contact" class="pr-link">
+              <span lang="en">Explore Research Collaboration</span><span lang="es">Consultar Colaboración Científica</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -797,8 +848,8 @@
     <div class="container">
       <div class="sec-head reveal">
         <p class="eyebrow light"><span lang="en">Get In Touch</span><span lang="es">Contáctenos</span></p>
-        <h2 class="display lg" style="color:var(--text-on-dark);margin-top:.75rem;"><span lang="en">Start a Conversation</span><span lang="es">Iniciar una Conversación</span></h2>
-        <p style="color:var(--text-on-dark-2);"><span lang="en">Whether you're qualifying our site, exploring a co-development opportunity, or simply want to learn more — our team responds within 2 business days.</span><span lang="es">Ya sea que esté calificando nuestro sitio, explorando una oportunidad de co-desarrollo o simplemente quiera saber más, nuestro equipo responde en 2 días hábiles.</span></p>
+        <h2 class="display lg" style="color:var(--text-on-dark);margin-top:.75rem;"><span lang="en">Start a Conversation</span><span lang="es">Póngase en contacto</span></h2>
+        <p style="color:var(--text-on-dark-2);"><span lang="en">Whether you're qualifying our site, exploring a co-development opportunity, or simply want to learn more — our team responds within 2 business days.</span><span lang="es">Si está evaluando nuestro centro para un ensayo, explorando una oportunidad de codesarrollo o simplemente desea ampliar información, nuestro equipo le responderá en un plazo de dos días hábiles.</span></p>
       </div>
       <div class="contact-layout">
         <div class="cinfo-list reveal">
@@ -891,10 +942,10 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <strong>neumAC R&amp;I</strong>
-          <p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Supporting respiratory and thoracic medicine through collaborative clinical research and open innovation.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Apoyando la medicina respiratoria y torácica mediante investigación clínica colaborativa e innovación abierta.</span></p>
+          <p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Supporting respiratory and thoracic medicine through collaborative clinical research and open innovation.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Investigación clínica colaborativa e innovación abierta en medicina respiratoria y torácica, Área Sanitaria de A Coruña y Cee.</span></p>
         </div>
         <div class="footer-col">
-          <h4><span lang="en">Navigate</span><span lang="es">Navegar</span></h4>
+          <h4><span lang="en">Navigate</span><span lang="es">Secciones</span></h4>
           <ul>
             <li><a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a></li>
             <li><a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a></li>
