@@ -27,8 +27,7 @@
       --text-on-light:#1A1A1A;--text-on-light-2:#404040;--text-on-light-3:#767676;
       --accent:#009999;--accent-2:#00B3B3;
       /* Legacy aliases */
-      --gold:#009999;--teal-old:#009999;
-      --text-primary:#F5F5F0;--text-secondary:#9DAEC4;--text-muted:#5D7494;
+            --text-primary:#F5F5F0;--text-secondary:#9DAEC4;--text-muted:#5D7494;
       --ff-display:'Fraunces',Georgia,serif;
       --ff-body:'DM Sans',system-ui,sans-serif;
       --ff-mono:'DM Mono',monospace;
@@ -131,8 +130,8 @@
     .btn-primary:hover{background:var(--accent);transform:translateY(-1px);}
     .btn-secondary{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;}
     .btn-secondary:hover{background:#007a7a;transform:translateY(-1px);}
-    .btn-gold{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;}
-    .btn-gold:hover{background:var(--accent);transform:translateY(-1px);}
+    .btn-primary-alt{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;}
+    .btn-primary-alt:hover{background:var(--accent);transform:translateY(-1px);}
     .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(255,255,255,.25);color:var(--text-on-dark);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:all .2s;}
     .btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.06);}
     .btn-ghost-dark{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid var(--rule-l);color:var(--ink-2);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:all .2s;}
@@ -1087,7 +1086,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <strong>neumAC R&amp;I</strong>
-          <p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Supporting respiratory and thoracic medicine through collaborative clinical research and open innovation.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Apoyando la medicina respiratoria y torácica mediante investigación clínica colaborativa e innovación abierta.</span></p>
+          <p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>A clinical research and innovation programme in respiratory and thoracic medicine at the Área Sanitaria de A Coruña y Cee.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Programa de investigación clínica e innovación en medicina respiratoria y torácica, Área Sanitaria de A Coruña y Cee.</span></p>
         </div>
         <div class="footer-col">
           <h4><span lang="en">Navigate</span><span lang="es">Navegar</span></h4>
@@ -1104,7 +1103,7 @@
           <address>
             <p>As Xubias, 84<br>15006 A Coruña, España</p>
             <p style="margin-top:.5rem;"><a href="tel:+34881111800">+34 881 111 800</a></p>
-            <p><a href="/cdn-cgi/l/email-protection#d7b9b2a2bab8b4b6a5b297a4b2a5b0b6a4f9b2a4"><span class="__cf_email__" data-cfemail="7a141f0f1715191b081f3a091f081d1b09541f09">[email&#160;protected]</span></a></p>
+            <p><a href="mailto:neumocare@sergas.es">neumocare@sergas.es</a></p>
             <p style="margin-top:.5rem;color:rgba(255,255,255,.2);font-size:.75rem;">INIBIC · Instituto de Investigación Biomédica A Coruña</p>
           </address>
         </div>
@@ -1118,7 +1117,7 @@
 
 
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     let _busy=false;
     function setLang(l){
       if(document.body.dataset.lang===l||_busy)return;
@@ -1156,4 +1155,12 @@
     });
     const io=new IntersectionObserver(entries=>{
       entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-    },{threshold:.1,rootMargin:
+    },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    try{const l=localStorage.getItem('huac_lang');if(l==='es')setLang('es');}catch(e){}
+  </script>
+
+
+  <script src="api.js"></script>
+</body>
+</html>
