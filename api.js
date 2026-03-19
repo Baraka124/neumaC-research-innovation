@@ -9,7 +9,7 @@
  *
  * Public endpoints:
  *   GET /api/research-lines/website
- *   GET /api/clinical-trials/website?line=&phase=&status=&search=
+ *   GET /api/clinical-trials/website?line=&phase=&status=&search= 
  *   GET /api/innovation-projects/website
  *   GET /api/news/website?type=&line=
  */
