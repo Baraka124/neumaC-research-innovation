@@ -66,12 +66,19 @@
     /* Header */
     .header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(10,22,40,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--rule-d);z-index:1000;transition:background .3s;}
     .header.solid{background:rgba(10,22,40,.99);}
-    .header-inner{display:flex;align-items:center;height:100%;gap:2.5rem;padding:0 clamp(1.5rem,4vw,5rem);max-width:none;}
+    .header-inner{
+      display:flex;align-items:center;height:100%;
+      padding:0 clamp(1.5rem,4vw,5rem);
+      gap:0;
+    }
+    /* Nav takes all remaining space, pushes right-group to far right */
+    .header-nav-spacer{flex:1;}
+    .header-right{display:flex;align-items:center;gap:1rem;flex-shrink:0;}
     .logo{display:flex;align-items:center;gap:.875rem;flex-shrink:0;text-decoration:none;}
     .logo-mark{width:32px;height:32px;background:var(--teal-2);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
     .logo-mark svg{width:18px;height:18px;color:#fff;}
     .logo-text{display:flex;flex-direction:column;gap:1px;}
-    .logo-name{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1;}
+    .logo-name{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1;} .logo-name sup{font-size:.55em;font-weight:400;color:rgba(255,255,255,.5);vertical-align:super;letter-spacing:.05em;}
     .logo-sub{font-family:var(--ff-mono);font-size:.52rem;color:rgba(255,255,255,.45);letter-spacing:.12em;text-transform:uppercase;line-height:1;}
     /* Legacy logo selectors */
     .logo-neun{font-family:var(--ff-display);font-size:1rem;font-weight:700;color:#fff;}
@@ -82,7 +89,7 @@
     .lang-sw button.active{color:var(--teal-2);background:rgba(0,153,153,.18);}
     .lang-sw button:not(.active):hover{color:rgba(255,255,255,.7);}
     .lang-sw-div{width:1px;height:10px;background:rgba(255,255,255,.1);flex-shrink:0;}
-    .nav{display:none;align-items:center;gap:.25rem;margin-left:auto;}
+    .nav{display:none;align-items:center;gap:.25rem;margin-left:2.5rem;}
     @media(min-width:1024px){.nav{display:flex;}}
     .nav a{padding:.5rem 1rem;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.65);border-radius:4px;transition:all .2s;white-space:nowrap;}
     .nav a:hover,.nav a.current{color:rgba(255,255,255,.9);}
@@ -208,9 +215,9 @@
     .fw-step:hover{background:var(--navy-2);border-color:rgba(124,111,207,.2);}
     .fw-num{width:26px;height:26px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff-mono);font-size:.65rem;font-weight:500;}
     .fw-step:nth-child(1) .fw-num{background:var(--teal-dim);color:var(--teal);}
-    .fw-step:nth-child(2) .fw-num{background:var(--gold-dim);color:var(--teal-2);}
+    .fw-step:nth-child(2) .fw-num{background:var(--teal-dim);color:var(--teal-2);}
     .fw-step:nth-child(3) .fw-num{background:var(--teal-dim);color:var(--teal-2);}
-    .fw-step:nth-child(4) .fw-num{background:var(--amber-dim);color:var(--amber);}
+    .fw-step:nth-child(4) .fw-num{background:var(--teal-dim);color:var(--teal-2);}
     .fw-step-label{font-size:.8375rem;font-weight:500;color:var(--text-secondary);}
 
     /* ══════════════════════════════════════════
@@ -225,7 +232,7 @@
         content:'';position:absolute;top:38px;
         left:calc(12.5% + 26px);right:calc(12.5% + 26px);
         height:2px;
-        background:linear-gradient(90deg,var(--teal),var(--teal-2),var(--teal-2),var(--amber));
+        background:linear-gradient(90deg,var(--teal),var(--teal-2),var(--teal-2),var(--teal-2));
         opacity:.25;z-index:0;
       }
     }
@@ -268,14 +275,14 @@
     .project-cat-badge{font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-on-dark-3);}
     .project-cat-badge svg{display:none;}
     .cat-device{background:var(--teal-dim);border:1px solid rgba(58,191,191,.2);color:var(--teal);}
-    .cat-digital{background:var(--gold-dim);border:1px solid rgba(201,168,76,.2);color:var(--teal-2);}
+    .cat-digital{background:var(--teal-dim);border:1px solid rgba(0,153,153,.15);color:var(--teal-2);}
     .cat-ai{background:var(--teal-dim);border:1px solid rgba(124,111,207,.2);color:var(--teal-2);}
     .cat-surgical{background:var(--coral-dim);border:1px solid rgba(224,92,75,.2);color:var(--teal-2);}
     .stage-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.22rem .6rem;border-radius:20px;font-size:.68rem;font-weight:600;flex-shrink:0;}
     .stage-badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;}
     .stage-pilot{background:rgba(58,191,191,.1);color:var(--teal);border:1px solid rgba(58,191,191,.2);}
     .stage-pilot::before{background:var(--teal);box-shadow:0 0 5px var(--teal);}
-    .stage-validation{background:rgba(201,168,76,.1);color:var(--teal-2);border:1px solid rgba(201,168,76,.2);}
+    .stage-validation{background:rgba(0,153,153,.08);color:var(--teal-2);border:1px solid rgba(0,153,153,.15);}
     .stage-validation::before{background:var(--teal-2);}
     .stage-dev{background:rgba(124,111,207,.1);color:var(--teal-2);border:1px solid rgba(124,111,207,.2);}
     .stage-dev::before{background:var(--teal-2);}
@@ -296,8 +303,8 @@
     .cap-icon svg{width:20px;height:20px;}
     .cap-card:nth-child(1) .cap-icon{background:var(--teal-dim);} .cap-card:nth-child(1) .cap-icon svg{color:var(--teal);}
     .cap-card:nth-child(2) .cap-icon{background:var(--teal-dim);} .cap-card:nth-child(2) .cap-icon svg{color:var(--teal-2);}
-    .cap-card:nth-child(3) .cap-icon{background:var(--gold-dim);} .cap-card:nth-child(3) .cap-icon svg{color:var(--teal-2);}
-    .cap-card:nth-child(4) .cap-icon{background:var(--amber-dim);} .cap-card:nth-child(4) .cap-icon svg{color:var(--amber);}
+    .cap-card:nth-child(3) .cap-icon{background:var(--teal-dim);} .cap-card:nth-child(3) .cap-icon svg{color:var(--teal-2);}
+    .cap-card:nth-child(4) .cap-icon{background:var(--teal-dim);} .cap-card:nth-child(4) .cap-icon svg{color:var(--teal-2);}
     .cap-title{font-family:var(--ff-display);font-size:1.075rem;font-weight:700;color:var(--text-primary);}
     .cap-desc{font-size:.875rem;color:var(--text-secondary);line-height:1.65;margin-bottom:1.125rem;}
     .cap-pills{margin-bottom:.875rem;}
@@ -650,10 +657,15 @@
       </div>
       <div class="contact-layout">
         <div class="contact-info-list reveal">
-          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cinfo-label"><span lang="en">Innovation Office</span><span lang="es">Oficina de Innovación</span></div><div class="cinfo-value"><a href="/cdn-cgi/l/email-protection#2e47404041584f4d4741406e4d465b4f4d005d4b5c494f5d004b5d"><span class="__cf_email__" data-cfemail="3d545353524b5c5e5452537d5e55485c5e134e584f5a5c4e13584e">[email&#160;protected]</span></a></div></div></div>
-          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 19.79 19.79 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 19.79 19.79 0 002.81.7A2 2 0 0122 14.92z"/></svg></div><div><div class="cinfo-label"><span lang="en">Phone</span><span lang="es">Teléfono</span></div><div class="cinfo-value"><a href="tel:+34881111800">+34 881 111 800</a></div></div></div>
-          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cinfo-label"><span lang="en">Location</span><span lang="es">Ubicación</span></div><div class="cinfo-value">As Xubias, 84<br>15006 A Coruña, España</div></div></div>
-          <div class="cinfo"><div class="cinfo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="cinfo-label"><span lang="en">Research Institute</span><span lang="es">Instituto de Investigación</span></div><div class="cinfo-value" style="font-size:.875rem;"><span lang="en">INIBIC · Instituto de Investigación Biomédica A Coruña · SERGAS · GCP compliant · MDR experience</span><span lang="es">INIBIC · Instituto de Investigación Biomédica A Coruña · SERGAS · Cumplimiento GCP · Experiencia MDR</span></div></div></div>
+          <p style="font-size:.9rem;line-height:1.75;color:var(--text-on-dark-2);max-width:380px;">
+            <span lang="en">Our team responds within 2 business days. For urgent enquiries about active trials or partnership opportunities, contact us directly.</span>
+            <span lang="es">Nuestro equipo responde en un plazo de dos días hábiles. Para consultas urgentes sobre ensayos activos u oportunidades de colaboración, contáctenos directamente.</span>
+          </p>
+          <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.625rem;">
+            <a href="mailto:neumocare@sergas.es" style="color:var(--teal-2);font-size:.9rem;text-decoration:none;">neumocare@sergas.es</a>
+            <a href="tel:+34881111800" style="color:var(--text-on-dark-2);font-size:.875rem;text-decoration:none;">+34 881 111 800</a>
+            <span style="font-size:.8rem;color:var(--text-on-dark-3);">As Xubias, 84 · 15006 A Coruña</span>
+          </div>
         </div>
         <div class="form-card reveal reveal-d1">
           <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a Project Proposal</span><span lang="es">Enviar una Propuesta de Proyecto</span></h3>
