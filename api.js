@@ -9,7 +9,7 @@
  *
  * Public endpoints:
  *   GET /api/research-lines/website
- *   GET /api/clinical-trials/website?line=&phase=&status=&search= 
+ *   GET /api/clinical-trials/website?line=&phase=&status=&search=
  *   GET /api/innovation-projects/website
  *   GET /api/news/website?type=&line=
  */
@@ -402,16 +402,19 @@ async function loadProjects() {
 // ─────────────────────────────────────────────
 
 async function loadNews(filters = {}) {
-  const feed = document.getElementById('newsFeed');
+  // Support both old 'newsFeed' and new 'blogFeed' element ids
+  const feed = document.getElementById('blogFeed') || document.getElementById('newsFeed');
   if (!feed) return;
 
-  // Light skeleton for news feed (off-white background)
-  feed.innerHTML = Array(4).fill('').map((_, i) => `
-    <div style="padding:1.5rem;border-bottom:1px solid rgba(0,0,0,.07);opacity:${1 - i * 0.15}">
-      <div class="api-skeleton" style="width:60px;height:12px;margin-bottom:12px;border-radius:3px;"></div>
-      <div class="api-skeleton" style="width:85%;height:16px;margin-bottom:8px;border-radius:3px;animation-delay:${i * 0.07}s;"></div>
-      <div class="api-skeleton" style="width:50%;height:11px;border-radius:3px;animation-delay:${i * 0.07 + 0.05}s;"></div>
-    </div>`).join('');
+  // New blog page has its own skeleton (#feedSkeleton) — only inject if old layout
+  if (!document.getElementById('feedSkeleton')) {
+    feed.innerHTML = Array(4).fill('').map((_, i) => `
+      <div style="padding:1.5rem;border-bottom:1px solid rgba(0,0,0,.07);opacity:${1 - i * 0.15}">
+        <div class="api-skeleton" style="width:60px;height:12px;margin-bottom:12px;border-radius:3px;"></div>
+        <div class="api-skeleton" style="width:85%;height:16px;margin-bottom:8px;border-radius:3px;animation-delay:${i * 0.07}s;"></div>
+        <div class="api-skeleton" style="width:50%;height:11px;border-radius:3px;animation-delay:${i * 0.07 + 0.05}s;"></div>
+      </div>`).join('');
+  }
 
   const params = new URLSearchParams();
   if (filters.type && filters.type !== 'all') params.set('type', filters.type);
