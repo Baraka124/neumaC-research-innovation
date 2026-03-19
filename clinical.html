@@ -11,7 +11,7 @@
   <meta property="og:site_name" content="neumAC R&I"/>
   <meta property="og:url" content="https://neumac.es/clinical.html"/>
   <meta property="og:title" content="Clinical Research | neumAC R&I"/>
-  <meta property="og:description" content="Active and recruiting clinical trials across six respiratory medicine research lines at the Área Sanitaria de A Coruña y Cee."/>
+  <meta property="og:description" content="Active and recruiting clinical studies across six respiratory medicine research lines at the Área Sanitaria de A Coruña y Cee."/>
   <meta property="og:image" content="https://neumac.es/og-clinical.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -55,7 +55,7 @@
     .section{padding:6rem 0;}
     @media(max-width:768px){.section{padding:4rem 0;}}
     .sec-head{margin-bottom:3.5rem;}
-    .sec-head p{margin-top:1rem;font-size:1rem;line-height:1.75;color:var(--text-on-light-2);max-width:580px;}
+    .sec-head p{margin-top:1rem;font-size:1.0625rem;line-height:1.75;color:var(--text-on-light-2);max-width:580px;}
     .sec-head h2{margin-top:.75rem;}
     .sec-head.center{text-align:center;}
     .sec-head.center p{margin-left:auto;margin-right:auto;}
@@ -150,7 +150,7 @@
     @media(min-width:960px){.hero-inner{grid-template-columns:1.15fr 1fr;align-items:center;}}
     .hero-title{margin-bottom:1.375rem;color:var(--text-on-dark);}
     .hero-title em{font-style:italic;color:var(--teal-2);}
-    .hero-desc{font-size:1rem;line-height:1.8;color:var(--text-on-dark-2);max-width:540px;margin-bottom:2rem;}
+    .hero-desc{font-size:1.0625rem;line-height:1.8;color:var(--text-on-dark-2);max-width:540px;margin-bottom:2rem;}
     .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:2rem;}
 
     /* Footer */
@@ -254,7 +254,7 @@
     .line-coordinator{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-family:var(--ff-mono);color:var(--text-on-light-3);margin-bottom:.5rem;}
     .line-coordinator svg{width:11px;height:11px;}
     .line-coordinator strong{color:var(--text-on-light-2);font-weight:600;}
-    .line-title{font-family:var(--ff-display);font-size:clamp(1.05rem,2vw,1.3rem);font-weight:700;color:var(--text-on-light);line-height:1.3;margin-bottom:.625rem;}
+    .line-title{font-size:1rem;font-family:var(--ff-display);font-size:clamp(1.05rem,2vw,1.3rem);font-weight:700;color:var(--text-on-light);line-height:1.3;margin-bottom:.625rem;}
     .line-tags-preview{padding:0 1.75rem .875rem;line-height:1.5;position:relative;z-index:1;}
     @media(max-width:600px){.line-tags-preview{padding:0 1.5rem .875rem;}}
     .ltag{font-size:.8rem;color:var(--text-on-light-3);letter-spacing:0;font-family:var(--ff-body);} .ltag+.ltag::before{content:" · ";opacity:.4;}
@@ -276,7 +276,7 @@
     /* ══════════════════════════════════════════
        CLINICAL TRIALS TABLE
     ══════════════════════════════════════════ */
-    .trials-bg{background:var(--off-white);border-top:1px solid var(--rule-l);}
+    .trials-bg{background:var(--white);border-top:1px solid var(--rule-l);}
     .filter-bar{display:flex;flex-wrap:wrap;gap:.875rem;margin-bottom:1.75rem;padding:1.25rem 0;border-bottom:1px solid var(--rule-l);}
     .filter-grp{flex:1;min-width:140px;} .filter-grp{flex:1;min-width:140px;} .filter-grp label{display:block;font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);margin-bottom:.45rem;}
     .filter-grp select{width:100%;background:var(--white);border:1px solid var(--mid-grey);border-radius:var(--r-sm);padding:.575rem .8rem;color:var(--text-on-light);font-family:var(--ff-body);font-size:.8125rem;transition:border .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23767676' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;padding-right:2.25rem;}
@@ -289,20 +289,20 @@
     .filter-grp input[type="text"]::placeholder{color:var(--text-muted);}
 
     .trials-count-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;flex-wrap:wrap;gap:.75rem;}
-    .trials-count-bar span{font-size:.78rem;color:var(--text-muted);font-family:var(--ff-mono);}
+    .trials-count-bar span{font-size:.875rem;color:var(--text-on-light-2);font-family:var(--ff-mono);}
     .trials-count-bar strong{color:var(--teal);}
-    .trials-wrap{border:1px solid rgba(255,255,255,.12);border-radius:var(--r-lg);overflow:hidden;}
+    .trials-wrap{border:1px solid var(--mid-grey);border-radius:var(--r-lg);overflow:hidden;}
     .trials-scroll{overflow-x:auto;}
     table.trials{width:100%;border-collapse:collapse;min-width:760px;}
     .trials thead{background:var(--white);border-bottom:2px solid var(--rule-l);}
-    .trials th{padding:.875rem 1.125rem;text-align:left;font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,.12);white-space:nowrap;}
-    .trials td{padding:1rem 1.125rem;border-bottom:1px solid var(--rule-d);vertical-align:middle;font-size:.8125rem;color:var(--text-secondary);}
+    .trials th{padding:1rem 1.25rem;text-align:left;font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);border-bottom:2px solid var(--mid-grey);white-space:nowrap;font-weight:600;}
+    .trials td{padding:1.1rem 1.25rem;border-bottom:1px solid var(--rule-l);vertical-align:middle;font-size:.9rem;color:var(--text-on-light-2);}
     .trials tbody tr:last-child td{border-bottom:none;}
     .trials tbody tr{background:var(--white);transition:background .15s;}
     .trials tbody tr:hover td{background:var(--off-white);}
-    .trial-protocol{font-family:var(--ff-mono);font-size:.7rem;color:var(--text-muted);white-space:nowrap;}
-    .trial-title{color:var(--text-primary);font-weight:500;line-height:1.4;}
-    .trial-line-tag{display:inline-block;padding:.22rem .55rem;border-radius:3px;font-size:.65rem;font-family:var(--ff-mono);border:1px solid rgba(255,255,255,.12);color:var(--text-muted);white-space:nowrap;}
+    .trial-protocol{font-family:var(--ff-mono);font-size:.75rem;color:var(--text-on-light-3);white-space:nowrap;}
+    .trial-title{color:var(--text-on-light);font-weight:500;font-size:.9375rem;line-height:1.4;}
+    .trial-line-tag{display:inline-block;padding:.2rem .5rem;border-radius:3px;font-size:.7rem;font-family:var(--ff-mono);border:1px solid var(--rule-l);color:var(--text-on-light-3);white-space:nowrap;background:var(--off-white);}
     .phase-badge{display:inline-flex;align-items:center;padding:.22rem .55rem;border-radius:3px;font-size:.65rem;font-family:var(--ff-mono);letter-spacing:.05em;border:1px solid rgba(0,153,153,.15);color:var(--teal-2);background:rgba(0,153,153,.06);white-space:nowrap;}
     .status-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border-radius:20px;font-size:.68rem;font-weight:600;white-space:nowrap;}
     .status-badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;}
@@ -312,13 +312,13 @@
     .status-badge.active::before{background:var(--teal-2);}
     .status-badge.completed{background:rgba(90,100,115,.15);color:var(--text-muted);border:1px solid var(--rule-d);}
     .status-badge.completed::before{background:var(--text-muted);}
-    .status-badge.prep{background:rgba(124,111,207,.1);color:var(--violet);border:1px solid rgba(124,111,207,.2);}
+    .status-badge.prep{background:rgba(0,153,153,.06);color:var(--teal-2);border:1px solid rgba(0,153,153,.15);}
     .status-badge.prep::before{background:var(--violet);}
     .no-results{padding:2.5rem;text-align:center;color:var(--text-muted);font-size:.875rem;display:none;}
     .no-results svg{width:28px;height:28px;margin:0 auto .75rem;opacity:.3;}
     .trials-footer{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:var(--white);border-top:1px solid var(--rule-l);flex-wrap:wrap;gap:.875rem;}
-    .trials-footer-info{font-size:.72rem;font-family:var(--ff-mono);color:var(--text-muted);}
-    .trials-footer-db{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-family:var(--ff-mono);color:var(--text-muted);border:1px solid rgba(255,255,255,.12);border-radius:3px;padding:.2rem .6rem;margin-top:.35rem;}
+    .trials-footer-info{font-size:.8rem;font-family:var(--ff-mono);color:var(--text-on-light-3);}
+    .trials-footer-db{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-family:var(--ff-mono);color:var(--text-on-light-3);border:1px solid var(--rule-l);border-radius:3px;padding:.25rem .65rem;margin-top:.35rem;}
     .trials-footer-db svg{width:10px;height:10px;color:var(--teal-2);}
 
     /* ── TEAM ── */
@@ -470,14 +470,14 @@
             </a>
             <a href="#clinical-trials" class="btn-ghost">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-              <span lang="en">Active Trials</span><span lang="es">Ensayos Activos</span>
+              <span lang="en">Active Studies</span><span lang="es">Ensayos Activos</span>
             </a>
           </div>
         </div>
         <!-- Right stats panel -->
         <div class="hero-stats reveal reveal-d2" style="margin-bottom:3rem;">
           <div class="hstat"><div class="hstat-num">6</div><div class="hstat-label"><span lang="en">Specialized Research Lines</span><span lang="es">Líneas de Investigación</span></div></div>
-          <div class="hstat"><div class="hstat-num">30+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Trials</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
+          <div class="hstat"><div class="hstat-num">30+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Studies</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
           <div class="hstat"><div class="hstat-num">6</div><div class="hstat-label"><span lang="en">Expert Line Coordinators</span><span lang="es">Coordinadores Especialistas</span></div></div>
           <div class="hstat"><div class="hstat-num">GCP</div><div class="hstat-label"><span lang="en">INIBIC · Good Clinical Practice</span><span lang="es">INIBIC · Cumplimiento GCP</span></div></div>
         </div>
@@ -573,7 +573,7 @@
             <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
           </div>
           <div class="line-body"><div class="line-body-inner">
-            <p class="line-desc"><span lang="en">Focused on minimally invasive bronchoscopic diagnostics and therapeutics, with a strong oncology component. We run clinical trials for targeted therapies in EGFR/ALK/ROS1-mutated NSCLC, checkpoint inhibitor regimens, and robotic bronchoscopy validation.</span><span lang="es">Enfocada en broncoscopia diagnóstica y terapéutica mínimamente invasiva con fuerte componente oncológico. Ensayos para terapias dirigidas en CPNM con mutaciones EGFR/ALK/ROS1 e inhibidores de checkpoint.</span></p>
+            <p class="line-desc"><span lang="en">Focused on minimally invasive bronchoscopic diagnostics and therapeutics, with a strong oncology component. We run clinical studies for targeted therapies in EGFR/ALK/ROS1-mutated NSCLC, checkpoint inhibitor regimens, and robotic bronchoscopy validation.</span><span lang="es">Enfocada en broncoscopia diagnóstica y terapéutica mínimamente invasiva con fuerte componente oncológico. Ensayos para terapias dirigidas en CPNM con mutaciones EGFR/ALK/ROS1 e inhibidores de checkpoint.</span></p>
           </div></div>
         </div>
 
@@ -645,8 +645,8 @@
       <span style="font-family:var(--ff-display);font-size:clamp(3.5rem,8vw,6rem);font-weight:300;color:#fff;line-height:1;letter-spacing:-.03em;" id="statTrialsBig">30+</span>
       <div>
         <div style="font-family:var(--ff-body);font-size:1rem;color:rgba(255,255,255,.75);font-weight:400;line-height:1.5;">
-          <span lang="en">active and recruiting clinical trials<br>across six specialisms · INIBIC-backed · GCP-compliant</span>
-          <span lang="es">ensayos clínicos activos y en reclutamiento<br>en seis especialidades · respaldados por el INIBIC</span>
+          <span lang="en">active and recruiting clinical studies<br>across six specialisms · INIBIC-backed · GCP-compliant</span>
+          <span lang="es">estudios clínicos activos y en reclutamiento<br>en seis especialidades · respaldados por el INIBIC</span>
         </div>
       </div>
     </div>
@@ -656,8 +656,8 @@
   <section class="section trials-bg" id="clinical-trials">
     <div class="container">
       <div class="sec-head reveal">
-        <p class="label"><span lang="en">Active Portfolio</span><span lang="es">Portfolio Activo</span></p>
-        <h2 class="display lg"><span lang="en">Clinical Trials</span><span lang="es">Ensayos Clínicos</span></h2>
+        <p class="label"><span lang="en">Active Studies Portfolio</span><span lang="es">Portfolio Activo</span></p>
+        <h2 class="display lg"><span lang="en">Clinical Studies</span><span lang="es">Estudios Clínicos</span></h2>
         <p><span lang="en">Live data from our research database. Filter by research line, phase, or status to find relevant studies. Contact us to request the full site qualification dossier.</span><span lang="es">Datos en tiempo real de nuestra base de datos de investigación. Filtre por línea, fase o estado para encontrar estudios relevantes.</span></p>
       </div>
 
@@ -707,7 +707,7 @@
       </div>
 
       <div class="trials-count-bar reveal">
-        <span><strong id="trialsCount">—</strong> <span lang="en">trials</span><span lang="es">ensayos</span></span>
+        <span><strong id="studiesCount">—</strong> <span lang="en">trials</span><span lang="es">ensayos</span></span>
         <a href="#contact" class="btn-primary" style="font-size:.75rem;padding:.4rem .875rem;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
           <span lang="en">Request Dossier</span><span lang="es">Solicitar Dossier</span>
@@ -728,7 +728,7 @@
               </tr>
             </thead>
             <!-- api.js renders rows here -->
-            <tbody id="trialsBody">
+            <tbody id="studiesBody">
               <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-muted);font-family:var(--ff-mono);font-size:.8125rem;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:24px;height:24px;margin:0 auto .75rem;display:block;opacity:.3;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
                 <span lang="en">Loading trials from database…</span><span lang="es">Cargando ensayos de la base de datos…</span>
@@ -737,7 +737,7 @@
           </table>
           <div class="trials-footer">
             <div>
-              <div class="trials-footer-info"><span lang="en">Showing <strong id="trialsShown" style="color:var(--teal-2);">—</strong> trials from live database</span><span lang="es">Mostrando <strong id="trialsShownEs" style="color:var(--teal-2);">—</strong> ensayos de la base de datos en vivo</span></div>
+              <div class="trials-footer-info"><span lang="en">Showing <strong id="studiesShown" style="color:var(--teal-2);">—</strong> studies from live database</span><span lang="es">Mostrando <strong id="studiesShownEs" style="color:var(--teal-2);">—</strong> ensayos de la base de datos en vivo</span></div>
               <div class="trials-footer-db">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
                 <span lang="en">Full portfolio managed in neumAC R&amp;I research system</span><span lang="es">Portfolio completo gestionado en el sistema de investigación neumAC I+I</span>
