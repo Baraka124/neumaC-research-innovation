@@ -1,16 +1,17 @@
 /**
  * neumAC R&I — Website Data Layer
- * api.js — shared script loaded by index.html, clinical.html, innovation.html
+ * api.js — shared script loaded by all pages
  *
  * Architecture:
  *   Website → Railway backend (public endpoints, no auth)
  *   App     → Railway backend (authenticated endpoints)
  *   Both    → same Supabase DB (one source of truth)
  *
- * Public endpoints used:
+ * Public endpoints:
  *   GET /api/research-lines/website
  *   GET /api/clinical-trials/website?line=&phase=&status=&search=
  *   GET /api/innovation-projects/website
+ *   GET /api/news/website?type=&line=
  */
 
 const API_BASE = 'https://neumac-manage-back-end-production.up.railway.app';
@@ -27,63 +28,86 @@ async function apiFetch(path) {
   return res.json();
 }
 
-/** Replace a container's content, handling loading/error states */
-function setLoading(el, rows = 3) {
-  el.innerHTML = Array(rows).fill(
-    `<div class="skeleton-row" style="height:52px;background:var(--ink-3);border-radius:var(--r-md);margin-bottom:1px;animation:skeleton-pulse 1.4s ease-in-out infinite;"></div>`
-  ).join('');
-}
-
-function setError(el, msg = 'Could not load data. Please try again later.') {
-  el.innerHTML = `
-    <div style="padding:2rem;text-align:center;color:var(--text-muted);font-size:.875rem;font-family:var(--ff-mono);">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20" style="margin:0 auto .75rem;display:block;color:var(--coral,#E05C4B)"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-      ${msg}
-    </div>`;
-}
-
-// Inject skeleton keyframe once
+/** Inject shared styles once — using new design palette */
 if (!document.getElementById('api-js-styles')) {
   const s = document.createElement('style');
   s.id = 'api-js-styles';
   s.textContent = `
     @keyframes skeleton-pulse {
-      0%,100%{opacity:.45} 50%{opacity:.9}
+      0%,100%{opacity:.35} 50%{opacity:.7}
     }
-    .skeleton-row { pointer-events:none; }
+    .api-skeleton {
+      background: #E0DDD8;
+      border-radius: 4px;
+      animation: skeleton-pulse 1.4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .api-skeleton-dark {
+      background: rgba(255,255,255,.08);
+      border-radius: 4px;
+      animation: skeleton-pulse 1.4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .api-error {
+      padding: 2rem;
+      text-align: center;
+      color: #767676;
+      font-size: .8125rem;
+      font-family: var(--ff-mono, monospace);
+    }
+    .api-error svg { margin: 0 auto .75rem; display: block; opacity: .4; }
   `;
   document.head.appendChild(s);
 }
 
+/** Skeleton loader — light for light sections, dark for dark sections */
+function setLoading(el, rows = 3, dark = false) {
+  const cls = dark ? 'api-skeleton-dark' : 'api-skeleton';
+  el.innerHTML = Array(rows).fill(
+    `<div class="${cls}" style="height:52px;margin-bottom:2px;"></div>`
+  ).join('');
+}
+
+function setError(el, msg = 'Could not load data. Please try again later.') {
+  el.innerHTML = `
+    <div class="api-error">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="20" height="20">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v4M12 16h.01"/>
+      </svg>
+      ${msg}
+    </div>`;
+}
+
 // ─────────────────────────────────────────────
-// STATUS → CSS CLASS MAP
+// STATUS / CATEGORY MAPS
 // ─────────────────────────────────────────────
 
 const STATUS_CLASS = {
-  'Reclutando':    'recruiting',
-  'Activo':        'active',
-  'Completado':    'completed',
-  'En preparación':'prep'
+  'Reclutando':     'recruiting',
+  'Activo':         'active',
+  'Completado':     'completed',
+  'En preparación': 'prep'
 };
 
 const STATUS_LABEL_EN = {
-  'Reclutando':    'Recruiting',
-  'Activo':        'Active',
-  'Completado':    'Completed',
-  'En preparación':'In Preparation'
+  'Reclutando':     'Recruiting',
+  'Activo':         'Active',
+  'Completado':     'Completed',
+  'En preparación': 'In Preparation'
 };
 
 const CATEGORY_CLASS = {
-  'Dispositivo':             'cat-device',
-  'Salud Digital':           'cat-digital',
-  'IA / ML':                 'cat-ai',
-  'Tecnología Quirúrgica':   'cat-surgical'
+  'Dispositivo':           'cat-device',
+  'Salud Digital':         'cat-digital',
+  'IA / ML':               'cat-ai',
+  'Tecnología Quirúrgica': 'cat-surgical'
 };
 
 const CATEGORY_ICON = {
-  'Dispositivo': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M7 7h2l1 3 2-6 1 3h3"/></svg>`,
-  'Salud Digital': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>`,
-  'IA / ML': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg>`,
+  'Dispositivo':           `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M7 7h2l1 3 2-6 1 3h3"/></svg>`,
+  'Salud Digital':         `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>`,
+  'IA / ML':               `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg>`,
   'Tecnología Quirúrgica': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><path d="M20 7l-9 9-4-4 9-9 4 4z"/><path d="M4 20l1-4"/></svg>`
 };
 
@@ -99,16 +123,12 @@ const PAGE = (() => {
   return 'index';
 })();
 
-// NOTE: line.is_new not yet in DB schema — New badge won't show until added.
-
 // ─────────────────────────────────────────────
-// 1. RESEARCH LINES  (index.html + clinical.html)
+// 1. RESEARCH LINES (index.html + clinical.html)
 // ─────────────────────────────────────────────
 
 async function loadResearchLines() {
-  // Index page: small grid cards
-  const indexGrid = document.getElementById('researchLinesGrid');
-  // Clinical page: expandable accordion cards
+  const indexGrid    = document.getElementById('researchLinesGrid');
   const clinicalList = document.getElementById('researchLinesList');
 
   if (!indexGrid && !clinicalList) return;
@@ -117,48 +137,66 @@ async function loadResearchLines() {
     const { data } = await apiFetch('/api/research-lines/website');
     if (!data?.length) return;
 
-    // ── INDEX grid ──
+    // ── INDEX: 2-column editorial grid ──────────────────────────────
     if (indexGrid) {
-      // Show skeleton cards while rendering
-      indexGrid.innerHTML = Array(6).fill(`
-        <div class="line-item" style="pointer-events:none;">
-          <div class="line-top"><div class="line-num-pill" style="background:var(--ink-3);color:transparent;">00</div></div>
-          <div style="height:1rem;background:var(--ink-3);border-radius:3px;width:80%;margin-bottom:.5rem;animation:skeleton-pulse 1.4s ease-in-out infinite;"></div>
-          <div style="height:.7rem;background:var(--ink-3);border-radius:3px;width:50%;animation:skeleton-pulse 1.4s ease-in-out infinite;animation-delay:.1s;"></div>
-        </div>`).join('');
-      // Small delay to show skeleton, then replace with real data
-      await new Promise(r => setTimeout(r, 0));
-      indexGrid.innerHTML = data.map(line => `
-        <a href="clinical.html#research-lines" class="line-item">
-          <span class="line-ghost-num">${String(line.line_number).padStart(2, '0')}</span>
-          <div class="line-top">
-            <div class="line-num-pill">${String(line.line_number).padStart(2, '0')}</div>
-          </div>
-          <div class="line-name">${escHtml(line.name)}</div>
-          ${line.coordinator?.full_name
-            ? `<div class="line-coord"><span lang="en">Coord.</span><span lang="es">Coord.</span> <strong>${escHtml(line.coordinator.full_name)}</strong></div>`
-            : ''}
-          <div class="line-tags">
-            ${(line.keywords || []).slice(0, 3).map(k => `<span class="ltag">${escHtml(k)}</span>`).join('')}
-          </div>
-        </a>
-      `).join('');
+      // Skeleton — light section
+      indexGrid.innerHTML = Array(6).fill(
+        `<div class="line-card" style="pointer-events:none;">
+           <div class="api-skeleton" style="width:1.75rem;height:.9rem;margin-top:.2rem;margin-right:1.25rem;flex-shrink:0;"></div>
+           <div style="flex:1;">
+             <div class="api-skeleton" style="height:.9rem;width:80%;margin-bottom:.5rem;"></div>
+             <div class="api-skeleton" style="height:.7rem;width:45%;"></div>
+           </div>
+         </div>`
+      ).join('');
 
-      // Update stat numbers
-      updateStat('statResearchLines', data.length);
+      await new Promise(r => setTimeout(r, 0));
+
+      indexGrid.innerHTML = data.map((line, i) => {
+        const num = String(line.line_number).padStart(2, '0');
+        const isNew = line.is_new || false;
+        const numCell = isNew
+          ? `<div class="line-num" style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">
+               <span class="lt-new" style="font-size:.5rem;padding:.15rem .4rem;">
+                 <span lang="en">New</span><span lang="es">Nueva</span>
+               </span>
+             </div>`
+          : `<div class="line-num">${num}</div>`;
+
+        return `
+          <a href="clinical.html#research-lines" class="line-card">
+            ${numCell}
+            <div class="line-body">
+              <div class="line-title">${escHtml(line.name)}</div>
+              ${line.coordinator?.full_name
+                ? `<div class="line-coord-new">${escHtml(line.coordinator.full_name)}</div>`
+                : ''}
+            </div>
+            <div class="line-arrow-new">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:10px;height:10px;">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </a>`;
+      }).join('');
+
+      // Update stat counters
+      _setStat('statLines', data.length);
     }
 
-    // ── CLINICAL expandable list ──
+    // ── CLINICAL: expandable accordion ──────────────────────────────
     if (clinicalList) {
-      clinicalList.innerHTML = data.map((line, i) => `
+      clinicalList.innerHTML = data.map(line => `
         <div class="line-card" id="line-${line.id}">
           <div class="line-head" onclick="toggleLine('line-${line.id}')">
             <div class="line-num">${String(line.line_number).padStart(2, '0')}</div>
             <div class="line-meta">
               ${line.coordinator?.full_name
                 ? `<div class="line-coordinator">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="11" height="11"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <strong>${escHtml(line.coordinator.full_name)}</strong>
+                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="11" height="11">
+                       <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                     </svg>
+                     <strong>${escHtml(line.coordinator.full_name)}</strong>
                    </div>`
                 : ''}
               <div class="line-title">${escHtml(line.name)}</div>
@@ -169,46 +207,46 @@ async function loadResearchLines() {
           </div>
           <div class="line-expand-toggle" onclick="toggleLine('line-${line.id}')">
             <span class="toggle-label">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13">
+                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
               <span lang="en">Research scope &amp; capabilities</span>
               <span lang="es">Alcance y capacidades</span>
             </span>
             <div class="toggle-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M19 9l-7 7-7-7"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11">
+                <path d="M19 9l-7 7-7-7"/>
+              </svg>
             </div>
           </div>
           <div class="line-body">
             <div class="line-body-inner">
-              ${line.description
-                ? `<p class="line-desc">${escHtml(line.description)}</p>`
-                : ''}
-              ${line.capabilities
-                ? `<p class="line-desc" style="margin-top:.5rem;">${escHtml(line.capabilities)}</p>`
-                : ''}
+              ${line.description  ? `<p class="line-desc">${escHtml(line.description)}</p>` : ''}
+              ${line.capabilities ? `<p class="line-desc" style="margin-top:.5rem;">${escHtml(line.capabilities)}</p>` : ''}
             </div>
           </div>
-        </div>
-      `).join('');
+        </div>`
+      ).join('');
     }
+
   } catch (err) {
     console.error('Research lines load failed:', err);
-    if (indexGrid) setError(indexGrid);
+    if (indexGrid)    setError(indexGrid);
     if (clinicalList) setError(clinicalList);
   }
 }
 
-/** Accordion toggle — used by clinical.html */
 window.toggleLine = function(id) {
   const card = document.getElementById(id);
   if (card) card.classList.toggle('open');
 };
 
 // ─────────────────────────────────────────────
-// 2. CLINICAL TRIALS  (clinical.html)
+// 2. CLINICAL TRIALS (clinical.html)
 // ─────────────────────────────────────────────
 
 async function loadTrials(filters = {}) {
-  const tbody = document.getElementById('trialsBody');
+  const tbody   = document.getElementById('trialsBody');
   const countEl = document.getElementById('trialsCount');
   if (!tbody) return;
 
@@ -224,27 +262,27 @@ async function loadTrials(filters = {}) {
     const { data } = await apiFetch(`/api/clinical-trials/website?${params}`);
     const trials = data || [];
 
-    if (countEl) {
-      countEl.textContent = `${trials.length} trial${trials.length !== 1 ? 's' : ''}`;
-    }
+    if (countEl) countEl.textContent = trials.length;
+
+    const trialsShown   = document.getElementById('trialsShown');
+    const trialsShownEs = document.getElementById('trialsShownEs');
+    if (trialsShown)   trialsShown.textContent   = trials.length;
+    if (trialsShownEs) trialsShownEs.textContent = trials.length;
 
     if (!trials.length) {
       tbody.innerHTML = `
-        <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-muted);font-size:.875rem;font-family:var(--ff-mono);">
-          No trials match the current filters.
+        <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-on-light-3,#767676);font-size:.875rem;font-family:var(--ff-mono,monospace);">
+          <span lang="en">No trials match the current filters.</span>
+          <span lang="es">No hay ensayos con los filtros actuales.</span>
         </td></tr>`;
       return;
     }
 
-    const lang = document.body.dataset.lang || 'en';
-
     tbody.innerHTML = trials.map(t => {
       const statusClass = STATUS_CLASS[t.status] || 'active';
-      const statusLabel = lang === 'es' ? t.status : (STATUS_LABEL_EN[t.status] || t.status);
-      const lineName = t.research_line?.name || '—';
-
+      const lineName    = t.research_line?.name || '—';
       return `
-        <tr data-line="${t.research_line_id || ''}" data-phase="${t.phase?.toLowerCase().replace(' ','') || ''}" data-status="${statusClass}">
+        <tr>
           <td><span class="trial-protocol">${escHtml(t.protocol_id)}</span></td>
           <td><span class="trial-title">${escHtml(t.title)}</span></td>
           <td><span class="trial-line-tag">${escHtml(lineName)}</span></td>
@@ -255,21 +293,22 @@ async function loadTrials(filters = {}) {
               <span lang="es">${t.status}</span>
             </span>
           </td>
-          <td>${t.sponsor_name ? `<span style="font-size:.75rem;color:var(--text-muted);font-family:var(--ff-mono);">${escHtml(t.sponsor_name)}</span>` : '<span style="color:var(--text-muted)">—</span>'}</td>
+          <td>${t.sponsor_name
+            ? `<span style="font-size:.75rem;color:var(--text-on-light-3,#767676);font-family:var(--ff-mono,monospace);">${escHtml(t.sponsor_name)}</span>`
+            : `<span style="color:var(--text-on-light-3,#767676)">—</span>`
+          }</td>
         </tr>`;
     }).join('');
 
-    // Re-run reveal animations on new rows
-    animateNewRows();
+    _fadeInRows('#trialsBody tr');
 
   } catch (err) {
     console.error('Trials load failed:', err);
     setError(tbody);
-    if (countEl) countEl.textContent = '';
+    if (countEl) countEl.textContent = '—';
   }
 }
 
-/** Wire filter dropdowns on clinical.html */
 function initTrialFilters() {
   const filterLine   = document.getElementById('filterLine');
   const filterPhase  = document.getElementById('filterPhase');
@@ -291,26 +330,24 @@ function initTrialFilters() {
   filterPhase?.addEventListener('change', refresh);
   filterStatus?.addEventListener('change', refresh);
 
-  // Debounced search
   let searchTimer;
   filterSearch?.addEventListener('input', () => {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(refresh, 380);
   });
 
-  // Initial load
   loadTrials(getFilters());
 }
 
 // ─────────────────────────────────────────────
-// 3. INNOVATION PROJECTS  (innovation.html)
+// 3. INNOVATION PROJECTS (innovation.html)
 // ─────────────────────────────────────────────
 
 async function loadProjects() {
   const grid = document.getElementById('projectsGrid');
   if (!grid) return;
 
-  setLoading(grid, 4);
+  setLoading(grid, 4, true); // dark section
 
   try {
     const { data } = await apiFetch('/api/innovation-projects/website');
@@ -325,25 +362,21 @@ async function loadProjects() {
       const catClass = CATEGORY_CLASS[p.category] || 'cat-device';
       const catIcon  = CATEGORY_ICON[p.category]  || CATEGORY_ICON['Dispositivo'];
       const delay    = i % 2 === 0 ? '' : ' reveal-d1';
-
       return `
         <div class="project-card reveal${delay}">
           <div class="project-top">
             <span class="project-cat-badge ${catClass}">
               ${catIcon}
-              <span lang="en">${escHtml(p.category)}</span>
-              <span lang="es">${escHtml(p.category)}</span>
+              ${escHtml(p.category)}
             </span>
-            ${p.development_stage
-              ? `<span class="stage-badge">${escHtml(p.development_stage)}</span>`
-              : ''}
+            ${p.development_stage ? `<span class="stage-badge">${escHtml(p.development_stage)}</span>` : ''}
           </div>
           <h3 class="project-title">${escHtml(p.title)}</h3>
           <p class="project-desc">${escHtml(p.description)}</p>
-          ${(p.partner_needs?.length)
+          ${p.partner_needs?.length
             ? `<p class="project-needs-label">
-                <span lang="en">Partner Needs</span>
-                <span lang="es">Necesidades del Socio</span>
+                 <span lang="en">Partner Needs</span>
+                 <span lang="es">Necesidades del Socio</span>
                </p>
                <div class="project-needs">
                  ${p.partner_needs.map(n => `<span class="pneed">${escHtml(n)}</span>`).join('')}
@@ -352,7 +385,6 @@ async function loadProjects() {
         </div>`;
     }).join('');
 
-    // Trigger reveal animations
     requestAnimationFrame(() => {
       grid.querySelectorAll('.reveal').forEach(el => {
         setTimeout(() => el.classList.add('in'), 50);
@@ -366,83 +398,19 @@ async function loadProjects() {
 }
 
 // ─────────────────────────────────────────────
-// STAT COUNTER UPDATER
-// Updates hero/numbers section stat values from live data
-// ─────────────────────────────────────────────
-
-function updateStat(id, value) {
-  document.querySelectorAll(`[data-stat="${id}"]`).forEach(el => {
-    el.textContent = value;
-  });
-}
-
-async function loadLiveStats() {
-  if (PAGE !== 'index') return;
-  try {
-    const linesRes = await apiFetch('/api/research-lines/website');
-    const lineCount = linesRes.data?.length || 0;
-    if (lineCount > 0) {
-      // Update right-panel first stat
-      const firstStat = document.querySelector('.hstat-num');
-      if (firstStat) firstStat.textContent = lineCount;
-      // Update hero strip
-      const stripLines = document.getElementById('heroStatLines');
-      if (stripLines) stripLines.textContent = lineCount;
-    }
-    // Update trials count from API
-    try {
-      const trialsRes = await apiFetch('/api/clinical-trials/website');
-      const trialCount = trialsRes.data?.length || 0;
-      if (trialCount > 0) {
-        const stripTrials = document.getElementById('heroStatTrials');
-        if (stripTrials) stripTrials.textContent = trialCount + '+';
-        const statTrials = document.getElementById('statTrials');
-        if (statTrials) statTrials.textContent = trialCount + '+';
-      }
-    } catch(e) { /* keep static fallback */ }
-  } catch (err) {
-    console.warn('Live stats not available:', err.message);
-  }
-}
-
-// ─────────────────────────────────────────────
-// UTILITY
-// ─────────────────────────────────────────────
-
-function escHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-function animateNewRows() {
-  requestAnimationFrame(() => {
-    document.querySelectorAll('#trialsBody tr').forEach((row, i) => {
-      row.style.opacity = '0';
-      row.style.transition = `opacity .3s ease ${i * 30}ms`;
-      requestAnimationFrame(() => { row.style.opacity = '1'; });
-    });
-  });
-}
-
-// ─────────────────────────────────────────────
-// 4. NEWS POSTS  (news.html)
+// 4. NEWS (news.html)
 // ─────────────────────────────────────────────
 
 async function loadNews(filters = {}) {
   const feed = document.getElementById('newsFeed');
   if (!feed) return;
 
-  // Show skeleton while loading
+  // Light skeleton for news feed (off-white background)
   feed.innerHTML = Array(4).fill('').map((_, i) => `
-    <div class="news-skel" style="padding:1.5rem;border-bottom:1px solid var(--rule);opacity:${1 - i * 0.15}">
-      <div class="news-skel-row" style="width:60px;height:14px;margin-bottom:12px;border-radius:3px;background:var(--ink-3);animation:skeleton-pulse 1.4s ease-in-out infinite;animation-delay:${i * 0.1}s;"></div>
-      <div class="news-skel-row" style="width:85%;height:18px;margin-bottom:8px;border-radius:3px;background:var(--ink-3);animation:skeleton-pulse 1.4s ease-in-out infinite;animation-delay:${i * 0.1 + 0.05}s;"></div>
-      <div class="news-skel-row" style="width:55%;height:12px;border-radius:3px;background:var(--ink-3);animation:skeleton-pulse 1.4s ease-in-out infinite;animation-delay:${i * 0.1 + 0.1}s;"></div>
+    <div style="padding:1.5rem;border-bottom:1px solid rgba(0,0,0,.07);opacity:${1 - i * 0.15}">
+      <div class="api-skeleton" style="width:60px;height:12px;margin-bottom:12px;border-radius:3px;"></div>
+      <div class="api-skeleton" style="width:85%;height:16px;margin-bottom:8px;border-radius:3px;animation-delay:${i * 0.07}s;"></div>
+      <div class="api-skeleton" style="width:50%;height:11px;border-radius:3px;animation-delay:${i * 0.07 + 0.05}s;"></div>
     </div>`).join('');
 
   const params = new URLSearchParams();
@@ -460,7 +428,58 @@ async function loadNews(filters = {}) {
 }
 
 // ─────────────────────────────────────────────
-// INIT — runs on DOMContentLoaded
+// LIVE STATS (index.html hero panel)
+// ─────────────────────────────────────────────
+
+async function loadLiveStats() {
+  if (PAGE !== 'index') return;
+  try {
+    const linesRes = await apiFetch('/api/research-lines/website');
+    const lineCount = linesRes.data?.length || 0;
+    if (lineCount > 0) _setStat('statLines', lineCount);
+
+    try {
+      const trialsRes = await apiFetch('/api/clinical-trials/website');
+      const trialCount = trialsRes.data?.length || 0;
+      if (trialCount > 0) _setStat('statTrials', trialCount + '+');
+    } catch { /* keep static fallback */ }
+  } catch (err) {
+    console.warn('Live stats not available:', err.message);
+  }
+}
+
+/** Update any element with id matching statId */
+function _setStat(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+// ─────────────────────────────────────────────
+// UTILITIES
+// ─────────────────────────────────────────────
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function _fadeInRows(selector) {
+  requestAnimationFrame(() => {
+    document.querySelectorAll(selector).forEach((row, i) => {
+      row.style.opacity = '0';
+      row.style.transition = `opacity .25s ease ${i * 25}ms`;
+      requestAnimationFrame(() => { row.style.opacity = '1'; });
+    });
+  });
+}
+
+// ─────────────────────────────────────────────
+// INIT
 // ─────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -469,16 +488,13 @@ document.addEventListener('DOMContentLoaded', () => {
       loadResearchLines();
       loadLiveStats();
       break;
-
     case 'clinical':
-      loadResearchLines();   // accordion on clinical.html
-      initTrialFilters();    // also calls loadTrials() internally
+      loadResearchLines();
+      initTrialFilters();
       break;
-
     case 'innovation':
       loadProjects();
       break;
-
     case 'news':
       loadNews();
       break;
