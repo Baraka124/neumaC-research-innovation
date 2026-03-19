@@ -10,7 +10,7 @@
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumAC R&I"/>
   <meta property="og:url" content="https://neumac.es/clinical.html"/>
-  <meta property="og:title" content="Clinical Research | neumAC R&I"/> 
+  <meta property="og:title" content="Clinical Research | neumAC R&I"/>
   <meta property="og:description" content="Active and recruiting clinical studies across six respiratory medicine research lines at the Área Sanitaria de A Coruña y Cee."/>
   <meta property="og:image" content="https://neumac.es/og-clinical.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -48,8 +48,8 @@
     .display.lg{font-size:clamp(2rem,3.5vw,3rem);}
     .display.md{font-size:clamp(1.5rem,2.5vw,2rem);}
     .display.sm{font-size:clamp(1.2rem,1.8vw,1.5rem);}
-    .eyebrow,.label{font-family:var(--ff-mono);font-size:.6875rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);}
-    .eyebrow.light,.label.light{color:var(--teal-2);}
+    .eyebrow,.label{font-family:var(--ff-mono);font-size:.6875rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);}
+    .eyebrow.light,.label.light{color:rgba(255,255,255,.75);font-weight:600;letter-spacing:.14em;}
     .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 3.5rem;}
     @media(max-width:768px){.container{padding:0 1.5rem;}}
     .section{padding:6rem 0;}
@@ -916,6 +916,7 @@
     try{const l=localStorage.getItem('huac_lang');if(l==='es')setLang('es');}catch(e){}
   </script>
 
+  <script src="animations.js"></script>
   <script src="api.js"></script>
 </body>
 </html>
