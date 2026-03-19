@@ -11,7 +11,7 @@
 (function() {
   'use strict';
 
-  /* ── 1. STAT COUNTER ───────────────────────────────────────── */
+  /* ── 1. STAT COUNTER ───────────────────────────────────────── */ 
   function parseStatValue(raw) {
     raw = (raw || '').trim();
     // Handle "<6w", "6+", "12", "—"
