@@ -69,16 +69,23 @@
       background:rgba(10,22,40,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
       border-bottom:1px solid var(--rule-d);z-index:1000;transition:background .3s;
     }
-    .header-inner{display:flex;align-items:center;height:100%;gap:2.5rem;padding:0 clamp(1.5rem,4vw,5rem);max-width:none;}
+    .header-inner{
+      display:flex;align-items:center;height:100%;
+      padding:0 clamp(1.5rem,4vw,5rem);
+      gap:0;
+    }
+    /* Nav takes all remaining space, pushes right-group to far right */
+    .header-nav-spacer{flex:1;}
+    .header-right{display:flex;align-items:center;gap:1rem;flex-shrink:0;}
     .logo{display:flex;align-items:center;gap:.875rem;flex-shrink:0;text-decoration:none;}
-    .logo-mark{width:38px;height:38px;background:var(--accent-2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .logo-mark svg{width:20px;height:20px;color:#fff;}
+    .logo-mark{width:38px;height:38px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .logo-mark svg{width:24px;height:24px;color:var(--teal-2);}
     .logo-text{display:flex;flex-direction:column;gap:1px;}
-    .logo-name{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1;}
+    .logo-name{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1;} .logo-name sup{font-size:.55em;font-weight:400;color:rgba(255,255,255,.5);vertical-align:super;letter-spacing:.05em;}
     .logo-sub{font-family:var(--ff-mono);font-size:.52rem;color:rgba(255,255,255,.45);letter-spacing:.12em;text-transform:uppercase;line-height:1;}
     .lang-sw{display:flex;align-items:center;gap:4px;flex-shrink:0;
       background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-      border-radius:20px;padding:3px 4px;margin-left:auto;}
+      border-radius:20px;padding:3px 4px;}
     .lang-sw-globe{display:flex;align-items:center;padding:0 6px 0 4px;color:rgba(255,255,255,.35);pointer-events:none;}
     .lang-sw-globe svg{width:13px;height:13px;}
     .lang-sw button{background:transparent;border:none;cursor:pointer;padding:.2rem .45rem;
@@ -88,7 +95,7 @@
     .lang-sw button.active{color:var(--teal-2);background:rgba(0,153,153,.18);}
     .lang-sw button:not(.active):hover{color:rgba(255,255,255,.7);}
     .lang-sw-div{width:1px;height:10px;background:rgba(255,255,255,.1);flex-shrink:0;}
-    .nav{display:none;align-items:center;gap:.25rem;margin-left:auto;}
+    .nav{display:none;align-items:center;gap:.25rem;margin-left:2.5rem;}
     @media(min-width:1024px){.nav{display:flex;}}
     .nav a{padding:.5rem 1rem;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.65);border-radius:4px;transition:all .2s;white-space:nowrap;}
     .nav a:hover{color:rgba(255,255,255,.9);}
@@ -331,8 +338,8 @@
     .pr-body{flex:1;min-width:0;}
     .pr-title{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:var(--text-on-light);margin-bottom:.5rem;}
     .pr-desc{font-size:.9rem;line-height:1.75;color:var(--text-on-light-2);max-width:640px;}
-    .pr-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.875rem;}
-    .pr-tag{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .55rem;border-radius:3px;background:var(--teal-lt);color:var(--accent);border:1px solid rgba(0,153,153,.2);}
+    .pr-tags{margin-top:.625rem;}
+    .pr-tag{font-family:var(--ff-mono);font-size:.65rem;color:var(--text-on-light-3);letter-spacing:.03em;} .pr-tag+.pr-tag::before{content:" · ";}
     .pr-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.8125rem;font-weight:600;color:var(--accent);margin-top:1rem;transition:gap .2s;}
     .pr-link:hover{gap:.65rem;}
 
@@ -467,6 +474,9 @@
           </div>
         </a>
 
+        <!-- Spacer pushes nav+right to the right -->
+        <div class="header-nav-spacer" aria-hidden="true"></div>
+
         <!-- Desktop nav -->
         <nav class="nav" aria-label="Primary navigation">
           <a href="index.html" class="current" aria-current="page">
@@ -486,22 +496,23 @@
           </a>
         </nav>
 
-        <!-- Mobile toggle -->
-        <button class="mob-toggle" id="mobToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobDrawer">
-          <span></span><span></span><span></span>
-        </button>
-        <!-- Lang — far right, always visible -->
-        <div class="lang-sw" role="group" aria-label="Language selection">
-          <div class="lang-sw-globe" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9M3 12h18"/>
-              <path d="M3.6 7.5h16.8M3.6 16.5h16.8"/>
-            </svg>
+        <!-- Right group: hamburger + lang — always far right -->
+        <div class="header-right">
+          <button class="mob-toggle" id="mobToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobDrawer">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="lang-sw" role="group" aria-label="Language selection">
+            <div class="lang-sw-globe" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9M3 12h18"/>
+                <path d="M3.6 7.5h16.8M3.6 16.5h16.8"/>
+              </svg>
+            </div>
+            <button onclick="setLang('en')" class="active" aria-label="English" aria-pressed="true">EN</button>
+            <div class="lang-sw-div"></div>
+            <button onclick="setLang('es')" aria-label="Español" aria-pressed="false">ES</button>
           </div>
-          <button onclick="setLang('en')" class="active" aria-label="English" aria-pressed="true">EN</button>
-          <div class="lang-sw-div"></div>
-          <button onclick="setLang('es')" aria-label="Español" aria-pressed="false">ES</button>
         </div>
     </div>
   </header>
