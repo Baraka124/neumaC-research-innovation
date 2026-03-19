@@ -584,21 +584,21 @@
           <div class="hero-panel">
             <div class="panel-stat-row">
               <div class="pstat">
-                <div class="pstat-num" id="statLines">6</div>
+                <div class="pstat-num" id="statLines" data-counter="6">6</div>
                 <div class="pstat-label"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></div>
               </div>
               <div class="pstat">
-                <div class="pstat-num"><span id="statTrials">30</span><span style="color:var(--accent-2);">+</span></div>
+                <div class="pstat-num" data-counter="30+"><span id="statTrials">30</span><span style="color:var(--accent-2);">+</span></div>
                 <div class="pstat-label"><span lang="en">Active Studies</span><span lang="es">Estudios Activos</span></div>
               </div>
             </div>
             <div class="panel-stat-row">
               <div class="pstat">
-                <div class="pstat-num">6</div>
+                <div class="pstat-num" data-counter="6">6</div>
                 <div class="pstat-label"><span lang="en">Specialist Leads</span><span lang="es">Especialistas Coordinadores</span></div>
               </div>
               <div class="pstat">
-                <div class="pstat-num">&lt;6<span style="font-size:1rem;color:var(--accent-2);">w</span></div>
+                <div class="pstat-num" data-counter="<6w">&lt;6<span style="font-size:1rem;color:var(--accent-2);">w</span></div>
                 <div class="pstat-label"><span lang="en">Avg. Site Initiation</span><span lang="es">Activación media del centro</span></div>
               </div>
             </div>
@@ -957,6 +957,7 @@
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     try{const l=localStorage.getItem('huac_lang');if(l==='es')setLang('es');}catch(e){}
   </script>
+  <script src="animations.js"></script>
   <script src="api.js"></script>
 </body>
 </html>
