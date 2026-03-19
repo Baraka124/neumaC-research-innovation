@@ -246,8 +246,8 @@ window.toggleLine = function(id) {
 // ─────────────────────────────────────────────
 
 async function loadTrials(filters = {}) {
-  const tbody   = document.getElementById('trialsBody');
-  const countEl = document.getElementById('trialsCount');
+  const tbody   = document.getElementById('studiesBody');
+  const countEl = document.getElementById('studiesCount');
   if (!tbody) return;
 
   setLoading(tbody, 6);
@@ -264,10 +264,10 @@ async function loadTrials(filters = {}) {
 
     if (countEl) countEl.textContent = trials.length;
 
-    const trialsShown   = document.getElementById('trialsShown');
-    const trialsShownEs = document.getElementById('trialsShownEs');
-    if (trialsShown)   trialsShown.textContent   = trials.length;
-    if (trialsShownEs) trialsShownEs.textContent = trials.length;
+    const studiesShown   = document.getElementById('studiesShown');
+    const studiesShownEs = document.getElementById('studiesShownEs');
+    if (studiesShown)   studiesShown.textContent   = trials.length;
+    if (studiesShownEs) studiesShownEs.textContent = trials.length;
 
     if (!trials.length) {
       tbody.innerHTML = `
@@ -300,7 +300,7 @@ async function loadTrials(filters = {}) {
         </tr>`;
     }).join('');
 
-    _fadeInRows('#trialsBody tr');
+    _fadeInRows('#studiesBody tr');
 
   } catch (err) {
     console.error('Trials load failed:', err);
