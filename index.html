@@ -69,12 +69,12 @@
       background:rgba(10,22,40,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
       border-bottom:1px solid var(--rule-d);z-index:1000;transition:background .3s;
     }
-    .header-inner{display:flex;align-items:center;justify-content:space-between;height:100%;gap:2rem;}
+    .header-inner{display:flex;align-items:center;height:100%;gap:2.5rem;padding:0 clamp(1.5rem,4vw,5rem);max-width:none;}
     .logo{display:flex;align-items:center;gap:.875rem;flex-shrink:0;text-decoration:none;}
-    .logo-mark{width:32px;height:32px;background:var(--accent-2);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .logo-mark svg{width:18px;height:18px;color:#fff;}
+    .logo-mark{width:38px;height:38px;background:var(--accent-2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .logo-mark svg{width:20px;height:20px;color:#fff;}
     .logo-text{display:flex;flex-direction:column;gap:1px;}
-    .logo-name{font-family:var(--ff-display);font-size:1rem;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1;}
+    .logo-name{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1;}
     .logo-sub{font-family:var(--ff-mono);font-size:.52rem;color:rgba(255,255,255,.45);letter-spacing:.12em;text-transform:uppercase;line-height:1;}
     .lang-sw{display:flex;align-items:center;gap:4px;flex-shrink:0;
       background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
@@ -90,10 +90,10 @@
     .lang-sw-div{width:1px;height:10px;background:rgba(255,255,255,.1);flex-shrink:0;}
     .nav{display:none;align-items:center;gap:.25rem;margin-left:auto;}
     @media(min-width:1024px){.nav{display:flex;}}
-    .nav a{padding:.4rem .8rem;font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.65);border-radius:4px;transition:all .2s;white-space:nowrap;}
+    .nav a{padding:.5rem 1rem;font-size:.875rem;font-weight:500;color:rgba(255,255,255,.65);border-radius:4px;transition:all .2s;white-space:nowrap;}
     .nav a:hover{color:rgba(255,255,255,.9);}
     .nav a.current{color:rgba(255,255,255,.9);}
-    .nav .nav-cta{margin-left:.5rem;background:var(--accent-2);color:#fff;font-weight:600;padding:.4rem 1rem;border-radius:4px;font-size:.8125rem;transition:background .2s;}
+    .nav .nav-cta{margin-left:.75rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.55rem 1.25rem;border-radius:4px;font-size:.875rem;transition:background .2s;}
     .nav .nav-cta:hover{background:var(--accent);}
     .mob-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem;width:38px;height:38px;justify-content:center;align-items:center;}
     @media(min-width:1024px){.mob-toggle{display:none;}}
@@ -235,8 +235,8 @@
     /* Research lines — flex 2-col at desktop, single col on mobile */
     .lines-grid-new{
       display:grid;grid-template-columns:1fr 1fr;
-      border:1px solid var(--mid-grey);border-radius:var(--r-lg);
-      overflow:hidden;background:var(--white);
+      border-top:1px solid var(--mid-grey);border-bottom:1px solid var(--mid-grey);
+      background:var(--white);
     }
     @media(max-width:640px){.lines-grid-new{grid-template-columns:1fr;}}}
     .line-card{
@@ -309,8 +309,8 @@
     }
     .inst-badge:hover{border-color:var(--accent);}
     .inst-badge-icon{
-      width:36px;height:36px;border-radius:var(--r-sm);
-      background:var(--blue-lt);display:flex;align-items:center;justify-content:center;
+      width:32px;height:32px;
+      display:flex;align-items:center;justify-content:center;
       flex-shrink:0;color:var(--accent);
     }
     .inst-badge-icon svg{width:16px;height:16px;}
@@ -450,8 +450,7 @@
 
   <!-- HEADER -->
   <header class="header" id="header">
-    <div class="container">
-      <div class="header-inner">
+    <div class="header-inner">
         <!-- Logo -->
         <a href="index.html" class="logo" aria-label="neumAC R&I — Home">
           <div class="logo-mark">
@@ -504,7 +503,6 @@
           <div class="lang-sw-div"></div>
           <button onclick="setLang('es')" aria-label="Español" aria-pressed="false">ES</button>
         </div>
-      </div>
     </div>
   </header>
 
