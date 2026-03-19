@@ -28,8 +28,7 @@
       --text-on-light:#1A1A1A;--text-on-light-2:#404040;--text-on-light-3:#767676;
       --accent:#009999;--accent-2:#00B3B3;
       /* Legacy aliases */
-      --gold:#009999;--teal-old:#009999;
-      --text-primary:#F5F5F0;--text-secondary:#9DAEC4;--text-muted:#5D7494;
+            --text-primary:#F5F5F0;--text-secondary:#9DAEC4;--text-muted:#5D7494;
       --ff-display:'Fraunces',Georgia,serif;
       --ff-body:'DM Sans',system-ui,sans-serif;
       --ff-mono:'DM Mono',monospace;
@@ -132,8 +131,8 @@
     .btn-primary:hover{background:var(--accent);transform:translateY(-1px);}
     .btn-secondary{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;}
     .btn-secondary:hover{background:#007a7a;transform:translateY(-1px);}
-    .btn-gold{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;}
-    .btn-gold:hover{background:var(--accent);transform:translateY(-1px);}
+    .btn-primary-alt{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:all .2s;border:none;cursor:pointer;}
+    .btn-primary-alt:hover{background:var(--accent);transform:translateY(-1px);}
     .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(255,255,255,.25);color:var(--text-on-dark);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:all .2s;}
     .btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.06);}
     .btn-ghost-dark{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid var(--rule-l);color:var(--ink-2);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:all .2s;}
@@ -709,7 +708,7 @@
 
       <div class="trials-count-bar reveal">
         <span><strong id="trialsCount">—</strong> <span lang="en">trials</span><span lang="es">ensayos</span></span>
-        <a href="#contact" class="btn-gold" style="font-size:.75rem;padding:.4rem .875rem;">
+        <a href="#contact" class="btn-primary" style="font-size:.75rem;padding:.4rem .875rem;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
           <span lang="en">Request Dossier</span><span lang="es">Solicitar Dossier</span>
         </a>
@@ -824,7 +823,7 @@
               </div>
               <div class="form-group span-2"><label><span lang="en">Message</span><span lang="es">Mensaje</span></label><textarea rows="4" placeholder="Please describe your inquiry or project in brief…"></textarea></div>
               <div class="form-group span-2" style="margin-bottom:0;">
-                <button type="submit" class="btn-gold" style="width:100%;padding:.875rem;justify-content:center;font-size:.875rem;">
+                <button type="submit" class="btn-primary" style="width:100%;padding:.875rem;justify-content:center;font-size:.875rem;">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
                   <span lang="en">Submit Inquiry</span><span lang="es">Enviar Consulta</span>
                 </button>
@@ -843,7 +842,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <strong>neumAC R&amp;I</strong>
-          <p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Supporting respiratory and thoracic medicine through collaborative clinical research and open innovation.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Apoyando la medicina respiratoria y torácica mediante investigación clínica colaborativa e innovación abierta.</span></p>
+          <p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>A clinical research and innovation programme in respiratory and thoracic medicine at the Área Sanitaria de A Coruña y Cee.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Programa de investigación clínica e innovación en medicina respiratoria y torácica, Área Sanitaria de A Coruña y Cee.</span></p>
         </div>
         <div class="footer-col">
           <h4><span lang="en">Navigate</span><span lang="es">Navegar</span></h4>
