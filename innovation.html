@@ -99,8 +99,8 @@
       display:flex;align-items:center;height:100%;
       padding:0 clamp(1.25rem,4vw,5rem);
       position:relative;z-index:1;
-    }
-    .header-nav-spacer{flex:1;min-width:.25rem;}
+    overflow:hidden;}
+    .header-nav-spacer{flex:1;min-width:0;}
     .header-right{display:flex;align-items:center;gap:.875rem;flex-shrink:0;}
 
     /* ── Logo ── */
@@ -148,14 +148,6 @@
       content:'';position:absolute;bottom:-1px;left:1rem;right:1rem;
       height:2px;background:var(--teal-2);border-radius:2px 2px 0 0;
     }
-    .nav .nav-cta{
-      margin-left:.75rem;
-      background:rgba(0,179,179,.11);border:1px solid rgba(0,179,179,.28);
-      color:var(--teal-2);font-weight:600;
-      padding:.5rem 1.25rem;border-radius:6px;font-size:.875rem;
-      transition:background .2s,border-color .2s,color .2s;
-    }
-    .nav .nav-cta:hover{background:rgba(0,179,179,.24);border-color:rgba(0,179,179,.55);color:#fff;}
 
     /* ── Hamburger ── */
     .mob-toggle{
@@ -200,7 +192,7 @@
       transform:translateY(-5px) scale(.98);
       transform-origin:top right;
       transition:opacity .18s,transform .18s,visibility .18s;
-      z-index:300;
+      z-index:300;max-width:calc(100vw - 2rem);
     }
     .lang-sw.open .lang-sw-panel{opacity:1;visibility:visible;transform:translateY(0) scale(1);}
         .lang-opt{
@@ -324,53 +316,47 @@
     .scroll-top:hover svg{}
 
     /* ── Responsive header ── */
-    @media(max-width:1023px){.logo::after{display:none;}}
+    /* Prevent overflow at ALL sizes */
+    .header-inner{overflow:hidden;}
+    /* Nav separator line: hide on tablet */
+    @media(max-width:1023px){
+      .logo::after{display:none;}
+      .nav{display:none !important;}
+    }
+    /* Ensure nav is truly hidden below 1024px */
+    @media(max-width:1023px){
+      .nav,.nav *{display:none !important;visibility:hidden !important;}
+    }
     @media(max-width:768px){
       :root{--header-h:72px;}
       .logo-mark{width:40px;height:40px;}
       .logo-mark svg{width:22px;height:22px;}
       .logo-name{font-size:1.05rem;}
       .scroll-top{bottom:1.5rem;right:1.25rem;width:44px;height:44px;}
+      .header-right{gap:.75rem;}
     }
     @media(max-width:480px){
       :root{--header-h:64px;}
       .logo-sub{display:none;}
-      .logo-mark{width:38px;height:38px;border-radius:9px;}
-      .logo-mark svg{width:20px;height:20px;}
-      .logo-name{font-size:1rem;}
-      .header-right{gap:.6rem;}
-      .lang-sw-btn{padding:.38rem .55rem;gap:4px;}
-      .lang-sw-label{display:none;}
+      .logo-mark{width:36px;height:36px;border-radius:8px;}
+      .logo-mark svg{width:18px;height:18px;}
+      .logo-name{font-size:.95rem;}
+      .header-right{gap:.5rem;}
+      /* Compact lang button — globe icon only, no label, no chevron */
+      .lang-sw-btn{padding:.38rem .5rem;gap:0;}
+      .lang-sw-label{display:none !important;}
+      .lang-sw-chevron{display:none !important;}
+      .lang-sw-btn .ls-globe{width:18px;height:18px;}
+      /* Compact hamburger */
+      .mob-toggle{width:40px;height:40px;}
+    }
+    @media(max-width:360px){
+      .logo-name{font-size:.875rem;}
+      .logo-mark{width:32px;height:32px;border-radius:7px;}
+      .logo-mark svg{width:16px;height:16px;}
+      .header-right{gap:.4rem;}
     }
 
-    /* Lang rules */
-    [lang="es"]{display:none !important;}
-    [lang="en"]{display:inline;}
-    [lang="en"].blk{display:block;}
-    body[data-lang="es"] [lang="es"]{display:inline !important;}
-    body[data-lang="es"] [lang="es"].blk{display:block !important;}
-    body[data-lang="es"] [lang="en"]{display:none !important;}
-    body[data-lang="en"] [lang="en"]{display:inline;}
-    body[data-lang="en"] [lang="en"].blk{display:block;}
-    body[data-lang="en"] [lang="es"]{display:none;}
-
-    /* Buttons */
-    .btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
-    .btn-primary:hover{background:var(--accent);}
-    .btn-secondary{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
-    .btn-secondary:hover{background:#007a7a;}
-    .btn-primary-alt{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
-    .btn-primary-alt:hover{background:var(--accent);}
-    .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(255,255,255,.25);color:var(--text-on-dark);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;}
-    .btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.06);}
-    .btn-ghost-dark{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid var(--rule-l);color:var(--ink-2);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;}
-    .btn-ghost-dark:hover{border-color:var(--accent);color:var(--accent);}
-    .btn-outline{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid currentColor;color:var(--text-on-dark);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;opacity:.7;}
-    .btn-outline:hover{opacity:1;background:rgba(255,255,255,.06);}
-    .btn-violet{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
-    .btn-violet:hover{background:var(--accent);}
-
-    /* Hero base (dark) */
     .hero{background:var(--navy);position:relative;overflow:hidden;padding:5rem 0;color:var(--text-on-dark);}
     .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:180px;opacity:.6;pointer-events:none;}
     .hero::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--teal-2),transparent);}
@@ -774,6 +760,10 @@
     .cinfo-value a{color:var(--teal);transition:color .2s;}
     .cinfo-value a:hover{color:#6dd6d6;}
     .form-card{background:var(--white);border-radius:var(--r-lg);padding:2rem;position:relative;overflow:hidden;}
+    .form-card.dark{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.1);
+    }
     .form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--teal-2);}
     .form-grid{display:grid;grid-template-columns:1fr;gap:1.125rem;}
     @media(min-width:600px){.form-grid{grid-template-columns:1fr 1fr;}}
@@ -807,7 +797,293 @@
     .reveal-d2{transition-delay:.2s;}
     .reveal-d3{transition-delay:.3s;}
   
-    </style>
+        /* Lang rules */
+    [lang="es"]{display:none !important;}
+    [lang="en"]{display:inline;}
+    [lang="en"].blk{display:block;}
+    html[data-lang="es"] [lang="es"]{display:inline !important;}
+    html[data-lang="es"] [lang="es"].blk{display:block !important;}
+    html[data-lang="es"] [lang="en"]{display:none !important;}
+    html[data-lang="en"] [lang="en"]{display:inline;}
+    html[data-lang="en"] [lang="en"].blk{display:block;}
+    html[data-lang="en"] [lang="es"]{display:none;}
+
+        /* When mobile drawer is open, suppress lang dropdown */
+    body[style*="overflow: hidden"] .lang-sw-panel,
+    body[style*="overflow:hidden"] .lang-sw-panel{
+      display:none !important;
+    }
+    /* On mobile, lang-sw-panel opens upward to avoid overlap with content */
+    @media(max-width:1023px){
+      .lang-sw-panel{
+        bottom:calc(100% + 6px);
+        top:auto;
+        transform-origin:bottom right;
+      }
+    }
+  
+    /* ── FORM — refined submit + fields ── */
+    .form-submit,
+    button[type="submit"].btn-primary{
+      width:100%;
+      padding:1rem 1.5rem;
+      background:var(--teal-2);
+      color:#fff;
+      font-weight:600;
+      font-size:.9375rem;
+      letter-spacing:.01em;
+      border:none;
+      border-radius:var(--r-sm);
+      cursor:pointer;
+      transition:background .18s,color .18s;
+      font-family:var(--ff-body);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:.625rem;
+    }
+    .form-submit:hover,
+    button[type="submit"].btn-primary:hover{
+      background:var(--teal);
+    }
+    /* Remove inline style overrides on submit */
+    .form-group{margin-bottom:0;}
+    .form-group label{
+      display:block;
+      font-family:var(--ff-mono);
+      font-size:.575rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:.5rem;
+    }
+    /* Inputs on LIGHT backgrounds */
+    .form-card:not(.dark) .form-group input,
+    .form-card:not(.dark) .form-group select,
+    .form-card:not(.dark) .form-group textarea{
+      width:100%;
+      background:#fff;
+      border:1px solid var(--mid-grey);
+      border-radius:var(--r-sm);
+      padding:.75rem 1rem;
+      font-size:.9rem;
+      font-family:var(--ff-body);
+      color:var(--text-on-light);
+      transition:border-color .18s;
+      outline:none;
+    }
+    .form-card:not(.dark) .form-group input:focus,
+    .form-card:not(.dark) .form-group select:focus,
+    .form-card:not(.dark) .form-group textarea:focus{
+      border-color:var(--teal-2);
+    }
+    /* Inputs on DARK backgrounds (navy form-card) */
+    .form-card.dark .form-group input,
+    .form-card.dark .form-group select,
+    .form-card.dark .form-group textarea{
+      width:100%;
+      background:rgba(255,255,255,.09);
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:var(--r-sm);
+      padding:.75rem 1rem;
+      font-size:.9rem;
+      font-family:var(--ff-body);
+      color:#F5F5F0;
+      transition:border-color .18s;
+      outline:none;
+    }
+    .form-card.dark .form-group input:focus,
+    .form-card.dark .form-group select:focus,
+    .form-card.dark .form-group textarea:focus{
+      border-color:var(--teal-2);
+      background:rgba(255,255,255,.1);
+    }
+    .form-card.dark .form-group label{color:rgba(255,255,255,.55);}
+    .form-card.dark .form-group input::placeholder,
+    .form-card.dark .form-group textarea::placeholder{color:rgba(255,255,255,.25);}
+    .form-card.dark h3{color:#F5F5F0;}
+  
+    /* ── TEXT CONTRAST — ensure all text readable on all backgrounds ── */
+    /* text-on-dark-3 (#5D7494) is too dim — boost it on key elements */
+    .hero-cred{color:rgba(255,255,255,.55);}
+    .pstat-label{color:rgba(255,255,255,.55);}
+    .team-role{color:rgba(255,255,255,.55);}
+    .team-line-tag{color:rgba(255,255,255,.5);}
+    /* contact-bg text */
+    .contact-bg .cinfo-label{color:rgba(255,255,255,.5);}
+    .contact-bg .cinfo-value{color:rgba(255,255,255,.85);}
+    .contact-bg .cinfo-value a{color:var(--teal-2);}
+    /* Boost body text in dark sections */
+    .paths-section .path-desc{color:rgba(255,255,255,.72);}
+    .paths-section .path-list li{color:rgba(255,255,255,.68);}
+    .partner-bg .pm-desc{color:rgba(255,255,255,.7);}
+    .partner-bg .pm-benefits li{color:rgba(255,255,255,.65);}
+    /* hero-desc */
+    .hero-desc{color:rgba(255,255,255,.78);}
+    /* footer address */
+    .footer-col address{color:rgba(255,255,255,.52);}
+    .footer-brand-desc{color:rgba(255,255,255,.52);}
+  
+    /* ── ACTIVE FOCUS AREAS ── */
+    .focus-bg{
+      background:var(--navy);
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+    .focus-intro{
+      display:flex;align-items:baseline;justify-content:space-between;
+      gap:2rem;flex-wrap:wrap;
+      margin-bottom:3rem;
+    }
+    .focus-live{
+      display:inline-flex;align-items:center;gap:.5rem;
+      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;
+      text-transform:uppercase;color:rgba(255,255,255,.45);
+      flex-shrink:0;
+    }
+    .focus-live::before{
+      content:'';width:6px;height:6px;border-radius:50%;
+      background:var(--teal-2);
+      box-shadow:0 0 0 3px rgba(0,179,179,.18);
+      flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot{
+      0%,100%{box-shadow:0 0 0 3px rgba(0,179,179,.18);}
+      50%{box-shadow:0 0 0 6px rgba(0,179,179,.08);}
+    }
+    .focus-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:1px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--r-lg);
+      overflow:hidden;
+    }
+    .focus-card{
+      background:var(--navy);
+      padding:1.875rem 2rem;
+      position:relative;
+      overflow:hidden;
+      transition:background .2s;
+      cursor:default;
+    }
+    .focus-card:hover{background:rgba(255,255,255,.03);}
+    .focus-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;
+      height:2px;background:var(--teal-2);
+      opacity:0;transition:opacity .2s;
+    }
+    .focus-card:hover::before{opacity:.6;}
+    .focus-tag{
+      font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.14em;
+      text-transform:uppercase;color:rgba(0,179,179,.7);
+      margin-bottom:.875rem;display:block;
+    }
+    .focus-title{
+      font-family:var(--ff-display);font-size:1.05rem;font-weight:700;
+      color:#F5F5F0;line-height:1.25;margin-bottom:.75rem;
+    }
+    .focus-desc{
+      font-size:.8375rem;color:rgba(255,255,255,.6);
+      line-height:1.7;margin-bottom:1.125rem;
+    }
+    .focus-cohorts{
+      display:flex;flex-direction:column;gap:.3rem;
+      padding-top:.875rem;
+      border-top:1px solid rgba(255,255,255,.07);
+    }
+    .focus-cohort{
+      font-family:var(--ff-mono);font-size:.6rem;
+      color:rgba(255,255,255,.38);letter-spacing:.04em;
+      padding-left:.75rem;
+      border-left:1.5px solid rgba(0,179,179,.25);
+    }
+    .focus-status{
+      margin-top:1.25rem;
+      font-family:var(--ff-mono);font-size:.565rem;
+      letter-spacing:.1em;text-transform:uppercase;
+      color:rgba(0,179,179,.65);
+    }
+
+    /* ── PARTNER LOGO STRIP ── */
+    .partner-strip-bg{
+      background:rgba(255,255,255,.02);
+      border-top:1px solid rgba(255,255,255,.06);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      padding:2.25rem 0;
+    }
+    .partner-strip-inner{
+      display:flex;align-items:center;
+      gap:0;
+      overflow:hidden;
+    }
+    .partner-strip-label{
+      font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.15em;
+      text-transform:uppercase;color:rgba(255,255,255,.22);
+      white-space:nowrap;flex-shrink:0;
+      margin-right:3rem;
+    }
+    .partner-logos{
+      display:flex;align-items:center;
+      gap:3rem;
+      flex-wrap:wrap;
+    }
+    .partner-logo-item{
+      font-family:var(--ff-mono);font-size:.7rem;
+      font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+      color:rgba(255,255,255,.28);
+      white-space:nowrap;
+      transition:color .2s;
+      position:relative;
+      padding-bottom:2px;
+    }
+    .partner-logo-item::after{
+      content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+      background:var(--teal-2);transition:width .25s;
+    }
+    .partner-logo-item:hover{color:rgba(255,255,255,.55);}
+    .partner-logo-item:hover::after{width:100%;}
+    @media(max-width:768px){
+      .focus-grid{grid-template-columns:1fr;}
+      .partner-logos{gap:1.75rem;}
+      .partner-strip-label{display:none;}
+    }
+  
+    /* ── CONTRAST BOOST v2 — stronger readable text ── */
+    /* Body text in dark sections */
+    .hero-desc{color:rgba(255,255,255,.88) !important;}
+    .path-desc{color:rgba(255,255,255,.82);}
+    .path-list li{color:rgba(255,255,255,.78);}
+    .pstat-label{color:rgba(255,255,255,.65) !important;}
+    .team-role{color:rgba(255,255,255,.65) !important;}
+    .team-line-tag{color:rgba(255,255,255,.58) !important;}
+    .team-expertise .team-tag{color:rgba(255,255,255,.5) !important;}
+    /* Contact info on dark */
+    .contact-bg .cinfo-label{color:rgba(255,255,255,.55) !important;}
+    .contact-bg .cinfo-value{color:rgba(255,255,255,.9) !important;}
+    /* Partnership cards */
+    .pm-desc{color:rgba(255,255,255,.8) !important;}
+    .pm-benefits li{color:rgba(255,255,255,.72) !important;}
+    .pm-title{color:#fff !important;}
+    /* Stage/pipeline */
+    .stage-desc{color:rgba(0,0,0,.72);}
+    .stage-list li{color:rgba(0,0,0,.62);}
+    /* Footer */
+    .footer-brand-desc{color:rgba(255,255,255,.62) !important;}
+    .footer-col ul a{color:rgba(255,255,255,.6) !important;}
+    .footer-col address{color:rgba(255,255,255,.58) !important;}
+    .footer-affiliate-name{color:rgba(255,255,255,.38) !important;}
+    /* Focus cards */
+    .focus-desc{color:rgba(255,255,255,.75) !important;}
+    .focus-cohort{color:rgba(255,255,255,.52) !important;}
+    /* Hero credentials */
+    .hero-cred{color:rgba(255,255,255,.65) !important;}
+    /* Eyebrow on dark */
+    .eyebrow{opacity:1;}
+    /* sec-head p on dark */
+    .contact-bg .sec-head p,
+    .partner-bg .sec-head p,
+    .team-bg .sec-head p{color:rgba(255,255,255,.78);}
+  </style>
 </head>
 <body>
   <div id="progress-bar" role="progressbar" aria-hidden="true"></div>
@@ -838,8 +1114,7 @@
           <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
           <a href="innovation.html" class="current" aria-current="page"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
           <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
-          <a href="#contact" class="nav-cta"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-      </nav>
+          </nav>
 
       <div class="header-right">
         <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer">
@@ -921,23 +1196,6 @@
       <path d="M12 19V5M5 12l7-7 7 7"/>
     </svg>
   </button>
-
-  <div class="mob-overlay" id="mobOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu"></div>
-  <div class="mob-drawer" id="mobDrawer">
-    <div class="mob-head">
-      <span style="font-family:var(--ff-display);font-weight:700;font-size:.9375rem;color:rgba(255,255,255,.85);">neumAC R&amp;I</span>
-      <button class="mob-close" id="mobClose" aria-label="Close navigation">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:20px;height:20px;"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <nav class="mob-links" aria-label="Mobile navigation">
-      <a href="index.html" ><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <a href="clinical.html" ><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-      <a href="innovation.html" class="current" aria-current="page"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-      <a href="news.html" ><span lang="en">News</span><span lang="es">Noticias</span></a>
-    </nav>
-    <a href="#contact" class="mob-cta"><span lang="en">Contact Us</span><span lang="es">Contáctenos</span></a>
-  </div>
 
 
 <!-- HERO -->
@@ -1118,22 +1376,113 @@
         <div class="cap-card reveal">
           <div class="cap-header"><p class="cap-title"><span lang="en">Clinical Data &amp; Biobank</span><span lang="es">Datos Clínicos y Biobanco</span></p><span class="cap-num">01</span></div><div class="cap-pills"><span class="cap-pill">Annotated</span><span class="cap-pill">Longitudinal</span><span class="cap-pill">GDPR-compliant</span></div>
           <p class="cap-desc"><span lang="en">Curated, structured clinical datasets with expert annotations across all disease domains — ready for AI training, algorithm validation, and retrospective analysis.</span><span lang="es">Conjuntos de datos clínicos curados con anotaciones expertas en todos los dominios de enfermedad.</span></p>
-          <ul class="cap-list"><li><span lang="en">3,200+ annotated CT scans (ILD, lung cancer)</span><span lang="es">3.200+ TCs anotadas (EPI, cáncer de pulmón)</span></li><li><span lang="en">Longitudinal spirometry + biomarker cohorts</span><span lang="es">Cohortes longitudinales de espirometría y biomarcadores</span></li><li><span lang="en">Linked EHR data for outcomes research</span><span lang="es">Datos HCE vinculados para investigación de resultados</span></li></ul></div>
+          <ul class="cap-list"><li><span lang="en">3,200+ annotated CT scans (ILD, lung cancer)</span><span lang="es">3.200+ TCs anotadas (EPI, cáncer de pulmón)</span></li><li><span lang="en">Longitudinal spirometry + biomarker cohorts</span><span lang="es">Cohortes longitudinales de espirometría y biomarcadores</span></li><li><span lang="en">Linked EHR data for outcomes research</span><span lang="es">Datos HCE vinculados para investigación de resultados</span></li></ul>
         </div>
         <div class="cap-card reveal reveal-d1">
-          <div class="cap-header"><p class="cap-title"><span lang="en">Specialist Clinical Team</span><span lang="es">Equipo Clínico Especialista</span></p><span class="cap-num">01</span></div><div class="cap-pills"><span class="cap-pill">6 Research Lines</span><span class="cap-pill">GCP certified</span></div>
+          <div class="cap-header"><p class="cap-title"><span lang="en">Specialist Clinical Team</span><span lang="es">Equipo Clínico Especialista</span></p><span class="cap-num">02</span></div><div class="cap-pills"><span class="cap-pill">6 Research Lines</span><span class="cap-pill">GCP certified</span></div>
           <p class="cap-desc"><span lang="en">Direct access to respiratory and thoracic surgery specialists across all six research lines — providing clinical oversight, protocol design, and expert annotation.</span><span lang="es">Acceso directo a especialistas respiratorios y de cirugía torácica en las seis líneas de investigación.</span></p>
-          <ul class="cap-list"><li><span lang="en">Dedicated innovation co-PI per project</span><span lang="es">Co-IP de innovación dedicado por proyecto</span></li><li><span lang="en">Expert-labelled datasets &amp; validation review</span><span lang="es">Conjuntos de datos etiquetados por expertos</span></li><li><span lang="en">Regulatory pathway advisory</span><span lang="es">Asesoría en vías regulatorias</span></li></ul></div>
+          <ul class="cap-list"><li><span lang="en">Dedicated innovation co-PI per project</span><span lang="es">Co-IP de innovación dedicado por proyecto</span></li><li><span lang="en">Expert-labelled datasets &amp; validation review</span><span lang="es">Conjuntos de datos etiquetados por expertos</span></li><li><span lang="en">Regulatory pathway advisory</span><span lang="es">Asesoría en vías regulatorias</span></li></ul>
         </div>
         <div class="cap-card reveal reveal-d1">
-          <div class="cap-header"><p class="cap-title"><span lang="en">Patient Recruitment</span><span lang="es">Reclutamiento de Pacientes</span></p><span class="cap-num">01</span></div><div class="cap-pills"><span class="cap-pill">High-volume</span><span class="cap-pill">Pre-phenotyped</span></div>
+          <div class="cap-header"><p class="cap-title"><span lang="en">Patient Recruitment</span><span lang="es">Reclutamiento de Pacientes</span></p><span class="cap-num">03</span></div><div class="cap-pills"><span class="cap-pill">High-volume</span><span class="cap-pill">Pre-phenotyped</span></div>
           <p class="cap-desc"><span lang="en">A high-volume tertiary centre with pre-phenotyped patient registries across all target conditions — enabling rapid recruitment with streamlined ethics processes.</span><span lang="es">Centro terciario de alto volumen con registros de pacientes pre-fenotipados, permitiendo reclutamiento rápido.</span></p>
-          <ul class="cap-list"><li><span lang="en">Pre-screened registries per disease domain</span><span lang="es">Registros pre-cribados por dominio de enfermedad</span></li><li><span lang="en">Streamlined ethics &amp; consent processes</span><span lang="es">Procesos simplificados de ética y consentimiento</span></li><li><span lang="en">Site initiation avg. under 6 weeks</span><span lang="es">Inicio de sitio medio inferior a 6 semanas</span></li></ul></div>
+          <ul class="cap-list"><li><span lang="en">Pre-screened registries per disease domain</span><span lang="es">Registros pre-cribados por dominio de enfermedad</span></li><li><span lang="en">Streamlined ethics &amp; consent processes</span><span lang="es">Procesos simplificados de ética y consentimiento</span></li><li><span lang="en">Site initiation avg. under 6 weeks</span><span lang="es">Inicio de sitio medio inferior a 6 semanas</span></li></ul>
         </div>
         <div class="cap-card reveal reveal-d2">
-          <div class="cap-header"><p class="cap-title"><span lang="en">Regulatory &amp; IP Support</span><span lang="es">Soporte Regulatorio y PI</span></p><span class="cap-num">01</span></div><div class="cap-pills"><span class="cap-pill">INIBIC</span><span class="cap-pill">MDR experience</span></div>
+          <div class="cap-header"><p class="cap-title"><span lang="en">Regulatory &amp; IP Support</span><span lang="es">Soporte Regulatorio y PI</span></p><span class="cap-num">04</span></div><div class="cap-pills"><span class="cap-pill">INIBIC</span><span class="cap-pill">MDR experience</span></div>
           <p class="cap-desc"><span lang="en">INIBIC-backed research infrastructure with experienced navigation of CE MDR, FDA breakthrough device pathways, and AEMPS submission processes for medical devices and SaMD.</span><span lang="es">Infraestructura respaldada por INIBIC con experiencia en CE MDR, FDA y procesos ante AEMPS.</span></p>
-          <ul class="cap-list"><li><span lang="en">CE MDR &amp; IVDR technical file support</span><span lang="es">Soporte expedientes técnicos CE MDR e IVDR</span></li><li><span lang="en">IP framework for joint inventions</span><span lang="es">Marco de PI para invenciones conjuntas</span></li><li><span lang="en">SERGAS institutional endorsement pathway</span><span lang="es">Vía de aval institucional SERGAS</span></li></ul></div>
+          <ul class="cap-list"><li><span lang="en">CE MDR &amp; IVDR technical file support</span><span lang="es">Soporte expedientes técnicos CE MDR e IVDR</span></li><li><span lang="en">IP framework for joint inventions</span><span lang="es">Marco de PI para invenciones conjuntas</span></li><li><span lang="en">SERGAS institutional endorsement pathway</span><span lang="es">Vía de aval institucional SERGAS</span></li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ACTIVE FOCUS AREAS -->
+  <section class="section focus-bg" id="focus-areas">
+    <div class="container">
+      <div class="focus-intro">
+        <div>
+          <p class="label" style="color:var(--teal-2);opacity:.9;margin-bottom:.625rem;"><span lang="en">Active Research Focus</span><span lang="es">Foco de Investigación Activo</span></p>
+          <h2 class="display lg" style="color:#F5F5F0;">
+            <span lang="en">Technologies We Are<br>Currently Exploring</span>
+            <span lang="es">Tecnologías que Estamos<br>Explorando Actualmente</span>
+          </h2>
+        </div>
+        <span class="focus-live">
+          <span lang="en">Active programmes · Updated Q1 2026</span>
+          <span lang="es">Programas activos · Actualizado Q1 2026</span>
+        </span>
+      </div>
+
+      <div class="focus-grid reveal">
+
+        <div class="focus-card">
+          <span class="focus-tag"><span lang="en">AI · Machine Learning</span><span lang="es">IA · Aprendizaje Automático</span></span>
+          <div class="focus-title"><span lang="en">AI-Assisted Diagnostics in Respiratory Medicine</span><span lang="es">Diagnóstico Asistido por IA en Medicina Respiratoria</span></div>
+          <p class="focus-desc"><span lang="en">Convolutional and transformer models for early disease classification, progression scoring, and treatment response prediction across ILD, COPD, and lung cancer cohorts.</span><span lang="es">Modelos convolucionales y transformers para clasificación temprana, puntuación de progresión y predicción de respuesta al tratamiento en cohortes de EPI, EPOC y cáncer de pulmón.</span></p>
+          <div class="focus-cohorts">
+            <span class="focus-cohort"><span lang="en">ILD / IPF subtype classification</span><span lang="es">Clasificación de subtipos EPI / FPI</span></span>
+            <span class="focus-cohort"><span lang="en">COPD exacerbation prediction</span><span lang="es">Predicción de exacerbaciones EPOC</span></span>
+            <span class="focus-cohort"><span lang="en">Lung cancer staging support</span><span lang="es">Apoyo a la estadificación del cáncer de pulmón</span></span>
+          </div>
+          <div class="focus-status"><span lang="en">Currently executing · Active validation</span><span lang="es">En ejecución · Validación activa</span></div>
+        </div>
+
+        <div class="focus-card">
+          <span class="focus-tag"><span lang="en">VR · AR · Simulation</span><span lang="es">RV · RA · Simulación</span></span>
+          <div class="focus-title"><span lang="en">Extended Reality in Pulmonology &amp; Thoracic Surgery</span><span lang="es">Realidad Extendida en Neumología y Cirugía Torácica</span></div>
+          <p class="focus-desc"><span lang="en">Immersive simulation for procedural training, AR-guided intraoperative navigation for VATS/RATS, and VR-based patient pre-operative education tools validated against clinical outcomes.</span><span lang="es">Simulación inmersiva para formación procedimental, navegación intraoperatoria guiada por AR en VATS/RATS y herramientas de educación preoperatoria basadas en RV.</span></p>
+          <div class="focus-cohorts">
+            <span class="focus-cohort"><span lang="en">VATS/RATS sublobar resection · AR overlay</span><span lang="es">Resección sublobar VATS/RATS · superposición AR</span></span>
+            <span class="focus-cohort"><span lang="en">Bronchoscopy simulation training</span><span lang="es">Simulación de entrenamiento en broncoscopia</span></span>
+            <span class="focus-cohort"><span lang="en">Patient pre-procedure VR education</span><span lang="es">Educación preoperatoria VR del paciente</span></span>
+          </div>
+          <div class="focus-status"><span lang="en">Co-development phase · Partners welcome</span><span lang="es">Fase de codesarrollo · Socios bienvenidos</span></div>
+        </div>
+
+        <div class="focus-card">
+          <span class="focus-tag"><span lang="en">Digital Health · SaMD</span><span lang="es">Salud Digital · SaMD</span></span>
+          <div class="focus-title"><span lang="en">Remote Monitoring &amp; Predictive Clinical Platforms</span><span lang="es">Monitorización Remota y Plataformas Clínicas Predictivas</span></div>
+          <p class="focus-desc"><span lang="en">Wearable and sensor-based remote monitoring platforms generating continuous respiratory data streams, feeding decision-support algorithms for outpatient chronic disease management.</span><span lang="es">Plataformas de monitorización remota basadas en sensores que generan flujos continuos de datos respiratorios para algoritmos de soporte a la decisión en el manejo ambulatorio de enfermedades crónicas.</span></p>
+          <div class="focus-cohorts">
+            <span class="focus-cohort"><span lang="en">COPD continuous SpO₂ + RR monitoring</span><span lang="es">Monitorización continua SpO₂ + FR en EPOC</span></span>
+            <span class="focus-cohort"><span lang="en">Severe asthma biologic response tracking</span><span lang="es">Seguimiento de respuesta a biológicos en asma grave</span></span>
+            <span class="focus-cohort"><span lang="en">NIV compliance + outcomes monitoring</span><span lang="es">Cumplimiento VNI y monitorización de resultados</span></span>
+          </div>
+          <div class="focus-status"><span lang="en">Pilot phase · 30-patient study active</span><span lang="es">Fase piloto · Estudio de 30 pacientes activo</span></div>
+        </div>
+
+        <div class="focus-card">
+          <span class="focus-tag"><span lang="en">Biomarkers · Precision Medicine</span><span lang="es">Biomarcadores · Medicina de Precisión</span></span>
+          <div class="focus-title"><span lang="en">Multi-Omic Profiling for Personalised Respiratory Treatment</span><span lang="es">Perfil Multi-Ómico para Tratamiento Respiratorio Personalizado</span></div>
+          <p class="focus-desc"><span lang="en">Integrating genomic, proteomic, and clinical phenotype data to build precision treatment algorithms — particularly for biologic selection in severe asthma and immunosuppression optimisation in lung transplant.</span><span lang="es">Integración de datos genómicos, proteómicos y fenotipo clínico para construir algoritmos de tratamiento de precisión en asma grave y trasplante pulmonar.</span></p>
+          <div class="focus-cohorts">
+            <span class="focus-cohort"><span lang="en">Biologic selection algorithm · Severe asthma</span><span lang="es">Algoritmo de selección de biológicos · Asma grave</span></span>
+            <span class="focus-cohort"><span lang="en">Transplant rejection early biomarkers</span><span lang="es">Biomarcadores precoces de rechazo en trasplante</span></span>
+            <span class="focus-cohort"><span lang="en">COPD precision phenotyping</span><span lang="es">Fenotipado de precisión en EPOC</span></span>
+          </div>
+          <div class="focus-status"><span lang="en">Protocol defined · Data collection underway</span><span lang="es">Protocolo definido · Recogida de datos en curso</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNER ORGANISATIONS -->
+  <section class="partner-strip-bg">
+    <div class="container">
+      <div class="partner-strip-inner">
+        <span class="partner-strip-label"><span lang="en">Collaborating with</span><span lang="es">Colaborando con</span></span>
+        <div class="partner-logos">
+          <span class="partner-logo-item">INIBIC</span>
+          <span class="partner-logo-item">SERGAS</span>
+          <span class="partner-logo-item">HUAC</span>
+          <span class="partner-logo-item">CHUAC</span>
+          <span class="partner-logo-item">AEMPS</span>
+          <span class="partner-logo-item">SEPAR</span>
+          <span class="partner-logo-item">SEMI</span>
+          <span class="partner-logo-item">ISCIII</span>
         </div>
       </div>
     </div>
@@ -1187,7 +1536,7 @@
             <span style="font-size:.8rem;color:var(--text-on-dark-3);">As Xubias, 84 · 15006 A Coruña</span>
           </div>
         </div>
-        <div class="form-card reveal reveal-d1">
+        <div class="form-card dark reveal reveal-d1">
           <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a Project Proposal</span><span lang="es">Enviar una Propuesta de Proyecto</span></h3>
           <form id="innovForm" novalidate>
             <div class="form-grid">
@@ -1219,9 +1568,7 @@
               </div>
               <div class="form-group span-2"><label><span lang="en">Brief Project Description</span><span lang="es">Descripción Breve del Proyecto</span></label><textarea rows="4" placeholder="Describe your technology, current development stage, and what you're looking for from neumAC R&I…"></textarea></div>
               <div class="form-group span-2" style="margin-bottom:0;">
-                <button type="submit" class="btn-primary" style="width:100%;padding:.875rem;justify-content:center;font-size:.9rem;">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
-                  <span lang="en">Submit Proposal</span><span lang="es">Enviar Propuesta</span>
+                <button type="submit" class="form-submit"><span lang="en">Submit Proposal</span><span lang="es">Enviar Propuesta</span>
                 </button>
               </div>
             </div>
@@ -1296,69 +1643,91 @@
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
   <script>
-    /* ── Scroll: header state + progress bar + scroll-to-top ── */
+    /* ── Scroll: header + progress bar + scroll-to-top ── */
     (function(){
-      const hdr = document.getElementById('header');
-      const prg = document.getElementById('progress-bar');
-      const stt = document.getElementById('scrollTop');
-      window.addEventListener('scroll', function(){
-        const y = window.scrollY;
-        hdr.classList.toggle('scrolled', y > 40);
-        if(prg){const tot=document.documentElement.scrollHeight-window.innerHeight;prg.style.width=(tot>0?(y/tot*100):0)+'%';}
-        if(stt){const thr=Math.max(400,(document.documentElement.scrollHeight-window.innerHeight)*0.35);stt.classList.toggle('visible',y>thr);}
+      var hdr=document.getElementById('header'),prg=document.getElementById('progress-bar'),stt=document.getElementById('scrollTop');
+      window.addEventListener('scroll',function(){
+        var y=window.scrollY;
+        hdr.classList.toggle('scrolled',y>40);
+        if(prg){var tot=document.documentElement.scrollHeight-window.innerHeight;prg.style.width=(tot>0?(y/tot*100):0)+'%';}
+        if(stt){var thr=Math.max(400,(document.documentElement.scrollHeight-window.innerHeight)*0.35);stt.classList.toggle('visible',y>thr);}
       },{passive:true});
-      if(stt) stt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+      if(stt)stt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
     })();
 
     /* ── Mobile drawer ── */
-    const _tog=document.getElementById('mobToggle'),_drw=document.getElementById('mobDrawer'),_ovl=document.getElementById('mobOverlay'),_cls=document.getElementById('mobClose');
-    function openMob(){_tog.classList.add('open');_drw.classList.add('open');_ovl.classList.add('open');_tog.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
-    function closeMob(){_tog.classList.remove('open');_drw.classList.remove('open');_ovl.classList.remove('open');_tog.setAttribute('aria-expanded','false');document.body.style.overflow='';}
-    _tog.addEventListener('click',openMob);
-    if(_cls) _cls.addEventListener('click',closeMob);
-    if(_ovl) _ovl.addEventListener('click',closeMob);
-    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMob();});
+    var _tog=document.getElementById('mobToggle'),_drw=document.getElementById('mobDrawer'),_ovl=document.getElementById('mobOverlay'),_cls=document.getElementById('mobClose');
+    function openMob(){
+      if(!_tog||!_drw)return;
+      _tog.classList.add('open');_drw.classList.add('open');_ovl&&_ovl.classList.add('open');
+      _tog.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';
+      closeLang();
+    }
+    function closeMob(){
+      if(!_tog||!_drw)return;
+      _tog.classList.remove('open');_drw.classList.remove('open');_ovl&&_ovl.classList.remove('open');
+      _tog.setAttribute('aria-expanded','false');document.body.style.overflow='';
+    }
+    if(_tog)_tog.addEventListener('click',openMob);
+    if(_cls)_cls.addEventListener('click',closeMob);
+    if(_ovl)_ovl.addEventListener('click',closeMob);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMob();closeLang();}});
 
     /* ── Language dropdown ── */
-    const _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
+    var _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
+    function openLang(){
+      if(!_lsw)return;
+      closeMob();
+      _lsw.classList.add('open');
+      if(_lbt)_lbt.setAttribute('aria-expanded','true');
+    }
+    function closeLang(){
+      if(!_lsw)return;
+      _lsw.classList.remove('open');
+      if(_lbt)_lbt.setAttribute('aria-expanded','false');
+    }
+    function toggleLang(){
+      if(_lsw&&_lsw.classList.contains('open'))closeLang();else openLang();
+    }
     if(_lbt){
-      _lbt.addEventListener('click',function(e){e.stopPropagation();const o=_lsw.classList.toggle('open');_lbt.setAttribute('aria-expanded',o);});
+      _lbt.addEventListener('click',function(e){e.stopPropagation();toggleLang();});
+    }
+    if(_lsw){
       _lsw.addEventListener('click',function(e){e.stopPropagation();});
     }
-    document.addEventListener('click',function(){if(_lsw){_lsw.classList.remove('open');if(_lbt)_lbt.setAttribute('aria-expanded','false');}});
+    document.addEventListener('click',function(){closeLang();});
 
+    /* ── Language core — NO _busy flag, always reliable ── */
+    function setLang(l){
+      if(!l||!(l==='en'||l==='es'))return;
+      document.documentElement.dataset.lang=l;
+      try{localStorage.setItem('huac_lang',l);}catch(e){}
+    }
     function selectLang(l){
-      document.querySelectorAll('.lang-opt').forEach(function(o){const m=o.dataset.lang===l;o.classList.toggle('active',m);o.setAttribute('aria-selected',m);});
+      setLang(l);
+      /* Update dropdown options */
+      document.querySelectorAll('.lang-opt').forEach(function(o){
+        var active=o.dataset.lang===l;
+        o.classList.toggle('active',active);
+        o.setAttribute('aria-selected',String(active));
+      });
+      /* Update mobile lang buttons */
       var me=document.getElementById('mobLangEn'),mes=document.getElementById('mobLangEs');
       if(me)me.classList.toggle('active',l==='en');
       if(mes)mes.classList.toggle('active',l==='es');
+      /* Update label */
       if(_lbl)_lbl.textContent=l.toUpperCase();
-      if(_lsw)_lsw.classList.remove('open');
-      if(_lbt)_lbt.setAttribute('aria-expanded','false');
-      setLang(l);
+      closeLang();
     }
-    document.querySelectorAll('.lang-opt').forEach(function(opt){opt.addEventListener('click',function(){selectLang(opt.dataset.lang);});});
-
-    /* ── Language core ── */
-    var _busy=false;
-    function setLang(l){
-      if(document.documentElement.dataset.lang===l||_busy)return;
-      _busy=true;var y=window.scrollY;
-      document.documentElement.dataset.lang=l;
-      try{localStorage.setItem('huac_lang',l);}catch(e){}
-      requestAnimationFrame(function(){window.scrollTo(0,y);_busy=false;});
-    }
+    /* Wire dropdown option buttons */
+    document.querySelectorAll('.lang-opt').forEach(function(opt){
+      opt.addEventListener('click',function(e){e.stopPropagation();selectLang(opt.dataset.lang);});
+    });
+    /* Restore saved language */
     (function(){
       try{
         var s=localStorage.getItem('huac_lang');
-        if(s==='en'||s==='es'){
-          setLang(s);
-          if(_lbl)_lbl.textContent=s.toUpperCase();
-          document.querySelectorAll('.lang-opt').forEach(function(o){o.classList.toggle('active',o.dataset.lang===s);o.setAttribute('aria-selected',o.dataset.lang===s);});
-          var me=document.getElementById('mobLangEn'),mes=document.getElementById('mobLangEs');
-          if(me)me.classList.toggle('active',s==='en');
-          if(mes)mes.classList.toggle('active',s==='es');
-        }
+        if(s==='en'||s==='es')selectLang(s);
       }catch(e){}
     })();
 
@@ -1373,8 +1742,19 @@
     });
 
     /* ── Reveal observer ── */
-    var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
     document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  </script>
+  <script>
+    var _cf = document.getElementById('innovForm')||document.getElementById('contactForm');
+    if(_cf) _cf.addEventListener('submit',function(e){
+      e.preventDefault();
+      var s=document.getElementById('formSuccess');
+      if(s){s.classList.add('show');setTimeout(function(){s.classList.remove('show');},7000);}
+      e.target.reset();
+    });
   </script>
 </body>
 </html>
