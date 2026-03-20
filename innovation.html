@@ -382,19 +382,92 @@
     .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:2rem;}
 
     /* Footer */
-    .footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:3.5rem 0 2rem;}
-    .footer-grid{display:grid;grid-template-columns:1fr;gap:2.5rem;margin-bottom:2.5rem;}
-    @media(min-width:640px){.footer-grid{grid-template-columns:1.5fr 1fr 1fr;}}
-    .footer-brand strong{font-family:var(--ff-display);font-size:1.0625rem;font-weight:700;color:rgba(255,255,255,.9);}
-    .footer-brand p{margin-top:.75rem;font-size:.8125rem;line-height:1.65;color:rgba(255,255,255,.3);}
-    .footer-col h4{font-family:var(--ff-mono);font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.875rem;}
-    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.4rem;}
-    .footer-col ul a{font-size:.8125rem;color:rgba(255,255,255,.45);transition:color .2s;}
-    .footer-col ul a:hover{color:rgba(255,255,255,.8);}
-    .footer-col address{font-style:normal;font-size:.8125rem;color:rgba(255,255,255,.35);line-height:1.75;}
-    .footer-col address a{color:rgba(255,255,255,.45);}
-    .footer-col address a:hover{color:rgba(255,255,255,.8);}
-    .footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.75rem;color:rgba(255,255,255,.22);}
+        /* ── FOOTER ── */
+    .footer{
+      background:var(--navy);
+      border-top:3px solid rgba(0,179,179,.2);
+      padding:5.5rem 0 0;
+    }
+    .footer-top{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:4rem;
+      padding-bottom:4rem;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    @media(min-width:768px){
+      .footer-top{grid-template-columns:1.6fr 1fr 1fr;}
+    }
+    /* Brand column */
+    .footer-brand{display:flex;flex-direction:column;gap:1.5rem;}
+    .footer-brand-logo{display:flex;align-items:center;gap:.875rem;}
+    .footer-brand-mark{
+      width:40px;height:40px;
+      background:rgba(0,179,179,.08);border:1px solid rgba(0,179,179,.2);
+      border-radius:9px;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    }
+    .footer-brand-mark svg{width:22px;height:22px;color:var(--teal-2);}
+    .footer-brand-name{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:rgba(255,255,255,.88);letter-spacing:-.02em;}
+    .footer-brand-desc{
+      font-size:.875rem;line-height:1.75;
+      color:rgba(255,255,255,.35);
+      max-width:340px;
+    }
+    .footer-brand-affiliates{
+      display:flex;flex-direction:column;gap:.5rem;
+      padding-top:1.25rem;
+      border-top:1px solid rgba(255,255,255,.07);
+    }
+    .footer-affiliate{
+      display:flex;align-items:baseline;gap:1rem;
+      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.1em;text-transform:uppercase;
+    }
+    .footer-affiliate-abbr{color:rgba(0,179,179,.65);flex-shrink:0;width:3rem;}
+    .footer-affiliate-name{color:rgba(255,255,255,.25);}
+    /* Nav columns */
+    .footer-col-head{
+      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.15em;
+      text-transform:uppercase;color:rgba(255,255,255,.28);
+      margin-bottom:1.25rem;
+      padding-bottom:.75rem;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.625rem;}
+    .footer-col ul a{
+      font-size:.875rem;color:rgba(255,255,255,.45);
+      transition:color .18s;
+      display:inline-block;
+    }
+    .footer-col ul a:hover{color:rgba(255,255,255,.85);}
+    .footer-col address{
+      font-style:normal;font-size:.875rem;
+      color:rgba(255,255,255,.38);line-height:1.85;
+    }
+    .footer-col address a{
+      color:rgba(255,255,255,.45);
+      transition:color .18s;
+      border-bottom:1px solid rgba(255,255,255,.1);
+    }
+    .footer-col address a:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.3);}
+    /* Bottom bar */
+    .footer-bottom{
+      padding:1.5rem 0;
+      display:flex;justify-content:space-between;align-items:center;
+      flex-wrap:wrap;gap:.75rem;
+      font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.06em;
+      color:rgba(255,255,255,.2);
+    }
+    .footer-bottom-cert{
+      display:flex;align-items:center;gap:.875rem;
+    }
+    .footer-bottom-cert span{
+      padding:.2rem .6rem;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:3px;
+      font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
+      color:rgba(255,255,255,.22);
+    }
 
     /* Reveal */
     
@@ -493,37 +566,75 @@
     /* ══════════════════════════════════════════
        VISUAL PIPELINE — the key design upgrade
     ══════════════════════════════════════════ */
-    .pipeline-bg{background:var(--off-white);color:var(--text-on-light);}
+        .pipeline-bg{background:var(--off-white);color:var(--text-on-light);}
 
-    /* Horizontal connector (desktop only) */
     .pipeline-track{position:relative;}
-    @media(min-width:900px){
-      .pipeline-track::before{
-        content:'';position:absolute;top:38px;
-        left:calc(12.5% + 26px);right:calc(12.5% + 26px);
+    .pipeline-stages{
+      display:flex;flex-direction:column;gap:0;
+      position:relative;z-index:1;
+      border-top:1px solid var(--mid-grey);
+    }
+    @media(min-width:640px){
+      .pipeline-stages{flex-direction:row;}
+      /* Teal connector line across top — desktop only */
+      .pipeline-stages::before{
+        content:'';position:absolute;top:0;left:0;right:0;
         height:2px;
-        background:linear-gradient(90deg,var(--teal),var(--teal-2),var(--teal-2),var(--teal-2));
-        opacity:.25;z-index:0;
+        background:linear-gradient(90deg,var(--teal),var(--teal-2) 50%,var(--teal-2));
+        opacity:.18;
       }
     }
-    .pipeline-stages{display:flex;flex-direction:column;gap:0;position:relative;z-index:1;border-top:1px solid var(--mid-grey);}
-    @media(min-width:640px){.pipeline-stages{flex-direction:row;}}
-    
-
-    .pipeline-stage{text-align:left;padding:2rem 1.5rem 2rem 0;flex:1;border-right:1px solid var(--mid-grey);}
-    .stage-node{font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;display:block;}
-    .stage-step{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-on-light-3);margin-bottom:.5rem;}
-    .stage-title{font-family:var(--ff-display);font-size:1.075rem;font-weight:700;color:var(--text-on-light);margin-bottom:.625rem;}
-    .stage-desc{font-size:.85rem;color:var(--text-on-light-2);line-height:1.65;margin-bottom:1rem;}
-    .stage-list{list-style:none;padding:0;}
-    .stage-list li{font-size:.78rem;color:var(--text-on-light-3);padding:.2rem 0 .2rem 1rem;position:relative;}
-    .stage-list li::before{content:'·';position:absolute;left:0;color:var(--text-on-light-3);font-size:1.2rem;line-height:1.1;}
-
-    /* Pipeline arrow connector (mobile/tablet) */
+    .pipeline-stage{
+      flex:1;
+      padding:2.25rem 2rem;
+      border-right:1px solid var(--mid-grey);
+      border-bottom:1px solid var(--mid-grey);
+      position:relative;
+    }
+    .pipeline-stage:last-child{border-right:none;}
+    @media(max-width:639px){
+      .pipeline-stage{border-right:none;}
+      .pipeline-stage:last-child{border-bottom:none;}
+    }
+    /* Teal top accent on each stage — reveals on hover */
+    .pipeline-stage::before{
+      content:'';position:absolute;top:-1px;left:0;right:0;
+      height:2px;background:var(--teal-2);
+      opacity:0;transition:opacity .2s;
+    }
+    .pipeline-stage:hover::before{opacity:.6;}
+    .stage-node{
+      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.14em;
+      text-transform:uppercase;color:rgba(0,153,153,.7);
+      margin-bottom:.5rem;display:flex;align-items:center;gap:.625rem;
+    }
+    .stage-node::after{
+      content:'';flex:1;height:1px;background:rgba(0,153,153,.15);
+    }
+    .stage-step{
+      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--text-on-light-3);
+      margin-bottom:.625rem;
+    }
+    .stage-title{
+      font-family:var(--ff-display);font-size:1.05rem;font-weight:700;
+      color:var(--text-on-light);margin-bottom:.75rem;line-height:1.2;
+    }
+    .stage-desc{
+      font-size:.8375rem;color:var(--text-on-light-2);
+      line-height:1.7;margin-bottom:1.125rem;
+    }
+    .stage-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:.3rem;}
+    .stage-list li{
+      font-size:.775rem;color:var(--text-on-light-3);
+      padding-left:.875rem;
+      border-left:1.5px solid rgba(0,153,153,.2);
+      line-height:1.5;
+    }
     @media(max-width:899px){
       .pipeline-stage:not(:last-child)::after{
-        content:'↓';display:block;text-align:center;
-        font-size:1.25rem;color:var(--text-on-light-3);opacity:.3;margin-top:.5rem;
+        content:'';display:block;width:1px;height:1.5rem;
+        background:var(--mid-grey);margin:.75rem auto 0;
       }
     }
 
@@ -563,22 +674,74 @@
     .pneed{font-size:.8125rem;font-family:var(--ff-mono);color:var(--text-on-light-2);} .pneed+.pneed::before{content:" · ";color:var(--mid-grey);}
 
     /* CAPABILITIES */
-    .cap-bg{background:var(--white);color:var(--text-on-light);}
-    .cap-grid{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule-l);}
-    
-    .cap-card{display:block;padding:2rem 0;border-bottom:1px solid var(--rule-l);transition:background .15s;}
-    .cap-card:hover{background:var(--off-white);}
-    .cap-icon-row{display:flex;align-items:flex-start;gap:1.5rem;width:100%;}
-    .cap-icon{width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:.2rem;color:var(--accent);}
-    .cap-icon svg{width:20px;height:20px;}
-    .cap-card:nth-child(1) .cap-icon{background:var(--teal-dim);} .cap-card:nth-child(1) .cap-icon svg{color:var(--teal);}
-                .cap-title{font-family:var(--ff-display);font-size:1.075rem;font-weight:700;color:var(--text-on-light);}
-    .cap-desc{font-size:.875rem;color:var(--text-on-light-2);line-height:1.65;margin-bottom:1.125rem;}
-    .cap-pills{margin-bottom:.875rem;}
-    .cap-pill{font-size:.8rem;color:var(--text-on-light-3);font-family:var(--ff-body);} .cap-pill+.cap-pill::before{content:" · ";opacity:.4;}
-    .cap-list{list-style:none;display:flex;flex-direction:column;gap:.35rem;}
-    .cap-list li{display:flex;align-items:flex-start;gap:.5rem;font-size:.875rem;color:var(--text-on-light-2);}
-    .cap-list li::before{content:'→';color:var(--text-on-light-3);flex-shrink:0;margin-top:.05rem;font-size:.875rem;}
+        .cap-bg{background:var(--white);color:var(--text-on-light);}
+    .cap-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:0;
+      border-top:1px solid var(--rule-l);
+    }
+    @media(min-width:768px){
+      .cap-grid{grid-template-columns:1fr 1fr;}
+    }
+    .cap-card{
+      padding:2.25rem 2.5rem;
+      border-bottom:1px solid var(--rule-l);
+      border-right:1px solid var(--rule-l);
+      transition:background .15s;
+      position:relative;
+    }
+    @media(min-width:768px){
+      .cap-card:nth-child(even){border-right:none;}
+      .cap-card:nth-last-child(-n+2){border-bottom:none;}
+    }
+    @media(max-width:767px){
+      .cap-card{border-right:none;}
+      .cap-card:last-child{border-bottom:none;}
+    }
+    .cap-card:hover{background:var(--teal-lt);}
+    /* Teal left accent on hover */
+    .cap-card::before{
+      content:'';position:absolute;left:0;top:0;bottom:0;
+      width:2px;background:var(--teal-2);
+      opacity:0;transition:opacity .2s;
+    }
+    .cap-card:hover::before{opacity:1;}
+    .cap-header{
+      display:flex;align-items:flex-start;
+      justify-content:space-between;
+      gap:1.5rem;
+      margin-bottom:1rem;
+    }
+    .cap-title{
+      font-family:var(--ff-display);font-size:1.05rem;font-weight:700;
+      color:var(--text-on-light);line-height:1.2;
+    }
+    .cap-num{
+      font-family:var(--ff-mono);font-size:.575rem;
+      color:rgba(0,153,153,.5);letter-spacing:.06em;
+      flex-shrink:0;padding-top:.25rem;
+    }
+    .cap-pills{
+      display:flex;flex-wrap:wrap;gap:.35rem;
+      margin-bottom:.875rem;
+    }
+    .cap-pill{
+      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.06em;
+      color:rgba(0,153,153,.7);
+    }
+    .cap-pill+.cap-pill::before{content:" · ";opacity:.4;}
+    .cap-desc{
+      font-size:.875rem;color:var(--text-on-light-2);
+      line-height:1.7;margin-bottom:1.125rem;
+    }
+    .cap-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:.35rem;}
+    .cap-list li{
+      font-size:.8rem;color:var(--text-on-light-3);
+      padding-left:.875rem;
+      border-left:1.5px solid rgba(0,153,153,.2);
+      line-height:1.5;
+    }
 
     /* PARTNERSHIP MODELS */
     .partner-bg{background:#0F2E2E;position:relative;overflow:hidden;}
@@ -625,7 +788,6 @@
     .form-success.show{display:block;}
 
     /* FOOTER */
-    .footer{background:var(--navy);border-top:1px solid var(--rule-d);padding:3.5rem 0 2rem;}
     .footer-grid{display:grid;grid-template-columns:1fr;gap:2.5rem;margin-bottom:2.5rem;}
     @media(min-width:768px){.footer-grid{grid-template-columns:2fr 1fr 1fr;}}
     .footer-brand strong{font-family:var(--ff-display);font-size:1.075rem;color:var(--text-primary);display:block;margin-bottom:.5rem;}
@@ -954,22 +1116,22 @@
       </div>
       <div class="cap-grid">
         <div class="cap-card reveal">
-          <div class="cap-icon-row"><div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg></div><div><p class="cap-title"><span lang="en">Clinical Data &amp; Biobank</span><span lang="es">Datos Clínicos y Biobanco</span></p><div class="cap-pills"><span class="cap-pill">Annotated</span><span class="cap-pill">Longitudinal</span><span class="cap-pill">GDPR-compliant</span></div></div></div>
+          <div class="cap-header"><p class="cap-title"><span lang="en">Clinical Data &amp; Biobank</span><span lang="es">Datos Clínicos y Biobanco</span></p><span class="cap-num">01</span></div><div class="cap-pills"><span class="cap-pill">Annotated</span><span class="cap-pill">Longitudinal</span><span class="cap-pill">GDPR-compliant</span></div>
           <p class="cap-desc"><span lang="en">Curated, structured clinical datasets with expert annotations across all disease domains — ready for AI training, algorithm validation, and retrospective analysis.</span><span lang="es">Conjuntos de datos clínicos curados con anotaciones expertas en todos los dominios de enfermedad.</span></p>
           <ul class="cap-list"><li><span lang="en">3,200+ annotated CT scans (ILD, lung cancer)</span><span lang="es">3.200+ TCs anotadas (EPI, cáncer de pulmón)</span></li><li><span lang="en">Longitudinal spirometry + biomarker cohorts</span><span lang="es">Cohortes longitudinales de espirometría y biomarcadores</span></li><li><span lang="en">Linked EHR data for outcomes research</span><span lang="es">Datos HCE vinculados para investigación de resultados</span></li></ul></div>
         </div>
         <div class="cap-card reveal reveal-d1">
-          <div class="cap-icon-row"><div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/><circle cx="19" cy="8" r="2.5"/><path d="M22 14c0-2-1.3-3-2.5-3"/></svg></div><div><p class="cap-title"><span lang="en">Specialist Clinical Team</span><span lang="es">Equipo Clínico Especialista</span></p><div class="cap-pills"><span class="cap-pill">6 Research Lines</span><span class="cap-pill">GCP certified</span></div></div></div>
+          <div class="cap-header"><p class="cap-title"><span lang="en">Specialist Clinical Team</span><span lang="es">Equipo Clínico Especialista</span></p><span class="cap-num">01</span></div><div class="cap-pills"><span class="cap-pill">6 Research Lines</span><span class="cap-pill">GCP certified</span></div>
           <p class="cap-desc"><span lang="en">Direct access to respiratory and thoracic surgery specialists across all six research lines — providing clinical oversight, protocol design, and expert annotation.</span><span lang="es">Acceso directo a especialistas respiratorios y de cirugía torácica en las seis líneas de investigación.</span></p>
           <ul class="cap-list"><li><span lang="en">Dedicated innovation co-PI per project</span><span lang="es">Co-IP de innovación dedicado por proyecto</span></li><li><span lang="en">Expert-labelled datasets &amp; validation review</span><span lang="es">Conjuntos de datos etiquetados por expertos</span></li><li><span lang="en">Regulatory pathway advisory</span><span lang="es">Asesoría en vías regulatorias</span></li></ul></div>
         </div>
         <div class="cap-card reveal reveal-d1">
-          <div class="cap-icon-row"><div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div><p class="cap-title"><span lang="en">Patient Recruitment</span><span lang="es">Reclutamiento de Pacientes</span></p><div class="cap-pills"><span class="cap-pill">High-volume</span><span class="cap-pill">Pre-phenotyped</span></div></div></div>
+          <div class="cap-header"><p class="cap-title"><span lang="en">Patient Recruitment</span><span lang="es">Reclutamiento de Pacientes</span></p><span class="cap-num">01</span></div><div class="cap-pills"><span class="cap-pill">High-volume</span><span class="cap-pill">Pre-phenotyped</span></div>
           <p class="cap-desc"><span lang="en">A high-volume tertiary centre with pre-phenotyped patient registries across all target conditions — enabling rapid recruitment with streamlined ethics processes.</span><span lang="es">Centro terciario de alto volumen con registros de pacientes pre-fenotipados, permitiendo reclutamiento rápido.</span></p>
           <ul class="cap-list"><li><span lang="en">Pre-screened registries per disease domain</span><span lang="es">Registros pre-cribados por dominio de enfermedad</span></li><li><span lang="en">Streamlined ethics &amp; consent processes</span><span lang="es">Procesos simplificados de ética y consentimiento</span></li><li><span lang="en">Site initiation avg. under 6 weeks</span><span lang="es">Inicio de sitio medio inferior a 6 semanas</span></li></ul></div>
         </div>
         <div class="cap-card reveal reveal-d2">
-          <div class="cap-icon-row"><div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><p class="cap-title"><span lang="en">Regulatory &amp; IP Support</span><span lang="es">Soporte Regulatorio y PI</span></p><div class="cap-pills"><span class="cap-pill">INIBIC</span><span class="cap-pill">MDR experience</span></div></div></div>
+          <div class="cap-header"><p class="cap-title"><span lang="en">Regulatory &amp; IP Support</span><span lang="es">Soporte Regulatorio y PI</span></p><span class="cap-num">01</span></div><div class="cap-pills"><span class="cap-pill">INIBIC</span><span class="cap-pill">MDR experience</span></div>
           <p class="cap-desc"><span lang="en">INIBIC-backed research infrastructure with experienced navigation of CE MDR, FDA breakthrough device pathways, and AEMPS submission processes for medical devices and SaMD.</span><span lang="es">Infraestructura respaldada por INIBIC con experiencia en CE MDR, FDA y procesos ante AEMPS.</span></p>
           <ul class="cap-list"><li><span lang="en">CE MDR &amp; IVDR technical file support</span><span lang="es">Soporte expedientes técnicos CE MDR e IVDR</span></li><li><span lang="en">IP framework for joint inventions</span><span lang="es">Marco de PI para invenciones conjuntas</span></li><li><span lang="en">SERGAS institutional endorsement pathway</span><span lang="es">Vía de aval institucional SERGAS</span></li></ul></div>
         </div>
@@ -1073,34 +1235,58 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-grid">
+      <div class="footer-top">
+
+        <!-- Brand -->
         <div class="footer-brand">
-          <strong>neumAC R&amp;I</strong>
-          <p><span lang="en">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>A clinical research and innovation programme in respiratory and thoracic medicine at the Área Sanitaria de A Coruña y Cee.</span><span lang="es">Área Sanitaria de A Coruña y Cee · INIBIC · SERGAS<br>Programa de investigación clínica e innovación en medicina respiratoria y torácica, Área Sanitaria de A Coruña y Cee.</span></p>
+          <div class="footer-brand-logo">
+            <div class="footer-brand-mark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3 C12 3 12 8 12 10"/>
+              <path d="M12 10 C9 10 5 11 4 14 C3 17 4 20 7 20 C9 20 10 19 11 17 L12 10"/>
+              <path d="M12 10 C15 10 19 11 20 14 C21 17 20 20 17 20 C15 20 14 19 13 17 L12 10"/>
+            </svg>
+            </div>
+            <span class="footer-brand-name">neumAC R&amp;I</span>
+          </div>
+          <p class="footer-brand-desc"><span lang="en">A clinical research and innovation programme in respiratory and thoracic medicine at the Área Sanitaria de A Coruña y Cee.</span><span lang="es">Programa de investigación clínica e innovación en medicina respiratoria y torácica, Área Sanitaria de A Coruña y Cee.</span></p>
+          <div class="footer-brand-affiliates">
+            <div class="footer-affiliate"><span class="footer-affiliate-abbr">INIBIC</span><span class="footer-affiliate-name"><span lang="en">Instituto de Investigación Biomédica de A Coruña</span><span lang="es">Instituto de Investigación Biomédica de A Coruña</span></span></div>
+            <div class="footer-affiliate"><span class="footer-affiliate-abbr">SERGAS</span><span class="footer-affiliate-name"><span lang="en">Servizo Galego de Saúde</span><span lang="es">Servizo Galego de Saúde</span></span></div>
+            <div class="footer-affiliate"><span class="footer-affiliate-abbr">HUAC</span><span class="footer-affiliate-name"><span lang="en">Hospital Universitario de A Coruña</span><span lang="es">Hospital Universitario de A Coruña</span></span></div>
+          </div>
         </div>
+
+        <!-- Navigate -->
         <div class="footer-col">
-          <h4><span lang="en">Navigate</span><span lang="es">Navegar</span></h4>
+          <p class="footer-col-head"><span lang="en">Navigate</span><span lang="es">Navegar</span></p>
           <ul>
             <li><a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a></li>
             <li><a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a></li>
             <li><a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a></li>
-            <li><a href="news.html"><span lang="en">News</span><span lang="es">Noticias</span></a></li>
-            <li><a href="#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a></li>
-          </ul></div>
+            <li><a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a></li>
+          </ul>
         </div>
+
+        <!-- Contact -->
         <div class="footer-col">
-          <h4><span lang="en">Contact</span><span lang="es">Contacto</span></h4>
+          <p class="footer-col-head"><span lang="en">Contact</span><span lang="es">Contacto</span></p>
           <address>
             <p>As Xubias, 84<br>15006 A Coruña, España</p>
-            <p style="margin-top:.5rem;"><a href="tel:+34881111800">+34 881 111 800</a></p>
+            <p style="margin-top:.875rem;"><a href="tel:+34881111800">+34 881 111 800</a></p>
             <p><a href="/cdn-cgi/l/email-protection#caa4afbfa7a5a9abb8af8ab9afb8adabb9e4afb9"><span class="__cf_email__" data-cfemail="7f111a0a12101c1e0d1a3f0c1a0d181e0c511a0c">[email&#160;protected]</span></a></p>
-            <p style="margin-top:.5rem;color:rgba(255,255,255,.2);font-size:.75rem;">INIBIC · Instituto de Investigación Biomédica A Coruña</p>
+            <p style="margin-top:.875rem;font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.08em;color:rgba(255,255,255,.18);">GCP · INIBIC · AEMPS</p>
           </address>
         </div>
+
       </div>
       <div class="footer-bottom">
         <span>© 2026 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee.</span>
-        <span style="font-family:var(--ff-mono);font-size:.65rem;">INIBIC · SERGAS · GCP</span>
+        <div class="footer-bottom-cert">
+          <span>GCP</span>
+          <span>INIBIC</span>
+          <span>CE MDR</span>
+        </div>
       </div>
     </div>
   </footer>
