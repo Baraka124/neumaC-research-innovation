@@ -186,7 +186,7 @@
       transform:translateY(-5px) scale(.98);
       transform-origin:top right;
       transition:opacity .18s,transform .18s,visibility .18s;
-      z-index:300;max-width:calc(100vw - 2rem);
+      z-index:1100;max-width:calc(100vw - 2rem);
     }
     .lang-sw.open .lang-sw-panel{opacity:1;visibility:visible;transform:translateY(0) scale(1);}
         .lang-opt{
@@ -590,14 +590,7 @@
     body[style*="overflow:hidden"] .lang-sw-panel{
       display:none !important;
     }
-    /* On mobile, lang-sw-panel opens upward to avoid overlap with content */
-    @media(max-width:1023px){
-      .lang-sw-panel{
-        bottom:calc(100% + 6px);
-        top:auto;
-        transform-origin:bottom right;
-      }
-    }
+    
   
     /* ── FORM — refined submit + fields ── */
     .form-submit,
@@ -1019,8 +1012,9 @@
     /* ── Language dropdown ── */
     var _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
     function openLang(){
-      if(!_lsw)return;
+      if(!_lsw||!_lbt)return;
       closeMob();
+      _lsw.classList.remove('open-up');
       _lsw.classList.add('open');
       if(_lbt)_lbt.setAttribute('aria-expanded','true');
     }
@@ -1089,6 +1083,261 @@
       entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
     },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
     document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  </script>
+
+  <script>
+  /* ══════════════════════════════════════════════════════════
+     PERSPECTIVES — news feed renderer
+     Called by api.js via window.onNewsLoaded() after fetch
+     Posts shape: { id, post_type, title, body, published_at,
+       created_at, featured_image_url, journal_name,
+       authors_text, doi, word_count,
+       author: { id, full_name },
+       research_line: { id, line_number, name } }
+  ══════════════════════════════════════════════════════════ */
+  (function(){
+
+    var _all      = [];   /* full post list */
+    var _filter   = '';   /* current type filter */
+    var feed      = document.getElementById('blogFeed');
+    var skeleton  = document.getElementById('feedSkeleton');
+    var reader    = document.getElementById('articleReader');
+    var countEl   = document.getElementById('filterCount');
+
+    /* ── Utils ────────────────────────────────────────────── */
+    function esc(s){
+      return s ? String(s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;') : '';
+    }
+
+    function fmtDate(d){
+      if(!d) return '';
+      try {
+        var diff = Math.floor((new Date() - new Date(d)) / 60000);
+        if(diff < 1)    return 'Just now';
+        if(diff < 60)   return diff + 'm ago';
+        if(diff < 1440) return Math.floor(diff/60) + 'h ago';
+        if(diff < 10080) return Math.floor(diff/1440) + 'd ago';
+        return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+      } catch(e){ return ''; }
+    }
+
+    function excerpt(body, len){
+      if(!body) return '';
+      var t = body.replace(/<[^>]*>/g,'').trim();
+      return t.length <= len ? t : t.slice(0,len).replace(/\s+\S*$/,'') + '…';
+    }
+
+    function typeLabel(t){
+      if(t==='publication') return 'Publication';
+      if(t==='update')      return 'Update';
+      if(t==='photo_story') return 'Photo Story';
+      return 'Article';
+    }
+
+    /* ── Build a single post item ─────────────────────────── */
+    function buildPost(p){
+      var type    = p.post_type || 'article';
+      var date    = fmtDate(p.published_at || p.created_at);
+      var author  = p.author ? p.author.full_name : (p.authors_text || '');
+      var line    = p.research_line
+                      ? 'L'+p.research_line.line_number+' — '+p.research_line.name
+                      : '';
+      var isPub   = type === 'publication';
+
+      var metaSep = '<span class="post-meta-sep"></span>';
+
+      var meta =
+        '<div class="post-meta">'+
+          '<span class="post-type-badge '+esc(type)+'">'+esc(typeLabel(type))+'</span>'+
+          (date  ? metaSep+'<span class="post-date">'+esc(date)+'</span>' : '')+
+          (line  ? metaSep+'<span class="post-line-tag">'+esc(line)+'</span>' : '')+
+        '</div>';
+
+      var pubBox = '';
+      if(isPub){
+        pubBox =
+          (p.journal_name ? '<div class="post-journal">'+esc(p.journal_name)+'</div>' : '')+
+          (p.authors_text ? '<div class="post-excerpt" style="font-size:.875rem">'+esc(p.authors_text)+'</div>' : '')+
+          (p.doi ? '<div class="post-doi"><a href="https://doi.org/'+esc(p.doi)+'" target="_blank" rel="noopener">doi:'+esc(p.doi)+'</a></div>' : '');
+      }
+
+      var bodyHtml = isPub ? pubBox :
+        (p.body ? '<p class="post-excerpt">'+esc(excerpt(p.body, 240))+'</p>' : '');
+
+      var footer =
+        '<div class="post-footer">'+
+          (author ? '<span class="post-author">'+esc(author)+'</span>' : '<span></span>')+
+          '<span class="post-readmore">'+
+            '<span lang="en">Read more</span><span lang="es">Leer más</span> '+
+            '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;vertical-align:middle;"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'+
+          '</span>'+
+        '</div>';
+
+      var el = document.createElement('article');
+      el.className = 'post-item';
+      el.dataset.id = p.id;
+      el.innerHTML = meta + '<h2 class="post-title">'+esc(p.title||'Untitled')+'</h2>' + bodyHtml + footer;
+      el.addEventListener('click', function(){ openPost(p); });
+      return el;
+    }
+
+    /* ── Render feed ──────────────────────────────────────── */
+    function renderFeed(){
+      var posts = _filter
+        ? _all.filter(function(p){ return p.post_type === _filter; })
+        : _all;
+
+      /* Count label */
+      if(countEl){
+        countEl.textContent = posts.length
+          ? posts.length + ' post' + (posts.length!==1?'s':'')
+          : '';
+      }
+
+      /* Remove old items (keep skeleton in DOM but hidden) */
+      Array.from(feed.children).forEach(function(c){
+        if(c.id !== 'feedSkeleton') feed.removeChild(c);
+      });
+
+      if(!posts.length){
+        var empty = document.createElement('div');
+        empty.className = 'feed-state';
+        empty.innerHTML =
+          '<div class="feed-state-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>'+
+          '<p><span lang="en">No posts in this category yet.</span><span lang="es">Aún no hay publicaciones en esta categoría.</span></p>';
+        feed.appendChild(empty);
+        return;
+      }
+
+      var frag = document.createDocumentFragment();
+      posts.forEach(function(p){ frag.appendChild(buildPost(p)); });
+      feed.appendChild(frag);
+    }
+
+    /* ── Populate sidebar ─────────────────────────────────── */
+    function populateSidebar(){
+      var counts = { article:0, update:0, publication:0 };
+      var lines  = {};
+
+      _all.forEach(function(p){
+        var t = p.post_type || 'article';
+        if(counts[t] !== undefined) counts[t]++;
+        if(p.research_line){
+          var key = p.research_line.id;
+          if(!lines[key]) lines[key] = { name: 'L'+p.research_line.line_number+' — '+p.research_line.name, count: 0 };
+          lines[key].count++;
+        }
+      });
+
+      var sa = document.getElementById('sbArticles');
+      var su = document.getElementById('sbUpdates');
+      var sp = document.getElementById('sbPubs');
+      var sl = document.getElementById('sbLines');
+
+      if(sa) sa.textContent = counts.article;
+      if(su) su.textContent = counts.update;
+      if(sp) sp.textContent = counts.publication;
+
+      if(sl){
+        sl.innerHTML = Object.values(lines)
+          .sort(function(a,b){ return b.count - a.count; })
+          .map(function(l){
+            return '<div class="sb-line-item" style="display:flex;justify-content:space-between;align-items:baseline;padding:.3rem 0;border-bottom:1px solid var(--rule-l);font-size:.8rem;">'+
+              '<span style="color:var(--text-on-light-2);font-size:.8125rem;">'+esc(l.name)+'</span>'+
+              '<span style="font-family:var(--ff-mono);font-size:.65rem;color:var(--text-on-light-3);">'+l.count+'</span>'+
+            '</div>';
+          }).join('') || '<span style="font-size:.8rem;color:var(--text-on-light-3);">—</span>';
+      }
+    }
+
+    /* ── Open single post in reader ───────────────────────── */
+    function openPost(p){
+      if(!reader) return;
+      var type   = p.post_type || 'article';
+      var author = p.author ? p.author.full_name : (p.authors_text || '');
+      var date   = p.published_at || p.created_at;
+      var isPub  = type === 'publication';
+
+      var pubBlock = '';
+      if(isPub){
+        pubBlock =
+          '<div class="art-pub-box">'+
+            (p.journal_name ? '<div class="art-pub-journal">'+esc(p.journal_name)+'</div>' : '')+
+            (p.authors_text ? '<div class="art-pub-authors">'+esc(p.authors_text)+'</div>' : '')+
+            (p.doi ? '<div class="art-pub-doi"><a href="https://doi.org/'+esc(p.doi)+'" target="_blank" rel="noopener">doi:'+esc(p.doi)+'</a></div>' : '')+
+          '</div>';
+      }
+
+      var bodyHtml = isPub ? pubBlock :
+        (p.body
+          ? p.body.split(/\n{2,}/).map(function(para){
+              return '<p>'+esc(para.trim())+'</p>';
+            }).join('')
+          : '<p style="color:var(--text-on-light-3);font-style:italic;">No content available.</p>');
+
+      reader.innerHTML =
+        '<div class="container">'+
+          '<div class="art-reader-wrap">'+
+            '<button class="art-back" id="artBack" type="button">'+
+              '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>'+
+              '<span lang="en">Back to feed</span><span lang="es">Volver</span>'+
+            '</button>'+
+            '<div class="art-type">'+esc(typeLabel(type))+'</div>'+
+            '<h1 class="art-title">'+esc(p.title||'Untitled')+'</h1>'+
+            '<div class="art-byline">'+
+              (author ? '<span>'+esc(author)+'</span>' : '')+
+              (date ? '<span>'+fmtDate(date)+'</span>' : '')+
+              (p.research_line ? '<span style="color:var(--accent);font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.04em;">L'+p.research_line.line_number+' — '+esc(p.research_line.name)+'</span>' : '')+
+            '</div>'+
+            '<div class="art-body">'+bodyHtml+'</div>'+
+          '</div>'+
+        '</div>';
+
+      reader.classList.add('open');
+      document.querySelector('.blog-layout') && (document.querySelector('.blog-layout').style.display = 'none');
+      document.querySelector('.filter-strip') && (document.querySelector('.filter-strip').style.display = 'none');
+
+      reader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      document.getElementById('artBack').addEventListener('click', closePost);
+    }
+
+    function closePost(){
+      reader.classList.remove('open');
+      reader.innerHTML = '';
+      document.querySelector('.blog-layout') && (document.querySelector('.blog-layout').style.display = '');
+      document.querySelector('.filter-strip') && (document.querySelector('.filter-strip').style.display = '');
+    }
+
+    /* ── Wire filter buttons ──────────────────────────────── */
+    document.querySelectorAll('.flt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        _filter = btn.dataset.type || '';
+        document.querySelectorAll('.flt').forEach(function(b){ b.classList.remove('on'); });
+        btn.classList.add('on');
+        renderFeed();
+      });
+    });
+
+    /* ── Entry point called by api.js ─────────────────────── */
+    window.onNewsLoaded = function(){
+      _all = (window._newsAllPosts || []);
+
+      /* Hide skeleton, show feed */
+      if(skeleton) skeleton.style.display = 'none';
+
+      populateSidebar();
+      renderFeed();
+    };
+
+    /* Fallback: if api.js already ran before this script */
+    if(window._newsAllPosts && window._newsAllPosts.length){
+      window.onNewsLoaded();
+    }
+
+  })();
   </script>
 </body>
 </html>
