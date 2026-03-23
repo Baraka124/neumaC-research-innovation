@@ -1804,8 +1804,11 @@
       return 'Article';
     }
 
-    function postUrl(p){
-      return 'news.html' + (p.id ? '?post='+encodeURIComponent(p.id) : '');
+    /* Truncate body text to use as excerpt — no excerpt field in API */
+    function mkExcerpt(body, len){
+      if(!body) return '';
+      var t = body.replace(/<[^>]*>/g,'').trim();
+      return t.length <= len ? t : t.slice(0, len).replace(/\s+\S*$/, '') + '…';
     }
 
     function render(posts){
@@ -1816,15 +1819,18 @@
       var arrowSvg = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
       var miniArrow = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h6M5 2l3 3-3 3"/></svg>';
 
-      /* Featured card */
+      /* research_line is a nested object { id, line_number, name } */
+      var fLine = f.research_line ? 'L'+f.research_line.line_number+' — '+f.research_line.name : '';
+
+      /* Featured card — post_type (not .type), body truncated for excerpt */
       var featuredHtml =
-        '<a href="'+esc(postUrl(f))+'" class="persp-featured reveal">'+
-          '<span class="persp-badge '+badgeClass(f.type)+'">'+badgeLabel(f.type)+'</span>'+
+        '<a href="news.html" class="persp-featured reveal">'+
+          '<span class="persp-badge '+badgeClass(f.post_type)+'">'+badgeLabel(f.post_type)+'</span>'+
           '<h3 class="persp-featured-title">'+esc(f.title||'Untitled')+'</h3>'+
-          '<p class="persp-featured-excerpt">'+esc(f.excerpt||f.body_preview||'')+'</p>'+
+          '<p class="persp-featured-excerpt">'+esc(mkExcerpt(f.body, 165))+'</p>'+
           '<div class="persp-featured-meta">'+
             (f.published_at||f.created_at ? '<span class="persp-meta-date">'+fmtDate(f.published_at||f.created_at)+'</span>' : '')+
-            (f.research_line||f.line ? '<span class="persp-meta-sep"></span><span class="persp-meta-line">'+esc(f.research_line||f.line)+'</span>' : '')+
+            (fLine ? '<span class="persp-meta-sep"></span><span class="persp-meta-line">'+esc(fLine)+'</span>' : '')+
             '<span class="persp-readmore"><span lang="en">Read</span><span lang="es">Leer</span>'+arrowSvg+'</span>'+
           '</div>'+
         '</a>';
@@ -1833,9 +1839,9 @@
       var rowsHtml = '<div class="persp-list">';
       rows.forEach(function(p){
         rowsHtml +=
-          '<a href="'+esc(postUrl(p))+'" class="persp-row reveal">'+
+          '<a href="news.html" class="persp-row reveal">'+
             '<div class="persp-row-body">'+
-              '<span class="persp-row-badge '+badgeClass(p.type)+'">'+badgeLabel(p.type)+'</span>'+
+              '<span class="persp-row-badge '+badgeClass(p.post_type)+'">'+badgeLabel(p.post_type)+'</span>'+
               '<div class="persp-row-title">'+esc(p.title||'Untitled')+'</div>'+
               (p.published_at||p.created_at ? '<div class="persp-row-date">'+fmtDate(p.published_at||p.created_at)+'</div>' : '')+
             '</div>'+
