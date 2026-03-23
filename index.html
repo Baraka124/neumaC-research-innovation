@@ -7,7 +7,7 @@
   <title>neumAC R&I — Respiratory Medicine Research & Innovation · Área Sanitaria de A Coruña y Cee</title>
   <meta name="description" content="neumAC R&I supports respiratory and thoracic medicine through structured clinical research and collaborative innovation at the Área Sanitaria de A Coruña y Cee." />
   <link rel="canonical" href="https://neumac.es/index.html"/>
-  <meta property="og:type" content="website"/> 
+  <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumAC R&I"/>
   <meta property="og:title" content="neumAC R&I — Respiratory Medicine Research & Innovation"/>
   <meta property="og:description" content="neumAC R&I supports respiratory and thoracic medicine through structured clinical research and collaborative innovation at the Área Sanitaria de A Coruña y Cee."/>
@@ -1044,6 +1044,111 @@
   <!-- ═══ HERO ═══ -->
   <section class="hero" aria-labelledby="heroTitle">
     <div class="container">
+      <!-- Background canvas — recursive bronchial tree -->
+      <canvas id="heroBg" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+      <script>
+      (function(){
+        function boot(){
+          const canvas = document.getElementById('heroBg');
+          if(!canvas) return;
+          const ctx = canvas.getContext('2d');
+          let W, H;
+
+          function resize(){
+            W = canvas.width  = canvas.parentElement.offsetWidth;
+            H = canvas.height = canvas.parentElement.offsetHeight;
+          }
+
+          /* Recursive fractal branch
+             angle: radians from vertical (0 = straight down)
+             depth 0 = main bronchi, 7 = terminal bronchioles  */
+          function branch(x, y, angle, len, depth){
+            if(depth > 8 || len < 1.5) return;
+            const ex = x + Math.sin(angle) * len;
+            const ey = y + Math.cos(angle) * len;
+
+            /* stroke width: 0.9 at depth 0, ~0.12 at depth 8 */
+            const sw    = Math.max(0.12, 0.9 * Math.pow(0.67, depth));
+            /* opacity: 0.52 at depth 0, ~0.08 at depth 8 */
+            const alpha = Math.max(0.06, 0.52 * Math.pow(0.77, depth));
+
+            ctx.lineWidth   = sw;
+            ctx.strokeStyle = `rgba(0,179,179,${alpha.toFixed(3)})`;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(ex, ey);
+            ctx.stroke();
+
+            const spread = 0.40 + _breath * 0.06; /* breathe: spread widens on inhale */
+            const ratio  = 0.69;
+            branch(ex, ey, angle - spread, len * ratio, depth + 1);
+            branch(ex, ey, angle + spread, len * ratio, depth + 1);
+          }
+
+          let _breath = 0;
+
+          function draw(t){
+            ctx.clearRect(0, 0, W, H);
+            ctx.lineCap = 'round';
+
+            /* slow breathing cycle ~8 s */
+            _breath = Math.sin(t * 0.00075) * 0.5 + 0.5;
+
+            const cx     = W * 0.68;          /* tree centred at 68% width */
+            const top    = H * 0.03;
+            const trunkH = H * 0.16;
+
+            /* trachea */
+            ctx.lineWidth   = 0.85;
+            ctx.strokeStyle = `rgba(0,179,179,0.48)`;
+            ctx.beginPath();
+            ctx.moveTo(cx, top);
+            ctx.lineTo(cx, top + trunkH);
+            ctx.stroke();
+
+            /* carina → two main bronchi, slightly asymmetric like real anatomy */
+            const mainLen   = H * 0.155;
+            const breathOff = _breath * 0.03;
+            branch(cx, top + trunkH, -(0.30 + breathOff), mainLen,        0); /* left */
+            branch(cx, top + trunkH,  (0.25 + breathOff), mainLen * 0.94, 0); /* right, slightly shorter */
+
+            /* ghost lung silhouettes — barely visible, anchor the form */
+            const sc  = Math.min(H * 0.36, W * 0.17);
+            const cy  = H * 0.52;
+            const lx  = cx - sc * 0.18;
+            const rx  = cx + sc * 0.18;
+            const lo  = 0.07 + _breath * 0.04;
+            ctx.lineWidth   = 0.35;
+            ctx.strokeStyle = `rgba(0,179,179,${lo.toFixed(3)})`;
+
+            ctx.beginPath(); /* left lobe */
+            ctx.moveTo(cx, cy - sc);
+            ctx.bezierCurveTo(lx - sc*1.05, cy - sc*0.65, lx - sc*1.15, cy + sc*0.45, lx - sc*0.12, cy + sc);
+            ctx.bezierCurveTo(cx - sc*0.04, cy + sc*0.55, cx, cy + sc*0.25, cx, cy - sc);
+            ctx.stroke();
+
+            ctx.beginPath(); /* right lobe */
+            ctx.moveTo(cx, cy - sc);
+            ctx.bezierCurveTo(rx + sc*1.05, cy - sc*0.65, rx + sc*1.15, cy + sc*0.45, rx + sc*0.12, cy + sc);
+            ctx.bezierCurveTo(cx + sc*0.04, cy + sc*0.55, cx, cy + sc*0.25, cx, cy - sc);
+            ctx.stroke();
+
+            requestAnimationFrame(draw);
+          }
+
+          resize();
+          window.addEventListener('resize', resize);
+          requestAnimationFrame(draw);
+        }
+
+        if(document.readyState === 'loading'){
+          document.addEventListener('DOMContentLoaded', boot);
+        } else {
+          setTimeout(boot, 0);
+        }
+      })();
+      </script>
+
       <div class="hero-inner">
 
         <!-- Left: copy -->
