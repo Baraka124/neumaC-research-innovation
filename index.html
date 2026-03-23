@@ -1049,71 +1049,48 @@
       <script>
       (function(){
 
-        /* ── shared draw function ─────────────────────────────
-           dir:  1 = downward (hero), -1 = upward (footer)
-           originY: starting Y of trachea
-        ────────────────────────────────────────────────────── */
+        const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ── shared draw ──────────────────────────────────── */
         function drawTree(ctx, W, H, breath, dir, cx, originY, trunkH, mainLen){
           ctx.lineCap = 'round';
-
-          /* node collector */
           const nodePoints = [];
 
           function branch(x, y, angle, len, depth){
             if(depth > 8 || len < 1.5) return;
             const ex = x + Math.sin(angle) * len;
             const ey = y + dir * Math.cos(angle) * len;
-
             const sw    = Math.max(0.12, 0.9  * Math.pow(0.67, depth));
             const alpha = Math.max(0.06, 0.52 * Math.pow(0.77, depth));
-
             ctx.lineWidth   = sw;
             ctx.strokeStyle = `rgba(0,179,179,${alpha.toFixed(3)})`;
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(ex, ey);
-            ctx.stroke();
-
-            /* collect junction node */
+            ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex, ey); ctx.stroke();
             nodePoints.push({ x: ex, y: ey, depth });
-
             const spread = 0.40 + breath * 0.06;
-            const ratio  = 0.69;
-            branch(ex, ey, angle - spread, len * ratio, depth + 1);
-            branch(ex, ey, angle + spread, len * ratio, depth + 1);
+            branch(ex, ey, angle - spread, len * 0.69, depth + 1);
+            branch(ex, ey, angle + spread, len * 0.69, depth + 1);
           }
 
           /* trachea */
-          ctx.lineWidth   = 0.85;
+          ctx.lineWidth = 0.85;
           ctx.strokeStyle = `rgba(0,179,179,0.48)`;
-          ctx.beginPath();
-          ctx.moveTo(cx, originY);
-          ctx.lineTo(cx, originY + dir * trunkH);
-          ctx.stroke();
-
-          /* carina node */
+          ctx.beginPath(); ctx.moveTo(cx, originY); ctx.lineTo(cx, originY + dir * trunkH); ctx.stroke();
           nodePoints.push({ x: cx, y: originY + dir * trunkH, depth: -1 });
 
-          /* main bronchi */
           const breathOff = breath * 0.03;
           branch(cx, originY + dir * trunkH, -(0.30 + breathOff), mainLen,        0);
           branch(cx, originY + dir * trunkH,  (0.25 + breathOff), mainLen * 0.94, 0);
 
-          /* draw nodes */
+          /* nodes */
           nodePoints.forEach(n => {
             const r     = n.depth < 0 ? 2.2 : Math.max(0.7, 2.2 * Math.pow(0.72, n.depth + 1));
             const alpha = Math.max(0.08, 0.55 * Math.pow(0.78, Math.max(n.depth, 0)));
-            ctx.beginPath();
-            ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0,179,179,${alpha.toFixed(3)})`;
-            ctx.fill();
-            /* ring on larger nodes */
+            ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0,179,179,${alpha.toFixed(3)})`; ctx.fill();
             if(r > 1.2){
-              ctx.beginPath();
-              ctx.arc(n.x, n.y, r + 1.8, 0, Math.PI * 2);
+              ctx.beginPath(); ctx.arc(n.x, n.y, r + 1.8, 0, Math.PI * 2);
               ctx.strokeStyle = `rgba(0,179,179,${(alpha * 0.35).toFixed(3)})`;
-              ctx.lineWidth = 0.3;
-              ctx.stroke();
+              ctx.lineWidth = 0.3; ctx.stroke();
             }
           });
 
@@ -1121,80 +1098,86 @@
           const sc = Math.min(H * 0.36, W * 0.17);
           const cy = originY + dir * (trunkH + mainLen * 1.1);
           const lo = 0.07 + breath * 0.04;
-          ctx.lineWidth   = 0.35;
-          ctx.strokeStyle = `rgba(0,179,179,${lo.toFixed(3)})`;
           const lx = cx - sc * 0.18, rx = cx + sc * 0.18;
-
+          ctx.lineWidth = 0.35;
+          ctx.strokeStyle = `rgba(0,179,179,${lo.toFixed(3)})`;
           ctx.beginPath();
-          ctx.moveTo(cx, cy - dir * sc);
-          ctx.bezierCurveTo(lx - sc*1.05, cy - dir*sc*0.65, lx - sc*1.15, cy + dir*sc*0.45, lx - sc*0.12, cy + dir*sc);
-          ctx.bezierCurveTo(cx - sc*0.04, cy + dir*sc*0.55, cx, cy + dir*sc*0.25, cx, cy - dir*sc);
+          ctx.moveTo(cx, cy - dir*sc);
+          ctx.bezierCurveTo(lx-sc*1.05, cy-dir*sc*0.65, lx-sc*1.15, cy+dir*sc*0.45, lx-sc*0.12, cy+dir*sc);
+          ctx.bezierCurveTo(cx-sc*0.04, cy+dir*sc*0.55, cx, cy+dir*sc*0.25, cx, cy-dir*sc);
           ctx.stroke();
-
           ctx.beginPath();
-          ctx.moveTo(cx, cy - dir * sc);
-          ctx.bezierCurveTo(rx + sc*1.05, cy - dir*sc*0.65, rx + sc*1.15, cy + dir*sc*0.45, rx + sc*0.12, cy + dir*sc);
-          ctx.bezierCurveTo(cx + sc*0.04, cy + dir*sc*0.55, cx, cy + dir*sc*0.25, cx, cy - dir*sc);
+          ctx.moveTo(cx, cy - dir*sc);
+          ctx.bezierCurveTo(rx+sc*1.05, cy-dir*sc*0.65, rx+sc*1.15, cy+dir*sc*0.45, rx+sc*0.12, cy+dir*sc);
+          ctx.bezierCurveTo(cx+sc*0.04, cy+dir*sc*0.55, cx, cy+dir*sc*0.25, cx, cy-dir*sc);
           ctx.stroke();
         }
 
-        /* ── HERO ──────────────────────────────────────────── */
-        function bootHero(){
-          const canvas = document.getElementById('heroBg');
+        /* ── generic canvas boot ─────────────────────────── */
+        function bootCanvas(id, getCx, dir, getOriginY, getTrunkH, getMainLen, phaseOffset){
+          const canvas = document.getElementById(id);
           if(!canvas) return;
           const ctx = canvas.getContext('2d');
-          let W, H;
+          let W, H, raf, paused = false;
 
           function resize(){
             W = canvas.width  = canvas.parentElement.offsetWidth;
             H = canvas.height = canvas.parentElement.offsetHeight;
           }
 
-          let _breath = 0;
+          /* pause when tab hidden — saves battery */
+          document.addEventListener('visibilitychange', () => {
+            paused = document.hidden;
+            if(!paused) requestAnimationFrame(draw);
+          });
+
           function draw(t){
+            if(paused) return;
             ctx.clearRect(0, 0, W, H);
-            _breath = Math.sin(t * 0.00075) * 0.5 + 0.5;
-            const cx = W * 0.68;
-            drawTree(ctx, W, H, _breath, 1, cx, H * 0.03, H * 0.16, H * 0.155);
-            requestAnimationFrame(draw);
+
+            /* on mobile (<960px) fade tree to right edge so it doesn't cover text */
+            const mobile = W < 960;
+            canvas.style.opacity = mobile ? '0.35' : '1';
+
+            const breath = REDUCED ? 0.5 : Math.sin((t + phaseOffset) * 0.00075) * 0.5 + 0.5;
+            drawTree(ctx, W, H, breath, dir, getCx(W, mobile), getOriginY(H), getTrunkH(H), getMainLen(H));
+
+            if(!REDUCED) raf = requestAnimationFrame(draw);
           }
 
           resize();
           window.addEventListener('resize', resize);
-          requestAnimationFrame(draw);
-        }
 
-        /* ── FOOTER ────────────────────────────────────────── */
-        function bootFooter(){
-          const canvas = document.getElementById('footerBg');
-          if(!canvas) return;
-          const ctx = canvas.getContext('2d');
-          let W, H;
-
-          function resize(){
-            W = canvas.width  = canvas.parentElement.offsetWidth;
-            H = canvas.height = canvas.parentElement.offsetHeight;
-          }
-
-          let _breath = 0;
-          function draw(t){
-            ctx.clearRect(0, 0, W, H);
-            /* offset breath phase so footer and hero don't sync exactly */
-            _breath = Math.sin(t * 0.00075 + 1.8) * 0.5 + 0.5;
-            const cx = W * 0.72;
-            /* tree grows upward from bottom — dir -1, originY near bottom */
-            drawTree(ctx, W, H, _breath, -1, cx, H * 0.98, H * 0.12, H * 0.13);
+          /* single static frame for reduced-motion */
+          if(REDUCED){
+            requestAnimationFrame(t => draw(t));
+          } else {
             requestAnimationFrame(draw);
           }
-
-          resize();
-          window.addEventListener('resize', resize);
-          requestAnimationFrame(draw);
         }
 
         function boot(){
-          bootHero();
-          bootFooter();
+          /* HERO — tree on right, grows down */
+          bootCanvas(
+            'heroBg',
+            (W, mobile) => mobile ? W * 0.82 : W * 0.68, /* push right on mobile */
+            1,
+            H => H * 0.03,
+            H => H * 0.16,
+            H => H * 0.155,
+            0
+          );
+
+          /* FOOTER — tree on right, grows up, different breath phase */
+          bootCanvas(
+            'footerBg',
+            (W, mobile) => mobile ? W * 0.82 : W * 0.72,
+            -1,
+            H => H * 0.98,
+            H => H * 0.12,
+            H => H * 0.13,
+            2400 /* phase offset so hero & footer breathe out of sync */
+          );
         }
 
         if(document.readyState === 'loading'){
