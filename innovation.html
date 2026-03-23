@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en"> 
+<html lang="en" data-lang="en">
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8" />
@@ -192,7 +192,7 @@
       transform:translateY(-5px) scale(.98);
       transform-origin:top right;
       transition:opacity .18s,transform .18s,visibility .18s;
-      z-index:300;max-width:calc(100vw - 2rem);
+      z-index:1100;max-width:calc(100vw - 2rem);
     }
     .lang-sw.open .lang-sw-panel{opacity:1;visibility:visible;transform:translateY(0) scale(1);}
         .lang-opt{
@@ -317,7 +317,7 @@
 
     /* ── Responsive header ── */
     /* Prevent overflow at ALL sizes */
-    .header-inner{overflow:hidden;}
+    .header-inner{overflow:visible;min-width:0;}
     /* Nav separator line: hide on tablet */
     @media(max-width:1023px){
       .logo::after{display:none;}
@@ -813,14 +813,7 @@
     body[style*="overflow:hidden"] .lang-sw-panel{
       display:none !important;
     }
-    /* On mobile, lang-sw-panel opens upward to avoid overlap with content */
-    @media(max-width:1023px){
-      .lang-sw-panel{
-        bottom:calc(100% + 6px);
-        top:auto;
-        transform-origin:bottom right;
-      }
-    }
+    
   
     /* ── FORM — refined submit + fields ── */
     .form-submit,
@@ -1676,8 +1669,9 @@
     /* ── Language dropdown ── */
     var _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
     function openLang(){
-      if(!_lsw)return;
+      if(!_lsw||!_lbt)return;
       closeMob();
+      _lsw.classList.remove('open-up');
       _lsw.classList.add('open');
       if(_lbt)_lbt.setAttribute('aria-expanded','true');
     }
@@ -1756,5 +1750,7 @@
       e.target.reset();
     });
   </script>
+  <script src="animations.js" defer></script>
+  <script src="api.js" defer></script>
 </body>
 </html>
