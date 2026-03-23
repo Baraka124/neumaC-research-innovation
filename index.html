@@ -583,6 +583,9 @@
     .persp-viewall:hover svg{transform:translateX(3px);}
     .persp-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:0;border:1px solid var(--rule-l);border-radius:var(--r-lg);overflow:hidden;align-items:start;}
     .persp-grid.solo{grid-template-columns:1fr;}
+    .persp-grid.one-row{grid-template-columns:1fr;display:flex;flex-direction:column;}
+    .persp-grid.one-row .persp-featured{border-right:none;border-bottom:1px solid var(--rule-l);}
+    .persp-grid.one-row .persp-list .persp-row{padding:1.25rem 2rem;}
     .persp-grid.solo .persp-featured{border-right:none;max-width:680px;}
     .persp-grid.solo .persp-featured-img{max-height:320px;}
     .persp-grid.solo .persp-featured-img img{height:320px;}
@@ -1872,8 +1875,10 @@
       });
       rowsHtml += '</div>';
 
+      var oneRow = !solo && rows.length === 1;
       grid.innerHTML = featuredHtml + (solo ? '' : rowsHtml);
       grid.classList.toggle('solo', solo);
+      grid.classList.toggle('one-row', oneRow);
 
       /* Wire new .reveal elements into the existing observer */
       if(window._io){
