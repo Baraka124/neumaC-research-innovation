@@ -8,7 +8,7 @@
   <meta name="description" content="neumAC R&I supports respiratory and thoracic medicine through structured clinical research and collaborative innovation at the Área Sanitaria de A Coruña y Cee." />
   <link rel="canonical" href="https://neumac.es/index.html"/>
   <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="neumAC R&I"/> 
+  <meta property="og:site_name" content="neumAC R&I"/>
   <meta property="og:title" content="neumAC R&I — Respiratory Medicine Research & Innovation"/>
   <meta property="og:description" content="neumAC R&I supports respiratory and thoracic medicine through structured clinical research and collaborative innovation at the Área Sanitaria de A Coruña y Cee."/>
   <meta property="og:image" content="https://neumac.es/og-home.jpg"/>
@@ -341,7 +341,7 @@
 
     /* ── Responsive header ── */
     /* Prevent overflow at ALL sizes */
-    .header-inner{overflow:hidden;}
+    .header-inner{overflow:visible;min-width:0;}
     /* Nav separator line: hide on tablet */
     @media(max-width:1023px){
       .logo::after{display:none;}
@@ -601,6 +601,9 @@
     .persp-readmore{margin-left:auto;display:inline-flex;align-items:center;gap:.35rem;font-size:.8rem;font-weight:600;color:var(--accent);transition:gap .18s;}
     .persp-featured:hover .persp-readmore{gap:.55rem;}
     .persp-readmore svg{width:12px;height:12px;}
+    .persp-featured-img{margin:-2.5rem -2.75rem 1.5rem;overflow:hidden;max-height:200px;}
+    .persp-featured-img img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .4s ease;}
+    .persp-featured:hover .persp-featured-img img{transform:scale(1.03);}
     .persp-list{display:flex;flex-direction:column;}
     .persp-row{display:flex;align-items:flex-start;gap:1rem;padding:1.625rem 2rem;border-bottom:1px solid var(--rule-l);text-decoration:none;color:inherit;transition:background .15s;}
     .persp-row:last-child{border-bottom:none;}
@@ -1822,9 +1825,15 @@
       /* research_line is a nested object { id, line_number, name } */
       var fLine = f.research_line ? 'L'+f.research_line.line_number+' — '+f.research_line.name : '';
 
+      /* Featured image — shown for photo_story or any post with featured_image_url */
+      var featImg = f.featured_image_url
+        ? '<div class="persp-featured-img"><img src="'+esc(f.featured_image_url)+'" alt="'+esc(f.title||'')+'" loading="lazy"></div>'
+        : '';
+
       /* Featured card — post_type (not .type), body truncated for excerpt */
       var featuredHtml =
         '<a href="news.html" class="persp-featured reveal">'+
+          featImg+
           '<span class="persp-badge '+badgeClass(f.post_type)+'">'+badgeLabel(f.post_type)+'</span>'+
           '<h3 class="persp-featured-title">'+esc(f.title||'Untitled')+'</h3>'+
           '<p class="persp-featured-excerpt">'+esc(mkExcerpt(f.body, 165))+'</p>'+
@@ -1870,5 +1879,7 @@
       .catch(function(){ section.style.display='none'; });
   })();
   </script>
+  <script src="animations.js" defer></script>
+  <script src="api.js" defer></script>
 </body>
 </html>
