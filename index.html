@@ -602,6 +602,29 @@
     .persp-featured-img{margin:-2.25rem -2.5rem 1.5rem;overflow:hidden;height:200px;}
     .persp-featured-img img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .4s ease;}
     .persp-featured:hover .persp-featured-img img{transform:scale(1.03);}
+    /* No-image accent — decorative header when no photo */
+    .persp-no-img{
+      margin:-2.25rem -2.5rem 1.5rem;height:200px;
+      background:var(--off-white);
+      border-bottom:1px solid var(--rule-l);
+      display:flex;align-items:flex-end;
+      padding:1.5rem 2.5rem;
+      position:relative;overflow:hidden;
+    }
+    .persp-no-img::before{
+      content:'';position:absolute;top:-40px;right:-40px;
+      width:220px;height:220px;border-radius:50%;
+      background:var(--teal-lt);opacity:.7;
+    }
+    .persp-no-img::after{
+      content:'';position:absolute;top:20px;right:40px;
+      width:120px;height:120px;border-radius:50%;
+      background:rgba(0,153,153,.07);
+    }
+    .persp-no-img-type{
+      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--accent);position:relative;z-index:1;
+    }
 
     .persp-badge{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .6rem;border-radius:3px;margin-bottom:1rem;border:1px solid rgba(0,153,153,.2);background:rgba(0,153,153,.07);color:var(--accent);}
     .persp-badge.publication{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.1);color:var(--text-on-light-3);}
@@ -1817,9 +1840,9 @@
 
     function buildFeatCard(p){
       var line = p.research_line ? 'L'+p.research_line.line_number+' — '+p.research_line.name : '';
-      var img  = p.featured_image_url
+      var img = p.featured_image_url
         ? '<div class="persp-featured-img"><img src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title||'')+'" loading="lazy"></div>'
-        : '';
+        : '<div class="persp-no-img"><span class="persp-no-img-type">'+esc(badgeLabel(p.post_type))+'</span></div>';
       var arrowSvg = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
       return '<a href="news.html" class="persp-featured reveal">'+
         img+
