@@ -622,6 +622,9 @@
     .persp-row-arrow{width:24px;height:24px;border-radius:50%;border:1px solid var(--mid-grey);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.2rem;color:var(--text-on-light-3);transition:border-color .18s,color .18s,background .18s;}
     .persp-row-arrow svg{width:10px;height:10px;}
     .persp-row:hover .persp-row-arrow{border-color:var(--accent);color:var(--accent);background:var(--teal-lt);}
+    .persp-row-thumb{width:56px;height:56px;flex-shrink:0;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--rule-l);}
+    .persp-row-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease;}
+    .persp-row:hover .persp-row-thumb img{transform:scale(1.08);}
     .persp-skeleton{display:grid;grid-template-columns:1.15fr 1fr;gap:0;width:100%;}
     @media(max-width:768px){.persp-skeleton{grid-template-columns:1fr;}}
     .persp-skel-featured{padding:2.5rem 2.75rem;border-right:1px solid var(--rule-l);}
@@ -1853,8 +1856,12 @@
       /* Compact rows */
       var rowsHtml = '<div class="persp-list">';
       rows.forEach(function(p){
+        var thumb = p.featured_image_url
+          ? '<div class="persp-row-thumb"><img src="'+esc(p.featured_image_url)+'" alt="" loading="lazy"></div>'
+          : '';
         rowsHtml +=
           '<a href="news.html" class="persp-row reveal">'+
+            (thumb ? thumb : '')+
             '<div class="persp-row-body">'+
               '<span class="persp-row-badge '+badgeClass(p.post_type)+'">'+badgeLabel(p.post_type)+'</span>'+
               '<div class="persp-row-title">'+esc(p.title||'Untitled')+'</div>'+
