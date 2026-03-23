@@ -62,7 +62,7 @@
     @media(max-width:768px){.section{padding:4rem 0;}}
 
     /* Progress bar */
-    /* Nav takes all remaining space, pushes right-group to far right */ .logo-name sup{font-size:.55em;font-weight:400;color:rgba(255,255,255,.5);vertical-align:super;letter-spacing:.05em;}
+    /* Nav takes all remaining space, pushes right-group to far right */
     @media(min-width:1024px){}
     @media(min-width:1024px){}
 
@@ -120,7 +120,7 @@
       display:flex;align-items:center;height:100%;
       padding:0 clamp(1.25rem,4vw,5rem);
       position:relative;z-index:1;
-    overflow:hidden;}
+    overflow:visible;}
     .header-nav-spacer{flex:1;min-width:0;}
     .header-right{display:flex;align-items:center;gap:.875rem;flex-shrink:0;}
 
@@ -134,29 +134,7 @@
       content:'';position:absolute;right:-1.5rem;top:50%;transform:translateY(-50%);
       width:1px;height:26px;background:rgba(255,255,255,.1);
     }
-    .logo-mark{
-      width:44px;height:44px;
-      background:rgba(0,179,179,.08);border:1px solid rgba(0,179,179,.22);
-      border-radius:10px;
-      display:flex;align-items:center;justify-content:center;flex-shrink:0;
-      transition:background .25s,border-color .25s;
-    }
-    .logo:hover .logo-mark{background:rgba(0,179,179,.16);border-color:rgba(0,179,179,.45);}
-    .logo-mark svg{width:24px;height:24px;color:var(--teal-2);}
-    .logo-text{display:flex;flex-direction:column;gap:3px;}
-    .logo-name{
-      font-family:var(--ff-display);font-size:1.175rem;font-weight:700;
-      color:#fff;letter-spacing:-.025em;line-height:1;
-    }
-    .logo-name sup{font-size:.5em;font-weight:300;color:rgba(255,255,255,.4);vertical-align:super;letter-spacing:.05em;}
-    .logo-sub{
-      font-family:var(--ff-mono);font-size:.565rem;
-      color:rgba(255,255,255,.35);letter-spacing:.13em;text-transform:uppercase;line-height:1;
-    }
-    .logo-sub::before{
-      content:'';display:inline-block;width:4px;height:4px;border-radius:50%;
-      background:var(--teal-2);margin-right:5px;vertical-align:middle;opacity:.7;
-    }
+    .logo:hover
 
     /* ── Desktop nav ── */
     .nav{display:none;align-items:center;gap:.1rem;margin-left:2.75rem;}
@@ -353,18 +331,11 @@
     }
     @media(max-width:768px){
       :root{--header-h:72px;}
-      .logo-mark{width:40px;height:40px;}
-      .logo-mark svg{width:22px;height:22px;}
-      .logo-name{font-size:1.05rem;}
       .scroll-top{bottom:1.5rem;right:1.25rem;width:44px;height:44px;}
       .header-right{gap:.75rem;}
     }
     @media(max-width:480px){
       :root{--header-h:64px;}
-      .logo-sub{display:none;}
-      .logo-mark{width:36px;height:36px;border-radius:8px;}
-      .logo-mark svg{width:18px;height:18px;}
-      .logo-name{font-size:.95rem;}
       .header-right{gap:.5rem;}
       /* Compact lang button — globe icon only, no label, no chevron */
       .lang-sw-btn{padding:.38rem .5rem;gap:0;}
@@ -375,9 +346,6 @@
       .mob-toggle{width:40px;height:40px;}
     }
     @media(max-width:360px){
-      .logo-name{font-size:.875rem;}
-      .logo-mark{width:32px;height:32px;border-radius:7px;}
-      .logo-mark svg{width:16px;height:16px;}
       .header-right{gap:.4rem;}
     }
 
@@ -621,12 +589,9 @@
       width:120px;height:120px;border-radius:50%;
       background:rgba(0,153,153,.07);
     }
-    .persp-no-img-type{
-      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.14em;text-transform:uppercase;
-      color:var(--accent);position:relative;z-index:1;
-    }
+    .persp-no-img-type{display:none;}
 
-    .persp-badge{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .6rem;border-radius:3px;margin-bottom:1rem;border:1px solid rgba(0,153,153,.2);background:rgba(0,153,153,.07);color:var(--accent);}
+    .persp-badge{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .6rem;border-radius:3px;margin-bottom:1rem;border:1px solid rgba(0,153,153,.2);background:rgba(0,153,153,.07);color:var(--accent);width:fit-content;align-self:flex-start;}
     .persp-badge.publication{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.1);color:var(--text-on-light-3);}
     .persp-badge.update{background:rgba(0,153,153,.05);border-color:rgba(0,153,153,.15);color:var(--accent);}
     .persp-badge.photo_story{background:rgba(0,153,153,.08);border-color:rgba(0,153,153,.2);color:var(--teal-2);}
@@ -680,6 +645,39 @@
     .form-submit:hover{background:#0a4e92;}
     .form-success{display:none;margin-top:1rem;padding:.875rem;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:var(--r-sm);font-size:.875rem;color:#059669;}
     .form-success.show{display:block;}
+
+    /* Collapsed form state */
+    .form-trigger{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1.5rem 2.25rem;cursor:pointer;
+      border-radius:var(--r-lg);
+      background:rgba(255,255,255,.05);border:1px solid var(--rule-d);
+      transition:background .18s;gap:1.5rem;
+    }
+    .form-trigger:hover{background:rgba(255,255,255,.09);}
+    .form-trigger-text{}
+    .form-trigger-label{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-on-dark-3);margin-bottom:.375rem;}
+    .form-trigger-title{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:var(--text-on-dark);line-height:1.2;}
+    .form-trigger-btn{
+      flex-shrink:0;
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:var(--accent-2);color:#fff;font-weight:600;
+      padding:.625rem 1.25rem;border-radius:var(--r-md);
+      font-size:.8125rem;white-space:nowrap;
+      transition:background .18s;
+    }
+    .form-trigger:hover .form-trigger-btn{background:var(--accent);}
+    .form-trigger-btn svg{width:12px;height:12px;}
+
+    /* Expandable form body */
+    .form-body{
+      max-height:0;overflow:hidden;
+      transition:max-height .45s cubic-bezier(.4,0,.2,1), opacity .3s ease;
+      opacity:0;
+    }
+    .form-body.open{opacity:1;}
+    .form-card{background:white;border-radius:var(--r-lg);padding:2.25rem;margin-top:.75rem;}
+    .form-card h3{font-family:var(--ff-display);font-size:1.375rem;font-weight:700;color:var(--text-on-light);margin-bottom:1.5rem;}
 
         /* ── FOOTER ── */
     .footer{
@@ -1012,18 +1010,29 @@
   <header class="header" id="header">
     <div class="header-inner">
 
-      <a href="index.html" class="logo" aria-label="neumAC R&amp;I — Home">
-        <div class="logo-mark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3 C12 3 12 8 12 10"/>
-              <path d="M12 10 C9 10 5 11 4 14 C3 17 4 20 7 20 C9 20 10 19 11 17 L12 10"/>
-              <path d="M12 10 C15 10 19 11 20 14 C21 17 20 20 17 20 C15 20 14 19 13 17 L12 10"/>
-            </svg>
-        </div>
-        <div class="logo-text">
-          <span class="logo-name">neumAC R&amp;I</span>
-          <span class="logo-sub">Respiratory Research · A Coruña</span>
-        </div>
+      <a href="index.html" class="logo" aria-label="neumAC — Área Sanitaria de A Coruña y Cee">
+        <svg height="40" viewBox="0 0 248 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+          <defs>
+            <linearGradient id="nmg" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#00D4D4"/>
+              <stop offset="100%" stop-color="#4A9EE8"/>
+            </linearGradient>
+          </defs>
+          <text x="0" y="29"
+            font-family="'Trebuchet MS','Segoe UI',Arial,sans-serif"
+            font-size="24" font-weight="700"
+            fill="url(#nmg)" letter-spacing="-0.4">neumAC</text>
+          <line x1="100" y1="5" x2="100" y2="37"
+            stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+          <text x="111" y="17"
+            font-family="'Segoe UI',Arial,sans-serif"
+            font-size="8" font-weight="700"
+            fill="rgba(255,255,255,0.58)" letter-spacing="0.35">ÁREA SANITARIA DE</text>
+          <text x="111" y="30"
+            font-family="'Segoe UI',Arial,sans-serif"
+            font-size="8" font-weight="700"
+            fill="rgba(255,255,255,0.58)" letter-spacing="0.35">A CORUÑA Y CEE</text>
+        </svg>
       </a>
 
       <div class="header-nav-spacer" aria-hidden="true"></div>
@@ -1081,12 +1090,18 @@
   <div class="mob-overlay" id="mobOverlay" aria-hidden="true"></div>
   <nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation" aria-hidden="true">
     <div class="mob-head">
-      <div class="mob-head-logo">
-        <div class="mob-head-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
-                <path d="M12 3 C12 3 12 8 12 10"/>
-                <path d="M12 10 C9 10 5 11 4 14 C3 17 4 20 7 20 C9 20 10 19 11 17 L12 10"/>
-                <path d="M12 10 C15 10 19 11 20 14 C21 17 20 20 17 20 C15 20 14 19 13 17 L12 10"/>
-              </svg></div>
+      <div class="mob-head-logo"><svg height="28" viewBox="0 0 100 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+            <defs>
+              <linearGradient id="nmgm" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stop-color="#00D4D4"/>
+                <stop offset="100%" stop-color="#4A9EE8"/>
+              </linearGradient>
+            </defs>
+            <text x="0" y="21"
+              font-family="'Trebuchet MS','Segoe UI',Arial,sans-serif"
+              font-size="18" font-weight="700"
+              fill="url(#nmgm)" letter-spacing="-0.3">neumAC</text>
+          </svg></div>
         <span class="mob-head-name">neumAC R&amp;I</span>
       </div>
       <button class="mob-close" id="mobClose" aria-label="Close navigation">
@@ -1598,36 +1613,53 @@
             <div><div class="cinfo-label"><span lang="en">Research Institute</span><span lang="es">Instituto de Investigación</span></div><div class="cinfo-value" style="font-size:.8125rem;"><span lang="en">INIBIC · Instituto de Investigación Biomédica A Coruña<br>SERGAS · GCP compliant</span><span lang="es">INIBIC · Instituto de Investigación Biomédica A Coruña<br>SERGAS · Cumplimiento GCP</span></div></div>
           </div>
         </div>
-        <div class="form-card reveal reveal-d1">
-          <h3><span lang="en">Send a Message</span><span lang="es">Enviar un Mensaje</span></h3>
-          <form id="contactForm" novalidate>
-            <div class="form-grid">
-              <div class="form-group"><label><span lang="en">Name</span><span lang="es">Nombre</span></label><input type="text" placeholder="Your full name" required /></div>
-              <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" placeholder="Institution / Company" required /></div>
-              <div class="form-group span-2"><label><span lang="en">Email</span><span lang="es">Email</span></label><input type="email" placeholder="your@institution.edu" required /></div>
-              <div class="form-group span-2">
-                <label><span lang="en">Area of Interest</span><span lang="es">Área de Interés</span></label>
-                <select>
-                  <option value=""><span lang="en">Select…</span></option>
-                  <option>Clinical study sponsorship or site qualification</option>
-                  <option>Investigator-initiated research collaboration</option>
-                  <option>AI / Digital Health co-development</option>
-                  <option>Medical device validation (CE MDR / SaMD)</option>
-                  <option>Clinical simulation or VR project</option>
-                  <option>Strategic innovation partnership</option>
-                  <option>Academic collaboration or biobank access</option>
-                  <option>General information request</option>
-                </select>
-              </div>
-              <div class="form-group span-2"><label><span lang="en">Message</span><span lang="es">Mensaje</span></label><textarea rows="4" placeholder="Tell us about your project or enquiry…"></textarea></div>
-              <div class="form-group span-2" style="margin-bottom:0;">
-                <button type="submit" class="form-submit"><span lang="en">Send Message</span><span lang="es">Enviar Mensaje</span></button>
+        <div class="reveal reveal-d1">
+          <!-- Collapsed trigger -->
+          <div class="form-trigger" id="formTrigger" onclick="openContactForm('formTrigger','formBody')" role="button" tabindex="0" aria-expanded="false">
+            <div class="form-trigger-text">
+              <div class="form-trigger-label"><span lang="en">Research collaboration · Partnership · Enquiry</span><span lang="es">Colaboración · Sociedad · Consulta</span></div>
+              <div class="form-trigger-title"><span lang="en">Want to work with us?</span><span lang="es">¿Quieres trabajar con nosotros?</span></div>
+            </div>
+            <div class="form-trigger-btn">
+              <span lang="en">Get in touch</span><span lang="es">Contáctanos</span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </div>
+          </div>
+
+          <!-- Expandable form -->
+          <div class="form-body" id="formBody">
+            <div class="form-card">
+              <h3><span lang="en">Send a Message</span><span lang="es">Enviar un Mensaje</span></h3>
+              <form id="contactForm" novalidate>
+                <div class="form-grid">
+                  <div class="form-group"><label><span lang="en">Name</span><span lang="es">Nombre</span></label><input type="text" placeholder="Your full name" required /></div>
+                  <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" placeholder="Institution / Company" required /></div>
+                  <div class="form-group span-2"><label><span lang="en">Email</span><span lang="es">Email</span></label><input type="email" placeholder="your@institution.edu" required /></div>
+                  <div class="form-group span-2">
+                    <label><span lang="en">Area of Interest</span><span lang="es">Área de Interés</span></label>
+                    <select>
+                      <option value=""><span lang="en">Select…</span></option>
+                      <option>Clinical study sponsorship or site qualification</option>
+                      <option>Investigator-initiated research collaboration</option>
+                      <option>AI / Digital Health co-development</option>
+                      <option>Medical device validation (CE MDR / SaMD)</option>
+                      <option>Clinical simulation or VR project</option>
+                      <option>Strategic innovation partnership</option>
+                      <option>Academic collaboration or biobank access</option>
+                      <option>General information request</option>
+                    </select>
+                  </div>
+                  <div class="form-group span-2"><label><span lang="en">Message</span><span lang="es">Mensaje</span></label><textarea rows="4" placeholder="Tell us about your project or enquiry…"></textarea></div>
+                  <div class="form-group span-2" style="margin-bottom:0;">
+                    <button type="submit" class="form-submit"><span lang="en">Send Message</span><span lang="es">Enviar Mensaje</span></button>
+                  </div>
+                </div>
+              </form>
+              <div class="form-success" id="formSuccess">
+                <span lang="en">✓ Thank you — our team will be in touch within 2 business days.</span>
+                <span lang="es">✓ Gracias — nuestro equipo se pondrá en contacto en 2 días hábiles.</span>
               </div>
             </div>
-          </form>
-          <div class="form-success" id="formSuccess">
-            <span lang="en">✓ Thank you — our team will be in touch within 2 business days.</span>
-            <span lang="es">✓ Gracias — nuestro equipo se pondrá en contacto en 2 días hábiles.</span>
           </div>
         </div>
       </div>
@@ -1644,10 +1676,13 @@
         <div class="footer-brand">
           <div class="footer-brand-logo">
             <div class="footer-brand-mark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3 C12 3 12 8 12 10"/>
-              <path d="M12 10 C9 10 5 11 4 14 C3 17 4 20 7 20 C9 20 10 19 11 17 L12 10"/>
-              <path d="M12 10 C15 10 19 11 20 14 C21 17 20 20 17 20 C15 20 14 19 13 17 L12 10"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Trachea -->
+              <path d="M12 2.5 L12 8"/>
+              <!-- Left bronchus + lobe -->
+              <path d="M12 8 C10 8 7 9 6 11.5 C5 14 6 17.5 8.5 18.5 C10.5 19.2 12 18 12 16"/>
+              <!-- Right bronchus + lobe -->
+              <path d="M12 8 C14 8 17 9 18 11.5 C19 14 18 17.5 15.5 18.5 C13.5 19.2 12 18 12 16"/>
             </svg>
             </div>
             <span class="footer-brand-name">neumAC R&amp;I</span>
