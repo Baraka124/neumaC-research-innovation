@@ -11,7 +11,7 @@
   <meta property="og:site_name" content="neumAC R&I"/>
   <meta property="og:url" content="https://neumac.es/news.html"/> 
   <meta property="og:title" content="Perspectives | neumAC R&I"/>
-  <meta property="og:image" content="https://neumac.es/og-news.jpg"/> 
+  <meta property="og:image" content="https://neumac.es/og-news.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1404,6 +1404,7 @@
               (date ? '<span>'+fmtDate(date)+'</span>' : '')+
               (p.research_line ? '<span style="color:var(--accent);font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.04em;">L'+p.research_line.line_number+' — '+esc(p.research_line.name)+'</span>' : '')+
             '</div>'+
+            (p.featured_image_url ? '<figure style="margin:0 0 2rem;border-radius:var(--r-md);overflow:hidden;"><img src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title||'')+'" style="width:100%;max-height:420px;object-fit:cover;display:block;" loading="lazy"></figure>' : '')+
             '<div class="art-body">'+bodyHtml+'</div>'+
           '</div>'+
         '</div>';
@@ -1427,10 +1428,14 @@
     /* ── Wire filter buttons ──────────────────────────────── */
     document.querySelectorAll('.flt').forEach(function(btn){
       btn.addEventListener('click', function(){
+        /* close reader if open before filtering */
+        if(reader && reader.classList.contains('open')) closePost();
         _filter = btn.dataset.type || '';
         document.querySelectorAll('.flt').forEach(function(b){ b.classList.remove('on'); });
         btn.classList.add('on');
         renderFeed();
+        /* scroll to feed top */
+        feed && feed.scrollIntoView({behavior:'smooth', block:'start'});
       });
     });
 
