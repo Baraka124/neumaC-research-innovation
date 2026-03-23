@@ -311,7 +311,7 @@
 
     /* ── Responsive header ── */
     /* Prevent overflow at ALL sizes */
-    .header-inner{overflow:hidden;}
+    .header-inner{overflow:visible;min-width:0;}
     /* Nav separator line: hide on tablet */
     @media(max-width:1023px){
       .logo::after{display:none;}
@@ -1339,5 +1339,7 @@
 
   })();
   </script>
+  <script src="animations.js" defer></script>
+  <script src="api.js" defer></script>
 </body>
 </html>
