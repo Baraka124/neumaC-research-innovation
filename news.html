@@ -325,71 +325,115 @@
 
     /* ── HERO ── */
     .blog-hero{
-      background:linear-gradient(150deg,var(--navy) 0%,var(--navy-2) 55%,#0b3535 100%);
-      padding:4.5rem 0 0;
-      position:relative;overflow:hidden;
+      background:linear-gradient(150deg,var(--navy) 0%,#0d2340 60%,#082828 100%);
+      padding:0;position:relative;overflow:hidden;
       border-bottom:1px solid var(--rule-d);
     }
-    .blog-hero::after{
-      content:'';position:absolute;inset:0;
-      background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-      background-size:44px 44px;pointer-events:none;
-    }
     .blog-hero::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--teal-2),transparent);z-index:2;}
-    .blog-hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:end;}
-    @media(max-width:768px){.blog-hero-inner{grid-template-columns:1fr;gap:2rem;}}
-    .blog-hero-left{padding-bottom:3rem;}
-    .blog-hero h1{
-      font-family:var(--ff-display);font-size:clamp(2.2rem,4.5vw,3.5rem);
-      font-weight:700;color:var(--text-on-dark);letter-spacing:-.025em;line-height:1.05;
-      margin-top:.875rem;margin-bottom:1.125rem;
+    /* Top section: big type */
+    .blog-hero-top{
+      padding:4rem 0 2.5rem;
+      position:relative;z-index:1;
     }
-    .blog-hero h1 em{font-style:italic;font-weight:300;color:var(--teal-2);font-family:var(--ff-display);}
-    .blog-hero-sub{font-size:.9375rem;color:var(--text-on-dark-2);max-width:480px;line-height:1.75;margin-bottom:2rem;}
-    .blog-hero-stats{display:flex;gap:2rem;padding-top:1.5rem;border-top:1px solid var(--rule-d);}
-    .blog-hero-stat-n{font-family:var(--ff-display);font-size:1.5rem;font-weight:700;color:#fff;line-height:1;}
-    .blog-hero-stat-l{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.25rem;}
-    /* Latest post card — rises from hero floor */
-    .blog-hero-right{align-self:end;}
-    @media(max-width:768px){.blog-hero-right{display:none;}}
-    .blog-hero-latest-label{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.625rem;}
-    .blog-hero-latest{
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.1);
-      border-bottom:none;
-      border-radius:var(--r-lg) var(--r-lg) 0 0;
-      overflow:hidden;cursor:pointer;
-      transition:background .2s;
+    .blog-hero-eyebrow{
+      font-family:var(--ff-mono);font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--teal-2);margin-bottom:1rem;
+      display:flex;align-items:center;gap:.75rem;
     }
-    .blog-hero-latest:hover{background:rgba(255,255,255,.1);}
-    .blog-hero-latest-img{height:160px;overflow:hidden;position:relative;}
-    .blog-hero-latest-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
-    .blog-hero-latest-img-ph{width:100%;height:100%;background:linear-gradient(135deg,rgba(0,153,153,.2),rgba(0,40,80,.4));}
-    .blog-hero-latest:hover .blog-hero-latest-img img{transform:scale(1.04);}
-    .blog-hero-latest-body{padding:1rem 1.25rem 1.375rem;}
-    .blog-hero-latest-badge{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-2);margin-bottom:.4rem;}
-    .blog-hero-latest-title{font-family:var(--ff-display);font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:.35rem;}
-    .blog-hero-latest-meta{font-family:var(--ff-mono);font-size:.575rem;color:rgba(255,255,255,.35);letter-spacing:.04em;}
+    .blog-hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--teal-2);}
+    .blog-hero-h1{
+      font-family:var(--ff-display);
+      font-size:clamp(3rem,6vw,5rem);
+      font-weight:700;color:#fff;
+      line-height:.92;letter-spacing:-.03em;
+      margin-bottom:0;
+    }
+    .blog-hero-h1 em{
+      color:var(--teal-2);font-style:italic;font-weight:300;
+      display:block;
+    }
+    /* Stat shelf — sits between type and feature image */
+    .blog-hero-shelf{
+      display:flex;border-top:1px solid rgba(255,255,255,.08);
+      margin-top:2.5rem;
+    }
+    .blog-hero-shelf-stat{
+      flex:1;padding:1rem 0;
+      border-right:1px solid rgba(255,255,255,.07);
+    }
+    .blog-hero-shelf-stat:last-child{border-right:none;}
+    .blog-hero-stat-n{
+      font-family:var(--ff-display);font-size:1.5rem;font-weight:700;
+      color:#fff;line-height:1;
+    }
+    .blog-hero-stat-l{
+      font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.12em;
+      text-transform:uppercase;color:rgba(255,255,255,.28);margin-top:.25rem;
+    }
+    /* Feature strip — full-bleed latest post image */
+    .blog-hero-feature{
+      position:relative;height:240px;overflow:hidden;cursor:pointer;
+      background:var(--navy-2);
+    }
+    .blog-hero-feature img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      filter:brightness(.65);
+      transition:transform .6s ease,filter .4s ease;
+    }
+    .blog-hero-feature:hover img{transform:scale(1.03);filter:brightness(.75);}
+    .blog-hero-feature-ph{
+      width:100%;height:100%;
+      background:linear-gradient(160deg,rgba(0,153,153,.2) 0%,rgba(10,22,40,.8) 100%);
+    }
+    .blog-hero-feature-over{
+      position:absolute;inset:0;
+      background:linear-gradient(to right,rgba(10,22,40,.85) 0%,rgba(10,22,40,.2) 65%,transparent 100%);
+      display:flex;align-items:flex-end;
+      padding:1.5rem clamp(1.5rem,4vw,5rem);
+    }
+    .blog-hero-feature-inner{max-width:560px;}
+    .blog-hero-feature-badge{
+      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.14em;
+      text-transform:uppercase;color:var(--teal-2);
+      margin-bottom:.5rem;
+      display:flex;align-items:center;gap:.5rem;
+    }
+    .blog-hero-feature-badge::before{content:'';width:16px;height:1px;background:var(--teal-2);}
+    .blog-hero-feature-title{
+      font-family:var(--ff-display);font-size:clamp(1.25rem,2.5vw,1.75rem);
+      font-weight:700;color:#fff;line-height:1.2;margin-bottom:.375rem;
+    }
+    .blog-hero-feature-meta{
+      font-family:var(--ff-mono);font-size:.6rem;
+      color:rgba(255,255,255,.4);letter-spacing:.04em;
+    }
+    @media(max-width:640px){
+      .blog-hero-h1{font-size:2.75rem;}
+      .blog-hero-feature{height:180px;}
+    }
 
     /* ── FILTER BAR ── */
     .filter-strip{
       background:var(--white);border-bottom:1px solid var(--rule-l);
       position:sticky;top:var(--header-h);z-index:100;
     }
-    .filter-inner{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;padding:.875rem 0;}
-    .flt{
-      background:transparent;border:1px solid var(--mid-grey);
-      border-radius:20px;padding:.3rem .875rem;
-      font-family:var(--ff-mono);font-size:.65rem;font-weight:600;letter-spacing:.08em;
+    .filter-inner{display:flex;align-items:center;flex-wrap:wrap;gap:.25rem;padding:.75rem 0;}
+    .filter-label{
+      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;
       text-transform:uppercase;color:var(--text-on-light-3);
-      cursor:pointer;transition:background .18s,border-color .18s,color .18s;white-space:nowrap;
+      margin-right:.5rem;flex-shrink:0;
     }
-    .flt:hover{border-color:var(--accent);color:var(--accent);}
-    .flt.on{background:var(--accent);border-color:var(--accent);color:#fff;}
-    .flt-article.on{background:var(--teal-2);border-color:var(--teal-2);color:#fff;}
-    .flt-update.on,.flt-pub.on{background:var(--ink);border-color:var(--ink);color:#fff;}
-    .filter-count{font-family:var(--ff-mono);font-size:.65rem;color:var(--text-on-light-3);margin-left:auto;padding-left:1rem;}
+    .flt{
+      background:transparent;border:none;padding:.35rem .75rem;
+      font-family:var(--ff-mono);font-size:.65rem;font-weight:500;letter-spacing:.06em;
+      text-transform:uppercase;color:var(--text-on-light-3);
+      cursor:pointer;transition:color .15s,background .15s;white-space:nowrap;
+      border-radius:var(--r-sm);
+    }
+    .flt:hover{color:var(--accent);background:var(--teal-lt);}
+    .flt.on{color:var(--text-on-light);font-weight:700;background:var(--teal-lt);}
+    .flt.on::after{content:'';display:block;height:2px;background:var(--accent);border-radius:2px;margin-top:2px;}
+    .filter-count{font-family:var(--ff-mono);font-size:.6rem;color:var(--text-on-light-3);margin-left:auto;padding-left:1rem;}
 
     /* ── MAIN LAYOUT ── */
     .blog-layout{
@@ -405,125 +449,86 @@
     @media(max-width:900px){.blog-sidebar{width:100%;position:static;}}
 
     /* ── POST CARD ── */
-    /* ── BASE post-item ── */
-    .post-item{
-      border-bottom:1px solid var(--rule-l);
-      cursor:pointer;transition:background .18s;
-    }
+    /* ── POST ITEMS — magazine numbered style ── */
+
+    /* Shared */
+    .post-item{cursor:pointer;border-bottom:1px solid var(--rule-l);position:relative;}
     .post-item:last-child{border-bottom:none;}
 
-    /* ── PHOTO STORY ── full-bleed image, title overlay, no text */
-    .post-item.is-photo{padding:0;overflow:hidden;border-radius:var(--r-md);margin-bottom:var(--rule-l);}
+    /* ── PHOTO STORY — full-bleed with overlay ── */
+    .post-item.is-photo{padding:0;overflow:hidden;border-radius:var(--r-md);margin-bottom:1.5rem;border:none;}
     .post-photo-wrap{position:relative;overflow:hidden;}
-    .post-photo-img{
-      width:100%;height:280px;object-fit:cover;display:block;
-      transition:transform .5s cubic-bezier(.4,0,.2,1);
-    }
+    .post-photo-img{width:100%;height:300px;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.4,0,.2,1);}
     .post-item.is-photo:hover .post-photo-img{transform:scale(1.03);}
-    .post-photo-scrim{
-      position:absolute;inset:0;
-      background:linear-gradient(to top,rgba(10,22,40,.85) 0%,rgba(10,22,40,.2) 55%,transparent 100%);
-      transition:opacity .3s;
-    }
-    .post-item.is-photo:hover .post-photo-scrim{opacity:.9;}
-    .post-photo-overlay{
-      position:absolute;bottom:0;left:0;right:0;
-      padding:1.25rem 1.5rem;
-    }
-    .post-photo-badge{
-      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;
-      color:rgba(255,255,255,.6);margin-bottom:.5rem;display:flex;align-items:center;gap:.375rem;
-    }
-    .post-photo-title{
-      font-family:var(--ff-display);font-size:1.25rem;font-weight:700;
-      color:#fff;line-height:1.25;margin-bottom:.375rem;
-    }
-    .post-photo-meta{
-      font-family:var(--ff-mono);font-size:.6rem;color:rgba(255,255,255,.5);
-      display:flex;align-items:center;gap:.5rem;
-    }
-    .post-photo-hint{
-      position:absolute;top:.875rem;right:.875rem;
-      background:rgba(10,22,40,.55);border:1px solid rgba(255,255,255,.15);
-      backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-      border-radius:99px;padding:.2rem .625rem;
-      font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;
-      color:rgba(255,255,255,.7);
-    }
+    .post-photo-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,22,40,.88) 0%,rgba(10,22,40,.15) 55%,transparent 100%);transition:opacity .3s;}
+    .post-item.is-photo:hover .post-photo-scrim{opacity:.92;}
+    .post-photo-overlay{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 2rem;}
+    .post-photo-badge{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem;}
+    .post-photo-badge::before{content:'';width:14px;height:1px;background:var(--teal-2);}
+    .post-photo-title{font-family:var(--ff-display);font-size:clamp(1.25rem,2vw,1.625rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:.375rem;}
+    .post-photo-meta{font-family:var(--ff-mono);font-size:.6rem;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:.5rem;}
+    .post-photo-hint{position:absolute;top:.875rem;right:.875rem;background:rgba(10,22,40,.6);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(6px);border-radius:99px;padding:.2rem .7rem;font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.65);}
 
-    /* ── ARTICLE — title + excerpt + optional thumbnail ── */
-    .post-item.is-article{padding:1.75rem 0;display:flex;gap:1.5rem;align-items:flex-start;}
-    .post-item.is-article:hover{background:var(--teal-lt);margin:0 -3.5rem;padding:1.75rem 3.5rem;}
-    @media(max-width:768px){.post-item.is-article:hover{margin:0 -1.5rem;padding:1.75rem 1.5rem;}}
+    /* ── ARTICLE — numbered magazine row ── */
+    .post-item.is-article{
+      display:flex;align-items:flex-start;gap:1.5rem;
+      padding:1.5rem 0;
+      transition:background .15s;
+    }
+    .post-item.is-article:hover{background:var(--teal-lt);margin:0 -3.5rem;padding:1.5rem 3.5rem;}
+    @media(max-width:768px){.post-item.is-article:hover{margin:0 -1.5rem;padding:1.5rem 1.5rem;}}
+    .post-item-num{
+      font-family:var(--ff-display);font-size:1.75rem;font-weight:700;
+      color:var(--rule-l);flex-shrink:0;width:2.5rem;line-height:1;
+      transition:color .2s;user-select:none;
+    }
+    .post-item.is-article:hover .post-item-num{color:var(--accent);}
     .post-article-body{flex:1;min-width:0;}
-    .post-article-thumb{
-      width:88px;height:88px;flex-shrink:0;
-      border-radius:var(--r-md);overflow:hidden;
-      border:1px solid var(--rule-l);
-    }
+    .post-article-thumb{width:84px;height:84px;flex-shrink:0;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--rule-l);}
     .post-article-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
-    .post-item.is-article:hover .post-article-thumb img{transform:scale(1.06);}
+    .post-item.is-article:hover .post-article-thumb img{transform:scale(1.07);}
 
-    /* ── UPDATE — compact bullet row ── */
+    /* ── UPDATE — accent line left ── */
     .post-item.is-update{
-      padding:1rem 0;display:flex;gap:.875rem;align-items:flex-start;
+      display:flex;gap:1.25rem;align-items:flex-start;
+      padding:1.125rem 0;
+      transition:background .15s;
     }
-    .post-item.is-update:hover{background:var(--teal-lt);margin:0 -3.5rem;padding:1rem 3.5rem;}
-    @media(max-width:768px){.post-item.is-update:hover{margin:0 -1.5rem;padding:1rem 1.5rem;}}
-    .post-update-dot{
-      width:6px;height:6px;border-radius:50%;background:var(--mid-grey);
-      flex-shrink:0;margin-top:.4rem;transition:background .18s;
-    }
-    .post-item.is-update:hover .post-update-dot{background:var(--accent);}
+    .post-item.is-update:hover{background:var(--teal-lt);margin:0 -3.5rem;padding:1.125rem 3.5rem;}
+    @media(max-width:768px){.post-item.is-update:hover{margin:0 -1.5rem;padding:1.125rem 1.5rem;}}
+    .post-update-accent{width:3px;flex-shrink:0;align-self:stretch;background:rgba(0,153,153,.25);border-radius:2px;min-height:32px;transition:background .2s;}
+    .post-item.is-update:hover .post-update-accent{background:var(--accent);}
 
-    /* ── PUBLICATION — document icon + journal info ── */
-    .post-item.is-publication{padding:1.5rem 0;display:flex;gap:1.25rem;align-items:flex-start;}
-    .post-item.is-publication:hover{background:var(--teal-lt);margin:0 -3.5rem;padding:1.5rem 3.5rem;}
-    @media(max-width:768px){.post-item.is-publication:hover{margin:0 -1.5rem;padding:1.5rem 1.5rem;}}
-    .post-pub-icon{
-      width:32px;height:32px;flex-shrink:0;
-      border:1px solid var(--rule-l);border-radius:var(--r-sm);
-      background:var(--off-white);
-      display:flex;align-items:center;justify-content:center;
-      margin-top:.125rem;
+    /* ── PUBLICATION — blue accent line ── */
+    .post-item.is-publication{
+      display:flex;gap:1.25rem;align-items:flex-start;
+      padding:1.125rem 0;
+      transition:background .15s;
     }
-    .post-pub-icon svg{width:14px;height:14px;color:var(--text-on-light-3);}
+    .post-item.is-publication:hover{background:var(--teal-lt);margin:0 -3.5rem;padding:1.125rem 3.5rem;}
+    @media(max-width:768px){.post-item.is-publication:hover{margin:0 -1.5rem;padding:1.125rem 1.5rem;}}
+    .post-pub-accent{width:3px;flex-shrink:0;align-self:stretch;background:rgba(74,158,232,.3);border-radius:2px;min-height:32px;transition:background .2s;}
+    .post-item.is-publication:hover .post-pub-accent{background:#4a9ee8;}
 
-    /* ── Shared text elements ── */
-    .post-type-badge{
-      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;
-      color:var(--text-on-light-3);margin-bottom:.375rem;display:block;
-    }
+    /* ── Shared text ── */
+    .post-type-badge{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-on-light-3);margin-bottom:.3rem;display:block;}
     .post-type-badge.article{color:var(--accent);}
     .post-type-badge.photo_story{color:var(--teal-2);}
     .post-type-badge.update{color:var(--text-on-light-3);}
     .post-type-badge.publication{color:var(--text-on-light-2);}
-    .post-title{
-      font-family:var(--ff-display);font-size:1.0625rem;font-weight:700;
-      color:var(--text-on-light);line-height:1.3;margin-bottom:.375rem;
-    }
+    .post-title{font-family:var(--ff-display);font-size:1.0625rem;font-weight:700;color:var(--text-on-light);line-height:1.3;margin-bottom:.3rem;}
     .post-item:hover .post-title{color:var(--accent);}
-    .post-excerpt{font-size:.9375rem;color:var(--text-on-light-2);line-height:1.7;margin-bottom:.625rem;max-width:640px;}
-    .post-meta-row{
-      display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
-      font-family:var(--ff-mono);font-size:.6rem;color:var(--text-on-light-3);
-    }
+    .post-excerpt{font-size:.9rem;color:var(--text-on-light-2);line-height:1.7;margin-bottom:.5rem;max-width:640px;}
+    .post-meta-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-family:var(--ff-mono);font-size:.6rem;color:var(--text-on-light-3);}
     .post-meta-sep{width:3px;height:3px;border-radius:50%;background:var(--mid-grey);flex-shrink:0;}
     .post-line-tag{color:var(--accent);}
-    .post-journal{
-      font-family:var(--ff-mono);font-size:.675rem;color:var(--text-on-light-2);
-      font-style:italic;margin-bottom:.3rem;
-    }
+    .post-journal{font-family:var(--ff-mono);font-size:.675rem;color:var(--text-on-light-2);font-style:italic;margin-bottom:.3rem;}
     .post-authors{font-size:.8125rem;color:var(--text-on-light-2);margin-bottom:.375rem;line-height:1.5;}
     .post-doi{font-family:var(--ff-mono);font-size:.625rem;color:var(--accent);word-break:break-all;}
-    .post-readmore{
-      font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;
-      color:var(--accent);display:inline-flex;align-items:center;gap:.375rem;margin-top:.5rem;
-      transition:color .18s,gap .18s;
-    }
+    .post-readmore{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:.35rem;margin-top:.5rem;transition:color .18s,gap .18s;}
     .post-item:hover .post-readmore{color:var(--teal-2);gap:.55rem;}
 
-    /* ── LOADING / EMPTY ── */
+        /* ── LOADING / EMPTY ── */
     .feed-state{padding:3rem 0;text-align:center;color:var(--text-on-light-3);font-size:.9rem;}
     .feed-state-icon{width:40px;height:40px;border-radius:50%;background:var(--light-grey);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
     .feed-state-icon svg{width:18px;height:18px;color:var(--text-on-light-3);}
@@ -942,57 +947,50 @@
 
   <!-- HERO -->
   <section class="blog-hero">
-    <div class="container">
-      <div class="blog-hero-inner">
-
-        <!-- Left: copy + live stats -->
-        <div class="blog-hero-left">
-          <p class="eyebrow light reveal"><span lang="en">neumAC Perspectives</span><span lang="es">neumAC Perspectivas</span></p>
-          <h1 class="reveal reveal-d1">
-            <span lang="en">Research Notes,<br><em>Openly Shared.</em></span>
-            <span lang="es">Notas de Investigación,<br><em>Compartidas Abiertamente.</em></span>
-          </h1>
-          <p class="blog-hero-sub reveal reveal-d1">
-            <span lang="en">Publications, updates and department news — written by the neumAC R&amp;I team.</span>
-            <span lang="es">Publicaciones, actualizaciones y noticias — escritas por el equipo de neumAC I+I.</span>
-          </p>
-          <div class="blog-hero-stats reveal reveal-d2">
-            <div>
-              <div class="blog-hero-stat-n" id="sbArticles">—</div>
-              <div class="blog-hero-stat-l"><span lang="en">Articles</span><span lang="es">Artículos</span></div>
-            </div>
-            <div>
-              <div class="blog-hero-stat-n" id="sbUpdates">—</div>
-              <div class="blog-hero-stat-l"><span lang="en">Updates</span><span lang="es">Actualizaciones</span></div>
-            </div>
-            <div>
-              <div class="blog-hero-stat-n" id="sbPubs">—</div>
-              <div class="blog-hero-stat-l"><span lang="en">Publications</span><span lang="es">Publicaciones</span></div>
-            </div>
-            <div>
-              <div class="blog-hero-stat-n" id="sbPhotos">—</div>
-              <div class="blog-hero-stat-l"><span lang="en">Photo Stories</span><span lang="es">Reportajes</span></div>
-            </div>
+    <!-- Top: big type + stats shelf -->
+    <div class="blog-hero-top">
+      <div class="container">
+        <div class="blog-hero-eyebrow reveal">
+          <span lang="en">neumAC Perspectives</span><span lang="es">neumAC Perspectivas</span>
+        </div>
+        <h1 class="blog-hero-h1 reveal reveal-d1">
+          <span lang="en">Research<br>Notes,<br><em>Openly Shared.</em></span>
+          <span lang="es">Notas de<br>Investigación,<br><em>Compartidas.</em></span>
+        </h1>
+        <!-- Stat shelf -->
+        <div class="blog-hero-shelf reveal reveal-d2">
+          <div class="blog-hero-shelf-stat">
+            <div class="blog-hero-stat-n" id="sbArticles">—</div>
+            <div class="blog-hero-stat-l"><span lang="en">Articles</span><span lang="es">Artículos</span></div>
+          </div>
+          <div class="blog-hero-shelf-stat">
+            <div class="blog-hero-stat-n" id="sbUpdates">—</div>
+            <div class="blog-hero-stat-l"><span lang="en">Updates</span><span lang="es">Actualizaciones</span></div>
+          </div>
+          <div class="blog-hero-shelf-stat">
+            <div class="blog-hero-stat-n" id="sbPubs">—</div>
+            <div class="blog-hero-stat-l"><span lang="en">Publications</span><span lang="es">Publicaciones</span></div>
+          </div>
+          <div class="blog-hero-shelf-stat">
+            <div class="blog-hero-stat-n" id="sbPhotos">—</div>
+            <div class="blog-hero-stat-l"><span lang="en">Photo Stories</span><span lang="es">Reportajes</span></div>
           </div>
         </div>
-
-        <!-- Right: latest post preview card -->
-        <div class="blog-hero-right reveal reveal-d1">
-          <div class="blog-hero-latest-label">
+      </div>
+    </div>
+    <!-- Feature strip: latest post full-bleed image -->
+    <div class="blog-hero-feature reveal" id="heroLatest">
+      <div id="heroLatestImg"><div class="blog-hero-feature-ph"></div></div>
+      <div class="blog-hero-feature-over">
+        <div class="blog-hero-feature-inner">
+          <div class="blog-hero-feature-badge" id="heroLatestBadge">
             <span lang="en">Latest post</span><span lang="es">Última entrada</span>
           </div>
-          <div class="blog-hero-latest" id="heroLatest" onclick="">
-            <div class="blog-hero-latest-img" id="heroLatestImg">
-              <div class="blog-hero-latest-img-ph"></div>
-            </div>
-            <div class="blog-hero-latest-body">
-              <div class="blog-hero-latest-badge" id="heroLatestBadge">—</div>
-              <div class="blog-hero-latest-title" id="heroLatestTitle">Loading…</div>
-              <div class="blog-hero-latest-meta" id="heroLatestMeta"></div>
-            </div>
+          <div class="blog-hero-feature-title" id="heroLatestTitle">
+            <span lang="en">Loading latest post…</span><span lang="es">Cargando…</span>
           </div>
+          <div class="blog-hero-feature-meta" id="heroLatestMeta"></div>
         </div>
-
       </div>
     </div>
   </section>
@@ -1001,6 +999,7 @@
   <div class="filter-strip" id="filterStrip">
     <div class="container">
       <div class="filter-inner">
+        <span class="filter-label"><span lang="en">Filter</span><span lang="es">Filtrar</span></span>
         <button class="flt on" data-type="">
           <span lang="en">All</span><span lang="es">Todo</span>
         </button>
@@ -1281,7 +1280,7 @@
 
     /* ── Build a single post item ─────────────────────────── */
     var arrowSvg = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;vertical-align:middle;"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
-    var docSvg   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>';
+    var _postIndex = 0; /* counter for numbering articles */
 
     function buildPost(p){
       var type   = p.post_type || 'article';
@@ -1323,13 +1322,16 @@
             '<div class="post-photo-hint"><span lang="en">Click to read</span><span lang="es">Clic para leer</span></div>'+
           '</div>';
 
-      /* ── ARTICLE ─────────────────────────────────────────── */
+      /* ── ARTICLE — numbered magazine row ─────────────────── */
       } else if(type === 'article'){
         el.className = 'post-item is-article';
+        _postIndex++;
+        var numStr = String(_postIndex).padStart(2,'0');
         var thumb = p.featured_image_url
           ? '<div class="post-article-thumb"><img src="'+esc(p.featured_image_url)+'" alt="" loading="lazy"></div>'
           : '';
         el.innerHTML =
+          '<div class="post-item-num">'+numStr+'</div>'+
           '<div class="post-article-body">'+
             '<span class="post-type-badge article">'+esc(typeLabel(type))+'</span>'+
             '<h2 class="post-title">'+esc(p.title||'Untitled')+'</h2>'+
@@ -1339,11 +1341,11 @@
           '</div>'+
           thumb;
 
-      /* ── UPDATE ──────────────────────────────────────────── */
+      /* ── UPDATE — accent line ────────────────────────────── */
       } else if(type === 'update'){
         el.className = 'post-item is-update';
         el.innerHTML =
-          '<div class="post-update-dot"></div>'+
+          '<div class="post-update-accent"></div>'+
           '<div class="post-article-body">'+
             '<span class="post-type-badge update">'+esc(typeLabel(type))+'</span>'+
             '<h2 class="post-title">'+esc(p.title||'Untitled')+'</h2>'+
@@ -1351,11 +1353,11 @@
             metaRow+
           '</div>';
 
-      /* ── PUBLICATION ─────────────────────────────────────── */
+      /* ── PUBLICATION — blue accent line ──────────────────── */
       } else {
         el.className = 'post-item is-publication';
         el.innerHTML =
-          '<div class="post-pub-icon">'+docSvg+'</div>'+
+          '<div class="post-pub-accent"></div>'+
           '<div class="post-article-body">'+
             '<span class="post-type-badge publication">'+esc(typeLabel(type))+'</span>'+
             '<h2 class="post-title">'+esc(p.title||'Untitled')+'</h2>'+
@@ -1374,6 +1376,7 @@
 
     /* ── Render feed ──────────────────────────────────────── */
     function renderFeed(){
+      _postIndex = 0; /* reset article numbering */
       var posts = _filter
         ? _all.filter(function(p){ return p.post_type === _filter; })
         : _all;
@@ -1531,26 +1534,33 @@
 
     function populateHeroLatest(){
       if(!_all.length) return;
-      var p = _all[0]; /* most recent */
-      var card   = document.getElementById('heroLatest');
-      var imgEl  = document.getElementById('heroLatestImg');
-      var badge  = document.getElementById('heroLatestBadge');
-      var title  = document.getElementById('heroLatestTitle');
-      var meta   = document.getElementById('heroLatestMeta');
+      var p    = _all[0];
+      var card = document.getElementById('heroLatest');
+      var imgEl= document.getElementById('heroLatestImg');
+      var badge= document.getElementById('heroLatestBadge');
+      var title= document.getElementById('heroLatestTitle');
+      var meta = document.getElementById('heroLatestMeta');
       if(!card) return;
 
-      if(badge)  badge.textContent  = typeLabel(p.post_type||'article');
-      if(title)  title.textContent  = p.title||'Untitled';
-      if(meta)   meta.textContent   = fmtDate(p.published_at||p.created_at) + (p.author ? ' · ' + p.author.full_name : '');
-
-      if(imgEl){
-        if(p.featured_image_url){
-          imgEl.innerHTML = '<img src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title||'')+'" loading="lazy">';
-        }
+      /* Badge — keep "Latest post" label + type */
+      if(badge){
+        badge.innerHTML =
+          '<span lang="en">Latest · '+esc(typeLabel(p.post_type||'article'))+'</span>'+
+          '<span lang="es">Última · '+esc(typeLabel(p.post_type||'article'))+'</span>';
       }
-      if(card){
-        card.onclick = function(){ openPost(p); };
+      if(title){
+        title.innerHTML = '<span lang="en">'+esc(p.title||'Untitled')+'</span><span lang="es">'+esc(p.title||'Untitled')+'</span>';
       }
+      if(meta){
+        var metaTxt = fmtDate(p.published_at||p.created_at)+(p.author?' · '+esc(p.author.full_name):'')+(p.research_line?' · L'+p.research_line.line_number:'');
+        meta.textContent = metaTxt;
+      }
+      /* Replace placeholder with actual image */
+      if(imgEl && p.featured_image_url){
+        imgEl.innerHTML = '<img src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title||'')+'" loading="lazy">';
+      }
+      card.onclick = function(){ openPost(p); };
+      card.style.cursor = 'pointer';
     }
 
     /* Fallback: if api.js already ran before this script */
