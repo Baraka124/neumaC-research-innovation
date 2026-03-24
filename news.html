@@ -969,6 +969,10 @@
               <div class="blog-hero-stat-n" id="sbPubs">—</div>
               <div class="blog-hero-stat-l"><span lang="en">Publications</span><span lang="es">Publicaciones</span></div>
             </div>
+            <div>
+              <div class="blog-hero-stat-n" id="sbPhotos">—</div>
+              <div class="blog-hero-stat-l"><span lang="en">Photo Stories</span><span lang="es">Reportajes</span></div>
+            </div>
           </div>
         </div>
 
@@ -1041,6 +1045,7 @@
           <div class="sb-stat"><span><span lang="en">Articles</span><span lang="es">Artículos</span></span><span class="sb-stat-n" id="sb2Articles">—</span></div>
           <div class="sb-stat"><span><span lang="en">Updates</span><span lang="es">Actualizaciones</span></span><span class="sb-stat-n" id="sb2Updates">—</span></div>
           <div class="sb-stat"><span><span lang="en">Publications</span><span lang="es">Publicaciones</span></span><span class="sb-stat-n" id="sb2Pubs">—</span></div>
+          <div class="sb-stat"><span><span lang="en">Photo Stories</span><span lang="es">Reportajes</span></span><span class="sb-stat-n" id="sb2Photos">—</span></div>
         </div>
         <div class="sb-rule"></div>
         <div class="sb-section">
@@ -1402,7 +1407,7 @@
 
     /* ── Populate sidebar ─────────────────────────────────── */
     function populateSidebar(){
-      var counts = { article:0, update:0, publication:0 };
+      var counts = { article:0, update:0, publication:0, photo_story:0 };
       var lines  = {};
 
       _all.forEach(function(p){
@@ -1415,10 +1420,15 @@
         }
       });
 
-      /* Update hero stats + sidebar stats */
-      ['sbArticles','sb2Articles'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.article; });
-      ['sbUpdates','sb2Updates'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.update; });
-      ['sbPubs','sb2Pubs'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.publication; });
+      /* Debug — log what we got */
+      console.log('[news] _all count:', _all.length, '| types:', _all.map(function(p){ return p.post_type; }));
+      console.log('[news] counts:', JSON.stringify(counts));
+
+      /* Update hero stats (articles + updates + publications shown in hero) */
+      ['sbArticles','sb2Articles'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.article||'0'; });
+      ['sbUpdates','sb2Updates'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.update||'0'; });
+      ['sbPubs','sb2Pubs'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.publication||'0'; });
+      ['sbPhotos','sb2Photos'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.photo_story||'0'; });
       var sl = document.getElementById('sbLines');
 
       if(sl){
