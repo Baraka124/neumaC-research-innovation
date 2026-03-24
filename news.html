@@ -325,20 +325,52 @@
 
     /* ── HERO ── */
     .blog-hero{
-      background:var(--navy);
-      padding:5rem 0 4rem;
+      background:linear-gradient(150deg,var(--navy) 0%,var(--navy-2) 55%,#0b3535 100%);
+      padding:4.5rem 0 0;
       position:relative;overflow:hidden;
       border-bottom:1px solid var(--rule-d);
     }
-    .blog-hero::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--teal-2),transparent);}
-    .blog-hero-inner{position:relative;z-index:1;}
-    .blog-hero h1{
-      font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,3.75rem);
-      font-weight:700;color:var(--text-on-dark);letter-spacing:-.025em;line-height:1.05;
-      margin-top:.875rem;margin-bottom:1.25rem;
+    .blog-hero::after{
+      content:'';position:absolute;inset:0;
+      background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:44px 44px;pointer-events:none;
     }
-    .blog-hero h1 em{font-style:italic;font-weight:300;color:rgba(245,245,240,.6);font-family:var(--ff-display);}
-    .blog-hero-sub{font-size:1.0625rem;color:var(--text-on-dark-2);max-width:560px;line-height:1.75;}
+    .blog-hero::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--teal-2),transparent);z-index:2;}
+    .blog-hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:end;}
+    @media(max-width:768px){.blog-hero-inner{grid-template-columns:1fr;gap:2rem;}}
+    .blog-hero-left{padding-bottom:3rem;}
+    .blog-hero h1{
+      font-family:var(--ff-display);font-size:clamp(2.2rem,4.5vw,3.5rem);
+      font-weight:700;color:var(--text-on-dark);letter-spacing:-.025em;line-height:1.05;
+      margin-top:.875rem;margin-bottom:1.125rem;
+    }
+    .blog-hero h1 em{font-style:italic;font-weight:300;color:var(--teal-2);font-family:var(--ff-display);}
+    .blog-hero-sub{font-size:.9375rem;color:var(--text-on-dark-2);max-width:480px;line-height:1.75;margin-bottom:2rem;}
+    .blog-hero-stats{display:flex;gap:2rem;padding-top:1.5rem;border-top:1px solid var(--rule-d);}
+    .blog-hero-stat-n{font-family:var(--ff-display);font-size:1.5rem;font-weight:700;color:#fff;line-height:1;}
+    .blog-hero-stat-l{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.25rem;}
+    /* Latest post card — rises from hero floor */
+    .blog-hero-right{align-self:end;}
+    @media(max-width:768px){.blog-hero-right{display:none;}}
+    .blog-hero-latest-label{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.625rem;}
+    .blog-hero-latest{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);
+      border-bottom:none;
+      border-radius:var(--r-lg) var(--r-lg) 0 0;
+      overflow:hidden;cursor:pointer;
+      transition:background .2s;
+    }
+    .blog-hero-latest:hover{background:rgba(255,255,255,.1);}
+    .blog-hero-latest-img{height:160px;overflow:hidden;position:relative;}
+    .blog-hero-latest-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+    .blog-hero-latest-img-ph{width:100%;height:100%;background:linear-gradient(135deg,rgba(0,153,153,.2),rgba(0,40,80,.4));}
+    .blog-hero-latest:hover .blog-hero-latest-img img{transform:scale(1.04);}
+    .blog-hero-latest-body{padding:1rem 1.25rem 1.375rem;}
+    .blog-hero-latest-badge{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-2);margin-bottom:.4rem;}
+    .blog-hero-latest-title{font-family:var(--ff-display);font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:.35rem;}
+    .blog-hero-latest-meta{font-family:var(--ff-mono);font-size:.575rem;color:rgba(255,255,255,.35);letter-spacing:.04em;}
 
     /* ── FILTER BAR ── */
     .filter-strip{
@@ -912,15 +944,51 @@
   <section class="blog-hero">
     <div class="container">
       <div class="blog-hero-inner">
-        <p class="eyebrow light reveal"><span lang="en">neumAC Perspectives</span><span lang="es">neumAC Perspectivas</span></p>
-        <h1 class="reveal reveal-d1">
-          <span lang="en">Research Notes,<br><em>Openly Shared.</em></span>
-          <span lang="es">Notas de Investigación,<br><em>Compartidas Abiertamente.</em></span>
-        </h1>
-        <p class="blog-hero-sub reveal reveal-d1">
-          <span lang="en">Publications, research updates, and department news — written by the neumAC R&amp;I team. Covering clinical studies, innovation projects, and applied technology in respiratory medicine.</span>
-          <span lang="es">Publicaciones, actualizaciones de investigación y noticias del departamento — escritas por el equipo de neumAC I+I. Estudios clínicos, proyectos de innovación y tecnología aplicada en medicina respiratoria.</span>
-        </p>
+
+        <!-- Left: copy + live stats -->
+        <div class="blog-hero-left">
+          <p class="eyebrow light reveal"><span lang="en">neumAC Perspectives</span><span lang="es">neumAC Perspectivas</span></p>
+          <h1 class="reveal reveal-d1">
+            <span lang="en">Research Notes,<br><em>Openly Shared.</em></span>
+            <span lang="es">Notas de Investigación,<br><em>Compartidas Abiertamente.</em></span>
+          </h1>
+          <p class="blog-hero-sub reveal reveal-d1">
+            <span lang="en">Publications, updates and department news — written by the neumAC R&amp;I team.</span>
+            <span lang="es">Publicaciones, actualizaciones y noticias — escritas por el equipo de neumAC I+I.</span>
+          </p>
+          <div class="blog-hero-stats reveal reveal-d2">
+            <div>
+              <div class="blog-hero-stat-n" id="sbArticles">—</div>
+              <div class="blog-hero-stat-l"><span lang="en">Articles</span><span lang="es">Artículos</span></div>
+            </div>
+            <div>
+              <div class="blog-hero-stat-n" id="sbUpdates">—</div>
+              <div class="blog-hero-stat-l"><span lang="en">Updates</span><span lang="es">Actualizaciones</span></div>
+            </div>
+            <div>
+              <div class="blog-hero-stat-n" id="sbPubs">—</div>
+              <div class="blog-hero-stat-l"><span lang="en">Publications</span><span lang="es">Publicaciones</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: latest post preview card -->
+        <div class="blog-hero-right reveal reveal-d1">
+          <div class="blog-hero-latest-label">
+            <span lang="en">Latest post</span><span lang="es">Última entrada</span>
+          </div>
+          <div class="blog-hero-latest" id="heroLatest" onclick="">
+            <div class="blog-hero-latest-img" id="heroLatestImg">
+              <div class="blog-hero-latest-img-ph"></div>
+            </div>
+            <div class="blog-hero-latest-body">
+              <div class="blog-hero-latest-badge" id="heroLatestBadge">—</div>
+              <div class="blog-hero-latest-title" id="heroLatestTitle">Loading…</div>
+              <div class="blog-hero-latest-meta" id="heroLatestMeta"></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -940,6 +1008,9 @@
         </button>
         <button class="flt flt-pub" data-type="publication">
           <span lang="en">Publications</span><span lang="es">Publicaciones</span>
+        </button>
+        <button class="flt flt-photo" data-type="photo_story">
+          <span lang="en">Photo Stories</span><span lang="es">Reportajes</span>
         </button>
         <span class="filter-count" id="filterCount"></span>
       </div>
@@ -967,9 +1038,9 @@
       <aside class="blog-sidebar">
         <div class="sb-section">
           <div class="sb-label"><span lang="en">In this feed</span><span lang="es">En este feed</span></div>
-          <div class="sb-stat"><span><span lang="en">Articles</span><span lang="es">Artículos</span></span><span class="sb-stat-n" id="sbArticles">—</span></div>
-          <div class="sb-stat"><span><span lang="en">Updates</span><span lang="es">Actualizaciones</span></span><span class="sb-stat-n" id="sbUpdates">—</span></div>
-          <div class="sb-stat"><span><span lang="en">Publications</span><span lang="es">Publicaciones</span></span><span class="sb-stat-n" id="sbPubs">—</span></div>
+          <div class="sb-stat"><span><span lang="en">Articles</span><span lang="es">Artículos</span></span><span class="sb-stat-n" id="sb2Articles">—</span></div>
+          <div class="sb-stat"><span><span lang="en">Updates</span><span lang="es">Actualizaciones</span></span><span class="sb-stat-n" id="sb2Updates">—</span></div>
+          <div class="sb-stat"><span><span lang="en">Publications</span><span lang="es">Publicaciones</span></span><span class="sb-stat-n" id="sb2Pubs">—</span></div>
         </div>
         <div class="sb-rule"></div>
         <div class="sb-section">
@@ -1344,14 +1415,11 @@
         }
       });
 
-      var sa = document.getElementById('sbArticles');
-      var su = document.getElementById('sbUpdates');
-      var sp = document.getElementById('sbPubs');
+      /* Update hero stats + sidebar stats */
+      ['sbArticles','sb2Articles'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.article; });
+      ['sbUpdates','sb2Updates'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.update; });
+      ['sbPubs','sb2Pubs'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.publication; });
       var sl = document.getElementById('sbLines');
-
-      if(sa) sa.textContent = counts.article;
-      if(su) su.textContent = counts.update;
-      if(sp) sp.textContent = counts.publication;
 
       if(sl){
         sl.innerHTML = Object.values(lines)
@@ -1447,8 +1515,33 @@
       if(skeleton) skeleton.style.display = 'none';
 
       populateSidebar();
+      populateHeroLatest();
       renderFeed();
     };
+
+    function populateHeroLatest(){
+      if(!_all.length) return;
+      var p = _all[0]; /* most recent */
+      var card   = document.getElementById('heroLatest');
+      var imgEl  = document.getElementById('heroLatestImg');
+      var badge  = document.getElementById('heroLatestBadge');
+      var title  = document.getElementById('heroLatestTitle');
+      var meta   = document.getElementById('heroLatestMeta');
+      if(!card) return;
+
+      if(badge)  badge.textContent  = typeLabel(p.post_type||'article');
+      if(title)  title.textContent  = p.title||'Untitled';
+      if(meta)   meta.textContent   = fmtDate(p.published_at||p.created_at) + (p.author ? ' · ' + p.author.full_name : '');
+
+      if(imgEl){
+        if(p.featured_image_url){
+          imgEl.innerHTML = '<img src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title||'')+'" loading="lazy">';
+        }
+      }
+      if(card){
+        card.onclick = function(){ openPost(p); };
+      }
+    }
 
     /* Fallback: if api.js already ran before this script */
     if(window._newsAllPosts && window._newsAllPosts.length){
