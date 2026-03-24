@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en"> 
+<html lang="en" data-lang="en">
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8" />
@@ -32,7 +32,7 @@
       --ff-display:'Fraunces',Georgia,serif;
       --ff-body:'DM Sans',system-ui,sans-serif;
       --ff-mono:'DM Mono',monospace;
-      --header-h:88px;--max-w:1400px;
+      --header-h:88px;--max-w:1440px;
       --r-sm:4px;--r-md:8px;--r-lg:12px;--r-xl:20px;
       /* Legacy surface vars */
       --ink-3:#162340;--surface:#0F1E36;
@@ -50,9 +50,10 @@
     .display.sm{font-size:clamp(1.2rem,1.8vw,1.5rem);}
     .eyebrow,.label{font-family:var(--ff-mono);font-size:.6875rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);}
     .eyebrow.light,.label.light{color:var(--teal-2);}
-    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 3.5rem;}
-    @media(max-width:768px){.container{padding:0 1.5rem;}}
-    .section{padding:6rem 0;}
+    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 clamp(1.5rem,5vw,6rem);}
+    @media(min-width:1600px){.container{padding:0 clamp(4rem,8vw,10rem);}}
+    .section{padding:7rem 0;}
+    @media(min-width:1400px){.section{padding:9rem 0;}}
     @media(max-width:768px){.section{padding:4rem 0;}}
     .sec-head{margin-bottom:3.5rem;}
     .sec-head p{margin-top:1rem;font-size:1.0625rem;line-height:1.75;color:var(--text-on-light-2);max-width:580px;}
@@ -88,7 +89,6 @@
     }
     .header::after{
       content:'';position:absolute;inset:0;
-      background-image:repeating-linear-gradient(0deg,transparent,transparent 31px,rgba(255,255,255,.017) 31px,rgba(255,255,255,.017) 32px);
       pointer-events:none;
     }
     .header.scrolled{
@@ -99,7 +99,7 @@
       display:flex;align-items:center;height:100%;
       padding:0 clamp(1.25rem,4vw,5rem);
       position:relative;z-index:1;
-    overflow:visible;}
+    overflow:hidden;}
     .header-nav-spacer{flex:1;min-width:0;}
     .header-right{display:flex;align-items:center;gap:.875rem;flex-shrink:0;}
 
@@ -174,7 +174,7 @@
       transform:translateY(-5px) scale(.98);
       transform-origin:top right;
       transition:opacity .18s,transform .18s,visibility .18s;
-      z-index:1100;max-width:calc(100vw - 2rem);
+      z-index:300;max-width:calc(100vw - 2rem);
     }
     .lang-sw.open .lang-sw-panel{opacity:1;visibility:visible;transform:translateY(0) scale(1);}
         .lang-opt{
@@ -299,7 +299,7 @@
 
     /* ── Responsive header ── */
     /* Prevent overflow at ALL sizes */
-    .header-inner{overflow:visible;min-width:0;}
+    .header-inner{overflow:hidden;}
     /* Nav separator line: hide on tablet */
     @media(max-width:1023px){
       .logo::after{display:none;}
@@ -731,6 +731,19 @@
     .cinfo-value{font-size:.875rem;color:var(--text-on-dark);line-height:1.5;}
     .cinfo-value a{color:var(--teal);transition:color .2s;}
     .cinfo-value a:hover{color:#6dd6d6;}
+
+    .form-trigger{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2.25rem;cursor:pointer;border-radius:var(--r-lg);background:rgba(255,255,255,.05);border:1px solid var(--rule-d);transition:background .18s;gap:1.5rem;}
+    .form-trigger:hover{background:rgba(255,255,255,.09);}
+    .form-trigger-text{flex:1;min-width:0;}
+    .form-trigger-label{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-2);margin-bottom:.375rem;}
+    .form-trigger-title{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:#ffffff;line-height:1.2;}
+    .form-trigger-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem;background:var(--accent-2);color:#fff;font-weight:600;padding:.625rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;white-space:nowrap;transition:background .18s;}
+    .form-trigger:hover .form-trigger-btn{background:var(--accent);}
+    .form-trigger-btn svg{width:12px;height:12px;flex-shrink:0;}
+    .form-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1),opacity .3s ease;opacity:0;}
+    .form-body.open{opacity:1;overflow:visible;}
+    .form-success{display:none;margin-top:1rem;padding:.875rem;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:var(--r-sm);font-size:.875rem;color:#059669;}
+    .form-success.show{display:block;}
     .form-card{background:var(--white);border-radius:var(--r-lg);padding:2rem;position:relative;overflow:hidden;}
     .form-card.dark{
       background:rgba(255,255,255,.04);
@@ -746,18 +759,7 @@
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--teal-2);background:var(--white);}
     .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23767676' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .875rem center;padding-right:2.25rem;background-color:var(--off-white);}
     .form-group select option{background:var(--white);color:var(--text-on-light);}
-    .form-success{display:none;margin-top:1rem;padding:.875rem;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:var(--r-sm);font-size:.875rem;color:#059669;}
-    /* ── Collapsible form ── */
-    .form-trigger{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2.25rem;cursor:pointer;border-radius:var(--r-lg);background:rgba(255,255,255,.05);border:1px solid var(--rule-d);transition:background .18s;gap:1.5rem;}
-    .form-trigger:hover{background:rgba(255,255,255,.09);}
-    .form-trigger-label{font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-2);margin-bottom:.375rem;}
-    .form-trigger-title{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:#ffffff;line-height:1.2;}
-    .form-trigger-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem;background:var(--accent-2);color:#fff;font-weight:600;padding:.625rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;white-space:nowrap;transition:background .18s;}
-    .form-trigger:hover .form-trigger-btn{background:var(--accent);}
-    .form-trigger-btn svg{width:12px;height:12px;}
-    .form-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1),opacity .3s ease;opacity:0;}
-    .form-body.open{overflow:visible;}
-    .form-body.open{opacity:1;}
+    .form-success{display:none;margin-top:1.125rem;padding:.9rem 1.125rem;background:var(--teal-dim);border:1px solid rgba(124,111,207,.3);border-radius:var(--r-md);color:var(--teal-2);font-size:.875rem;text-align:center;}
     .form-success.show{display:block;}
 
     /* FOOTER */
@@ -796,7 +798,14 @@
     body[style*="overflow:hidden"] .lang-sw-panel{
       display:none !important;
     }
-    
+    /* On mobile, lang-sw-panel opens upward to avoid overlap with content */
+    @media(max-width:1023px){
+      .lang-sw-panel{
+        bottom:calc(100% + 6px);
+        top:auto;
+        transform-origin:bottom right;
+      }
+    }
   
     /* ── FORM — refined submit + fields ── */
     .form-submit,
@@ -877,13 +886,6 @@
     .form-card.dark .form-group input::placeholder,
     .form-card.dark .form-group textarea::placeholder{color:rgba(255,255,255,.25);}
     .form-card.dark h3{color:#F5F5F0;}
-    /* ── Dark form expand polish ── */
-    .form-body > .form-card.dark,
-    .form-body > div > .form-card.dark {
-      margin-top:.875rem;
-      box-shadow:0 12px 48px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.2);
-      border-top:3px solid var(--teal-2);
-    }
   
     /* ── TEXT CONTRAST — ensure all text readable on all backgrounds ── */
     /* text-on-dark-3 (#5D7494) is too dim — boost it on key elements */
@@ -1066,26 +1068,126 @@
     .contact-bg .sec-head p,
     .partner-bg .sec-head p,
     .team-bg .sec-head p{color:rgba(255,255,255,.78);}
+
+
+
+    /* ══ PARTNERS ══ */
+    .partners-strip{
+      background:var(--white);
+      border-top:1px solid var(--rule-l);
+      border-bottom:1px solid var(--rule-l);
+      padding:5rem 0;
+    }
+    .partners-inner{display:flex;flex-direction:column;gap:2.5rem;}
+    .partners-top{
+      display:flex;align-items:flex-end;justify-content:space-between;
+      gap:2rem;flex-wrap:wrap;
+      padding-bottom:2rem;
+      border-bottom:1px solid var(--rule-l);
+    }
+    .partners-heading{
+      font-family:var(--ff-display);
+      font-size:clamp(1.375rem,2.5vw,1.875rem);
+      font-weight:700;color:var(--text-on-light);
+      line-height:1.15;
+    }
+    .partners-heading em{color:var(--accent);font-style:italic;font-weight:300;}
+    .partners-copy{
+      font-size:.9rem;color:var(--text-on-light-3);
+      max-width:320px;line-height:1.7;
+      text-align:right;
+    }
+    @media(max-width:640px){
+      .partners-top{flex-direction:column;align-items:flex-start;}
+      .partners-copy{text-align:left;max-width:100%;}
+    }
+    /* Tile table */
+    .partners-tiles{
+      display:flex;flex-wrap:wrap;
+      border:1px solid var(--rule-l);
+      border-radius:var(--r-lg);
+      overflow:hidden;
+    }
+    .partner-tile{
+      flex:1;min-width:140px;
+      padding:1.5rem 1.75rem;
+      border-right:1px solid var(--rule-l);
+      border-bottom:1px solid var(--rule-l);
+      display:flex;flex-direction:column;gap:.375rem;
+      transition:background .18s;
+      cursor:default;
+      position:relative;
+    }
+    .partner-tile::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:transparent;transition:background .25s;
+    }
+    .partner-tile:hover{background:var(--off-white);}
+    .partner-tile:hover::before{background:var(--accent);}
+    /* Remove right border on last in row */
+    .partner-tile:last-child{border-right:none;}
+    .partner-tile-name{
+      font-family:var(--ff-mono);font-size:.75rem;font-weight:500;
+      letter-spacing:.1em;text-transform:uppercase;
+      color:var(--text-on-light);line-height:1;
+    }
+    .partner-tile-sub{
+      font-size:.8rem;color:var(--text-on-light-3);
+      line-height:1.45;
+    }
+    .partner-tile-tag{
+      display:inline-flex;align-items:center;
+      width:fit-content;
+      font-family:var(--ff-mono);font-size:.55rem;
+      letter-spacing:.1em;text-transform:uppercase;
+      padding:.2rem .55rem;border-radius:3px;
+      margin-top:.25rem;
+    }
+    .partner-tile-tag.institutional{
+      background:rgba(0,153,153,.08);
+      border:1px solid rgba(0,153,153,.2);
+      color:var(--accent);
+    }
+    .partner-tile-tag.regulatory{
+      background:rgba(10,22,40,.05);
+      border:1px solid rgba(10,22,40,.12);
+      color:var(--text-on-light-2);
+    }
+    .partner-tile-tag.industry{
+      background:rgba(74,158,232,.07);
+      border:1px solid rgba(74,158,232,.2);
+      color:#3a7ec8;
+    }
+    .partner-tile-tag.government{
+      background:rgba(99,102,241,.07);
+      border:1px solid rgba(99,102,241,.2);
+      color:#5b5fc7;
+    }
+
+    .footer{background:var(--navy);border-top:2px solid rgba(0,179,179,.18);padding:2.5rem 0;position:relative;overflow:hidden;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;z-index:1;}
+    .footer-brand{display:flex;align-items:center;gap:.875rem;flex-shrink:0;}
+    .footer-brand-mark{width:34px;height:34px;background:rgba(0,179,179,.1);border:1px solid rgba(0,179,179,.22);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .footer-brand-mark svg{width:18px;height:18px;color:var(--teal-2);}
+    .footer-brand-name{font-family:var(--ff-display);font-size:.9375rem;font-weight:700;color:rgba(255,255,255,.82);letter-spacing:-.02em;line-height:1;margin-bottom:.2rem;}
+    .footer-brand-sub{font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.22);}
+    .footer-nav{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:center;}
+    .footer-nav a{font-size:.8125rem;color:rgba(255,255,255,.4);text-decoration:none;transition:color .18s;white-space:nowrap;}
+    .footer-nav a:hover{color:rgba(255,255,255,.85);}
+    .footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:.375rem;flex-shrink:0;}
+    .footer-contact{font-size:.8rem;color:rgba(255,255,255,.4);}
+    .footer-contact a{color:rgba(0,179,179,.7);text-decoration:none;transition:color .18s;}
+    .footer-contact a:hover{color:var(--teal-2);}
+    .footer-cert{display:flex;gap:.5rem;align-items:center;}
+    .footer-cert span{font-family:var(--ff-mono);font-size:.525rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.22);}
+    .footer-cert span+span::before{content:"·";margin-right:.5rem;color:rgba(255,255,255,.15);}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.06);margin-top:2rem;padding-top:1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.05em;color:rgba(255,255,255,.18);position:relative;z-index:1;}
+    @media(max-width:900px){.footer-inner{flex-direction:column;align-items:flex-start;gap:1.5rem;}.footer-right{align-items:flex-start;}.footer-nav{justify-content:flex-start;}}
   </style>
 </head>
 <body>
 <script>
-  function openContactForm(triggerId, bodyId){
-    var body    = document.getElementById(bodyId);
-    var trigger = document.getElementById(triggerId);
-    if(!body) return;
-    var isOpen = body.classList.contains('open');
-    if(isOpen){
-      body.style.maxHeight = '0';
-      body.classList.remove('open');
-      if(trigger) trigger.setAttribute('aria-expanded','false');
-    } else {
-      body.classList.add('open');
-      body.style.maxHeight = body.scrollHeight + 300 + 'px';
-      if(trigger) trigger.setAttribute('aria-expanded','true');
-      setTimeout(function(){ body.scrollIntoView({behavior:'smooth',block:'nearest'}); }, 100);
-    }
-  }
+  function openContactForm(t,b){var body=document.getElementById(b),trig=document.getElementById(t);if(!body)return;var o=body.classList.contains('open');if(o){body.style.maxHeight='0';body.classList.remove('open');if(trig)trig.setAttribute('aria-expanded','false');}else{body.classList.add('open');body.style.maxHeight=body.scrollHeight+300+'px';if(trig)trig.setAttribute('aria-expanded','true');setTimeout(function(){body.scrollIntoView({behavior:'smooth',block:'nearest'});},100);}}
 </script>
   <div id="progress-bar" role="progressbar" aria-hidden="true"></div>
 
@@ -1096,26 +1198,11 @@
 
       <a href="index.html" class="logo" aria-label="neumAC — Área Sanitaria de A Coruña y Cee">
         <svg height="40" viewBox="0 0 248 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
-          <defs>
-            <linearGradient id="nmg" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#00D4D4"/>
-              <stop offset="100%" stop-color="#4A9EE8"/>
-            </linearGradient>
-          </defs>
-          <text x="0" y="29"
-            font-family="'Trebuchet MS','Segoe UI',Arial,sans-serif"
-            font-size="24" font-weight="700"
-            fill="url(#nmg)" letter-spacing="-0.4">neumAC</text>
-          <line x1="100" y1="5" x2="100" y2="37"
-            stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
-          <text x="111" y="17"
-            font-family="'Segoe UI',Arial,sans-serif"
-            font-size="8" font-weight="700"
-            fill="rgba(255,255,255,0.58)" letter-spacing="0.35">ÁREA SANITARIA DE</text>
-          <text x="111" y="30"
-            font-family="'Segoe UI',Arial,sans-serif"
-            font-size="8" font-weight="700"
-            fill="rgba(255,255,255,0.58)" letter-spacing="0.35">A CORUÑA Y CEE</text>
+          <defs><linearGradient id="nmg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00D4D4"/><stop offset="100%" stop-color="#4A9EE8"/></linearGradient></defs>
+          <text x="0" y="29" font-family="'Trebuchet MS','Segoe UI',Arial,sans-serif" font-size="24" font-weight="700" fill="url(#nmg)" letter-spacing="-0.4">neumAC</text>
+          <line x1="100" y1="5" x2="100" y2="37" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+          <text x="111" y="17" font-family="'Segoe UI',Arial,sans-serif" font-size="8" font-weight="700" fill="rgba(255,255,255,0.58)" letter-spacing="0.35">ÁREA SANITARIA DE</text>
+          <text x="111" y="30" font-family="'Segoe UI',Arial,sans-serif" font-size="8" font-weight="700" fill="rgba(255,255,255,0.58)" letter-spacing="0.35">A CORUÑA Y CEE</text>
         </svg>
       </a>
 
@@ -1174,18 +1261,12 @@
   <div class="mob-overlay" id="mobOverlay" aria-hidden="true"></div>
   <nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation" aria-hidden="true">
     <div class="mob-head">
-      <div class="mob-head-logo"><svg height="28" viewBox="0 0 100 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-            <defs>
-              <linearGradient id="nmgm" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%"   stop-color="#00D4D4"/>
-                <stop offset="100%" stop-color="#4A9EE8"/>
-              </linearGradient>
-            </defs>
-            <text x="0" y="21"
-              font-family="'Trebuchet MS','Segoe UI',Arial,sans-serif"
-              font-size="18" font-weight="700"
-              fill="url(#nmgm)" letter-spacing="-0.3">neumAC</text>
-          </svg></div>
+      <div class="mob-head-logo">
+        <div class="mob-head-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+                <path d="M12 3 C12 3 12 8 12 10"/>
+                <path d="M12 10 C9 10 5 11 4 14 C3 17 4 20 7 20 C9 20 10 19 11 17 L12 10"/>
+                <path d="M12 10 C15 10 19 11 20 14 C21 17 20 20 17 20 C15 20 14 19 13 17 L12 10"/>
+              </svg></div>
         <span class="mob-head-name">neumAC R&amp;I</span>
       </div>
       <button class="mob-close" id="mobClose" aria-label="Close navigation">
@@ -1556,7 +1637,7 @@
         </div>
         <div class="reveal reveal-d1">
           <div class="form-trigger" id="innovTrigger" onclick="openContactForm('innovTrigger','innovBody')" role="button" tabindex="0" aria-expanded="false">
-            <div>
+            <div class="form-trigger-text">
               <div class="form-trigger-label"><span lang="en">Co-development · Clinical validation · Strategic partnership</span><span lang="es">Co-desarrollo · Validación clínica · Alianza estratégica</span></div>
               <div class="form-trigger-title"><span lang="en">Have a project to propose?</span><span lang="es">¿Tiene un proyecto que proponer?</span></div>
             </div>
@@ -1605,72 +1686,48 @@
           </form>
           <div class="form-success" id="formSuccess"><span lang="en">✓ Received! Our innovation team will respond within 2 business days.</span><span lang="es">✓ ¡Recibido! Nuestro equipo de innovación responderá en 2 días hábiles.</span></div>
         </div>
-          </div>
       </div>
     </div>
   </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
-
-        <!-- Brand -->
-        <div class="footer-brand">
-          <div class="footer-brand-logo">
-            <div class="footer-brand-mark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <!-- Trachea -->
-              <path d="M12 2.5 L12 8"/>
-              <!-- Left bronchus + lobe -->
-              <path d="M12 8 C10 8 7 9 6 11.5 C5 14 6 17.5 8.5 18.5 C10.5 19.2 12 18 12 16"/>
-              <!-- Right bronchus + lobe -->
-              <path d="M12 8 C14 8 17 9 18 11.5 C19 14 18 17.5 15.5 18.5 C13.5 19.2 12 18 12 16"/>
-            </svg>
-            </div>
-            <span class="footer-brand-name">neumAC R&amp;I</span>
           </div>
-          <p class="footer-brand-desc"><span lang="en">A clinical research and innovation programme in respiratory and thoracic medicine at the Área Sanitaria de A Coruña y Cee.</span><span lang="es">Programa de investigación clínica e innovación en medicina respiratoria y torácica, Área Sanitaria de A Coruña y Cee.</span></p>
-          <div class="footer-brand-affiliates">
-            <div class="footer-affiliate"><span class="footer-affiliate-abbr">INIBIC</span><span class="footer-affiliate-name"><span lang="en">Instituto de Investigación Biomédica de A Coruña</span><span lang="es">Instituto de Investigación Biomédica de A Coruña</span></span></div>
-            <div class="footer-affiliate"><span class="footer-affiliate-abbr">SERGAS</span><span class="footer-affiliate-name"><span lang="en">Servizo Galego de Saúde</span><span lang="es">Servizo Galego de Saúde</span></span></div>
-            <div class="footer-affiliate"><span class="footer-affiliate-abbr">HUAC</span><span class="footer-affiliate-name"><span lang="en">Hospital Universitario de A Coruña</span><span lang="es">Hospital Universitario de A Coruña</span></span></div>
-          </div>
-        </div>
-
-        <!-- Navigate -->
-        <div class="footer-col">
-          <p class="footer-col-head"><span lang="en">Navigate</span><span lang="es">Navegar</span></p>
-          <ul>
-            <li><a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a></li>
-            <li><a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a></li>
-            <li><a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a></li>
-            <li><a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a></li>
-          </ul>
-        </div>
-
-        <!-- Contact -->
-        <div class="footer-col">
-          <p class="footer-col-head"><span lang="en">Contact</span><span lang="es">Contacto</span></p>
-          <address>
-            <p>As Xubias, 84<br>15006 A Coruña, España</p>
-            <p style="margin-top:.875rem;"><a href="tel:+34881111800">+34 881 111 800</a></p>
-            <p><a href="/cdn-cgi/l/email-protection#caa4afbfa7a5a9abb8af8ab9afb8adabb9e4afb9"><span class="__cf_email__" data-cfemail="7f111a0a12101c1e0d1a3f0c1a0d181e0c511a0c">[email&#160;protected]</span></a></p>
-            <p style="margin-top:.875rem;font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.08em;color:rgba(255,255,255,.18);">GCP · INIBIC · AEMPS</p>
-          </address>
-        </div>
-
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee.</span>
-        <div class="footer-bottom-cert">
-          <span>GCP</span>
-          <span>INIBIC</span>
-          <span>CE MDR</span>
         </div>
       </div>
     </div>
+  </div>
+</section>
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer" style="position:relative;overflow:hidden;">
+    <canvas id="footerBg" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-brand-info">
+            <div class="footer-brand-name">neumAC R&amp;I</div>
+            <div class="footer-brand-sub">Área Sanitaria de A Coruña y Cee</div>
+          </div>
+        </div>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+          <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
+          <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
+          <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
+        </nav>
+        <div class="footer-right">
+          <div class="footer-contact">
+            <a href="tel:+34881111800">+34 881 111 800</a> &nbsp;·&nbsp;
+            <a href="mailto:investigacion@neumac.es">investigacion@neumac.es</a>
+          </div>
+          <div class="footer-cert"><span>GCP</span><span>INIBIC</span><span>CE MDR</span><span>AEMPS</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee</span>
+        <span>INIBIC · SERGAS · HUAC</span>
+      </div>
+    </div>
   </footer>
+
 
 
 
@@ -1710,9 +1767,8 @@
     /* ── Language dropdown ── */
     var _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
     function openLang(){
-      if(!_lsw||!_lbt)return;
+      if(!_lsw)return;
       closeMob();
-      _lsw.classList.remove('open-up');
       _lsw.classList.add('open');
       if(_lbt)_lbt.setAttribute('aria-expanded','true');
     }
@@ -1791,20 +1847,51 @@
       e.target.reset();
     });
   </script>
-  <script src="animations.js" defer></script>
-  <script src="api.js" defer></script>
+
   <script>
-    var _ft=document.getElementById('innovTrigger');
-    if(_ft) _ft.addEventListener('keydown',function(e){
-      if(e.key==='Enter'||e.key===' '){e.preventDefault();openContactForm('innovTrigger','innovBody');}
-    });
-    var _cf=document.getElementById('innovForm');
-    if(_cf) _cf.addEventListener('submit',function(e){
-      e.preventDefault();
-      var s=document.getElementById('formSuccess');
-      if(s){s.classList.add('show');setTimeout(function(){s.classList.remove('show');},7000);}
-      e.target.reset();
-    });
+  (function(){
+    var REDUCED=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function drawTree(ctx,W,H,breath,dir,cx,oy,trunkH,mainLen){
+      ctx.lineCap='round';var nodes=[];
+      function branch(x,y,angle,len,d){
+        if(d>8||len<1.5)return;
+        var ex=x+Math.sin(angle)*len,ey=y+dir*Math.cos(angle)*len;
+        var sw=Math.max(0.12,0.9*Math.pow(0.67,d)),alpha=Math.max(0.06,0.52*Math.pow(0.77,d));
+        ctx.lineWidth=sw;ctx.strokeStyle='rgba(0,179,179,'+alpha.toFixed(3)+')';
+        ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(ex,ey);ctx.stroke();
+        nodes.push({x:ex,y:ey,d:d});
+        var sp=0.40+breath*0.06;branch(ex,ey,angle-sp,len*0.69,d+1);branch(ex,ey,angle+sp,len*0.69,d+1);
+      }
+      ctx.lineWidth=0.85;ctx.strokeStyle='rgba(0,179,179,0.48)';
+      ctx.beginPath();ctx.moveTo(cx,oy);ctx.lineTo(cx,oy+dir*trunkH);ctx.stroke();
+      nodes.push({x:cx,y:oy+dir*trunkH,d:-1});
+      var bo=breath*0.03;
+      branch(cx,oy+dir*trunkH,-(0.30+bo),mainLen,0);
+      branch(cx,oy+dir*trunkH,(0.25+bo),mainLen*0.94,0);
+      nodes.forEach(function(n){
+        var r=n.d<0?2.2:Math.max(0.7,2.2*Math.pow(0.72,n.d+1));
+        var a=Math.max(0.08,0.55*Math.pow(0.78,Math.max(n.d,0)));
+        ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);
+        ctx.fillStyle='rgba(0,179,179,'+a.toFixed(3)+')';ctx.fill();
+      });
+    }
+    var canvas=document.getElementById('footerBg');
+    if(!canvas)return;
+    var ctx=canvas.getContext('2d'),W,H,paused=false;
+    function resize(){W=canvas.width=canvas.parentElement.offsetWidth;H=canvas.height=canvas.parentElement.offsetHeight;}
+    document.addEventListener('visibilitychange',function(){paused=document.hidden;if(!paused)requestAnimationFrame(draw);});
+    function draw(t){
+      if(paused)return;
+      ctx.clearRect(0,0,W,H);
+      canvas.style.opacity=W<960?'0.3':'0.7';
+      var cx=W<960?W*0.82:W*0.72;
+      var breath=REDUCED?0.5:Math.sin((t+2400)*0.00075)*0.5+0.5;
+      drawTree(ctx,W,H,breath,-1,cx,H*0.98,H*0.12,H*0.13);
+      if(!REDUCED)requestAnimationFrame(draw);
+    }
+    resize();window.addEventListener('resize',resize);
+    if(REDUCED){requestAnimationFrame(function(t){draw(t);});}else{requestAnimationFrame(draw);}
+  })();
   </script>
 </body>
 </html>
