@@ -98,8 +98,8 @@
     .header-inner{
       display:flex;align-items:center;height:100%;
       padding:0 clamp(1.25rem,4vw,5rem);
-      position:relative;z-index:1;
-    overflow:hidden;}
+      position:relative;
+    overflow:visible;}
     .header-nav-spacer{flex:1;min-width:0;}
     .header-right{display:flex;align-items:center;gap:.875rem;flex-shrink:0;}
 
@@ -148,7 +148,7 @@
     .mob-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px);}
 
     /* ── Language switcher — dropdown ── */
-    .lang-sw{position:relative;flex-shrink:0;}
+    .lang-sw{position:relative;flex-shrink:0;z-index:1001;}
     .lang-sw-btn{
       display:flex;align-items:center;gap:5px;
       background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.11);
@@ -165,16 +165,16 @@
     .lang-sw-chevron{width:10px;height:10px;color:rgba(255,255,255,.28);transition:transform .25s,color .2s;flex-shrink:0;}
     .lang-sw.open .lang-sw-chevron{transform:rotate(180deg);color:var(--teal-2);}
         .lang-sw-panel{
-      position:absolute;top:calc(100% + 6px);right:0;
+      position:absolute;top:calc(100% + 8px);right:0;
       background:rgba(7,16,32,.97);
       border:1px solid rgba(0,179,179,.18);border-radius:8px;
-      overflow:hidden;min-width:140px;
-      box-shadow:0 6px 24px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.03);
+      overflow:hidden;min-width:120px;
+      box-shadow:0 8px 28px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.03);
       opacity:0;visibility:hidden;
-      transform:translateY(-5px) scale(.98);
+      transform:translateY(-4px) scale(.98);
       transform-origin:top right;
       transition:opacity .18s,transform .18s,visibility .18s;
-      z-index:300;max-width:calc(100vw - 2rem);
+      z-index:1200;
     }
     .lang-sw.open .lang-sw-panel{opacity:1;visibility:visible;transform:translateY(0) scale(1);}
         .lang-opt{
@@ -299,7 +299,7 @@
 
     /* ── Responsive header ── */
     /* Prevent overflow at ALL sizes */
-    .header-inner{overflow:hidden;}
+    .header-inner{overflow:visible;}
     /* Nav separator line: hide on tablet */
     @media(max-width:1023px){
       .logo::after{display:none;}
