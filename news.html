@@ -31,7 +31,7 @@
       --ff-display:'Fraunces',Georgia,serif;
       --ff-body:'DM Sans',system-ui,sans-serif;
       --ff-mono:'DM Mono',monospace;
-      --header-h:88px;--max-w:1400px;
+      --header-h:88px;--max-w:1440px;
       --r-sm:4px;--r-md:8px;--r-lg:12px;--r-xl:20px;
       --rule:rgba(255,255,255,.09);--rule-light:rgba(255,255,255,.12);
     }
@@ -45,8 +45,8 @@
     .display.lg{font-size:clamp(2rem,3.5vw,3rem);}
     .eyebrow{font-family:var(--ff-mono);font-size:.6875rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);}
     .eyebrow.light{color:var(--teal-2);}
-    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 3.5rem;}
-    @media(max-width:768px){.container{padding:0 1.5rem;}}
+    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 clamp(1.5rem,5vw,6rem);}
+    @media(min-width:1600px){.container{padding:0 clamp(4rem,8vw,10rem);}}
     @media(min-width:1024px){}
     .nav a:hover,
     @media(min-width:1024px){}
@@ -574,100 +574,166 @@
     }
     .sb-line:hover,.sb-line.active{color:var(--accent);}
 
-        /* ── FOOTER ── */
-    .footer{
-      background:var(--navy);
-      border-top:3px solid rgba(0,179,179,.2);
-      padding:5.5rem 0 0;
+
+
+    /* ══ PARTNERS ══ */
+    .partners-strip{
+      background:var(--white);
+      border-top:1px solid var(--rule-l);
+      border-bottom:1px solid var(--rule-l);
+      padding:5rem 0;
     }
-    .footer-top{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:4rem;
-      padding-bottom:4rem;
-      border-bottom:1px solid rgba(255,255,255,.07);
+    .partners-inner{display:flex;flex-direction:column;gap:2.5rem;}
+    .partners-top{
+      display:flex;align-items:flex-end;justify-content:space-between;
+      gap:2rem;flex-wrap:wrap;
+      padding-bottom:2rem;
+      border-bottom:1px solid var(--rule-l);
     }
-    @media(min-width:768px){
-      .footer-top{grid-template-columns:1.6fr 1fr 1fr;}
+    .partners-heading{
+      font-family:var(--ff-display);
+      font-size:clamp(1.375rem,2.5vw,1.875rem);
+      font-weight:700;color:var(--text-on-light);
+      line-height:1.15;
     }
-    /* Brand column */
-    .footer-brand{display:flex;flex-direction:column;gap:1.5rem;}
-    .footer-brand-logo{display:flex;align-items:center;gap:.875rem;}
-    .footer-brand-mark{
-      width:40px;height:40px;
-      background:rgba(0,179,179,.08);border:1px solid rgba(0,179,179,.2);
-      border-radius:9px;
-      display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    .partners-heading em{color:var(--accent);font-style:italic;font-weight:300;}
+    .partners-copy{
+      font-size:.9rem;color:var(--text-on-light-3);
+      max-width:320px;line-height:1.7;
+      text-align:right;
     }
-    .footer-brand-mark svg{width:22px;height:22px;color:var(--teal-2);}
-    .footer-brand-name{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:rgba(255,255,255,.88);letter-spacing:-.02em;}
-    .footer-brand-desc{
-      font-size:.875rem;line-height:1.75;
-      color:rgba(255,255,255,.35);
-      max-width:340px;
+    @media(max-width:640px){
+      .partners-top{flex-direction:column;align-items:flex-start;}
+      .partners-copy{text-align:left;max-width:100%;}
     }
-    .footer-brand-affiliates{
-      display:flex;flex-direction:column;gap:.5rem;
-      padding-top:1.25rem;
-      border-top:1px solid rgba(255,255,255,.07);
+    /* Tile table */
+    .partners-tiles{
+      display:flex;flex-wrap:wrap;
+      border:1px solid var(--rule-l);
+      border-radius:var(--r-lg);
+      overflow:hidden;
     }
-    .footer-affiliate{
-      display:flex;align-items:baseline;gap:1rem;
-      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.1em;text-transform:uppercase;
+    .partner-tile{
+      flex:1;min-width:140px;
+      padding:1.5rem 1.75rem;
+      border-right:1px solid var(--rule-l);
+      border-bottom:1px solid var(--rule-l);
+      display:flex;flex-direction:column;gap:.375rem;
+      transition:background .18s;
+      cursor:default;
+      position:relative;
     }
-    .footer-affiliate-abbr{color:rgba(0,179,179,.65);flex-shrink:0;width:3rem;}
-    .footer-affiliate-name{color:rgba(255,255,255,.25);}
-    /* Nav columns */
-    .footer-col-head{
-      font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.15em;
-      text-transform:uppercase;color:rgba(255,255,255,.28);
-      margin-bottom:1.25rem;
-      padding-bottom:.75rem;
-      border-bottom:1px solid rgba(255,255,255,.06);
+    .partner-tile::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:transparent;transition:background .25s;
     }
-    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.625rem;}
-    .footer-col ul a{
-      font-size:.875rem;color:rgba(255,255,255,.45);
-      transition:color .18s;
-      display:inline-block;
+    .partner-tile:hover{background:var(--off-white);}
+    .partner-tile:hover::before{background:var(--accent);}
+    /* Remove right border on last in row */
+    .partner-tile:last-child{border-right:none;}
+    .partner-tile-name{
+      font-family:var(--ff-mono);font-size:.75rem;font-weight:500;
+      letter-spacing:.1em;text-transform:uppercase;
+      color:var(--text-on-light);line-height:1;
     }
-    .footer-col ul a:hover{color:rgba(255,255,255,.85);}
-    .footer-col address{
-      font-style:normal;font-size:.875rem;
-      color:rgba(255,255,255,.38);line-height:1.85;
+    .partner-tile-sub{
+      font-size:.8rem;color:var(--text-on-light-3);
+      line-height:1.45;
     }
-    .footer-col address a{
-      color:rgba(255,255,255,.45);
-      transition:color .18s;
-      border-bottom:1px solid rgba(255,255,255,.1);
+    .partner-tile-tag{
+      display:inline-flex;align-items:center;
+      width:fit-content;
+      font-family:var(--ff-mono);font-size:.55rem;
+      letter-spacing:.1em;text-transform:uppercase;
+      padding:.2rem .55rem;border-radius:3px;
+      margin-top:.25rem;
     }
-    .footer-col address a:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.3);}
-    /* Bottom bar */
-    .footer-bottom{
-      padding:1.5rem 0;
-      display:flex;justify-content:space-between;align-items:center;
-      flex-wrap:wrap;gap:.75rem;
-      font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.06em;
-      color:rgba(255,255,255,.2);
+    .partner-tile-tag.institutional{
+      background:rgba(0,153,153,.08);
+      border:1px solid rgba(0,153,153,.2);
+      color:var(--accent);
     }
-    .footer-bottom-cert{
-      display:flex;align-items:center;gap:.875rem;
+    .partner-tile-tag.regulatory{
+      background:rgba(10,22,40,.05);
+      border:1px solid rgba(10,22,40,.12);
+      color:var(--text-on-light-2);
     }
-    .footer-bottom-cert span{
-      padding:.2rem .6rem;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:3px;
-      font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
-      color:rgba(255,255,255,.22);
+    .partner-tile-tag.industry{
+      background:rgba(74,158,232,.07);
+      border:1px solid rgba(74,158,232,.2);
+      color:#3a7ec8;
+    }
+    .partner-tile-tag.government{
+      background:rgba(99,102,241,.07);
+      border:1px solid rgba(99,102,241,.2);
+      color:#5b5fc7;
     }
 
-    .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+    .footer{
+      background:var(--navy);
+      border-top:2px solid rgba(0,179,179,.18);
+      padding:2.5rem 0;
+      position:relative;overflow:hidden;
+    }
+    .footer-inner{
+      display:flex;align-items:center;
+      justify-content:space-between;
+      gap:2rem;flex-wrap:wrap;
+      position:relative;z-index:1;
+    }
+    .footer-brand{display:flex;align-items:center;gap:.875rem;flex-shrink:0;}
+    .footer-brand-mark{
+      width:34px;height:34px;
+      background:rgba(0,179,179,.1);border:1px solid rgba(0,179,179,.22);
+      border-radius:8px;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    }
+    .footer-brand-mark svg{width:18px;height:18px;color:var(--teal-2);}
+    .footer-brand-name{
+      font-family:var(--ff-display);font-size:.9375rem;font-weight:700;
+      color:rgba(255,255,255,.82);letter-spacing:-.02em;line-height:1;
+      margin-bottom:.2rem;
+    }
+    .footer-brand-sub{
+      font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;
+      text-transform:uppercase;color:rgba(255,255,255,.22);
+    }
+    .footer-nav{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:center;}
+    .footer-nav a{font-size:.8125rem;color:rgba(255,255,255,.4);text-decoration:none;transition:color .18s;white-space:nowrap;}
+    .footer-nav a:hover{color:rgba(255,255,255,.85);}
+    .footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:.375rem;flex-shrink:0;}
+    .footer-contact{font-size:.8rem;color:rgba(255,255,255,.4);}
+    .footer-contact a{color:rgba(0,179,179,.7);text-decoration:none;transition:color .18s;}
+    .footer-contact a:hover{color:var(--teal-2);}
+    .footer-cert{display:flex;gap:.625rem;}
+    .footer-cert span{
+      font-family:var(--ff-mono);font-size:.525rem;letter-spacing:.1em;
+      text-transform:uppercase;color:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.08);
+      padding:.15rem .5rem;border-radius:3px;
+    }
+    .footer-bottom{
+      border-top:1px solid rgba(255,255,255,.06);
+      margin-top:2rem;padding-top:1.25rem;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:.75rem;
+      font-family:var(--ff-mono);font-size:.575rem;
+      letter-spacing:.05em;color:rgba(255,255,255,.18);
+      position:relative;z-index:1;
+    }
+    @media(max-width:900px){
+      .footer-inner{flex-direction:column;align-items:flex-start;gap:1.5rem;}
+      .footer-right{align-items:flex-start;}
+      .footer-nav{justify-content:flex-start;}
+    }
+        .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
     .reveal.in{opacity:1;transform:none;}
     .reveal-d1{transition-delay:.1s;}
     @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
     @supports(padding:env(safe-area-inset-bottom)){.footer{padding-bottom:calc(2rem + env(safe-area-inset-bottom));}}
     
-        .section{padding:6rem 0;}
+        .section{padding:7rem 0;}
+    @media(min-width:1400px){.section{padding:9rem 0;}}
     @media(max-width:768px){.section{padding:4rem 0;}}
       /* When mobile drawer is open, suppress lang dropdown */
     body[style*="overflow: hidden"] .lang-sw-panel,
@@ -1058,67 +1124,43 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
+    <canvas id="footerBg" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
     <div class="container">
-      <div class="footer-top">
-
-        <!-- Brand -->
+      <div class="footer-inner">
         <div class="footer-brand">
-          <div class="footer-brand-logo">
-            <div class="footer-brand-mark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <!-- Trachea -->
-              <path d="M12 2.5 L12 8"/>
-              <!-- Left bronchus + lobe -->
-              <path d="M12 8 C10 8 7 9 6 11.5 C5 14 6 17.5 8.5 18.5 C10.5 19.2 12 18 12 16"/>
-              <!-- Right bronchus + lobe -->
-              <path d="M12 8 C14 8 17 9 18 11.5 C19 14 18 17.5 15.5 18.5 C13.5 19.2 12 18 12 16"/>
-            </svg>
-            </div>
-            <span class="footer-brand-name">neumAC R&amp;I</span>
-          </div>
-          <p class="footer-brand-desc"><span lang="en">A clinical research and innovation programme in respiratory and thoracic medicine at the Área Sanitaria de A Coruña y Cee.</span><span lang="es">Programa de investigación clínica e innovación en medicina respiratoria y torácica, Área Sanitaria de A Coruña y Cee.</span></p>
-          <div class="footer-brand-affiliates">
-            <div class="footer-affiliate"><span class="footer-affiliate-abbr">INIBIC</span><span class="footer-affiliate-name"><span lang="en">Instituto de Investigación Biomédica de A Coruña</span><span lang="es">Instituto de Investigación Biomédica de A Coruña</span></span></div>
-            <div class="footer-affiliate"><span class="footer-affiliate-abbr">SERGAS</span><span class="footer-affiliate-name"><span lang="en">Servizo Galego de Saúde</span><span lang="es">Servizo Galego de Saúde</span></span></div>
-            <div class="footer-affiliate"><span class="footer-affiliate-abbr">HUAC</span><span class="footer-affiliate-name"><span lang="en">Hospital Universitario de A Coruña</span><span lang="es">Hospital Universitario de A Coruña</span></span></div>
+          <div class="footer-brand-info">
+            <div class="footer-brand-name">neumAC R&amp;I</div>
+            <div class="footer-brand-sub">Área Sanitaria de A Coruña y Cee</div>
           </div>
         </div>
-
-        <!-- Navigate -->
-        <div class="footer-col">
-          <p class="footer-col-head"><span lang="en">Navigate</span><span lang="es">Navegar</span></p>
-          <ul>
-            <li><a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a></li>
-            <li><a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a></li>
-            <li><a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a></li>
-            <li><a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a></li>
-          </ul>
         </div>
-
-        <!-- Contact -->
-        <div class="footer-col">
-          <p class="footer-col-head"><span lang="en">Contact</span><span lang="es">Contacto</span></p>
-          <address>
-            <p>As Xubias, 84<br>15006 A Coruña, España</p>
-            <p style="margin-top:.875rem;"><a href="tel:+34881111800">+34 881 111 800</a></p>
-            <p><a href="/cdn-cgi/l/email-protection#ee808b9b83818d8f9c8bae9d8b9c898f9dc08b9d"><span class="__cf_email__" data-cfemail="0b656e7e6664686a796e4b786e796c6a78256e78">[email&#160;protected]</span></a></p>
-            <p style="margin-top:.875rem;font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.08em;color:rgba(255,255,255,.18);">GCP · INIBIC · AEMPS</p>
-          </address>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+          <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
+          <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
+          <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
+          <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+        </nav>
+        <div class="footer-right">
+          <div class="footer-contact">
+            <a href="tel:+34881111800">+34 881 111 800</a>
+            &nbsp;·&nbsp;
+            <a href="mailto:investigacion@neumac.es">investigacion@neumac.es</a>
+          </div>
+          <div class="footer-cert">
+            <span>GCP</span><span>INIBIC</span><span>CE MDR</span><span>AEMPS</span>
+          </div>
         </div>
-
       </div>
       <div class="footer-bottom">
-        <span>© 2026 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee.</span>
-        <div class="footer-bottom-cert">
-          <span>GCP</span>
-          <span>INIBIC</span>
-          <span>CE MDR</span>
-        </div>
+        <span>© 2026 neumAC R&amp;I · Área Sanitaria de A Coruña y Cee · As Xubias, 84, 15006 A Coruña</span>
+        <span>INIBIC · SERGAS · HUAC</span>
       </div>
     </div>
   </footer>
+
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
