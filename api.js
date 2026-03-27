@@ -21,9 +21,7 @@ const API_BASE = 'https://neumac-manage-back-end-production.up.railway.app';
 // ─────────────────────────────────────────────
 
 async function apiFetch(path) {
-  const res = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json' }
-  });
+  const res = await fetch(`${API_BASE}${path}`);
   if (!res.ok) throw new Error(`API ${res.status}: ${path}`);
   return res.json();
 }
@@ -63,9 +61,16 @@ if (!document.getElementById('api-js-styles')) {
 /** Skeleton loader — light for light sections, dark for dark sections */
 function setLoading(el, rows = 3, dark = false) {
   const cls = dark ? 'api-skeleton-dark' : 'api-skeleton';
-  el.innerHTML = Array(rows).fill(
-    `<div class="${cls}" style="height:52px;margin-bottom:2px;"></div>`
-  ).join('');
+  // tbody only accepts tr elements — use tr/td skeleton for tables
+  if (el.tagName === 'TBODY') {
+    el.innerHTML = Array(rows).fill(
+      `<tr>${Array(6).fill(`<td><div class="${cls}" style="height:14px;border-radius:3px;"></div></td>`).join('')}</tr>`
+    ).join('');
+  } else {
+    el.innerHTML = Array(rows).fill(
+      `<div class="${cls}" style="height:52px;margin-bottom:2px;"></div>`
+    ).join('');
+  }
 }
 
 function setError(el, msg = 'Could not load data. Please try again later.') {
