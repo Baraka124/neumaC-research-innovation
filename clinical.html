@@ -668,6 +668,18 @@
     }
     .team-card:last-child{border-bottom:none;}
     .team-card:hover{background:rgba(255,255,255,.03);padding-left:0;border-radius:var(--r-sm);margin:0 -1rem;padding-left:1rem;padding-right:1rem;}
+    /* Avatar */
+    .team-avatar{
+      width:52px;height:52px;border-radius:50%;
+      background:linear-gradient(135deg,rgba(0,153,153,.35),rgba(0,179,179,.15));
+      border:1px solid rgba(0,179,179,.3);
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+      font-family:var(--ff-display);font-size:1.1rem;font-weight:700;
+      color:var(--teal-2);letter-spacing:-.02em;
+      overflow:hidden;
+    }
+    .team-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
     /* Plain marginal number — no box, no border */
     .team-line-num{
       font-family:var(--ff-mono);font-size:.6rem;
@@ -697,10 +709,16 @@
       margin-bottom:.5rem;
       display:block;
     }
+    .team-bio{
+      font-size:.8125rem;line-height:1.7;
+      color:rgba(255,255,255,.52);
+      margin-top:.5rem;max-width:580px;
+    }
     /* Tags as plain inline text with middot separator — no pills */
     .team-expertise{
       font-family:var(--ff-mono);font-size:.6rem;
       color:rgba(255,255,255,.3);letter-spacing:.03em;
+      margin-top:.4rem;
     }
     .team-expertise .team-tag{display:inline;}
     .team-expertise .team-tag + .team-tag::before{
@@ -710,6 +728,7 @@
     @media(max-width:480px){
       .team-card{gap:1.375rem;padding:1.375rem 0;}
       .team-name{font-size:1rem;}
+      .team-avatar{width:44px;height:44px;font-size:.95rem;}
     }
 
     /* ── CONTACT ── */
@@ -1243,16 +1262,16 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><rect x="3" y="10" width="5" height="11"/><rect x="9.5" y="4" width="5" height="17"/><rect x="16" y="7" width="5" height="14"/></svg>
               <span lang="en">Research Lines</span><span lang="es">Ver Líneas</span>
             </a>
-            <a href="#clinical-trials" class="btn-ghost">
+            <a href="#clinical-studies" class="btn-ghost">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-              <span lang="en">Active Studies</span><span lang="es">Ensayos Activos</span>
+              <span lang="en">Active Studies</span><span lang="es">Estudios Activos</span>
             </a>
           </div>
         </div>
         <!-- Right stats panel -->
         <div class="hero-stats reveal reveal-d2" style="margin-bottom:3rem;">
           <div class="hstat"><div class="hstat-num">6</div><div class="hstat-label"><span lang="en">Specialized Research Lines</span><span lang="es">Líneas de Investigación</span></div></div>
-          <div class="hstat"><div class="hstat-num">30+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Studies</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
+          <div class="hstat"><div class="hstat-num">13+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Studies</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
           <div class="hstat"><div class="hstat-num">6</div><div class="hstat-label"><span lang="en">Expert Line Coordinators</span><span lang="es">Coordinadores Especialistas</span></div></div>
           <div class="hstat"><div class="hstat-num">GCP</div><div class="hstat-label"><span lang="en">INIBIC · Good Clinical Practice</span><span lang="es">INIBIC · Cumplimiento GCP</span></div></div>
         </div>
@@ -1289,7 +1308,7 @@
       <div class="sec-head reveal">
         <p class="eyebrow"><span lang="en">Specialized Lines</span><span lang="es">Líneas Especializadas</span></p>
         <h2 class="display lg"><span lang="en">Our Research Portfolio</span><span lang="es">Nuestro Portfolio de Investigación</span></h2>
-        <p><span lang="en">Each line represents a focused area of clinical expertise with an active pipeline of investigator-initiated and sponsored trials. Expand any line to explore its scope and capabilities.</span><span lang="es">Cada línea representa un área de experiencia clínica con un pipeline activo de ensayos. Expanda para ver su alcance y capacidades.</span></p>
+        <p><span lang="en">Each line represents a focused area of clinical expertise with an active pipeline of investigator-initiated and sponsored studies. Expand any line to explore its scope and capabilities.</span><span lang="es">Cada línea representa un área de experiencia clínica con un pipeline activo de ensayos. Expanda para ver su alcance y capacidades.</span></p>
       </div>
 
       <!-- api.js injects into this container (id="researchLinesList") -->
@@ -1417,22 +1436,22 @@
   <!-- STAT BREAK — typographic moment -->
   <div style="background:var(--navy);padding:3.5rem 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);">
     <div style="padding:0 clamp(1.5rem,4vw,5rem);display:flex;align-items:baseline;gap:1.5rem;flex-wrap:wrap;">
-      <span style="font-family:var(--ff-display);font-size:clamp(3.5rem,8vw,6rem);font-weight:300;color:#fff;line-height:1;letter-spacing:-.03em;" id="statTrialsBig">30+</span>
+      <span style="font-family:var(--ff-display);font-size:clamp(3.5rem,8vw,6rem);font-weight:300;color:#fff;line-height:1;letter-spacing:-.03em;" id="statTrialsBig">13+</span>
       <div>
         <div style="font-family:var(--ff-body);font-size:1rem;color:rgba(255,255,255,.75);font-weight:400;line-height:1.5;">
-          <span lang="en">active and recruiting clinical studies<br>across six specialisms · INIBIC-backed · GCP-compliant</span>
+          <span lang="en">active and recruiting clinical studies<br>across six research lines · INIBIC-backed · GCP-compliant</span>
           <span lang="es">estudios clínicos activos y en reclutamiento<br>en seis especialidades · respaldados por el INIBIC</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- CLINICAL TRIALS — fully wired to api.js -->
-  <section class="section trials-bg" id="clinical-trials">
+  <!-- CLINICAL STUDIES — fully wired to api.js -->
+  <section class="section trials-bg" id="clinical-studies">
     <div class="container">
       <div class="sec-head reveal">
-        <p class="label"><span lang="en">Active Studies Portfolio</span><span lang="es">Portfolio Activo</span></p>
-        <h2 class="display lg"><span lang="en">Clinical Studies</span><span lang="es">Estudios Clínicos</span></h2>
+        <p class="label"><span lang="en">Active Studies</span><span lang="es">Portfolio Activo</span></p>
+        <h2 class="display lg"><span lang="en">Clinical Studies Portfolio</span><span lang="es">Estudios Clínicos</span></h2>
         <p><span lang="en">Live data from our research database. Filter by research line, phase, or status to find relevant studies. Contact us to request the full site qualification dossier.</span><span lang="es">Datos en tiempo real de nuestra base de datos de investigación. Filtre por línea, fase o estado para encontrar estudios relevantes.</span></p>
       </div>
 
@@ -1442,12 +1461,12 @@
           <label><span lang="en">Research Line</span><span lang="es">Línea</span></label>
           <select id="filterLine">
             <option value="all"><span lang="en">All Lines</span></option>
-            <option value="01 — Transplantation">01 — Transplantation &amp; Diffuse</option>
-            <option value="02 — Airway">02 — Airway Diseases</option>
-            <option value="03 — Interventional">03 — Interventional &amp; Oncology</option>
-            <option value="04 — Critical Care">04 — Critical Care &amp; Sleep</option>
-            <option value="05 — Personalized">05 — Personalized Medicine</option>
-            <option value="06 — Thoracic Surgery">06 — Thoracic Surgery</option>
+            <option value="1">01 — Trasplante e Hipertensión</option>
+            <option value="2">02 — Vía Aérea</option>
+            <option value="3">03 — Neumología Intervencionista</option>
+            <option value="4">04 — Insuficiencia Respiratoria</option>
+            <option value="5">05 — Cirugía Torácica</option>
+            <option value="6">06 — Medicina Personalizada</option>
           </select>
         </div>
         <div class="filter-grp">
@@ -1482,7 +1501,7 @@
       </div>
 
       <div class="trials-count-bar reveal">
-        <span><strong id="studiesCount">—</strong> <span lang="en">trials</span><span lang="es">ensayos</span></span>
+        <span><strong id="studiesCount">—</strong> <span lang="en">studies</span><span lang="es">estudios</span></span>
         <a href="#contact" class="btn-primary" style="font-size:.75rem;padding:.4rem .875rem;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
           <span lang="en">Request Dossier</span><span lang="es">Solicitar Dossier</span>
@@ -1506,7 +1525,7 @@
             <tbody id="studiesBody">
               <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-muted);font-family:var(--ff-mono);font-size:.8125rem;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:24px;height:24px;margin:0 auto .75rem;display:block;opacity:.3;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
-                <span lang="en">Loading trials from database…</span><span lang="es">Cargando ensayos de la base de datos…</span>
+                <span lang="en">Loading studies from database…</span><span lang="es">Cargando estudios de la base de datos…</span>
               </td></tr>
             </tbody>
           </table>
@@ -1515,7 +1534,7 @@
               <div class="trials-footer-info"><span lang="en">Showing <strong id="studiesShown" style="color:var(--teal-2);">—</strong> studies from live database</span><span lang="es">Mostrando <strong id="studiesShownEs" style="color:var(--teal-2);">—</strong> ensayos de la base de datos en vivo</span></div>
               <div class="trials-footer-db">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
-                <span lang="en">Full portfolio managed in neumAC R&amp;I research system</span><span lang="es">Portfolio completo gestionado en el sistema de investigación neumAC I+I</span>
+                <span lang="en">Full portfolio managed in neumACt research system</span><span lang="es">Portfolio completo gestionado en el sistema de investigación neumAC I+I</span>
               </div>
             </div>
             <a href="#contact" class="btn-ghost" style="font-size:.75rem;padding:.4rem .875rem;"><span lang="en">Request Full Dossier</span><span lang="es">Solicitar Dossier Completo</span></a>
@@ -1531,21 +1550,101 @@
       <div class="sec-head reveal">
         <p class="eyebrow"><span lang="en">Research Coordinators</span><span lang="es">Coordinadores de Investigación</span></p>
         <h2 class="display lg"><span lang="en">Meet the Research Leads</span><span lang="es">Los Responsables de Investigación</span></h2>
-        <p><span lang="en">Each research line is directed by a clinician-scientist with extensive trial experience — your primary contact for partnership discussions within their domain.</span><span lang="es">Cada línea está dirigida por un médico-científico con amplia experiencia en ensayos, su contacto principal para discusiones de colaboración.</span></p>
+        <p><span lang="en">Each research line is directed by a clinician-scientist with extensive clinical study experience — your primary contact for collaboration discussions within their domain.</span><span lang="es">Cada línea está dirigida por un médico-científico con amplia experiencia en ensayos, su contacto principal para discusiones de colaboración.</span></p>
       </div>
       <div class="team-grid">
-        <div class="team-card reveal"><div class="team-line-num">01</div><div class="team-body"><div class="team-name">Dra. Pilar Sanjuán</div><div class="team-role"><span lang="en">Transplantation &amp; Diffuse Pulmonary Disease</span></div><span class="team-line-tag">Transplant, Hypertension &amp; Diffuse Pulmonary Disease</span><div class="team-expertise"><span class="team-tag">Lung Transplant</span><span class="team-tag">PAH</span><span class="team-tag">ILD</span></div></div></div>
-        <div class="team-card reveal reveal-d1"><div class="team-line-num">02</div><div class="team-body"><div class="team-name">Dra. Marina Blanco Aparicio</div><div class="team-role"><span lang="en">Airway Diseases</span></div><span class="team-line-tag">COPD, Severe Asthma &amp; Biologics</span><div class="team-expertise"><span class="team-tag">COPD</span><span class="team-tag">Severe Asthma</span><span class="team-tag">Biologics</span></div></div></div>
-        <div class="team-card reveal reveal-d1"><div class="team-line-num">03</div><div class="team-body"><div class="team-name">Dr. Rachid Tazi</div><div class="team-role"><span lang="en">Interventional &amp; Thoracic Oncology</span></div><span class="team-line-tag">Interventional Pulmonology &amp; Oncology</span><div class="team-expertise"><span class="team-tag">NSCLC</span><span class="team-tag">EBUS</span><span class="team-tag">Immunotherapy</span></div></div></div>
-        <div class="team-card reveal reveal-d2"><div class="team-line-num">04</div><div class="team-body"><div class="team-name">Dra. Angélica Consuegra</div><div class="team-role"><span lang="en">Respiratory Failure &amp; Sleep Medicine</span></div><span class="team-line-tag">Critical Care, UCRI &amp; Sleep Medicine</span><div class="team-expertise"><span class="team-tag">UCRI</span><span class="team-tag">NIV</span><span class="team-tag">Sleep Medicine</span></div></div></div>
-        <div class="team-card reveal reveal-d2"><div class="team-line-num">05</div><div class="team-body"><div class="team-name">Dra. María Delgado Roel</div><div class="team-role"><span lang="en">Innovation in Thoracic Surgery</span></div><span class="team-line-tag">VATS / RATS, Thoracic Oncology &amp; ERATS</span><div class="team-expertise"><span class="team-tag">VATS / RATS</span><span class="team-tag">Thoracic Oncology</span><span class="team-tag">ERATS</span></div></div></div>
-        <div class="team-card reveal reveal-d3"><div class="team-line-num">06</div><div class="team-body"><div class="team-name">Dr. Pedro Jorge Marcos Rodríguez</div><div class="team-role"><span lang="en">Personalised Respiratory Medicine &amp; Clinical Innovation</span></div><span class="team-line-tag">Precision Medicine, AI &amp; Digital Health</span><div class="team-expertise"><span class="team-tag">Precision Medicine</span><span class="team-tag">AI / Digital Health</span><span class="team-tag">Rare Diseases</span></div></div></div>
+        <div class="team-card reveal">
+          <div class="team-avatar">PS</div>
+          <div class="team-body">
+            <div class="team-name">Dra. María Pilar Sanjuán López</div>
+            <div class="team-role"><span lang="en">Line 01 · Coordinator</span><span lang="es">Línea 01 · Coordinadora</span></div>
+            <span class="team-line-tag">Trasplante, Hipertensión y Enfermedad Difusa Pulmonar</span>
+            <p class="team-bio">Jefa de la Línea 1 de Investigación (neumACt – INIBIC). Especialista en neumología con dedicación a trasplante pulmonar, hipertensión pulmonar arterial y enfermedades pulmonares intersticiales difusas. Miembro activo de redes nacionales e internacionales de investigación en trasplante y enfermedades pulmonares avanzadas.</p>
+            <div class="team-expertise"><span class="team-tag">Lung Transplant</span><span class="team-tag">PAH</span><span class="team-tag">ILD</span></div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-d1">
+          <div class="team-avatar">MB</div>
+          <div class="team-body">
+            <div class="team-name">Dra. Marina Blanco Aparicio</div>
+            <div class="team-role"><span lang="en">Line 02 · Coordinator</span><span lang="es">Línea 02 · Coordinadora</span></div>
+            <span class="team-line-tag">Enfermedades de la Vía Aérea</span>
+            <p class="team-bio">Responsable de la Línea 2 de Investigación (neumACt – INIBIC). Especialista en asma grave, EPOC, bronquiectasias y fibrosis quística. Coordinadora del Circuito de Vía Aérea Compleja (UVAC) del CHUAC. Autora de más de 30 publicaciones en revistas de alto impacto y participante activa en la elaboración de guías GEMA/SEPAR.</p>
+            <div class="team-expertise"><span class="team-tag">Severe Asthma</span><span class="team-tag">COPD</span><span class="team-tag">Biologics</span></div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-d1">
+          <div class="team-avatar">RT</div>
+          <div class="team-body">
+            <div class="team-name">Dr. Rachid Tazi Mezalek</div>
+            <div class="team-role"><span lang="en">Line 03 · Coordinator</span><span lang="es">Línea 03 · Coordinador</span></div>
+            <span class="team-line-tag">Neumología Intervencionista y Cáncer de Pulmón</span>
+            <p class="team-bio">Responsable de la Línea 3 de Investigación (neumACt – INIBIC). Especialista en neumología intervencionista y oncología torácica. Experto en EBUS-TBNA, criobiopsia transbronquial, catéteres pleurales permanentes y prótesis endobronquiales. Investigador en estudios multicéntricos de broncoscopia intervencionista.</p>
+            <div class="team-expertise"><span class="team-tag">EBUS</span><span class="team-tag">Lung Cancer</span><span class="team-tag">Bronchoscopy</span></div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-d2">
+          <div class="team-avatar">AC</div>
+          <div class="team-body">
+            <div class="team-name">Dra. Angélica Consuegra Vanegas</div>
+            <div class="team-role"><span lang="en">Line 04 · Coordinator</span><span lang="es">Línea 04 · Coordinadora</span></div>
+            <span class="team-line-tag">Insuficiencia Respiratoria, Cuidados Críticos y Medicina del Sueño</span>
+            <p class="team-bio">Responsable de la Línea 4 de Investigación (neumACt – INIBIC). Especialista en insuficiencia respiratoria aguda y crónica, ventilación no invasiva, oxigenoterapia domiciliaria y medicina del sueño. Investigadora en estudios multicéntricos sobre soporte ventilatorio y pronóstico en pacientes críticos respiratorios.</p>
+            <div class="team-expertise"><span class="team-tag">NIV</span><span class="team-tag">Critical Care</span><span class="team-tag">Sleep Medicine</span></div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-d2">
+          <div class="team-avatar">MD</div>
+          <div class="team-body">
+            <div class="team-name">Dra. María Delgado Roel</div>
+            <div class="team-role"><span lang="en">Line 05 · Coordinator</span><span lang="es">Línea 05 · Coordinadora</span></div>
+            <span class="team-line-tag">Innovación en Cirugía Torácica</span>
+            <p class="team-bio">Responsable de la Línea 5 de Investigación (neumACt – INIBIC). Cirujana torácica especializada en técnicas mínimamente invasivas (VATS y RATS). El Servicio de Cirugía Torácica del CHUAC actúa como referente quirúrgico para las áreas sanitarias de Lugo y Ferrol. Investigadora principal en estudios multicéntricos europeos de cirugía robótica torácica.</p>
+            <div class="team-expertise"><span class="team-tag">VATS / RATS</span><span class="team-tag">Thoracic Oncology</span><span class="team-tag">ERATS</span></div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-d3">
+          <div class="team-avatar">PM</div>
+          <div class="team-body">
+            <div class="team-name">Dr. Pedro Jorge Marcos Rodríguez</div>
+            <div class="team-role"><span lang="en">Line 06 · Coordinator · Group PI</span><span lang="es">Línea 06 · Coordinador · IP del Grupo</span></div>
+            <span class="team-line-tag">Medicina Respiratoria Personalizada, Gestión e Innovación Clínica</span>
+            <p class="team-bio">Jefe del Servicio de Neumología del CHUAC e Investigador Principal del grupo neumACt – INIBIC. Doctor en Medicina por la Universidade de A Coruña (2015). Investigador en medicina personalizada, enfermedades raras respiratorias, inteligencia artificial aplicada a la clínica y gestión sanitaria. Colaborador en el proyecto europeo DALi Lab (Horizonte Europa) e IP en el registro EARCO sobre déficit de Alfa-1 Antitripsina.</p>
+            <div class="team-expertise"><span class="team-tag">Precision Medicine</span><span class="team-tag">AI / Digital Health</span><span class="team-tag">Rare Diseases</span></div>
+          </div>
+        </div>
       </div>
       </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="section contact-bg" id="contact">
+  <!-- TRIAL DETAIL MODAL -->
+  <div id="trialModal" style="display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;padding:1rem;">
+    <div id="trialModalOverlay" style="position:absolute;inset:0;background:rgba(5,12,26,.82);backdrop-filter:blur(6px);" onclick="closeTrialModal()"></div>
+    <div id="trialModalBox" style="position:relative;z-index:1;background:var(--white);border-radius:var(--r-lg);max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.35);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:1.75rem 2rem 1.25rem;border-bottom:1px solid var(--rule-l);">
+        <div>
+          <div id="tmProtocol" style="font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.375rem;"></div>
+          <h3 id="tmTitle" style="font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:var(--text-on-light);line-height:1.3;max-width:480px;"></h3>
+        </div>
+        <button onclick="closeTrialModal()" style="background:var(--light-grey);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1rem;margin-top:.2rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:14px;height:14px;"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div style="padding:1.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;" id="tmMeta"></div>
+      <div id="tmDesc" style="padding:0 2rem 1rem;font-size:.9375rem;line-height:1.75;color:var(--text-on-light-2);display:none;"></div>
+      <div style="padding:1.25rem 2rem;border-top:1px solid var(--rule-l);display:flex;gap:.75rem;flex-wrap:wrap;">
+        <a href="#contact" onclick="closeTrialModal()" class="btn-primary" style="font-size:.8125rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:13px;height:13px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+          <span lang="en">Request Dossier</span><span lang="es">Solicitar Dossier</span>
+        </a>
+        <button onclick="closeTrialModal()" style="background:none;border:1.5px solid var(--rule-l);border-radius:var(--r-md);padding:.5rem 1rem;font-size:.8125rem;font-weight:500;cursor:pointer;color:var(--ink-2);">
+          <span lang="en">Close</span><span lang="es">Cerrar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->\n  <section class="section contact-bg" id="contact">
     <div class="container">
       <div class="sec-head reveal">
         <p class="label"><span lang="en">Work With Us</span><span lang="es">Trabaje Con Nosotros</span></p>
@@ -1555,7 +1654,7 @@
       <div class="contact-layout">
         <div class="contact-info-list reveal">
           <p style="font-size:.9rem;line-height:1.75;color:var(--text-on-dark-2);max-width:380px;">
-            <span lang="en">Our team responds within 2 business days. For urgent enquiries about active trials or partnership opportunities, contact us directly.</span>
+            <span lang="en">Our team responds within 2 business days. For urgent enquiries about active studies or partnership opportunities, contact us directly.</span>
             <span lang="es">Nuestro equipo responde en un plazo de dos días hábiles. Para consultas urgentes sobre ensayos activos u oportunidades de colaboración, contáctenos directamente.</span>
           </p>
           <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.625rem;">
@@ -1600,7 +1699,7 @@
                 <label><span lang="en">Nature of Inquiry</span><span lang="es">Tipo de Consulta</span></label>
                 <select>
                   <option value="">Select…</option>
-                  <option>Sponsored clinical trial — site qualification</option>
+                  <option>Sponsored clinical study — site qualification</option>
                   <option>Investigator-initiated study partnership</option>
                   <option>Feasibility / site assessment</option>
                   <option>Academic collaboration</option>
