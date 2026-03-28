@@ -54,6 +54,7 @@ if (!document.getElementById('api-js-styles')) {
       font-family: var(--ff-mono, monospace);
     }
     .api-error svg { margin: 0 auto .75rem; display: block; opacity: .4; }
+    tr[onclick]:hover td { background: var(--teal-lt, #E6F7F7); }
   `;
   document.head.appendChild(s);
 }
@@ -190,6 +191,10 @@ async function loadResearchLines() {
     }
 
     // ── CLINICAL: expandable accordion ──────────────────────────────
+    // Build line_number -> id map for trial filter
+    window._researchLineMap = {};
+    data.forEach(line => { window._researchLineMap[String(line.line_number)] = line.id; });
+
     if (clinicalList) {
       clinicalList.innerHTML = data.map(line => `
         <div class="line-card" id="line-${line.id}">
@@ -258,7 +263,11 @@ async function loadTrials(filters = {}) {
   setLoading(tbody, 6);
 
   const params = new URLSearchParams();
-  if (filters.line   && filters.line   !== 'all') params.set('line',   filters.line);
+  if (filters.line && filters.line !== 'all') {
+    // Map line number to UUID using cached research lines data
+    const lineId = window._researchLineMap && window._researchLineMap[filters.line];
+    if (lineId) params.set('line', lineId);
+  }
   if (filters.phase  && filters.phase  !== 'all') params.set('phase',  filters.phase);
   if (filters.status && filters.status !== 'all') params.set('status', filters.status);
   if (filters.search) params.set('search', filters.search);
@@ -277,17 +286,18 @@ async function loadTrials(filters = {}) {
     if (!trials.length) {
       tbody.innerHTML = `
         <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-on-light-3,#767676);font-size:.875rem;font-family:var(--ff-mono,monospace);">
-          <span lang="en">No trials match the current filters.</span>
+          <span lang="en">No studies match the current filters.</span>
           <span lang="es">No hay ensayos con los filtros actuales.</span>
         </td></tr>`;
       return;
     }
 
     tbody.innerHTML = trials.map(t => {
+      window._trialData[t.id] = t;
       const statusClass = STATUS_CLASS[t.status] || 'active';
       const lineName    = t.research_line?.name || '—';
       return `
-        <tr>
+        <tr onclick="openTrialModal('${t.id}')" style="cursor:pointer;" title="Click for details">
           <td><span class="trial-protocol">${escHtml(t.protocol_id)}</span></td>
           <td><span class="trial-title">${escHtml(t.title)}</span></td>
           <td><span class="trial-line-tag">${escHtml(lineName)}</span></td>
@@ -487,7 +497,78 @@ function _fadeInRows(selector) {
 }
 
 // ─────────────────────────────────────────────
-// 5. CONTACT FORM
+// TRIAL DETAIL MODAL
+// ─────────────────────────────────────────────
+
+window._trialData = {};
+
+window.openTrialModal = function(id) {
+  const t = window._trialData[id];
+  if (!t) return;
+
+  const modal = document.getElementById('trialModal');
+  if (!modal) return;
+
+  document.getElementById('tmProtocol').textContent = t.protocol_id;
+  document.getElementById('tmTitle').textContent = t.title;
+
+  const statusClass = STATUS_CLASS[t.status] || 'active';
+  const statusLabel = STATUS_LABEL_EN[t.status] || t.status;
+  const lineName = t.research_line?.name || '—';
+  const lineNum  = t.research_line?.line_number ? `0${t.research_line.line_number}`.slice(-2) : '—';
+
+  document.getElementById('tmMeta').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Status</div>
+      <span class="status-badge ${statusClass}" style="width:fit-content;">
+        <span lang="en">${statusLabel}</span><span lang="es">${t.status}</span>
+      </span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Phase</div>
+      <span class="phase-badge" style="width:fit-content;">${escHtml(t.phase)}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Research Line</div>
+      <span style="font-size:.875rem;color:var(--text-on-light);">${escHtml(lineNum)} — ${escHtml(lineName)}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Sponsor</div>
+      <span style="font-size:.875rem;color:var(--text-on-light);">${t.sponsor_name ? escHtml(t.sponsor_name) : '—'}</span>
+    </div>
+    ${t.study_type ? `
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Study Type</div>
+      <span style="font-size:.875rem;color:var(--text-on-light);">${escHtml(t.study_type)}</span>
+    </div>` : ''}
+    ${t.sponsor_type ? `
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Sponsor Type</div>
+      <span style="font-size:.875rem;color:var(--text-on-light);">${escHtml(t.sponsor_type)}</span>
+    </div>` : ''}
+  `;
+
+  const descEl = document.getElementById('tmDesc');
+  if (t.description) {
+    descEl.textContent = t.description;
+    descEl.style.display = 'block';
+  } else {
+    descEl.style.display = 'none';
+  }
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeTrialModal = function() {
+  const modal = document.getElementById('trialModal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
+};
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') window.closeTrialModal();
+});
 // ─────────────────────────────────────────────
 
 function initContactForm() {
