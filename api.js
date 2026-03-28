@@ -487,6 +487,96 @@ function _fadeInRows(selector) {
 }
 
 // ─────────────────────────────────────────────
+// 5. CONTACT FORM
+// ─────────────────────────────────────────────
+
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = form.querySelector('button[type="submit"]');
+    const success = document.getElementById('formSuccess');
+    const originalText = btn ? btn.innerHTML : '';
+
+    // Get field values
+    const inputs = form.querySelectorAll('input, select, textarea');
+    const data = {};
+    inputs.forEach(el => {
+      const label = el.closest('.form-group')?.querySelector('label')?.textContent?.trim().toLowerCase() || el.type;
+      if (el.name) {
+        data[el.name] = el.value;
+      }
+    });
+
+    // Collect by position — matches form field order
+    const fields = form.querySelectorAll('input, select, textarea');
+    const payload = {
+      name:             fields[0]?.value || '',
+      organisation:     fields[1]?.value || '',
+      email:            fields[2]?.value || '',
+      area_of_interest: fields[3]?.value || '',
+      message:          fields[4]?.value || ''
+    };
+
+    if (!payload.name || !payload.email) return;
+
+    // Loading state
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:14px;height:14px;animation:spin .8s linear infinite;">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+      </svg> Sending…`;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Submission failed');
+
+      // Success
+      form.reset();
+      if (success) {
+        success.classList.add('show');
+        setTimeout(() => success.classList.remove('show'), 7000);
+      }
+    } catch (err) {
+      console.error('Contact form error:', err);
+      if (success) {
+        success.style.background = 'rgba(220,38,38,.08)';
+        success.style.borderColor = 'rgba(220,38,38,.2)';
+        success.style.color = '#dc2626';
+        success.textContent = 'Something went wrong. Please email us directly.';
+        success.classList.add('show');
+        setTimeout(() => {
+          success.classList.remove('show');
+          success.removeAttribute('style');
+        }, 6000);
+      }
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+  });
+}
+
+// Add spin keyframe for loading button
+if (!document.getElementById('api-spin-style')) {
+  const s = document.createElement('style');
+  s.id = 'api-spin-style';
+  s.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+  document.head.appendChild(s);
+}
+
+// ─────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────
 
@@ -495,13 +585,16 @@ document.addEventListener('DOMContentLoaded', () => {
     case 'index':
       loadResearchLines();
       loadLiveStats();
+      initContactForm();
       break;
     case 'clinical':
       loadResearchLines();
       initTrialFilters();
+      initContactForm();
       break;
     case 'innovation':
       loadProjects();
+      initContactForm();
       break;
     case 'news':
       loadNews();
