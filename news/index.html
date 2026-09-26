@@ -89,7 +89,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <section class="blog-hero" id="mainContent">
     <!-- Bronchial tree background canvas -->
-    <canvas id="newsBg" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <canvas class="news-hero__canvas" id="newsBg" aria-hidden="true"></canvas>
     <!-- Top: big type + stats shelf -->
     <div class="blog-hero-top">
       <div class="container">
@@ -102,7 +102,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
           <span lang="en">Clinical research,<br><em>in their own words.</em></span>
           <span lang="es">Investigación clínica,<br><em>en sus propias palabras.</em></span>
         </h1>
-        <p class="reveal-d2" style="font-size:1.0625rem;color:rgba(255,255,255,.68);max-width:480px;line-height:1.7;margin-top:1.25rem;">
+        <p class="reveal-d2 news-hero__intro">
           <span lang="en">Articles, updates, and findings written directly by the clinicians and researchers who did the work.</span>
           <span lang="es">Artículos, novedades y hallazgos escritos directamente por los clínicos e investigadores que realizaron el trabajo.</span>
         </p>
@@ -181,15 +181,15 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
   <!-- PUBLICATION HIGHLIGHTS — curated, distinct from the full chronological
        feed below. Pulls from the same is_featured publications already
        used for the hero spotlight pool, just shown as a static list here. -->
-  <div class="container" id="pubHighlightsWrap" style="display:none;padding-top:2.5rem;">
-    <p class="eyebrow" style="margin-bottom:1.25rem;"><span lang="en">Highlighted publications</span><span lang="es">Publicaciones destacadas</span></p>
-    <div id="pubHighlightsList" style="border-top:1px solid var(--border-l);"></div>
+  <div class="container pub-highlights" id="pubHighlightsWrap">
+    <p class="eyebrow pub-highlights__eyebrow"><span lang="en">Highlighted publications</span><span lang="es">Publicaciones destacadas</span></p>
+    <div class="pub-highlights__list" id="pubHighlightsList"></div>
   </div>
 
   <!-- ═══ PUBLICATIONS TIMELINE (Phase 2 #8) ═══════════════ -->
-  <div class="container" id="pubTimelineWrap" style="display:none;padding-top:3rem;">
-    <p class="eyebrow" style="margin-bottom:.35rem;"><span lang="en">Output over time</span><span lang="es">Producción en el tiempo</span></p>
-    <p style="font-size:.8125rem;color:var(--ink-3);margin:0 0 1.25rem;"><span lang="en">Each dot is a peer-reviewed publication — click to open.</span><span lang="es">Cada punto es una publicación revisada por pares; haga clic para abrirla.</span></p>
+  <div class="container pub-timeline" id="pubTimelineWrap">
+    <p class="eyebrow pub-timeline__eyebrow"><span lang="en">Output over time</span><span lang="es">Producción en el tiempo</span></p>
+    <p class="pub-timeline__hint"><span lang="en">Each dot is a peer-reviewed publication — click to open.</span><span lang="es">Cada punto es una publicación revisada por pares; haga clic para abrirla.</span></p>
     <div id="pubTimeline" class="pub-timeline" role="list"></div>
   </div>
 
@@ -201,9 +201,9 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <main class="blog-feed" id="blogFeed">
         <!-- Skeleton while loading -->
         <div class="feed-skeleton" id="feedSkeleton">
-          <div class="skel-row"><div class="skel-block" style="height:.7rem;width:30%;margin-bottom:.875rem;"></div><div class="skel-block" style="height:1.5rem;width:75%;margin-bottom:.625rem;"></div><div class="skel-block" style="height:.9rem;width:90%;margin-bottom:.375rem;"></div><div class="skel-block" style="height:.9rem;width:60%;"></div></div>
-          <div class="skel-row"><div class="skel-block" style="height:.7rem;width:25%;margin-bottom:.875rem;"></div><div class="skel-block" style="height:1.5rem;width:80%;margin-bottom:.625rem;"></div><div class="skel-block" style="height:.9rem;width:85%;"></div></div>
-          <div class="skel-row"><div class="skel-block" style="height:.7rem;width:20%;margin-bottom:.875rem;"></div><div class="skel-block" style="height:1.5rem;width:70%;margin-bottom:.625rem;"></div><div class="skel-block" style="height:.9rem;width:55%;"></div></div>
+          <div class="skel-row"><div class="skel-block skel-block--meta-30"></div><div class="skel-block skel-block--title-75"></div><div class="skel-block skel-block--copy-90"></div><div class="skel-block skel-block--copy-60"></div></div>
+          <div class="skel-row"><div class="skel-block skel-block--meta-25"></div><div class="skel-block skel-block--title-80"></div><div class="skel-block skel-block--copy-85"></div></div>
+          <div class="skel-row"><div class="skel-block skel-block--meta-20"></div><div class="skel-block skel-block--title-70"></div><div class="skel-block skel-block--copy-55"></div></div>
         </div>
       </main>
 
@@ -243,7 +243,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- INIBIC -->
       <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
         <div class="affil-card-logo">
-          <img src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--inibic" src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">INIBIC</div>
@@ -254,7 +254,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- FINIBIC / Fundación Galega -->
       <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
         <div class="affil-card-logo">
-          <img src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--finibic" src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
@@ -323,7 +323,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <address class="footer-address">
         <strong>Servicio de Neumología · CHUAC</strong>
         As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
-        <a href="/#contact" style="color:rgba(0,179,179,.55);text-decoration:none;margin-top:.5rem;display:inline-block;font-size:.75rem;transition:color .15s;" onmouseover="this.style.color='rgba(0,179,179,.85)'" onmouseout="this.style.color='rgba(0,179,179,.55)'">
+        <a class="footer-enquiry-link" href="/#contact">
           <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>
         </a>
       </address>
@@ -338,11 +338,11 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     </div>
   </div>
 </footer>
-<div class="footer-legal" style="background:var(--navy-footer);max-width:1440px;margin:0 auto;padding:.75rem clamp(1.25rem,4vw,3rem);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.04);">
-  <a href="/privacidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
-  <a href="/accesibilidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
-  <a href="/aviso-legal/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
-  <span style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-left:auto;"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
+<div class="footer-legal">
+  <a class="footer-legal-link" href="/privacidad/"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
+  <a class="footer-legal-link" href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
+  <a class="footer-legal-link" href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
+  <span class="footer-accreditation"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
 </div>
 
   <script>
@@ -502,7 +502,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     }
 
     /* ── Build a single post item ─────────────────────────── */
-    var arrowSvg = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;vertical-align:middle;"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+    var arrowSvg = '<svg class="icon icon--arrow-inline" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
     var _postIndex = 0; /* counter for numbering articles */
 
     function buildPost(p){
@@ -535,11 +535,11 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
           '<div class="post-photo-wrap">'+
             (imgSrc
               ? '<img src="'+esc(imgSrc)+'" alt="'+esc(p.title||'')+'" class="post-photo-img" loading="lazy">'
-              : '<div class="post-photo-img" style="background:var(--navy-2);"></div>')+
+              : '<div class="post-photo-img post-photo-img--fallback"></div>')+
             '<div class="post-photo-scrim"></div>'+
             '<div class="post-photo-overlay">'+
               '<div class="post-photo-badge">'+
-                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="width:10px;height:10px;"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg>'+
+                '<svg class="icon icon--micro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg>'+
                 esc(typeLabel(type))+
               '</div>'+
               '<h2 class="post-photo-title">'+esc(p.title||'Untitled')+'</h2>'+
@@ -662,11 +662,11 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         sl.innerHTML = Object.values(lines)
           .sort(function(a,b){ return b.count - a.count; })
           .map(function(l){
-            return '<div class="sb-line-item" style="display:flex;justify-content:space-between;align-items:baseline;padding:.3rem 0;border-bottom:1px solid var(--rule-l);font-size:.8rem;">'+
-              '<span style="color:var(--text-on-light-2);font-size:.8125rem;">'+esc(l.name)+'</span>'+
-              '<span style="font-family:var(--ff-mono);font-size:var(--fs-label);color:var(--text-on-light-3);">'+l.count+'</span>'+
+            return '<div class="sb-line-item sb-line-item--count">'+
+              '<span class="sb-line-item__name">'+esc(l.name)+'</span>'+
+              '<span class="sb-line-item__count">'+l.count+'</span>'+
             '</div>';
-          }).join('') || '<span style="font-size:.8rem;color:var(--text-on-light-3);">—</span>';
+          }).join('') || '<span class="sb-line-empty">—</span>';
       }
     }
 
@@ -683,7 +683,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         return w && ['Dr.','Dra.','Prof.'].indexOf(w) === -1;
       }).slice(0,2).map(function(n){ return n[0]; }).join('').toUpperCase() : '';
       var authorAv = (p.author && p.author.public_photo_url)
-        ? '<img src="'+esc(p.author.public_photo_url)+'" alt="'+esc(author)+'" loading="lazy" style="width:100%;height:100%;object-fit:cover;">'
+        ? '<img class="avatar-image--cover" src="'+esc(p.author.public_photo_url)+'" alt="'+esc(author)+'" loading="lazy">'
         : authorInitials;
 
       /* Body — HTML passthrough if HTML, otherwise plain paragraph blocks */
@@ -706,7 +706,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
                 return '<p>'+esc(para.trim())+'</p>';
               }).join('');
         } else {
-          bodyHtml += '<p style="color:var(--ink-3);font-style:italic;">Full article content is available via the linked publication.</p>';
+          bodyHtml += '<p class="article-body__fallback">Full article content is available via the linked publication.</p>';
         }
         bodyHtml += '</div>';
       }
@@ -716,7 +716,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
           '<div class="gz-reader-close">'+
             '<span class="gz-reader-close-name">neumACt Articles</span>'+
             '<button class="gz-reader-close-btn" id="artBack" type="button" aria-label="Close article">'+
-              '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>'+
+              '<svg class="icon icon--sm" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>'+
               '<span lang="en">Back</span><span lang="es">Volver</span>'+
             '</button>'+
           '</div>'+
@@ -834,9 +834,9 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       if(!pubs.length){ wrap.style.display = 'none'; return; }
       list.innerHTML = pubs.map(function(p, i){
         var year = p.published_at ? new Date(p.published_at).getFullYear() : '';
-        return '<a href="#" class="pub-hl-row" data-idx="'+i+'" style="display:flex;align-items:baseline;gap:.875rem;padding:1rem 0;'+(i>0?'border-top:1px solid var(--border-l);':'')+'text-decoration:none;color:inherit;">'+
-          '<span style="font-family:var(--ff-mono);font-size:var(--fs-label);color:var(--ink-4);flex-shrink:0;white-space:nowrap;">'+esc(p.journal_name||'')+(year?' · '+year:'')+'</span>'+
-          '<span style="font-size:var(--fs-meta);flex:1;">'+esc(p.title||'')+'</span>'+
+        return '<a href="#" class="pub-hl-row pub-hl-row--layout" data-idx="'+i+'">'+
+          '<span class="pub-hl-row__meta">'+esc(p.journal_name||'')+(year?' · '+year:'')+'</span>'+
+          '<span class="pub-hl-row__title">'+esc(p.title||'')+'</span>'+
           '</a>';
       }).join('');
       list.querySelectorAll('.pub-hl-row').forEach(function(row){
@@ -1094,14 +1094,14 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     bootCanvas();
   })();
   </script>
-<div id="cookieBanner" role="dialog"
-  style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(4,44,83,.97);border-top:1px solid rgba(255,255,255,.08);padding:1rem clamp(1.25rem,4vw,3rem);flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;backdrop-filter:blur(8px);">
-  <p style="font-size:.8rem;color:rgba(255,255,255,.55);margin:0;max-width:680px;">
+<div class="cookie-banner" id="cookieBanner" role="dialog"
+ >
+  <p class="cookie-banner__copy">
     <span lang="en">This site uses essential cookies only. No tracking, no advertising.</span>
     <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.</span>
   </p>
-  <button onclick="this.parentElement.style.display='none';localStorage.setItem('cookieOk','1')"
-    style="flex-shrink:0;padding:.45rem 1.1rem;background:#007A7A;color:#fff;border:none;border-radius:100px;font-size:.75rem;cursor:pointer;">
+  <button class="cookie-banner__button" onclick="this.parentElement.style.display='none';localStorage.setItem('cookieOk','1')"
+   >
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>

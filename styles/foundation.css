@@ -129,14 +129,6 @@ html[data-lang="en"] [lang="es"]{display:none;}
 .btn, .btn-primary, .btn-sec, .cta-btn, [class*="btn-"]:not(.lt-btn):not(.mob-toggle) {
   border-radius: 2px !important;
 }
-a[style*="border-radius:8px"], button[style*="border-radius:8px"],
-a[style*="border-radius: 8px"], button[style*="border-radius: 8px"] {
-  border-radius: 2px !important;
-}
-a[style*="border-radius:6px"], a[style*="border-radius:7px"],
-a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
-  border-radius: 2px !important;
-}
 .site-footer::before{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,122,122,.25),transparent);}
 .footer-grid{max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3rem;}
 @media(max-width:860px){

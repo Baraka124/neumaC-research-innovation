@@ -19,6 +19,7 @@ for f in PAGES:
     try: P().feed(c); check(f'{f} html parse',True)
     except Exception as ex: check(f'{f} html parse',False,str(ex))
     check(f'{f} no embedded <style>', '<style' not in c.lower())
+    check(f'{f} no inline style attributes', not re.search(r'\bstyle\s*=', c, re.I))
     check(f'{f} no retired CSS refs', 'core.css' not in c and 'polish.css' not in c)
     check(f'{f} no embedded base64 images','data:image/png;base64,/9j' not in c)
 
@@ -26,6 +27,15 @@ css_files=sorted(Path('styles').rglob('*.css'))
 for f in css_files:
     c=f.read_text(encoding='utf-8')
     check(f'{f} braces',c.count('{')==c.count('}'))
+    check(f'{f} no style-attribute selectors', not re.search(r'\[style(?:[*^$|~]?=|\])', c, re.I))
+
+# Runtime templates must use the same class-owned presentation model as HTML.
+# Imperative element.style changes used for state/animation are allowed here;
+# literal style= attributes embedded in JS-generated markup are not.
+js_files=sorted(Path('.').glob('*.js'))
+for f in js_files:
+    c=f.read_text(encoding='utf-8')
+    check(f'{f} no generated inline style attributes', not re.search(r'\bstyle\s*=', c, re.I))
 
 # Tokens are the only normal source of global custom properties.
 tokens=Path('styles/tokens.css').read_text(encoding='utf-8')

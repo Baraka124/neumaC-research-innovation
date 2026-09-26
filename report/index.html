@@ -79,12 +79,12 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <!-- ═══ PRIVACY POLICY ═══════════════════════════════════ -->
 <!-- ═══ PHASE 2 · 10: ANNUAL REPORT ═══════════════════════ -->
-<section class="section" id="mainContent" data-hdr="light" style="background:var(--white);padding-top:7rem;">
-  <div class="wrap" style="max-width:880px;">
-    <p class="label" style="margin-bottom:1rem;color:var(--teal,#007A7A);">
+<section class="section report-page" id="mainContent" data-hdr="light">
+  <div class="wrap report-shell">
+    <p class="label report-kicker">
       <span lang="en">Annual Report</span><span lang="es">Memoria Anual</span></p>
-    <h1 class="display-lg" style="margin-bottom:.5rem;">neumACt R&amp;I <span id="rptYear" style="color:var(--teal,#007A7A);">—</span></h1>
-    <p style="font-size:var(--fs-body);color:var(--ink-3);margin:0 0 3.5rem;line-height:1.7;">
+    <h1 class="display-lg report-title">neumACt R&amp;I <span class="report-year" id="rptYear">—</span></h1>
+    <p class="report-intro">
       <span lang="en">Research output of the Servicio de Neumología, CHUAC — generated from live departmental data.</span>
       <span lang="es">Producción investigadora del Servicio de Neumología, CHUAC — generada a partir de datos departamentales en vivo.</span>
     </p>
@@ -96,14 +96,14 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <div class="rpt-stat"><div class="rpt-n" id="rptPubs">—</div><div class="rpt-l"><span lang="en">Publications this year</span><span lang="es">Publicaciones este año</span></div></div>
     </div>
 
-    <h2 class="display-md" style="margin:4rem 0 1.5rem;font-size:var(--fs-h3);">
+    <h2 class="display-md report-section-title">
       <span lang="en">Publications</span><span lang="es">Publicaciones</span></h2>
     <ol class="rpt-pubs" id="rptPubList">
-      <li style="color:var(--ink-4);list-style:none;"><span lang="en">Loading…</span><span lang="es">Cargando…</span></li>
+      <li class="report-loading"><span lang="en">Loading…</span><span lang="es">Cargando…</span></li>
     </ol>
 
-    <p class="rpt-print-note" style="margin-top:3.5rem;">
-      <button onclick="window.print()" class="btn-text" style="border:none;background:none;cursor:pointer;font-size:.9375rem;">
+    <p class="rpt-print-note report-print-note">
+      <button onclick="window.print()" class="btn-text report-print-button">
         <span lang="en">Print / save as PDF →</span><span lang="es">Imprimir / guardar como PDF →</span></button>
     </p>
   </div>
@@ -135,7 +135,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     document.getElementById('rptPubs').textContent = pubs.length;
     var ol = document.getElementById('rptPubList');
     if(!pubs.length){
-      ol.innerHTML = '<li style="list-style:none;color:var(--ink-4);"><span lang="en">No publications recorded for '+year+' yet.</span><span lang="es">Aún no hay publicaciones registradas en '+year+'.</span></li>';
+      ol.innerHTML = '<li class="report-empty"><span lang="en">No publications recorded for '+year+' yet.</span><span lang="es">Aún no hay publicaciones registradas en '+year+'.</span></li>';
       return;
     }
     function esc(s){ var d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML; }
@@ -145,7 +145,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         (p.authors ? '<span class="rp-a">'+esc(p.authors)+'</span>' : '')+'</li>';
     }).join('');
   }).catch(function(){
-    document.getElementById('rptPubList').innerHTML='<li style="list-style:none;color:var(--ink-4);">Data unavailable.</li>';
+    document.getElementById('rptPubList').innerHTML='<li class="report-empty">Data unavailable.</li>';
   });
 })();
 </script>
@@ -167,7 +167,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- INIBIC -->
       <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
         <div class="affil-card-logo">
-          <img src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--inibic" src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">INIBIC</div>
@@ -178,7 +178,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- FINIBIC / Fundación Galega -->
       <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
         <div class="affil-card-logo">
-          <img src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--finibic" src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
@@ -247,7 +247,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <address class="footer-address">
         <strong>Servicio de Neumología · CHUAC</strong>
         As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
-        <a href="/#contact" style="color:rgba(0,179,179,.55);text-decoration:none;margin-top:.5rem;display:inline-block;font-size:.75rem;transition:color .15s;" onmouseover="this.style.color='rgba(0,179,179,.85)'" onmouseout="this.style.color='rgba(0,179,179,.55)'">
+        <a class="footer-enquiry-link" href="/#contact">
           <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>
         </a>
       </address>
@@ -262,10 +262,10 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     </div>
   </div>
 </footer>
-<div class="footer-legal" style="background:var(--navy-footer);max-width:1440px;margin:0 auto;padding:.75rem clamp(1.25rem,4vw,3rem);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.04);">
-  <a href="/privacidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
-  <a href="/accesibilidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
-  <a href="/aviso-legal/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
+<div class="footer-legal">
+  <a class="footer-legal-link" href="/privacidad/"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
+  <a class="footer-legal-link" href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
+  <a class="footer-legal-link" href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
 </div>
 <script>
 if(!localStorage.getItem('cookieOk')){
@@ -273,18 +273,14 @@ if(!localStorage.getItem('cookieOk')){
   if(cb){cb.style.display='flex';}
 }
 </script>
-<div id="cookieBanner" role="dialog" aria-label="Cookie notice"
-  style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;
-         background:rgba(4,44,83,.97);border-top:1px solid rgba(255,255,255,.08);
-         padding:1rem clamp(1.25rem,4vw,3rem);flex-wrap:wrap;align-items:center;
-         justify-content:space-between;gap:1rem;backdrop-filter:blur(8px);">
-  <p style="font-size:.8rem;color:rgba(255,255,255,.55);line-height:1.5;margin:0;max-width:680px;">
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie notice"
+ >
+  <p class="cookie-banner__copy">
     <span lang="en">This site uses essential cookies only. No tracking, no advertising.</span>
     <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.</span>
   </p>
-  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOk','1')"
-    style="flex-shrink:0;padding:.45rem 1.1rem;background:#007A7A;color:#fff;border:none;
-           border-radius:100px;font-size:.75rem;font-weight:500;cursor:pointer;">
+  <button class="cookie-banner__button" onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOk','1')"
+   >
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>

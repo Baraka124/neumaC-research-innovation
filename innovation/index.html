@@ -98,7 +98,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
             <span lang="en">Innovation at the Servicio de Neumología is driven by clinical need — problems encountered daily in the treatment of patients with respiratory disease. Tools are developed with the clinicians who will use them, evaluated within the Fundación Galega de Investigación Biomédica (INIBIC) framework, and measured by their impact on diagnosis and patient outcomes.</span>
             <span lang="es">La innovación en el Servicio de Neumología parte de la necesidad clínica — problemas encontrados a diario en el tratamiento de pacientes con enfermedades respiratorias. Las herramientas se desarrollan con los clínicos que las usarán, se evalúan dentro del marco de la Fundación Galega de Investigación Biomédica (INIBIC) y se miden por su impacto en el diagnóstico y los resultados de los pacientes.</span>
           </p>
-          <div class="hero-actions" style="display:flex;gap:1.75rem;align-items:center;">
+          <div class="hero-actions hero-actions--wide">
             <a href="#projects" class="hero-text-link">
               <span lang="en">Active Projects</span><span lang="es">Proyectos Activos</span> →
             </a>
@@ -163,19 +163,19 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 
 
   <!-- STAT BREAK -->
-  <div style="background:var(--off-white);padding:2rem 0;border-top:1px solid var(--rule-l);">
-    <div style="padding:0 clamp(1.5rem,4vw,5rem);display:flex;align-items:center;gap:3rem;flex-wrap:wrap;">
-      <div style="display:flex;align-items:baseline;gap:.75rem;">
-        <span style="font-family:var(--ff-display);font-size:2.5rem;font-weight:300;color:var(--navy);line-height:1;letter-spacing:-.03em;">4</span>
-        <span style="font-size:.875rem;color:var(--text-on-light-2);">
+  <div class="innovation-process">
+    <div class="innovation-process__inner">
+      <div class="innovation-process__stat">
+        <span class="innovation-process__value">4</span>
+        <span class="innovation-process__label">
           <span lang="en">phases · Insight → Co-development → Validation → Scale</span>
           <span lang="es">fases · Identificación → Codesarrollo → Validación → Escalado</span>
         </span>
       </div>
-      <div style="width:1px;height:32px;background:var(--rule-l);flex-shrink:0;" aria-hidden="true"></div>
-      <div style="display:flex;align-items:baseline;gap:.75rem;">
-        <span style="font-family:var(--ff-display);font-size:2.5rem;font-weight:300;color:var(--navy);line-height:1;letter-spacing:-.03em;">SERGAS</span>
-        <span style="font-size:.875rem;color:var(--text-on-light-2);">
+      <div class="innovation-process__divider" aria-hidden="true"></div>
+      <div class="innovation-process__stat">
+        <span class="innovation-process__value">SERGAS</span>
+        <span class="innovation-process__label">
           <span lang="en">network scale-up pathway</span>
           <span lang="es">vía de escalado en red asistencial</span>
         </span>
@@ -189,7 +189,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <div class="sec-head reveal">
         <p class="label"><span lang="en">Open Collaborations</span><span lang="es">Colaboraciones Abiertas</span></p>
         <h2 class="display lg"><span lang="en">Active projects</span><span lang="es">Proyectos activos</span></h2>
-        <p style="max-width:600px;"><span lang="en">Ongoing initiatives where external partners can contribute technical expertise, co-invest, or provide scale-up capabilities. Current open projects include AIRWAYSCOPE (explainable AI / RAG platform for treatable traits) and CBI-EPOC (corticosteroid burden index platform). Contact us to explore entry points.</span><span lang="es">Iniciativas en curso donde socios externos pueden contribuir experiencia técnica, co-invertir o proporcionar capacidades de escalado. Proyectos abiertos actuales: AIRWAYSCOPE (plataforma IA explicable / RAG para rasgos tratables) y CBI-EPOC (índice de carga corticoidea). Contáctenos para explorar puntos de entrada.</span></p>
+        <p class="projects-intro"><span lang="en">Ongoing initiatives where external partners can contribute technical expertise, co-invest, or provide scale-up capabilities. Current open projects include AIRWAYSCOPE (explainable AI / RAG platform for treatable traits) and CBI-EPOC (corticosteroid burden index platform). Contact us to explore entry points.</span><span lang="es">Iniciativas en curso donde socios externos pueden contribuir experiencia técnica, co-invertir o proporcionar capacidades de escalado. Proyectos abiertos actuales: AIRWAYSCOPE (plataforma IA explicable / RAG para rasgos tratables) y CBI-EPOC (índice de carga corticoidea). Contáctenos para explorar puntos de entrada.</span></p>
       </div>
 
       <!-- api.js replaces these static cards -->
@@ -197,7 +197,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         <!-- Populated by api.js loadProjects() from /api/innovation-projects/website -->
       </div><!-- /#projectsGrid -->
 
-      <div class="text-center" style="margin-top:2rem;">
+      <div class="text-center projects-enquire">
         <a href="#contact" class="btn-cta-solid">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
           <span lang="en">Enquire</span><span lang="es">Contactar</span>
@@ -245,8 +245,8 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     <div class="container">
       <div class="focus-intro">
         <div>
-          <p class="label" style="color:var(--teal-2);opacity:.9;margin-bottom:.625rem;"><span lang="en">Active Research Focus</span><span lang="es">Foco de Investigación Activo</span></p>
-          <h2 class="display lg" style="color:#F5F5F0;">
+          <p class="label innovation-focus__kicker"><span lang="en">Active Research Focus</span><span lang="es">Foco de Investigación Activo</span></p>
+          <h2 class="display lg innovation-focus__title">
             <span lang="en">Technologies We Are<br>Currently Exploring</span>
             <span lang="es">Tecnologías que Estamos<br>Explorando Actualmente</span>
           </h2>
@@ -364,18 +364,18 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <div class="sec-head reveal">
         <p class="label"><span lang="en">Contact</span><span lang="es">Contáctenos</span></p>
         <h2 class="display lg"><span lang="en">Enquiries</span><span lang="es">Contacto</span></h2>
-        <p style="max-width:540px;"><span lang="en">Whether you have a specific project proposal or are simply exploring what's possible.</span><span lang="es">Ya sea que tenga una propuesta específica o esté explorando posibilidades.</span></p>
+        <p class="innovation-contact__intro"><span lang="en">Whether you have a specific project proposal or are simply exploring what's possible.</span><span lang="es">Ya sea que tenga una propuesta específica o esté explorando posibilidades.</span></p>
       </div>
       <div class="contact-layout">
         <div class="contact-info-list reveal">
-          <p style="font-size:.9rem;line-height:1.75;color:var(--text-on-dark-2);max-width:380px;">
+          <p class="contact-direct-note">
             <span lang="en">For urgent enquiries about active trials or partnership opportunities, contact us directly.</span>
             <span lang="es">Para consultas urgentes sobre ensayos activos u oportunidades de colaboración, contáctenos directamente.</span>
           </p>
-          <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.625rem;">
-            <a href="mailto:neumocare@sergas.es" style="color:var(--teal-2);font-size:.9rem;text-decoration:none;">neumocare@sergas.es</a>
-            <a href="tel:+34881111800" style="color:var(--text-on-dark-2);font-size:.875rem;text-decoration:none;">+34 881 111 800</a>
-            <span style="font-size:.8rem;color:var(--text-on-dark-3);">As Xubias, 84 · 15006 A Coruña</span>
+          <div class="contact-direct-list">
+            <a class="contact-direct-email" href="mailto:neumocare@sergas.es">neumocare@sergas.es</a>
+            <a class="contact-direct-phone" href="tel:+34881111800">+34 881 111 800</a>
+            <span class="contact-direct-address">As Xubias, 84 · 15006 A Coruña</span>
           </div>
         </div>
         <div class="reveal reveal-d1">
@@ -393,8 +393,8 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
             </div>
           </div>
           <div class="form-body" id="innovBody">
-            <div class="form-card dark" style="margin-top:.75rem;">
-          <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a proposal</span><span lang="es">Enviar una propuesta</span></h3>
+            <div class="form-card dark space-top-sm">
+          <h3 class="display sm form-card__title"><span lang="en">Send a proposal</span><span lang="es">Enviar una propuesta</span></h3>
           <form id="innovForm">
             <div class="form-grid">
               <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" name="organisation" placeholder="Company / Institution" required /></div>
@@ -424,7 +424,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
                 </select>
               </div>
               <div class="form-group span-2"><label><span lang="en">Brief Project Description</span><span lang="es">Descripción Breve del Proyecto</span></label><textarea name="message" rows="4" placeholder="Describe your technology, current development stage, and what you're looking for from neumACt R&I…"></textarea></div>
-              <div class="form-group span-2" style="margin-bottom:0;">
+              <div class="form-group span-2 form-group--flush">
                 <button type="submit" class="form-submit"><span lang="en">Submit Proposal</span><span lang="es">Enviar Propuesta</span>
                 </button>
               </div>
@@ -454,7 +454,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- INIBIC -->
       <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
         <div class="affil-card-logo">
-          <img src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--inibic" src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">INIBIC</div>
@@ -465,7 +465,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- FINIBIC / Fundación Galega -->
       <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
         <div class="affil-card-logo">
-          <img src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--finibic" src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
@@ -534,7 +534,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <address class="footer-address">
         <strong>Servicio de Neumología · CHUAC</strong>
         As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
-        <a href="/#contact" style="color:rgba(0,179,179,.55);text-decoration:none;margin-top:.5rem;display:inline-block;font-size:.75rem;transition:color .15s;" onmouseover="this.style.color='rgba(0,179,179,.85)'" onmouseout="this.style.color='rgba(0,179,179,.55)'">
+        <a class="footer-enquiry-link" href="/#contact">
           <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>
         </a>
       </address>
@@ -549,11 +549,11 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     </div>
   </div>
 </footer>
-<div class="footer-legal" style="background:var(--navy-footer);max-width:1440px;margin:0 auto;padding:.75rem clamp(1.25rem,4vw,3rem);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.04);">
-  <a href="/privacidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
-  <a href="/accesibilidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
-  <a href="/aviso-legal/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
-  <span style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-left:auto;"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
+<div class="footer-legal">
+  <a class="footer-legal-link" href="/privacidad/"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
+  <a class="footer-legal-link" href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
+  <a class="footer-legal-link" href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
+  <span class="footer-accreditation"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
 </div>
 
   <script>
@@ -685,14 +685,14 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 
 <script src="../animations.js" defer></script>
 <script src="../api.js" defer></script>
-<div id="cookieBanner" role="dialog"
-  style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(4,44,83,.97);border-top:1px solid rgba(255,255,255,.08);padding:1rem clamp(1.25rem,4vw,3rem);flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;backdrop-filter:blur(8px);">
-  <p style="font-size:.8rem;color:rgba(255,255,255,.55);margin:0;max-width:680px;">
+<div class="cookie-banner" id="cookieBanner" role="dialog"
+ >
+  <p class="cookie-banner__copy">
     <span lang="en">This site uses essential cookies only. No tracking, no advertising.</span>
     <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.</span>
   </p>
-  <button onclick="this.parentElement.style.display='none';localStorage.setItem('cookieOk','1')"
-    style="flex-shrink:0;padding:.45rem 1.1rem;background:#007A7A;color:#fff;border:none;border-radius:100px;font-size:.75rem;cursor:pointer;">
+  <button class="cookie-banner__button" onclick="this.parentElement.style.display='none';localStorage.setItem('cookieOk','1')"
+   >
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>

@@ -88,9 +88,9 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     </div><div class="mob-lang" role="radiogroup" aria-label="Language / Idioma"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" role="radio" aria-checked="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" role="radio" aria-checked="false">ES</button></div></nav>
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <section class="hero" id="top">
-    <div class="container" style="padding-bottom:0;">
+    <div class="container clinical-hero__container">
       <div class="hero-inner">
-        <div style="padding-bottom:3rem;">
+        <div class="clinical-hero__copy">
           <h1 class="display xl hero-title">
             <span lang="en">Respiratory medicine,<br>systematically investigated.</span>
             <span lang="es">Medicina respiratoria,<br>investigada con rigor.</span>
@@ -99,7 +99,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
             <span lang="en">The Servicio de Neumología at CHUAC covers the full spectrum of pulmonary and thoracic medicine — from lung transplantation and pulmonary arterial hypertension to interventional pneumology, thoracic surgery, sleep medicine, and precision phenotyping. Active clinical trials in all areas, within the Fundación Galega de Investigación Biomédica (INIBIC) framework.</span>
             <span lang="es">El Servicio de Neumología del CHUAC cubre el espectro completo de la medicina pulmonar y torácica — desde el trasplante pulmonar y la hipertensión arterial pulmonar hasta la neumología intervencionista, la cirugía torácica, la medicina del sueño y la fenotipificación de precisión. Ensayos clínicos activos en todas las áreas, dentro del marco de la Fundación Galega de Investigación Biomédica (INIBIC).</span>
           </p>
-          <div class="hero-actions" style="display:flex;gap:1.75rem;align-items:center;">
+          <div class="hero-actions hero-actions--wide">
             <a href="#research-lines" class="hero-text-link">
               <span lang="en">Research Lines</span><span lang="es">Ver Líneas</span> →
             </a>
@@ -109,7 +109,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
           </div>
         </div>
         <!-- Right stats panel -->
-        <div class="hero-stats reveal reveal-d2" style="margin-bottom:3rem;">
+        <div class="hero-stats reveal reveal-d2 hero-stats--spaced">
           <div class="hstat"><div class="hstat-num" data-counter="6">6</div><div class="hstat-label"><span lang="en">Specialized Research Lines</span><span lang="es">Líneas de Investigación</span></div></div>
           <div class="hstat"><div class="hstat-num" data-counter="10+">10+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Studies</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
           <div class="hstat"><div class="hstat-num" data-counter="6">6</div><div class="hstat-label"><span lang="en">Specialist Coordinators</span><span lang="es">Coordinadores Especialistas</span></div></div>
@@ -118,7 +118,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       </div>
     </div>
     <!-- Stat strip — integrated into hero, full width -->
-    <div class="hero-strip" style="background:var(--navy-2);border-top:1px solid var(--rule-d);">
+    <div class="hero-strip hero-strip--research">
       <div class="container">
         <div class="hero-strip-inner">
           <div class="hstrip-item">
@@ -159,91 +159,91 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
            failures with an actual error state, not a fake-looking card. -->
       <div class="line-card">
         <div class="line-head">
-          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
-          <div class="line-meta" style="flex:1;">
-            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
-            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          <div class="api-skeleton api-skeleton--line-icon"></div>
+          <div class="line-meta line-meta--fluid">
+            <div class="api-skeleton api-skeleton--line-kicker"></div>
+            <div class="api-skeleton api-skeleton--line-title"></div>
           </div>
         </div>
         <div class="line-tags-preview">
-          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton api-skeleton--pill-lg"></div>
+          <div class="api-skeleton api-skeleton--pill-sm"></div>
+          <div class="api-skeleton api-skeleton--pill-xl"></div>
         </div>
       </div>
 
       <div class="line-card">
         <div class="line-head">
-          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
-          <div class="line-meta" style="flex:1;">
-            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
-            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          <div class="api-skeleton api-skeleton--line-icon"></div>
+          <div class="line-meta line-meta--fluid">
+            <div class="api-skeleton api-skeleton--line-kicker"></div>
+            <div class="api-skeleton api-skeleton--line-title"></div>
           </div>
         </div>
         <div class="line-tags-preview">
-          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton api-skeleton--pill-lg"></div>
+          <div class="api-skeleton api-skeleton--pill-sm"></div>
+          <div class="api-skeleton api-skeleton--pill-xl"></div>
         </div>
       </div>
 
       <div class="line-card">
         <div class="line-head">
-          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
-          <div class="line-meta" style="flex:1;">
-            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
-            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          <div class="api-skeleton api-skeleton--line-icon"></div>
+          <div class="line-meta line-meta--fluid">
+            <div class="api-skeleton api-skeleton--line-kicker"></div>
+            <div class="api-skeleton api-skeleton--line-title"></div>
           </div>
         </div>
         <div class="line-tags-preview">
-          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton api-skeleton--pill-lg"></div>
+          <div class="api-skeleton api-skeleton--pill-sm"></div>
+          <div class="api-skeleton api-skeleton--pill-xl"></div>
         </div>
       </div>
 
       <div class="line-card">
         <div class="line-head">
-          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
-          <div class="line-meta" style="flex:1;">
-            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
-            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          <div class="api-skeleton api-skeleton--line-icon"></div>
+          <div class="line-meta line-meta--fluid">
+            <div class="api-skeleton api-skeleton--line-kicker"></div>
+            <div class="api-skeleton api-skeleton--line-title"></div>
           </div>
         </div>
         <div class="line-tags-preview">
-          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton api-skeleton--pill-lg"></div>
+          <div class="api-skeleton api-skeleton--pill-sm"></div>
+          <div class="api-skeleton api-skeleton--pill-xl"></div>
         </div>
       </div>
 
       <div class="line-card">
         <div class="line-head">
-          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
-          <div class="line-meta" style="flex:1;">
-            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
-            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          <div class="api-skeleton api-skeleton--line-icon"></div>
+          <div class="line-meta line-meta--fluid">
+            <div class="api-skeleton api-skeleton--line-kicker"></div>
+            <div class="api-skeleton api-skeleton--line-title"></div>
           </div>
         </div>
         <div class="line-tags-preview">
-          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton api-skeleton--pill-lg"></div>
+          <div class="api-skeleton api-skeleton--pill-sm"></div>
+          <div class="api-skeleton api-skeleton--pill-xl"></div>
         </div>
       </div>
 
       <div class="line-card">
         <div class="line-head">
-          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
-          <div class="line-meta" style="flex:1;">
-            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
-            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          <div class="api-skeleton api-skeleton--line-icon"></div>
+          <div class="line-meta line-meta--fluid">
+            <div class="api-skeleton api-skeleton--line-kicker"></div>
+            <div class="api-skeleton api-skeleton--line-title"></div>
           </div>
         </div>
         <div class="line-tags-preview">
-          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
-          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton api-skeleton--pill-lg"></div>
+          <div class="api-skeleton api-skeleton--pill-sm"></div>
+          <div class="api-skeleton api-skeleton--pill-xl"></div>
         </div>
       </div>
 
@@ -253,11 +253,11 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 
 
   <!-- STAT BREAK — typographic moment -->
-  <div style="background:var(--navy);padding:3.5rem 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);">
-    <div style="padding:0 clamp(1.5rem,4vw,5rem);display:flex;align-items:baseline;gap:1.5rem;flex-wrap:wrap;">
-      <span style="font-family:var(--ff-display);font-size:clamp(3.5rem,8vw,6rem);font-weight:300;color:#fff;line-height:1;letter-spacing:-.03em;" id="statTrialsBig">10+</span>
+  <div class="study-summary">
+    <div class="study-summary__inner">
+      <span class="study-summary__value" id="statTrialsBig">10+</span>
       <div>
-        <div style="font-family:var(--ff-body);font-size:1rem;color:rgba(255,255,255,.75);font-weight:400;line-height:1.5;">
+        <div class="study-summary__copy">
           <span lang="en">active and recruiting clinical studies<br>across six research lines · INIBIC-backed · GCP-compliant</span>
           <span lang="es">estudios clínicos activos y en reclutamiento<br>en seis especialidades · respaldados por el INIBIC</span>
         </div>
@@ -321,8 +321,8 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 
       <div class="trials-count-bar reveal">
         <span><strong id="studiesCount">—</strong> <span lang="en">studies</span><span lang="es">estudios</span></span>
-        <a href="#contact" class="btn-primary" style="font-size:.75rem;padding:.4rem .875rem;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+        <a href="#contact" class="btn-primary btn--compact">
+          <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
           <span lang="en">Download dossier</span><span lang="es">Descargar dossier</span>
         </a>
       </div>
@@ -342,21 +342,21 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
             </thead>
             <!-- api.js renders rows here -->
             <tbody id="studiesBody">
-              <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-muted);font-family:var(--ff-mono);font-size:.8125rem;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:24px;height:24px;margin:0 auto .75rem;display:block;opacity:.3;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
+              <tr><td class="studies-table__loading" colspan="6">
+                <svg class="icon icon--loading" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
                 <span lang="en">Loading studies from database…</span><span lang="es">Cargando estudios de la base de datos…</span>
               </td></tr>
             </tbody>
           </table>
           <div class="trials-footer">
             <div>
-              <div class="trials-footer-info"><span lang="en">Showing <strong id="studiesShown" style="color:var(--teal-2);">—</strong> studies from live database</span><span lang="es">Mostrando <strong id="studiesShownEs" style="color:var(--teal-2);">—</strong> ensayos de la base de datos en vivo</span></div>
+              <div class="trials-footer-info"><span lang="en">Showing <strong class="studies-count" id="studiesShown">—</strong> studies from live database</span><span lang="es">Mostrando <strong class="studies-count" id="studiesShownEs">—</strong> ensayos de la base de datos en vivo</span></div>
               <div class="trials-footer-db">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
                 <span lang="en">Full portfolio managed in neumACt research system</span><span lang="es">Portfolio completo gestionado en el sistema de investigación neumAC I+I</span>
               </div>
             </div>
-            <a href="#contact" class="btn-ghost" style="font-size:.75rem;padding:.4rem .875rem;"><span lang="en">Download dossier</span><span lang="es">Descargar dossier Completo</span></a>
+            <a href="#contact" class="btn-ghost btn--compact"><span lang="en">Download dossier</span><span lang="es">Descargar dossier Completo</span></a>
           </div>
         </div>
       </div>
@@ -368,27 +368,27 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
        line.html hero. No unique value here, only repetition. -->
 
   <!-- TRIAL DETAIL MODAL -->
-  <div id="trialModal" style="display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;padding:1rem;">
-    <div id="trialModalOverlay" style="position:absolute;inset:0;background:rgba(5,12,26,.82);backdrop-filter:blur(6px);" onclick="closeTrialModal()"></div>
-    <div id="trialModalBox" style="position:relative;z-index:1;background:var(--white);border-radius:var(--r-lg);max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.35);">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:1.75rem 2rem 1.25rem;border-bottom:1px solid var(--rule-l);">
+  <div class="trial-modal" id="trialModal">
+    <div class="trial-modal__overlay" id="trialModalOverlay" onclick="closeTrialModal()"></div>
+    <div class="trial-modal__dialog" id="trialModalBox">
+      <div class="trial-modal__header">
         <div>
-          <div id="tmProtocol" style="font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.375rem;"></div>
-          <h3 id="tmTitle" style="font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:var(--text-on-light);line-height:1.3;max-width:480px;"></h3>
+          <div class="trial-modal__protocol" id="tmProtocol"></div>
+          <h3 class="trial-modal__title" id="tmTitle"></h3>
         </div>
-        <button onclick="closeTrialModal()" style="background:var(--light-grey);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1rem;margin-top:.2rem;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:14px;height:14px;"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <button class="trial-modal__icon-close" onclick="closeTrialModal()">
+          <svg class="icon icon--md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
       </div>
-      <div style="padding:1.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;" id="tmMeta"></div>
-      <div id="tmRegistry" style="display:none;padding:0 2rem 1rem;"></div>
-      <div id="tmDesc" style="padding:0 2rem 1rem;font-size:.9375rem;line-height:1.75;color:var(--text-on-light-2);display:none;"></div>
-      <div style="padding:1.25rem 2rem;border-top:1px solid var(--rule-l);display:flex;gap:.75rem;flex-wrap:wrap;">
-        <a href="#contact" onclick="closeTrialModal()" class="btn-primary" style="font-size:.8125rem;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:13px;height:13px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+      <div class="trial-modal__meta" id="tmMeta"></div>
+      <div class="trial-modal__registry" id="tmRegistry"></div>
+      <div class="trial-modal__description" id="tmDesc"></div>
+      <div class="trial-modal__actions">
+        <a href="#contact" onclick="closeTrialModal()" class="btn-primary btn--small">
+          <svg class="icon icon--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
           <span lang="en">Download dossier</span><span lang="es">Descargar dossier</span>
         </a>
-        <button onclick="closeTrialModal()" style="background:none;border:1.5px solid var(--rule-l);border-radius:var(--r-md);padding:.5rem 1rem;font-size:.8125rem;font-weight:500;cursor:pointer;color:var(--ink-2);">
+        <button class="trial-modal__secondary-close" onclick="closeTrialModal()">
           <span lang="en">Close</span><span lang="es">Cerrar</span>
         </button>
       </div>
@@ -401,18 +401,18 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <div class="sec-head reveal">
         <p class="label"><span lang="en">Servicio de Neumología · CHUAC · A Coruña</span><span lang="es">Servicio de Neumología · CHUAC · A Coruña</span></p>
         <h2 class="display lg"><span lang="en">Enquiries</span><span lang="es">Contacto</span></h2>
-        <p style="max-width:560px;"><span lang="en">For clinical trial collaboration, academic partnerships, or enquiries about active studies — contact us directly.</span><span lang="es">Para colaboración en ensayos clínicos, asociaciones académicas o consultas sobre estudios activos, contáctenos directamente.</span></p>
+        <p class="contact-copy--wide"><span lang="en">For clinical trial collaboration, academic partnerships, or enquiries about active studies — contact us directly.</span><span lang="es">Para colaboración en ensayos clínicos, asociaciones académicas o consultas sobre estudios activos, contáctenos directamente.</span></p>
       </div>
       <div class="contact-layout">
         <div class="contact-info-list reveal">
-          <p style="font-size:.9rem;line-height:1.75;color:var(--text-on-dark-2);max-width:380px;">
+          <p class="contact-direct-note">
             <span lang="en">For urgent enquiries about active studies or partnership opportunities, contact us directly.</span>
             <span lang="es">Para consultas urgentes sobre ensayos activos u oportunidades de colaboración, contáctenos directamente.</span>
           </p>
-          <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.625rem;">
-            <a href="mailto:neumocare@sergas.es" style="color:var(--teal-2);font-size:.9rem;text-decoration:none;">neumocare@sergas.es</a>
-            <a href="tel:+34881111800" style="color:var(--text-on-dark-2);font-size:.875rem;text-decoration:none;">+34 881 111 800</a>
-            <span style="font-size:.8rem;color:var(--text-on-dark-3);">As Xubias, 84 · 15006 A Coruña</span>
+          <div class="contact-direct-list">
+            <a class="contact-direct-email" href="mailto:neumocare@sergas.es">neumocare@sergas.es</a>
+            <a class="contact-direct-phone" href="tel:+34881111800">+34 881 111 800</a>
+            <span class="contact-direct-address">As Xubias, 84 · 15006 A Coruña</span>
           </div>
         </div>
         <div class="reveal reveal-d1">
@@ -430,8 +430,8 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
             </div>
           </div>
           <div class="form-body" id="clinBody">
-            <div class="form-card dark" style="margin-top:.75rem;">
-          <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a message</span><span lang="es">Enviar un mensaje</span></h3>
+            <div class="form-card dark space-top-sm">
+          <h3 class="display sm form-card__title"><span lang="en">Send a message</span><span lang="es">Enviar un mensaje</span></h3>
           <form id="researchForm">
             <div class="form-grid">
               <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" name="organisation" placeholder="Pharma Corp, University…" required /></div>
@@ -463,7 +463,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
                 </select>
               </div>
               <div class="form-group span-2"><label><span lang="en">Message</span><span lang="es">Mensaje</span></label><textarea name="message" rows="4" placeholder="Please describe your inquiry or project in brief…"></textarea></div>
-              <div class="form-group span-2" style="margin-bottom:0;">
+              <div class="form-group span-2 form-group--flush">
                 <button type="submit" class="form-submit"><span lang="en">Submit Inquiry</span><span lang="es">Enviar Consulta</span>
                 </button>
               </div>
@@ -493,7 +493,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- INIBIC -->
       <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
         <div class="affil-card-logo">
-          <img src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--inibic" src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">INIBIC</div>
@@ -504,7 +504,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- FINIBIC / Fundación Galega -->
       <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
         <div class="affil-card-logo">
-          <img src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--finibic" src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
@@ -573,7 +573,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <address class="footer-address">
         <strong>Servicio de Neumología · CHUAC</strong>
         As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
-        <a href="/#contact" style="color:rgba(0,179,179,.55);text-decoration:none;margin-top:.5rem;display:inline-block;font-size:.75rem;transition:color .15s;" onmouseover="this.style.color='rgba(0,179,179,.85)'" onmouseout="this.style.color='rgba(0,179,179,.55)'">
+        <a class="footer-enquiry-link" href="/#contact">
           <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>
         </a>
       </address>
@@ -588,11 +588,11 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     </div>
   </div>
 </footer>
-<div class="footer-legal" style="background:var(--navy-footer);max-width:1440px;margin:0 auto;padding:.75rem clamp(1.25rem,4vw,3rem);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.04);">
-  <a href="/privacidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
-  <a href="/accesibilidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
-  <a href="/aviso-legal/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
-  <span style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-left:auto;"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
+<div class="footer-legal">
+  <a class="footer-legal-link" href="/privacidad/"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
+  <a class="footer-legal-link" href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
+  <a class="footer-legal-link" href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
+  <span class="footer-accreditation"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
 </div>
 
   <script>
@@ -737,14 +737,14 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 </script>
 <script src="../animations.js" defer></script>
 <script src="../api.js" defer></script>
-<div id="cookieBanner" role="dialog"
-  style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(4,44,83,.97);border-top:1px solid rgba(255,255,255,.08);padding:1rem clamp(1.25rem,4vw,3rem);flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;backdrop-filter:blur(8px);">
-  <p style="font-size:.8rem;color:rgba(255,255,255,.55);margin:0;max-width:680px;">
+<div class="cookie-banner" id="cookieBanner" role="dialog"
+ >
+  <p class="cookie-banner__copy">
     <span lang="en">This site uses essential cookies only. No tracking, no advertising.</span>
     <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.</span>
   </p>
-  <button onclick="this.parentElement.style.display='none';localStorage.setItem('cookieOk','1')"
-    style="flex-shrink:0;padding:.45rem 1.1rem;background:#007A7A;color:#fff;border:none;border-radius:100px;font-size:.75rem;cursor:pointer;">
+  <button class="cookie-banner__button" onclick="this.parentElement.style.display='none';localStorage.setItem('cookieOk','1')"
+   >
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>

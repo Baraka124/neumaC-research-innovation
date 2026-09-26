@@ -87,11 +87,11 @@ function setLoading(el, rows = 3, dark = false) {
   // tbody only accepts tr elements — use tr/td skeleton for tables
   if (el.tagName === 'TBODY') {
     el.innerHTML = Array(rows).fill(
-      `<tr>${Array(6).fill(`<td><div class="${cls}" style="height:14px;border-radius:3px;"></div></td>`).join('')}</tr>`
+      `<tr>${Array(6).fill(`<td><div class="${cls} api-skeleton--table-cell"></div></td>`).join('')}</tr>`
     ).join('');
   } else {
     el.innerHTML = Array(rows).fill(
-      `<div class="${cls}" style="height:52px;margin-bottom:2px;"></div>`
+      `<div class="${cls} api-skeleton--row"></div>`
     ).join('');
   }
 }
@@ -126,7 +126,7 @@ function showApiDownBanner() {
   b.innerHTML =
     '<span lang="en">Live data is temporarily unavailable — page content may be incomplete. Please try again shortly.</span>' +
     '<span lang="es">Los datos en vivo no están disponibles temporalmente; el contenido puede estar incompleto. Inténtelo de nuevo en breve.</span>' +
-    '<button aria-label="Dismiss" onclick="this.parentNode.remove()" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.7);font-size:1.1rem;cursor:pointer;line-height:1;">×</button>';
+    '<button class="api-notice__dismiss" aria-label="Dismiss" onclick="this.parentNode.remove()">×</button>';
   document.body.appendChild(b);
 }
 
@@ -247,11 +247,11 @@ async function loadResearchLines() {
     if (indexGrid) {
       // Skeleton — light section
       indexGrid.innerHTML = Array(6).fill(
-        `<div class="line-card" style="pointer-events:none;">
-           <div class="api-skeleton" style="width:1.75rem;height:.9rem;margin-top:.2rem;margin-right:1.25rem;flex-shrink:0;"></div>
-           <div style="flex:1;">
-             <div class="api-skeleton" style="height:.9rem;width:80%;margin-bottom:.5rem;"></div>
-             <div class="api-skeleton" style="height:.7rem;width:45%;"></div>
+        `<div class="line-card is-noninteractive">
+           <div class="api-skeleton api-skeleton--line-index"></div>
+           <div class="flex-1">
+             <div class="api-skeleton api-skeleton--line-title"></div>
+             <div class="api-skeleton api-skeleton--line-meta"></div>
            </div>
          </div>`
       ).join('');
@@ -269,7 +269,7 @@ async function loadResearchLines() {
         let coordBlock = '';
         if (coord?.full_name) {
           const avatar = buildAvatar(coord, 22);
-          coordBlock = `<div class="line-coord" style="display:flex;align-items:center;gap:.5rem;">${avatar}<span>${escHtml(coord.full_name)}</span></div>`;
+          coordBlock = `<div class="line-coord line-coord--inline">${avatar}<span>${escHtml(coord.full_name)}</span></div>`;
         }
         return `
           <a href="/line/?id=${line.id}" class="line-card reveal">
@@ -281,7 +281,7 @@ async function loadResearchLines() {
               ${trialBadge ? `<div class="line-meta">${trialBadge}</div>` : ''}
             </div>
             <div class="line-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;">
+              <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </div>
@@ -351,8 +351,8 @@ async function loadResearchLines() {
           <div class="line-body">
             <div class="line-body-inner">
               ${line.description  ? `<p class="line-desc">${escHtml(line.description)}</p>` : ''}
-              ${line.capabilities ? `<p class="line-desc" style="margin-top:.5rem;">${escHtml(line.capabilities)}</p>` : ''}
-              <a href="/line/?id=${line.id}" class="btn-text" style="display:inline-flex;margin-top:.875rem;"><span lang="en">View full line page</span><span lang="es">Ver página completa de la línea</span> →</a>
+              ${line.capabilities ? `<p class="line-desc line-desc--spaced">${escHtml(line.capabilities)}</p>` : ''}
+              <a href="/line/?id=${line.id}" class="btn-text btn-text--line-detail"><span lang="en">View full line page</span><span lang="es">Ver página completa de la línea</span> →</a>
             </div>
           </div>
         </div>`
@@ -406,7 +406,7 @@ async function loadTrials(filters = {}) {
 
     if (!trials.length) {
       tbody.innerHTML = `
-        <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-on-light-3,#767676);font-size:.875rem;font-family:var(--ff-mono,monospace);">
+        <tr><td class="table-empty-state" colspan="6">
           <span lang="en">No studies match the current filters.</span>
           <span lang="es">No hay ensayos con los filtros actuales.</span>
         </td></tr>`;
@@ -418,11 +418,11 @@ async function loadTrials(filters = {}) {
       const statusClass = STATUS_CLASS[t.status] || 'active';
       const allLines = [t.research_line, ...(t.additional_lines || [])].filter(Boolean);
       const lineCell = allLines.length
-        ? allLines.slice(0, 2).map(l => `<span class="trial-line-tag" title="${escHtml(l.name)}" style="margin-right:4px;">L${String(l.line_number).padStart(2,'0')} · ${escHtml(l.short_name || l.name)}</span>`).join('') +
+        ? allLines.slice(0, 2).map(l => `<span class="trial-line-tag trial-line-tag--spaced" title="${escHtml(l.name)}">L${String(l.line_number).padStart(2,'0')} · ${escHtml(l.short_name || l.name)}</span>`).join('') +
           (allLines.length > 2 ? `<span class="trial-line-tag" title="${escHtml(allLines.slice(2).map(l => l.name).join(', '))}">+${allLines.length - 2}</span>` : '')
         : '<span class="trial-line-tag">—</span>';
       return `
-        <tr onclick="openTrialModal('${t.id}')" style="cursor:pointer;" title="Click for details">
+        <tr class="is-clickable" onclick="openTrialModal('${t.id}')" title="Click for details">
           <td><span class="trial-protocol">${escHtml(t.protocol_id)}</span></td>
           <td><span class="trial-title">${escHtml(t.title)}</span></td>
           <td>${lineCell}</td>
@@ -434,8 +434,8 @@ async function loadTrials(filters = {}) {
             </span>
           </td>
           <td>${t.sponsor_name
-            ? `<span style="font-size:.75rem;color:var(--text-on-light-3,#767676);font-family:var(--ff-mono,monospace);">${escHtml(t.sponsor_name)}</span>`
-            : `<span style="color:var(--text-on-light-3,#767676)">—</span>`
+            ? `<span class="trial-sponsor">${escHtml(t.sponsor_name)}</span>`
+            : `<span class="text-muted">—</span>`
           }</td>
         </tr>`;
     }).join('');
@@ -562,10 +562,10 @@ async function loadNews(filters = {}) {
   // New blog page has its own skeleton (#feedSkeleton) — only inject if old layout
   if (!document.getElementById('feedSkeleton')) {
     feed.innerHTML = Array(4).fill('').map((_, i) => `
-      <div style="padding:1.5rem;border-bottom:1px solid rgba(0,0,0,.07);opacity:${1 - i * 0.15}">
-        <div class="api-skeleton" style="width:60px;height:12px;margin-bottom:12px;border-radius:3px;"></div>
-        <div class="api-skeleton" style="width:85%;height:16px;margin-bottom:8px;border-radius:3px;animation-delay:${i * 0.07}s;"></div>
-        <div class="api-skeleton" style="width:50%;height:11px;border-radius:3px;animation-delay:${i * 0.07 + 0.05}s;"></div>
+      <div class="news-api-skeleton-row news-api-skeleton-row--${i}">
+        <div class="api-skeleton api-skeleton--story-kicker"></div>
+        <div class="api-skeleton api-skeleton--story-title api-skeleton--delay-${i}"></div>
+        <div class="api-skeleton api-skeleton--story-copy api-skeleton--delay-${i}"></div>
       </div>`).join('');
   }
 
@@ -626,7 +626,7 @@ async function loadTeamLeads() {
       const isAffiliated = m.is_external;
       const leadInitialsId = 'lav' + Math.random().toString(36).slice(2, 9);
       const avatarArea = m.public_photo_url
-        ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${leadInitialsId}').style.display='inline';"/><span id="${leadInitialsId}" class="lead-initials" style="display:none;">${initials}</span>`
+        ? `<img class="media-cover" src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" loading="lazy" onerror="this.style.display='none';document.getElementById('${leadInitialsId}').style.display='inline';"/><span id="${leadInitialsId}" class="lead-initials is-hidden">${initials}</span>`
         : `<span class="lead-initials">${initials}</span>`;
 
       // Research-focus tags only — role/seniority (Chief, PI) moved to the
@@ -672,13 +672,13 @@ async function loadTeamLeads() {
                  <span class="lp-title-inline">${escHtml(p.title)}</span>
                  ${p.doi ? `<a href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener" class="lp-doi-inline">DOI →</a>` : ''}
                </div>`).join('')}
-             ${pubCount > pubs.length ? `<a href="/news" class="ls-link" style="display:inline-block;margin-top:.5rem;"><span lang="en">+${pubCount - pubs.length} more →</span><span lang="es">+${pubCount - pubs.length} más →</span></a>` : ''}
+             ${pubCount > pubs.length ? `<a href="/news" class="ls-link ls-link--more"><span lang="en">+${pubCount - pubs.length} more →</span><span lang="es">+${pubCount - pubs.length} más →</span></a>` : ''}
            </div>`
         : '';
 
       const partnerNote = m.seeking_partner
-        ? `<a href="/innovation" class="ls-link" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.625rem;">
-             <span class="ls-dot" style="background:#d97706;"></span>
+        ? `<a href="/innovation" class="ls-link ls-link--project">
+             <span class="ls-dot ls-dot--amber"></span>
              <span lang="en">Seeking innovation partner</span><span lang="es">Buscando socio innovador</span> →
            </a>`
         : '';
@@ -805,7 +805,7 @@ async function loadTeamConstellation() {
     });
 
     host.innerHTML = `
-    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">
+    <svg class="chart-svg" viewBox="0 0 ${W} ${H}">
       <style>
         .const-edge{stroke:rgba(255,255,255,.14);stroke-width:1;transition:stroke .25s;}
         .const-hub circle{fill:rgba(0,179,179,.14);stroke:#00B3B3;stroke-width:1.4;transition:fill .25s;}
@@ -861,9 +861,9 @@ async function loadTeamGroup() {
     grid.innerHTML = group.map(m => {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const role = roleLabel[m.staff_type] || m.staff_type;
-      return `<div class="team-member" onclick="openProfileModal('${escHtml(m.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfileModal('${escHtml(m.id)}');}" style="cursor:pointer;" tabindex="0" role="button" aria-label="View profile for ${escHtml(m.full_name)}">
-        <div class="tm-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" loading="lazy"/>` : initials}</div>
-        <div style="min-width:0;">
+      return `<div class="team-member is-clickable" onclick="openProfileModal('${escHtml(m.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfileModal('${escHtml(m.id)}');}" tabindex="0" role="button" aria-label="View profile for ${escHtml(m.full_name)}">
+        <div class="tm-avatar">${m.public_photo_url ? `<img class="media-cover media-cover--circle" src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" loading="lazy"/>` : initials}</div>
+        <div class="min-w-0">
           <div class="tm-name">${escHtml(m.display_name || m.full_name)}</div>
           <div class="tm-role">${escHtml(role)}</div>
           ${m.specialization ? `<div class="tm-spec">${escHtml(m.specialization)}</div>` : ''}
@@ -887,17 +887,17 @@ function openProfileModal(staffId) {
   const role = roleLabel[m.staff_type] || m.staff_type;
   const avatar = buildAvatar(m, 72);
   content.innerHTML = `
-    <div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">
+    <div class="profile-summary">
       ${avatar}
       <div>
-        <p style="font-weight:600;font-size:1.0625rem;margin:0;">${escHtml(m.display_name || m.full_name)}</p>
-        <p style="font-size:.875rem;color:var(--ink-3);margin:2px 0 0;">${escHtml(role)}</p>
-        ${m.specialization ? `<p style="font-size:.8125rem;color:var(--ink-4);margin:2px 0 0;font-family:var(--ff-mono);">${escHtml(m.specialization)}</p>` : ''}
+        <p class="profile-summary__name">${escHtml(m.display_name || m.full_name)}</p>
+        <p class="profile-summary__role">${escHtml(role)}</p>
+        ${m.specialization ? `<p class="profile-summary__specialization">${escHtml(m.specialization)}</p>` : ''}
       </div>
     </div>
     ${m.public_bio
-      ? `<p style="font-size:.9375rem;line-height:1.65;color:var(--ink-2);margin:0;">${escHtml(m.public_bio)}</p>`
-      : `<p style="font-size:.875rem;color:var(--ink-4);font-style:italic;margin:0;border-top:1px dashed var(--border-l);padding-top:1rem;">Bio not yet added.</p>`}
+      ? `<p class="profile-summary__bio">${escHtml(m.public_bio)}</p>`
+      : `<p class="profile-summary__bio profile-summary__bio--empty">Bio not yet added.</p>`}
     ${(m.orcid_id || m.scholar_url || m.researchgate_url) ? `
     <div class="scholar-links">
       ${m.orcid_id ? `<a href="https://orcid.org/${escHtml(String(m.orcid_id).trim())}" target="_blank" rel="noopener" class="scholar-link scholar-orcid"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zM7.4 18.4H5.5V7.6h1.9v10.8zM6.4 6.3a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zm12.3 12.1h-1.9v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8v5.4H11V7.6h1.8v1.5h.03c.25-.48.87-1 1.8-1 1.9 0 2.3 1.27 2.3 2.9v5.4z"/></svg><span>ORCID <span class="scholar-id">${escHtml(String(m.orcid_id).trim())}</span></span></a>` : ''}
@@ -927,7 +927,7 @@ async function loadTeam() {
   try {
     const { data } = await apiFetch('/api/team/website');
     const members = (data || []).filter(m => !m.coordinates_line);
-    if (!members.length) { grid.innerHTML='<p style="padding:2rem;color:#6B6B6B;font-size:.875rem;">Team information coming soon.</p>'; return; }
+    if (!members.length) { grid.innerHTML='<p class="team-empty-state">Team information coming soon.</p>'; return; }
     grid.style.transition = 'none';
     grid.style.opacity = '0';
     grid.innerHTML = members.map(m => {
@@ -935,17 +935,17 @@ async function loadTeam() {
       const lineTag = m.coordinates_line ? `<span class="tca-line">L${String(m.coordinates_line.line_number).padStart(2,'0')} — ${escHtml(m.coordinates_line.name)}</span>` : '';
       const affiliTag = m.is_external ? `<span class="tca-affil">${escHtml(m.primary_dept_name||'Affiliated')}</span>` : '';
       return `<div class="team-card-api">
-        <div class="tca-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:40px;height:40px;object-fit:cover;border-radius:50%;" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;">${escHtml(initials)}</span>` : initials}</div>
-        <div style="flex:1;min-width:0;">
+        <div class="tca-avatar">${m.public_photo_url ? `<img class="tca-avatar__image" src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tca-avatar__fallback">${escHtml(initials)}</span>` : initials}</div>
+        <div class="flex-1 min-w-0">
           <div class="tca-name">${escHtml(m.display_name || m.full_name)}</div>
           ${m.specialization ? `<div class="tca-spec">${escHtml(m.specialization)}</div>` : ''}
-          <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.375rem;">${lineTag}${affiliTag}</div>
+          <div class="team-card__tags">${lineTag}${affiliTag}</div>
           ${m.public_bio ? `<p class="tca-bio">${escHtml(trimBioRolePrefix(m.public_bio))}</p>` : ''}
         </div>
       </div>`;
     }).join('');
     requestAnimationFrame(() => { grid.style.transition = 'opacity .22s var(--ease-clinical)'; grid.style.opacity = '1'; });
-  } catch(err) { console.error('Team load failed:',err); grid.innerHTML='<p style="padding:2rem;color:#6B6B6B;">Unable to load team information.</p>'; }
+  } catch(err) { console.error('Team load failed:',err); grid.innerHTML='<p class="team-error-state">Unable to load team information.</p>'; }
 }
 
 // ─────────────────────────────────────────────
@@ -963,7 +963,7 @@ async function loadPublicationStrip() {
     const { data } = await apiFetch('/api/news/website?type=publication&limit=30');
     const pubs = (data || []).filter(p => p.journal_name);
 
-    if (!pubs.length) { inner.innerHTML = '<div class="pub-card" style="color:rgba(255,255,255,.4);font-size:.875rem;padding:2rem;">No publications available.</div>'; return; }
+    if (!pubs.length) { inner.innerHTML = '<div class="pub-card pub-card--empty">No publications available.</div>'; return; }
 
     inner.style.transition = 'none';
     inner.style.opacity = '0';
@@ -1035,7 +1035,7 @@ async function loadOpportunities() {
         <div class="opp-meta">${t.sponsor ? escHtml(t.sponsor) : ''}</div>
         <a href="/clinical" class="opp-link">
           <span lang="en">View study</span><span lang="es">Ver estudio</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:10px;height:10px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg class="icon icon--micro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>`).join('');
 
@@ -1046,7 +1046,7 @@ async function loadOpportunities() {
         <div class="opp-meta">${p.current_stage ? escHtml(p.current_stage.charAt(0).toUpperCase() + p.current_stage.slice(1)) : ''}</div>
         <a href="/innovation" class="opp-link">
           <span lang="en">View project</span><span lang="es">Ver proyecto</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:10px;height:10px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg class="icon icon--micro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>`).join('');
 
@@ -1167,32 +1167,17 @@ function buildAvatar(person, sizePx, shape = 'circle') {
   const initials = (person.full_name || '').split(' ')
     .filter(w => w && !['Dr.', 'Dra.', 'Prof.'].includes(w))
     .slice(0, 2).map(n => n[0]).join('').toUpperCase();
-  const radius = shape === 'circle' ? '50%' : 'var(--r-sm, 6px)';
   const fallbackId = 'av' + Math.random().toString(36).slice(2, 9);
-
-  // No-photo state: typographic monogram rather than a gradient blob.
-  // Fraunces serif initials on a light surface background read as a
-  // deliberate editorial choice (like an author monogram in a journal)
-  // rather than "user hasn't uploaded a profile picture yet".
-  // The dashed border signals 'photo slot' to someone who recognises
-  // the convention (admins, editors) without looking broken to visitors.
-  const noPhotoStyle = [
-    `width:${sizePx}px`, `height:${sizePx}px`, `border-radius:${radius}`,
-    `background:#F0F4F8`, `display:flex`, `align-items:center`,
-    `justify-content:center`, `flex-shrink:0`,
-    `border:1.5px dashed rgba(12,56,104,.18)`,
-    `font-family:'Fraunces',Georgia,serif`, `font-weight:600`,
-    `font-style:italic`, `font-size:${Math.round(sizePx * 0.34)}px`,
-    `color:var(--navy,#0C3868)`, `letter-spacing:-.01em`,
-  ].join(';');
-
-  const fallbackSpan = `<span id="${fallbackId}" style="display:none;${noPhotoStyle};">${escHtml(initials)}</span>`;
+  const supportedSize = [20, 22, 72].includes(Number(sizePx)) ? Number(sizePx) : 72;
+  const shapeClass = shape === 'circle' ? 'person-avatar--circle' : 'person-avatar--rounded';
+  const avatarClass = `person-avatar person-avatar--${supportedSize} ${shapeClass}`;
+  const fallbackSpan = `<span id="${fallbackId}" class="${avatarClass} person-avatar--monogram is-hidden">${escHtml(initials)}</span>`;
 
   if (!person.public_photo_url) {
-    return `<div style="${noPhotoStyle};">${escHtml(initials)}</div>`;
+    return `<div class="${avatarClass} person-avatar--monogram">${escHtml(initials)}</div>`;
   }
-  return `<div style="width:${sizePx}px;height:${sizePx}px;border-radius:${radius};overflow:hidden;flex-shrink:0;position:relative;">
-    <img src="${escHtml(person.public_photo_url)}" alt="${escHtml(person.full_name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';document.getElementById('${fallbackId}').style.display='flex';">
+  return `<div class="${avatarClass} person-avatar--frame">
+    <img class="media-cover media-cover--block" src="${escHtml(person.public_photo_url)}" alt="${escHtml(person.full_name)}" loading="lazy" onerror="this.style.display='none';document.getElementById('${fallbackId}').style.display='flex';">
     ${fallbackSpan}
   </div>`;
 }
@@ -1251,33 +1236,33 @@ window.openTrialModal = function(id) {
   const lineNum  = t.research_line?.line_number ? `0${t.research_line.line_number}`.slice(-2) : '—';
 
   if (tmMeta) tmMeta.innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:.3rem;">
-      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Status</div>
-      <span class="status-badge ${statusClass}" style="width:fit-content;">
+    <div class="trial-meta-item">
+      <div class="trial-meta-item__label">Status</div>
+      <span class="status-badge ${statusClass} badge--fit">
         <span lang="en">${statusLabel}</span><span lang="es">${t.status}</span>
       </span>
     </div>
-    <div style="display:flex;flex-direction:column;gap:.3rem;">
-      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Phase</div>
-      <span class="phase-badge" style="width:fit-content;">${escHtml(t.phase)}</span>
+    <div class="trial-meta-item">
+      <div class="trial-meta-item__label">Phase</div>
+      <span class="phase-badge badge--fit">${escHtml(t.phase)}</span>
     </div>
-    <div style="display:flex;flex-direction:column;gap:.3rem;">
-      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Research Line</div>
-      <span style="font-size:.875rem;color:var(--text-on-light);">${escHtml(lineNum)} — ${escHtml(lineName)}</span>
+    <div class="trial-meta-item">
+      <div class="trial-meta-item__label">Research Line</div>
+      <span class="trial-meta-item__value">${escHtml(lineNum)} — ${escHtml(lineName)}</span>
     </div>
-    <div style="display:flex;flex-direction:column;gap:.3rem;">
-      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Sponsor</div>
-      <span style="font-size:.875rem;color:var(--text-on-light);">${t.sponsor_name ? escHtml(t.sponsor_name) : '—'}</span>
+    <div class="trial-meta-item">
+      <div class="trial-meta-item__label">Sponsor</div>
+      <span class="trial-meta-item__value">${t.sponsor_name ? escHtml(t.sponsor_name) : '—'}</span>
     </div>
     ${t.study_type ? `
-    <div style="display:flex;flex-direction:column;gap:.3rem;">
-      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Study Type</div>
-      <span style="font-size:.875rem;color:var(--text-on-light);">${escHtml(t.study_type)}</span>
+    <div class="trial-meta-item">
+      <div class="trial-meta-item__label">Study Type</div>
+      <span class="trial-meta-item__value">${escHtml(t.study_type)}</span>
     </div>` : ''}
     ${t.sponsor_type ? `
-    <div style="display:flex;flex-direction:column;gap:.3rem;">
-      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Sponsor Type</div>
-      <span style="font-size:.875rem;color:var(--text-on-light);">${escHtml(t.sponsor_type)}</span>
+    <div class="trial-meta-item">
+      <div class="trial-meta-item__label">Sponsor Type</div>
+      <span class="trial-meta-item__value">${escHtml(t.sponsor_type)}</span>
     </div>` : ''}
   `;
 
@@ -1405,7 +1390,7 @@ function initContactForm() {
     // Loading state
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:14px;height:14px;animation:spin .8s linear infinite;">
+      btn.innerHTML = `<svg class="icon icon--spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
         <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
       </svg> Sending…`;
     }
@@ -1766,7 +1751,7 @@ async function loadFeaturedStories() {
     const posts = data || [];
 
     if (!posts.length) {
-      if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">No posts available.</p>';
+      if (skeleton) skeleton.innerHTML = '<p class="content-empty-state">No posts available.</p>';
       return;
     }
 
@@ -1846,7 +1831,7 @@ async function loadFeaturedStories() {
             ${hasImg ? `<div class="story-main-title">${escHtml(feature.title)}</div>` : ''}
             <div class="story-main-meta">
               ${feature.author?.full_name ? `<span>${escHtml(feature.author.full_name)}</span><span class="story-meta-sep">·</span>` : ''}
-              ${feature.journal_name && !hasImg ? '' : feature.journal_name ? `<span style="color:var(--teal);font-weight:500;">${escHtml(feature.journal_name)}</span><span class="story-meta-sep">·</span>` : ''}
+              ${feature.journal_name && !hasImg ? '' : feature.journal_name ? `<span class="story-meta__journal">${escHtml(feature.journal_name)}</span><span class="story-meta-sep">·</span>` : ''}
               <span>${formatDate(feature.published_at)}</span>
               ${feature.doi ? `<span class="story-meta-sep">·</span><a href="https://doi.org/${escHtml(feature.doi)}" target="_blank" rel="noopener">DOI</a>` : ''}
             </div>
@@ -1901,7 +1886,7 @@ async function loadFeaturedStories() {
     }
 
     function render() {
-      const layout = `<div class="story-layout" style="opacity:0;">${renderHero(heroPool[activeHeroIdx])}${renderSidebar()}</div>`;
+      const layout = `<div class="story-layout reveal-pending">${renderHero(heroPool[activeHeroIdx])}${renderSidebar()}</div>`;
       section.innerHTML = layout;
       requestAnimationFrame(() => {
         const l = section.querySelector('.story-layout');
@@ -1931,7 +1916,7 @@ async function loadFeaturedStories() {
 
   } catch (err) {  
     console.error('Story section load failed:', err);
-    if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">Unable to load recent posts.</p>';
+    if (skeleton) skeleton.innerHTML = '<p class="content-empty-state">Unable to load recent posts.</p>';
   }
 }
 
@@ -1987,7 +1972,7 @@ async function loadInnovationSpotlight() {
            </div>`
         : '';
       const html = `
-        <div class="spotlight-card" style="opacity:0;">
+        <div class="spotlight-card reveal-pending">
           <span class="spotlight-stage-pill">
             ${escHtml(p.category || 'Project')}${stageLabel ? ' · ' + escHtml(stageLabel) : ''}
           </span>
@@ -2028,7 +2013,7 @@ async function loadInnovationSpotlight() {
 
   } catch (err) {
     console.error('Innovation spotlight load failed:', err);
-    if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">Unable to load projects.</p>';
+    if (skeleton) skeleton.innerHTML = '<p class="content-empty-state">Unable to load projects.</p>';
   }
 }
 
@@ -2155,10 +2140,10 @@ async function loadLineDetail() {
     if (pillsEl) {
       const pills = [];
       if (line.active_trials > 0) {
-        pills.push(`<span class="hstat-label" style="background:rgba(255,255,255,.12);color:#fff;padding:.4rem .8rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">${line.active_trials} recruiting ${line.active_trials===1?'trial':'trials'}</span><span lang="es">${line.active_trials} ${line.active_trials===1?'ensayo':'ensayos'} en reclutamiento</span></span>`);
+        pills.push(`<span class="hstat-label hstat-label--pill"><span lang="en">${line.active_trials} recruiting ${line.active_trials===1?'trial':'trials'}</span><span lang="es">${line.active_trials} ${line.active_trials===1?'ensayo':'ensayos'} en reclutamiento</span></span>`);
       }
       if (line.active_projects > 0) {
-        pills.push(`<span class="hstat-label" style="background:rgba(255,255,255,.12);color:#fff;padding:.4rem .8rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">${line.active_projects} active ${line.active_projects===1?'project':'projects'}</span><span lang="es">${line.active_projects} ${line.active_projects===1?'proyecto':'proyectos'} activo${line.active_projects===1?'':'s'}</span></span>`);
+        pills.push(`<span class="hstat-label hstat-label--pill"><span lang="en">${line.active_projects} active ${line.active_projects===1?'project':'projects'}</span><span lang="es">${line.active_projects} ${line.active_projects===1?'proyecto':'proyectos'} activo${line.active_projects===1?'':'s'}</span></span>`);
       }
       pillsEl.innerHTML = pills.join('');
     }
@@ -2166,8 +2151,8 @@ async function loadLineDetail() {
     const keywordsEl = document.getElementById('lineKeywords');
     if (keywordsEl && line.keywords && line.keywords.length) {
       keywordsEl.innerHTML = line.keywords.map(k =>
-        `<span style="font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.65);">${escHtml(k)}</span>`
-      ).join('<span style="color:rgba(255,255,255,.3);margin:0 -.05rem;">·</span>');
+        `<span class="line-keyword">${escHtml(k)}</span>`
+      ).join('<span class="line-keyword-sep">·</span>');
     }
 
     // Coordinator — first, visually distinguished row in the merged
@@ -2179,10 +2164,9 @@ async function loadLineDetail() {
       const c = line.coordinator;
       const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const coordAvId = 'cav' + Math.random().toString(36).slice(2, 9);
-      const coordMonogram = `background:#F0F4F8;border:1.5px dashed rgba(12,56,104,.18);font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;font-size:1.875rem;color:#0C3868;letter-spacing:-.01em;`;
       const avatar = c.public_photo_url
-        ? `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);overflow:hidden;flex-shrink:0;position:relative;"><img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${coordAvId}').style.display='flex';"><div id="${coordAvId}" style="display:none;position:absolute;inset:0;${coordMonogram}align-items:center;justify-content:center;">${escHtml(initials)}</div></div>`
-        : `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;${coordMonogram}">${escHtml(initials)}</div>`;
+        ? `<div class="line-coordinator-avatar"><img class="media-cover" src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" loading="lazy" onerror="this.style.display='none';document.getElementById('${coordAvId}').style.display='flex';"><div id="${coordAvId}" class="line-coordinator-avatar__fallback line-coordinator-avatar--monogram">${escHtml(initials)}</div></div>`
+        : `<div class="line-coordinator-avatar line-coordinator-avatar--fallback line-coordinator-avatar--monogram">${escHtml(initials)}</div>`;
 
       // Every real role this person holds gets its own badge — these are
       // independent facts (chief, PI, and line coordinator are not
@@ -2190,27 +2174,27 @@ async function loadLineDetail() {
       // Previously an if/else-if meant a chief who was also a PI never
       // had that second, equally true fact shown at all.
       const roleBadges = [
-        c.is_chief_of_department ? `<span class="role-badge" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '',
+        c.is_chief_of_department ? `<span class="role-badge role-badge--line"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '',
         c.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d'
-          ? `<span class="role-badge" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span></span>`
-          : (c.can_be_pi ? `<span class="role-badge" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span></span>` : ''),
+          ? `<span class="role-badge role-badge--line"><span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span></span>`
+          : (c.can_be_pi ? `<span class="role-badge role-badge--line"><span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span></span>` : ''),
       ].filter(Boolean).join('');
 
       coordCard.innerHTML = `
-        <div style="display:flex;flex-direction:column;gap:.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border-l);">
-          <div style="display:flex;gap:1rem;align-items:flex-start;">
+        <div class="line-coordinator">
+          <div class="line-coordinator__main">
             ${avatar}
-            <div style="flex:1;min-width:0;">
-              <p style="font-weight:500;font-size:var(--fs-body-sm);margin:0;">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
-              <p style="font-size:var(--fs-label);color:var(--ink-3);margin:2px 0 0;">
+            <div class="flex-1 min-w-0">
+              <p class="line-coordinator__name">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
+              <p class="line-coordinator__role">
                 <span lang="en">Coordinator, this line</span><span lang="es">Coordinador de esta línea</span>${c.specialization ? ' · ' + (c.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Pulmonologist</span><span lang="es">Neumólogo</span>' : escHtml(c.specialization)) : ''}
               </p>
-              <p style="font-size:var(--fs-label);color:var(--ink-4);margin:2px 0 0;">
+              <p class="line-coordinator__affiliation">
                 <span lang="en">Servicio de Neumología, CHUAC</span><span lang="es">Servicio de Neumología, CHUAC</span>
               </p>
             </div>
           </div>
-          ${roleBadges ? `<div style="display:flex;gap:.5rem;flex-wrap:wrap;padding-left:calc(56px + 1rem);">${roleBadges}</div>` : ''}
+          ${roleBadges ? `<div class="line-coordinator__badges">${roleBadges}</div>` : ''}
         </div>`;
       peopleSection.style.opacity = '0';
       peopleSection.style.display = '';
@@ -2269,23 +2253,23 @@ async function loadLineDetail() {
         let cursor = 0;
         for (const r of kept) {
           descHtml += escHtml(desc.slice(cursor, r.start));
-          descHtml += `<a href="/clinical?search=${encodeURIComponent(r.protocolId)}" class="btn-text" style="font-size:inherit;border-bottom-width:1px;">${escHtml(r.name)}</a>`;
+          descHtml += `<a href="/clinical?search=${encodeURIComponent(r.protocolId)}" class="btn-text btn-text--inline">${escHtml(r.name)}</a>`;
           cursor = r.end;
         }
         descHtml += escHtml(desc.slice(cursor));
-        html += `<p style="margin-bottom:1.5rem;">${descHtml}</p>`;
+        html += `<p class="line-about-paragraph">${descHtml}</p>`;
       }
       if (line.capabilities) {
         const caps = line.capabilities.split(',').map(c => c.trim()).filter(Boolean);
         if (caps.length) {
-          html += `<div style="display:flex;flex-wrap:wrap;gap:.4rem .25rem;margin-bottom:${line.deep_content ? '2rem' : '0'};">
+          html += `<div class="line-capabilities${line.deep_content ? ' line-capabilities--with-deep' : ''}">
             ${caps.map(c => `<span class="ltag">${escHtml(c)}</span>`).join('')}
           </div>`;
         }
       }
       if (line.deep_content) {
-        html += `<div style="border-top:1px solid var(--border-l);padding-top:1.5rem;">
-          ${line.deep_content.split(/\n\n+/).map(p => `<p style="margin-bottom:1.25rem;">${escHtml(p)}</p>`).join('')}
+        html += `<div class="line-deep-content">
+          ${line.deep_content.split(/\n\n+/).map(p => `<p class="line-deep-content__paragraph">${escHtml(p)}</p>`).join('')}
         </div>`;
       }
       if (html) {
@@ -2307,9 +2291,9 @@ async function loadLineDetail() {
         ].filter(f => f.num > 0);
         if (facts.length) {
           factsEl.innerHTML = facts.map((f, i) => `
-            <div style="${i > 0 ? 'border-top:1px solid var(--border-l);margin-top:1rem;padding-top:1rem;' : ''}">
-              <p style="font-family:var(--ff-display);font-size:1.75rem;font-weight:700;margin:0;line-height:1;font-variant-numeric:tabular-nums;">${f.num}</p>
-              <p style="font-size:var(--fs-label);color:var(--ink-3);margin-top:.25rem;"><span lang="en">${f.labelEn}</span><span lang="es">${f.labelEs}</span></p>
+            <div class="line-fact${i > 0 ? ' line-fact--divided' : ''}">
+              <p class="line-fact__value">${f.num}</p>
+              <p class="line-fact__label"><span lang="en">${f.labelEn}</span><span lang="es">${f.labelEs}</span></p>
             </div>`).join('');
           factsEl.style.opacity = '0';
           factsEl.style.display = '';
@@ -2340,7 +2324,7 @@ async function loadLineDetail() {
       const activeTrials = (trials || []).filter(t => ['Reclutando','Activo','Active','Recruiting'].includes(t.status));
       if (activeTrials.length && trialsSection && trialsList) {
         trialsList.innerHTML = activeTrials.slice(0, 6).map((t, i) => `
-          <a href="/clinical#research-lines" class="lt-trial-row" style="${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
+          <a href="/clinical#research-lines" class="lt-trial-row${i > 0 ? ' lt-trial-row--divided' : ''}">
             <span class="lt-trial-phase">${escHtml(t.phase || 'Clinical study')}</span>
             <span class="lt-trial-title">${escHtml(t.title || t.protocol_id || '—')}</span>
             <svg class="lt-trial-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -2388,16 +2372,16 @@ function openLineProfileModal(m) {
     : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
     : (m.specialization ? escHtml(m.specialization) : '');
   content.innerHTML = `
-    <div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">
+    <div class="profile-summary">
       ${avatar}
       <div>
-        <p style="font-weight:600;font-size:1.0625rem;margin:0;">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
-        ${roleText ? `<p style="font-size:.875rem;color:var(--ink-3);margin:2px 0 0;">${roleText}</p>` : ''}
+        <p class="profile-summary__name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
+        ${roleText ? `<p class="profile-summary__role">${roleText}</p>` : ''}
       </div>
     </div>
     ${m.public_bio
-      ? `<p style="font-size:.9375rem;line-height:1.65;color:var(--ink-2);margin:0;">${escHtml(m.public_bio)}</p>`
-      : `<p style="font-size:.875rem;color:var(--ink-4);font-style:italic;margin:0;border-top:1px dashed var(--border-l);padding-top:1rem;">Bio not yet added.</p>`}
+      ? `<p class="profile-summary__bio">${escHtml(m.public_bio)}</p>`
+      : `<p class="profile-summary__bio profile-summary__bio--empty">Bio not yet added.</p>`}
   `;
   overlay.style.display = 'flex';
   document.body.style.overflow = 'hidden';
@@ -2411,19 +2395,18 @@ window._lineTeamData = [];
       teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
         const lineAvId = 'ltav' + i;
-        const lineMonoStyle = `background:#F0F4F8;border:1.5px dashed rgba(12,56,104,.18);font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;color:#0C3868;letter-spacing:-.01em;`;
         const avatarInner = m.public_photo_url
-          ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${lineAvId}').style.display='flex';this.parentElement.style.cssText+=';${lineMonoStyle.replace(/'/g,'"')}';"><span id="${lineAvId}" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;">${escHtml(initials)}</span>`
+          ? `<img class="media-cover" src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" loading="lazy" onerror="this.style.display='none';document.getElementById('${lineAvId}').style.display='flex';this.parentElement.classList.add('line-team-avatar--monogram');"><span class="line-team-avatar__fallback" id="${lineAvId}">${escHtml(initials)}</span>`
           : escHtml(initials);
-        const avatarStyle = m.public_photo_url ? '' : lineMonoStyle;
+        const avatarClass = m.public_photo_url ? 'line-team-avatar' : 'line-team-avatar line-team-avatar--monogram';
         return `<div class="line-team-card">
           <div class="line-team-header" onclick="openLineProfileModal(window._lineTeamData[${i}])" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLineProfileModal(window._lineTeamData[${i}]);}" tabindex="0" role="button" aria-label="${escHtml(m.full_name)} — view full profile">
-            <div class="line-team-avatar" style="${avatarStyle}">${avatarInner}</div>
-            <div style="min-width:0;flex:1;">
+            <div class="${avatarClass}">${avatarInner}</div>
+            <div class="line-team-copy">
               <p class="line-team-name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
               ${roleTextFor(m) ? `<p class="line-team-role">${roleTextFor(m)}</p>` : ''}
             </div>
-            <svg class="line-team-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transform:rotate(-90deg);"><path d="M6 9l6 6 6-6"/></svg>
+            <svg class="line-team-chevron line-team-chevron--collapsed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
           </div>
         </div>`;
       }).join('');
@@ -2439,12 +2422,12 @@ window._lineTeamData = [];
       if (pubs && pubs.length && pubsSection && pubsList) {
         pubsList.innerHTML = pubs.map((p, i) => {
           const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
-          return `<div style="padding:1rem 0;${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
-            <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:4px;">
-              ${p.journal_name ? `<span style="font-size:var(--fs-label);color:var(--navy-2);font-weight:500;">${escHtml(p.journal_name)}</span>` : '<span></span>'}
-              <span style="font-size:var(--fs-label);color:var(--ink-4);">${year}</span>
+          return `<div class="line-pub${i > 0 ? ' line-pub--divided' : ''}">
+            <div class="line-pub__meta">
+              ${p.journal_name ? `<span class="line-pub__journal">${escHtml(p.journal_name)}</span>` : '<span></span>'}
+              <span class="line-pub__year">${year}</span>
             </div>
-            <p style="font-size:var(--fs-meta);margin:0;">${escHtml(p.title)}</p>
+            <p class="line-pub__title">${escHtml(p.title)}</p>
           </div>`;
         }).join('');
         pubsSection.style.opacity = '0';
@@ -2471,11 +2454,11 @@ window._lineTeamData = [];
       loadErrorEl.style.display = '';
     } else if (loadingEl) {
       loadingEl.style.display = '';
-      loadingEl.innerHTML = '<p style="color:rgba(255,255,255,.6);">'
+      loadingEl.innerHTML = '<p class="line-load-error">'
         + '<span lang="en">This line couldn\'t be loaded right now. '
-        + '<a href="/clinical/" style="color:var(--teal-2,#00B3B3);">View all research lines</a>.</span>'
+        + '<a class="line-load-error__link" href="/clinical/">View all research lines</a>.</span>'
         + '<span lang="es">No se pudo cargar esta línea. '
-        + '<a href="/clinical/" style="color:var(--teal-2,#00B3B3);">Ver todas las líneas</a>.</span></p>';
+        + '<a class="line-load-error__link" href="/clinical/">Ver todas las líneas</a>.</span></p>';
     }
   }
 }  

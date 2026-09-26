@@ -80,8 +80,8 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <span lang="en">1,000th lung transplant performed at CHUAC · Regional milestone · May 2026</span>
       <span lang="es">1.000 trasplante pulmonar en el CHUAC · Hito autonómico · Mayo de 2026</span>
     </span>
-    <button onclick="dismissLatestBar()"
-      aria-label="Dismiss" style="background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:1rem;line-height:1;padding:0 0 0 .5rem;">×</button>
+    <button class="latest-bar__dismiss" onclick="dismissLatestBar()"
+      aria-label="Dismiss">×</button>
   </div>
 </div>
 <a href="#mainContent" class="skip-link">Skip to main content</a>
@@ -155,7 +155,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
           <span lang="es">Seis líneas especializadas. <strong>1.000 trasplantes pulmonares</strong> realizados en el CHUAC — hito alcanzado en mayo de 2026. Más de 13 estudios activos en reclutamiento sobre EPOC, asma, EPI, cáncer de pulmón, hipertensión pulmonar, insuficiencia respiratoria, trastornos respiratorios del sueño y cirugía torácica.</span>
         </p>
 
-        <div class="hero-actions" style="display:flex;gap:1.75rem;align-items:center;">
+        <div class="hero-actions hero-actions--wide">
           <a href="/clinical/" class="hero-text-link">
             <span lang="en">Research portfolio</span><span lang="es">Cartera de investigación</span> →
           </a>
@@ -172,8 +172,8 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
           <div class="hero-cred">CE MDR</div>
         </div>
 
-        <p id="liveTicker" aria-live="polite"
-           style="margin-top:1.75rem;font-family:var(--ff-mono,'DM Mono',monospace);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);opacity:0;transition:opacity .35s var(--ease-clinical);min-height:1.2em;">
+        <p class="live-ticker" id="liveTicker" aria-live="polite"
+          >
         </p>
       </div>
 
@@ -220,7 +220,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 <div class="spiro-rule" aria-hidden="true"></div>
 
 <!-- ═══════════════════ WHAT WE WORK ON ══════════ -->
-<section class="section" style="background:var(--white);">
+<section class="section section--white">
   <div class="wrap">
     <div class="sec-intro reveal">
       <div class="sec-kicker">
@@ -237,35 +237,35 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     </div>
 
     <div class="lines-grid reveal" id="workAreasGrid">
-      <div class="line-card" style="cursor:default;">
+      <div class="line-card line-card--static">
         <div class="line-num">01</div>
         <div class="line-body">
           <div class="line-title"><span lang="en">Lung transplantation &amp; pulmonary hypertension</span><span lang="es">Trasplante pulmonar e hipertensión pulmonar</span></div>
           <div class="line-coord"><span lang="en">Long-term graft monitoring and trial protocols for advanced pulmonary vascular and interstitial disease.</span><span lang="es">Seguimiento a largo plazo del injerto y protocolos de ensayo para enfermedad vascular pulmonar e intersticial avanzada.</span></div>
         </div>
       </div>
-      <div class="line-card" style="cursor:default;">
+      <div class="line-card line-card--static">
         <div class="line-num">02</div>
         <div class="line-body">
           <div class="line-title"><span lang="en">Severe asthma &amp; COPD</span><span lang="es">Asma grave y EPOC</span></div>
           <div class="line-coord"><span lang="en">Biologic therapy protocols and treatable-trait approaches for patients who haven't responded to standard care.</span><span lang="es">Protocolos de terapia biológica y enfoques por rasgos tratables para pacientes sin respuesta al tratamiento estándar.</span></div>
         </div>
       </div>
-      <div class="line-card" style="cursor:default;">
+      <div class="line-card line-card--static">
         <div class="line-num">03</div>
         <div class="line-body">
           <div class="line-title"><span lang="en">Robotic &amp; minimally invasive thoracic surgery</span><span lang="es">Cirugía torácica robótica y mínimamente invasiva</span></div>
           <div class="line-coord"><span lang="en">RATS and VATS techniques in multicentre studies, alongside EBUS-guided diagnosis for lung cancer.</span><span lang="es">Técnicas RATS y VATS en estudios multicéntricos, junto con diagnóstico guiado por EBUS para cáncer de pulmón.</span></div>
         </div>
       </div>
-      <div class="line-card" style="cursor:default;">
+      <div class="line-card line-card--static">
         <div class="line-num">04</div>
         <div class="line-body">
           <div class="line-title"><span lang="en">Sleep medicine &amp; respiratory failure</span><span lang="es">Medicina del sueño e insuficiencia respiratoria</span></div>
           <div class="line-coord"><span lang="en">Non-invasive ventilation, home oxygen therapy, and sleep-disordered breathing in critically ill respiratory patients.</span><span lang="es">Ventilación no invasiva, oxigenoterapia domiciliaria y trastornos respiratorios del sueño en pacientes críticos.</span></div>
         </div>
       </div>
-      <div class="line-card" style="cursor:default;">
+      <div class="line-card line-card--static">
         <div class="line-num">05</div>
         <div class="line-body">
           <div class="line-title"><span lang="en">Digital tools &amp; precision medicine</span><span lang="es">Herramientas digitales y medicina de precisión</span></div>
@@ -284,7 +284,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     <div class="lines-footer reveal">
       <a href="/clinical/" class="btn-text">
         <span lang="en">See all research lines</span><span lang="es">Ver todas las líneas de investigación</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
   </div>
@@ -300,14 +300,14 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         <div class="sec-kicker">
           <span class="label"><span lang="en">From the Department</span><span lang="es">Del Departamento</span></span>
         </div>
-        <h2 class="display-md" style="margin-top:.625rem;">
+        <h2 class="display-md section-title--offset">
           <span lang="en">Recent work</span>
           <span lang="es">Actividad reciente</span>
         </h2>
       </div>
       <a href="/news/" class="btn-text reveal">
         <span lang="en">All publications</span><span lang="es">Todas las publicaciones</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
 
@@ -317,21 +317,21 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- Skeleton while loading -->
       <div class="story-layout" id="storySkeleton">
         <div class="story-main">
-          <div style="height:220px;background:var(--surface);flex-shrink:0;"></div>
+          <div class="work-skeleton__media"></div>
           <div class="story-main-body">
-            <div class="skel" style="height:14px;width:80px;margin-bottom:12px;"></div>
-            <div class="skel" style="height:18px;width:90%;margin-bottom:8px;"></div>
-            <div class="skel" style="height:18px;width:70%;margin-bottom:auto;"></div>
-            <div style="border-top:1px solid var(--border-l);margin-top:auto;padding-top:12px;">
-              <div class="skel" style="height:12px;width:60%;"></div>
+            <div class="skel skel--work-kicker"></div>
+            <div class="skel skel--work-title-a"></div>
+            <div class="skel skel--work-title-b"></div>
+            <div class="work-skeleton__meta">
+              <div class="skel skel--line-60"></div>
             </div>
           </div>
         </div>
         <div class="story-sidebar">
-          <div class="story-side-item"><div class="skel" style="height:12px;width:80%;margin-bottom:6px;"></div><div class="skel" style="height:12px;width:55%;"></div></div>
-          <div class="story-side-item"><div class="skel" style="height:12px;width:85%;margin-bottom:6px;"></div><div class="skel" style="height:12px;width:60%;"></div></div>
-          <div class="story-side-item"><div class="skel" style="height:12px;width:75%;margin-bottom:6px;"></div><div class="skel" style="height:12px;width:50%;"></div></div>
-          <div class="story-side-item"><div class="skel" style="height:12px;width:80%;margin-bottom:6px;"></div><div class="skel" style="height:12px;width:65%;"></div></div>
+          <div class="story-side-item"><div class="skel skel--line-80"></div><div class="skel skel--line-55"></div></div>
+          <div class="story-side-item"><div class="skel skel--line-85"></div><div class="skel skel--line-60"></div></div>
+          <div class="story-side-item"><div class="skel skel--line-75"></div><div class="skel skel--line-50"></div></div>
+          <div class="story-side-item"><div class="skel skel--line-80"></div><div class="skel skel--line-65"></div></div>
         </div>
       </div>
     </div>
@@ -340,31 +340,31 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 </section>
 
 <!-- ═══════════════════ INNOVATION SPOTLIGHT ═════════════ -->
-<section class="section innovation-spotlight" id="innovation-spotlight" style="background:var(--surface);">
+<section class="section innovation-spotlight section--surface" id="innovation-spotlight">
   <div class="wrap">
     <div class="from-dept-head reveal">
       <div>
         <div class="sec-kicker">
           <span class="label"><span lang="en">Innovation</span><span lang="es">Innovación</span></span>
         </div>
-        <h2 class="display-md" style="margin-top:.625rem;">
+        <h2 class="display-md section-title--offset">
           <span lang="en">In development</span>
           <span lang="es">En desarrollo</span>
         </h2>
       </div>
       <a href="/innovation/" class="btn-text reveal">
         <span lang="en">All projects</span><span lang="es">Todos los proyectos</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
 
     <!-- Spotlight card: injected by api.js loadInnovationSpotlight() -->
     <div id="spotlightSection" class="reveal">
       <div class="spotlight-card" id="spotlightSkeleton">
-        <div class="skel" style="height:14px;width:100px;margin-bottom:12px;"></div>
-        <div class="skel" style="height:20px;width:75%;margin-bottom:10px;"></div>
-        <div class="skel" style="height:14px;width:95%;margin-bottom:6px;"></div>
-        <div class="skel" style="height:14px;width:60%;"></div>
+        <div class="skel skel--innovation-kicker"></div>
+        <div class="skel skel--innovation-title"></div>
+        <div class="skel skel--innovation-copy-a"></div>
+        <div class="skel skel--innovation-copy-b"></div>
       </div>
     </div>
   </div>
@@ -379,7 +379,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <div class="sec-kicker">
         <span class="label on-dark"><span lang="en">Engagement</span><span lang="es">Colaboración</span></span>
       </div>
-      <h2 class="display-md" style="color:#fff;margin-top:.75rem;max-width:480px;">
+      <h2 class="display-md collaboration-title">
         <span lang="en">Collaboration</span>
         <span lang="es">Colaboración</span>
       </h2>
@@ -403,7 +403,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         </ul>
         <a href="/clinical/" class="btn-text on-dark">
           <span lang="en">Research programme</span><span lang="es">Programa de investigación</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
       <div class="path-card">
@@ -424,7 +424,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         </ul>
         <a href="/innovation/" class="btn-text on-dark">
           <span lang="en">Innovation framework</span><span lang="es">Marco de innovación</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
@@ -432,14 +432,14 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 </section>
 
 <!-- ═══════════════════ INSTITUTION ══════════════ -->
-<section class="section" style="background:var(--white);">
+<section class="section section--white">
   <div class="wrap">
     <div class="inst-inner">
       <div class="reveal">
         <div class="sec-kicker">
           <span class="label"><span lang="en">Institutional</span><span lang="es">Institucional</span></span>
         </div>
-        <h2 class="display-md sec-h2" style="margin-top:.75rem;">
+        <h2 class="display-md sec-h2 space-top-sm">
           <span lang="en">Institutional context</span>
           <span lang="es">Contexto institucional</span>
         </h2>
@@ -449,21 +449,21 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         </p>
       </div>
       <div class="reveal reveal-d1">
-        <div style="margin-bottom:1.25rem;">
+        <div class="institutional-milestone">
           <div class="inst-stat-big milestone-num">1,000</div>
           <div class="inst-stat-label"><span lang="en">Lung transplants performed · National reference</span><span lang="es">Trasplantes pulmonares realizados · Referencia nacional</span></div>
         </div>
         
         <!-- Department context — replaces logo in mid-page -->
-        <div class="inst-dept-context" style="margin-top:1.5rem;padding:1.5rem 0;border-top:1px solid rgba(0,0,0,.08);">
-          <p style="font-size:.8125rem;font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.06em;text-transform:uppercase;color:#007A7A;margin:0 0 .4rem;">
+        <div class="inst-dept-context inst-dept-context--framed">
+          <p class="inst-dept-context__label">
             <span lang="en">Department</span><span lang="es">Servicio</span>
           </p>
-          <p style="font-size:1.0625rem;font-weight:600;color:var(--ink,#111111);line-height:1.4;margin:0;">
+          <p class="inst-dept-context__name">
             <span lang="en">Servicio de Neumología<br>Hospital Universitario A Coruña</span>
             <span lang="es">Servicio de Neumología<br>Hospital Universitario A Coruña</span>
           </p>
-          <p style="font-size:.8125rem;color:rgba(12,68,124,.5);margin:.4rem 0 0;line-height:1.5;">
+          <p class="inst-dept-context__meta">
             <span lang="en">Regional reference centre · Lung transplantation · PAH · ILD · Thoracic surgery</span>
             <span lang="es">Centro de referencia autonómica · Trasplante pulmonar · HAP · EPI · Cirugía torácica</span>
           </p>
@@ -489,7 +489,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <div>
         <p class="partnering-item-title" id="seekingPartnerCount"><span lang="en">Open innovation projects</span><span lang="es">Proyectos de innovación abiertos</span></p>
         <p class="partnering-item-desc"><span lang="en">Currently seeking a co-development partner.</span><span lang="es">Buscando actualmente un socio de codesarrollo.</span></p>
-        <a href="/innovation/" class="btn-text" style="margin-top:.5rem;"><span lang="en">See open projects</span><span lang="es">Ver proyectos abiertos</span> →</a>
+        <a href="/innovation/" class="btn-text btn-text--spaced"><span lang="en">See open projects</span><span lang="es">Ver proyectos abiertos</span> →</a>
       </div>
     </div>
   </div>
@@ -498,15 +498,15 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 <!-- ═══════════════════ CONTACT ════════════════════ -->
 <section class="section contact-section" id="contact">
   <div class="wrap">
-    <div class="reveal" style="margin-bottom:2.5rem;">
+    <div class="reveal contact-heading-block">
       <div class="sec-kicker">
         <span class="label on-dark"><span lang="en">Contact</span><span lang="es">Contacto</span></span>
       </div>
-      <h2 class="display-md" style="color:#fff;margin-top:.75rem;">
+      <h2 class="display-md contact-title">
         <span lang="en">Enquiries</span>
         <span lang="es">Contacto</span>
       </h2>
-      <p style="color:rgba(255,255,255,.48);font-size:1rem;max-width:500px;margin-top:.75rem;line-height:1.7;">
+      <p class="contact-intro">
         <span lang="en">Clinical study sponsorship, academic collaboration, innovation co-development, or regulatory pathway partnership.</span>
         <span lang="es">Patrocinio de estudios clínicos, colaboración académica, codesarrollo de innovación o asociación en vías regulatorias.</span>
       </p>
@@ -539,7 +539,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
           <div class="cinfo-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
           <div>
             <div class="cinfo-label"><span lang="en">Regulatory</span><span lang="es">Regulatorio</span></div>
-            <div class="cinfo-value" style="font-size:.8125rem;">INIBIC · AEMPS · GCP compliant · CE MDR pathway</div>
+            <div class="cinfo-value cinfo-value--compact">INIBIC · AEMPS · GCP compliant · CE MDR pathway</div>
           </div>
         </div>
       </div>
@@ -609,7 +609,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- INIBIC -->
       <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
         <div class="affil-card-logo">
-          <img src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--inibic" src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">INIBIC</div>
@@ -620,7 +620,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <!-- FINIBIC / Fundación Galega -->
       <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
         <div class="affil-card-logo">
-          <img src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+          <img class="affil-card-logo-img affil-card-logo-img--finibic" src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38"/>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
@@ -667,21 +667,21 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
 <!-- ═══════════════════ FOOTER ════════════════════ -->
 
 <!-- ═══ NETWORKS & STANDARDS ═══════════════════════════════ -->
-<section class="networks-sec" style="padding:5rem 0;background:var(--navy-2);border-top:1px solid rgba(255,255,255,.06);">
-  <div class="wrap" style="max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
+<section class="networks-sec networks-sec--framed">
+  <div class="wrap networks-sec__inner">
 
-    <div class="sec-eyebrow" style="margin-bottom:1.5rem;">
-      <span style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);">
+    <div class="sec-eyebrow networks-sec__eyebrow-wrap">
+      <span class="networks-sec__eyebrow">
         <span lang="en">Networks &amp; Standards</span>
         <span lang="es">Redes y Estándares</span>
       </span>
     </div>
 
-    <h2 class="display-md" style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:#fff;margin:0 0 1rem;max-width:48rem;line-height:1.15;">
+    <h2 class="display-md networks-sec__title">
       <span lang="en">Operating within established research frameworks</span>
       <span lang="es">Operando dentro de marcos de investigación consolidados</span>
     </h2>
-    <p style="color:rgba(255,255,255,.5);font-size:.9375rem;max-width:44rem;margin:0 0 3.5rem;line-height:1.7;">
+    <p class="networks-sec__intro">
       <span lang="en">All clinical research at the group is conducted under recognised international frameworks — regulatory, ethical, and quality standards shared with leading European pulmonology centres.</span>
       <span lang="es">Toda la investigación clínica del grupo se realiza bajo marcos internacionales reconocidos: estándares regulatorios, éticos y de calidad compartidos con los principales centros europeos de neumología.</span>
     </p>
@@ -938,7 +938,7 @@ document.addEventListener('DOMContentLoaded', function(){
       <address class="footer-address">
         <strong>Servicio de Neumología · CHUAC</strong>
         As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
-        <a href="#contact" style="color:rgba(0,179,179,.55);text-decoration:none;margin-top:.5rem;display:inline-block;font-size:.75rem;transition:color .15s;" onmouseover="this.style.color='rgba(0,179,179,.85)'" onmouseout="this.style.color='rgba(0,179,179,.55)'">
+        <a class="footer-enquiry-link" href="#contact">
           <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>
         </a>
       </address>
@@ -953,28 +953,24 @@ document.addEventListener('DOMContentLoaded', function(){
     </div>
   </div>
 </footer>
-<div class="footer-legal" style="background:var(--navy-footer);max-width:1440px;margin:0 auto;padding:.75rem clamp(1.25rem,4vw,3rem);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.04);">
-  <a href="/privacidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
-  <a href="/accesibilidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
-  <a href="/aviso-legal/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
-  <span style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-left:auto;"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
+<div class="footer-legal">
+  <a class="footer-legal-link" href="/privacidad/"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
+  <a class="footer-legal-link" href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
+  <a class="footer-legal-link" href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
+  <span class="footer-accreditation"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
 </div>
-<div id="cookieBanner" role="dialog" aria-label="Cookie notice"
-  style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;
-         background:rgba(4,44,83,.97);border-top:1px solid rgba(255,255,255,.08);
-         padding:1rem clamp(1.25rem,4vw,3rem);display:flex;align-items:center;
-         justify-content:space-between;gap:1rem;flex-wrap:wrap;backdrop-filter:blur(8px);">
-  <p style="font-size:.8rem;color:rgba(255,255,255,.55);line-height:1.5;margin:0;max-width:680px;">
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie notice"
+ >
+  <p class="cookie-banner__copy">
     <span lang="en">This site uses essential cookies only. No tracking, no advertising.
-      <a href="/privacidad/" style="color:rgba(0,179,179,.7);text-decoration:none;margin-left:.25rem;">Privacy policy →</a>
+      <a class="cookie-banner__link" href="/privacidad/">Privacy policy →</a>
     </span>
     <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.
-      <a href="/privacidad/" style="color:rgba(0,179,179,.7);text-decoration:none;margin-left:.25rem;">Política de privacidad →</a>
+      <a class="cookie-banner__link" href="/privacidad/">Política de privacidad →</a>
     </span>
   </p>
-  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOk','1')"
-    style="flex-shrink:0;padding:.45rem 1.1rem;background:#007A7A;color:#fff;border:none;
-           border-radius:100px;font-size:.75rem;font-weight:500;cursor:pointer;white-space:nowrap;">
+  <button class="cookie-banner__button" onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOk','1')"
+   >
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>

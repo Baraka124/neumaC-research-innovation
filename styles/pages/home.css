@@ -9,14 +9,12 @@
 /* On light/white backgrounds, the pale gold above fails contrast —
    use a deeper amber so the milestone still reads as celebratory
    without becoming illegible. */
-section[style*="background:var(--white)"] .milestone-num,
-.section[style*="background:var(--white)"] .milestone-num,
+.section--white .milestone-num,
 .lines-bg .milestone-num,.trials-bg .milestone-num,.pipeline-bg .milestone-num,.cap-bg .milestone-num{
   color:#9C6B0A!important;
   -webkit-text-fill-color:#9C6B0A!important;
 }
-section[style*="background:var(--white)"] .milestone-label,
-.section[style*="background:var(--white)"] .milestone-label{
+.section--white .milestone-label{
   color:rgba(156,107,10,.8)!important;
 }
 @media(max-width:860px){}
@@ -728,3 +726,45 @@ html:not(.bar-dismissed) body { padding-top: calc(var(--hdr) + 30px); }
       outline:2px solid var(--teal-2);outline-offset:2px;border-radius:var(--r-xs);
     }
     [data-counter]{font-variant-numeric:tabular-nums;font-feature-settings:'tnum';}
+
+
+/* ── Phase 2: semantic presentation ownership (migrated from markup) ── */
+.latest-bar__dismiss{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:1rem;line-height:1;padding:0 0 0 .5rem;}
+.live-ticker{margin-top:1.75rem;font-family:var(--ff-mono,'DM Mono',monospace);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);opacity:0;transition:opacity .35s var(--ease-clinical);min-height:1.2em;}
+.section--white{background:var(--white);}
+.line-card--static{cursor:default;}
+.section-title--offset{margin-top:.625rem;}
+.work-skeleton__media{height:220px;background:var(--surface);flex-shrink:0;}
+.skel--work-kicker{height:14px;width:80px;margin-bottom:12px;}
+.skel--work-title-a{height:18px;width:90%;margin-bottom:8px;}
+.skel--work-title-b{height:18px;width:70%;margin-bottom:auto;}
+.work-skeleton__meta{border-top:1px solid var(--border-l);margin-top:auto;padding-top:12px;}
+.skel--line-60{height:12px;width:60%;}
+.skel--line-80{height:12px;width:80%;margin-bottom:6px;}
+.skel--line-55{height:12px;width:55%;}
+.skel--line-85{height:12px;width:85%;margin-bottom:6px;}
+.skel--line-75{height:12px;width:75%;margin-bottom:6px;}
+.skel--line-50{height:12px;width:50%;}
+.skel--line-65{height:12px;width:65%;}
+.section--surface{background:var(--surface);}
+.skel--innovation-kicker{height:14px;width:100px;margin-bottom:12px;}
+.skel--innovation-title{height:20px;width:75%;margin-bottom:10px;}
+.skel--innovation-copy-a{height:14px;width:95%;margin-bottom:6px;}
+.skel--innovation-copy-b{height:14px;width:60%;}
+.collaboration-title{color:#fff;margin-top:.75rem;max-width:480px;}
+.institutional-milestone{margin-bottom:1.25rem;}
+.inst-dept-context--framed{margin-top:1.5rem;padding:1.5rem 0;border-top:1px solid rgba(0,0,0,.08);}
+.inst-dept-context__label{font-size:.8125rem;font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.06em;text-transform:uppercase;color:#007A7A;margin:0 0 .4rem;}
+.inst-dept-context__name{font-size:1.0625rem;font-weight:600;color:var(--ink,#111111);line-height:1.4;margin:0;}
+.inst-dept-context__meta{font-size:.8125rem;color:rgba(12,68,124,.5);margin:.4rem 0 0;line-height:1.5;}
+.btn-text--spaced{margin-top:.5rem;}
+.contact-heading-block{margin-bottom:2.5rem;}
+.contact-title{color:#fff;margin-top:.75rem;}
+.contact-intro{color:rgba(255,255,255,.48);font-size:1rem;max-width:500px;margin-top:.75rem;line-height:1.7;}
+.cinfo-value--compact{font-size:.8125rem;}
+.networks-sec--framed{padding:5rem 0;background:var(--navy-2);border-top:1px solid rgba(255,255,255,.06);}
+.networks-sec__inner{max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);}
+.networks-sec__eyebrow-wrap{margin-bottom:1.5rem;}
+.networks-sec__eyebrow{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.networks-sec__title{font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:#fff;margin:0 0 1rem;max-width:48rem;line-height:1.15;}
+.networks-sec__intro{color:rgba(255,255,255,.5);font-size:.9375rem;max-width:44rem;margin:0 0 3.5rem;line-height:1.7;}

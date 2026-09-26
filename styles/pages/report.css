@@ -17,3 +17,7 @@
     body{padding-top:0!important;background:#fff!important;}
     .rpt-n{color:#000;} .rpt-stat{border:1px solid #ddd;}
   }
+
+
+/* ── Phase 2: remaining markup presentation migrated to semantic classes ── */
+.report-empty{list-style:none;color:var(--ink-4);}

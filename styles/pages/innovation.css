@@ -1034,3 +1034,17 @@
       outline:2px solid var(--teal-2);outline-offset:2px;border-radius:var(--r-xs);
     }
     [data-counter]{font-variant-numeric:tabular-nums;font-feature-settings:'tnum';}
+
+
+/* ── Phase 2: semantic presentation ownership (migrated from markup) ── */
+.innovation-process{background:var(--off-white);padding:2rem 0;border-top:1px solid var(--rule-l);}
+.innovation-process__inner{padding:0 clamp(1.5rem,4vw,5rem);display:flex;align-items:center;gap:3rem;flex-wrap:wrap;}
+.innovation-process__stat{display:flex;align-items:baseline;gap:.75rem;}
+.innovation-process__value{font-family:var(--ff-display);font-size:2.5rem;font-weight:300;color:var(--navy);line-height:1;letter-spacing:-.03em;}
+.innovation-process__label{font-size:.875rem;color:var(--text-on-light-2);}
+.innovation-process__divider{width:1px;height:32px;background:var(--rule-l);flex-shrink:0;}
+.projects-intro{max-width:600px;}
+.projects-enquire{margin-top:2rem;}
+.innovation-focus__kicker{color:var(--teal-2);opacity:.9;margin-bottom:.625rem;}
+.innovation-focus__title{color:#F5F5F0;}
+.innovation-contact__intro{max-width:540px;}
