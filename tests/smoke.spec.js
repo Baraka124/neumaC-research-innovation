@@ -42,3 +42,33 @@ test('mobile drawer opens, traps focus, closes on Escape', async ({ page }) => {
   await page.keyboard.press('Escape');
   await expect(page.locator('#mobDrawer')).not.toHaveClass(/open/);
 });
+
+
+test('research line detail reveals after API render', async ({ page }) => {
+  await page.route('**/api/research-lines/test-line/website', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ data: {
+      id: 'test-line', line_number: 1,
+      name: 'Transplantation & Pulmonary Hypertension',
+      short_name: 'Transplantation & Pulmonary Hypertension',
+      description: 'Mock research line used by the browser smoke test.',
+      active_trials: 0, active_projects: 0, total_trials: 0, total_projects: 0,
+      keywords: [], track_record: [], team: [], trials_list: []
+    }})
+  }));
+  await page.route('**/api/research-lines/website', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ data: [] })
+  }));
+  await page.route('**/api/clinical-trials/website?line=test-line', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ data: [] })
+  }));
+  await page.route('**/api/news/website?type=publication&line=test-line&limit=5', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ data: [] })
+  }));
+
+  await page.goto('/line/?id=test-line');
+  await expect(page.locator('#lineHero')).toBeVisible({ timeout: 6000 });
+  await expect(page.locator('#lineTitle')).toContainText('Transplantation');
+  await expect(page.locator('#lineLoadingState')).toBeHidden();
+});

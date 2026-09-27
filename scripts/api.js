@@ -2033,9 +2033,24 @@ async function loadLineDetail() {
   const loadErrorEl = document.getElementById('lineLoadError');
   const heroEl      = document.getElementById('lineHero');
 
+  // Phase 4.2: visibility is class-owned. Phase 2 moved the line page's
+  // default hidden states into CSS, so setting element.style.display=''
+  // no longer reveals anything — the stylesheet still wins with
+  // display:none. Keep state transitions semantic and explicit.
+  const showLineEl = (el) => {
+    if (!el) return;
+    el.classList.remove('is-hidden');
+    el.classList.add('is-visible');
+  };
+  const hideLineEl = (el) => {
+    if (!el) return;
+    el.classList.remove('is-visible');
+    el.classList.add('is-hidden');
+  };
+
   if (!lineId) {
-    if (loadingEl) loadingEl.style.display = 'none';
-    if (notFoundEl) notFoundEl.style.display = '';
+    hideLineEl(loadingEl);
+    showLineEl(notFoundEl);
     return;
   }
 
@@ -2051,8 +2066,8 @@ async function loadLineDetail() {
     if (!line) throw new Error('not found');
   } catch (err) {
     console.error('Research line load failed:', err.message);
-    if (loadingEl) loadingEl.style.display = 'none';
-    if (loadErrorEl) loadErrorEl.style.display = '';
+    hideLineEl(loadingEl);
+    showLineEl(loadErrorEl);
     return;
   }
 
@@ -2071,7 +2086,7 @@ async function loadLineDetail() {
   } catch (e) { /* decorative */ }
 
   try {
-    if (loadingEl) loadingEl.style.display = 'none';
+    hideLineEl(loadingEl);
     // heroEl is intentionally NOT shown here. Showing it before the render
     // below completes means any exception partway through this block
     // (a malformed field on one specific line, a slow/failed secondary
@@ -2080,7 +2095,7 @@ async function loadLineDetail() {
     // blank page to a visitor. heroEl is shown only once everything in
     // this block has finished without throwing (see end of try block).
     const collabEl = document.getElementById('lineCollabSection');
-    if (collabEl) collabEl.style.display = '';
+    showLineEl(collabEl);
 
     // Page title / description, since this is one template for six lines
     const titleText = `${line.short_name || line.name} | neumACt R&I`;
@@ -2127,9 +2142,9 @@ async function loadLineDetail() {
       if (qEn) {
         questionEl.innerHTML =
           `<span lang="en">${escHtml(qEn)}</span><span lang="es">${escHtml(qEs)}</span>`;
-        questionEl.style.display = '';
+        showLineEl(questionEl);
       } else {
-        questionEl.style.display = 'none';
+        hideLineEl(questionEl);
       }
     }
 
@@ -2194,7 +2209,7 @@ async function loadLineDetail() {
           ${roleBadges ? `<div class="line-coordinator__badges">${roleBadges}</div>` : ''}
         </div>`;
       peopleSection.style.opacity = '0';
-      peopleSection.style.display = '';
+      showLineEl(peopleSection);
       requestAnimationFrame(() => { peopleSection.style.transition = 'opacity .25s var(--ease-clinical)'; peopleSection.style.opacity = '1'; });
     }
 
@@ -2272,7 +2287,7 @@ async function loadLineDetail() {
       if (html) {
         aboutContent.innerHTML = html;
         aboutSection.style.opacity = '0';
-        aboutSection.style.display = '';
+        showLineEl(aboutSection);
         requestAnimationFrame(() => { aboutSection.style.transition = 'opacity .25s var(--ease-clinical)'; aboutSection.style.opacity = '1'; });
       }
 
@@ -2293,7 +2308,7 @@ async function loadLineDetail() {
               <p class="line-fact__label"><span lang="en">${f.labelEn}</span><span lang="es">${f.labelEs}</span></p>
             </div>`).join('');
           factsEl.style.opacity = '0';
-          factsEl.style.display = '';
+          showLineEl(factsEl);
           requestAnimationFrame(() => { factsEl.style.transition = 'opacity .25s var(--ease-clinical)'; factsEl.style.opacity = '1'; });
         }
       }
@@ -2309,7 +2324,7 @@ async function loadLineDetail() {
         `<li class="ltr-item"><span class="ltr-mark">—</span><span>${escHtml(item)}</span></li>`
       ).join('');
       trackSection.style.opacity = '0';
-      trackSection.style.display = '';
+      showLineEl(trackSection);
       requestAnimationFrame(() => { trackSection.style.transition = 'opacity .25s var(--ease-clinical)'; trackSection.style.opacity = '1'; });
     }
 
@@ -2327,7 +2342,7 @@ async function loadLineDetail() {
             <svg class="lt-trial-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>`).join('');
         trialsSection.style.opacity = '0';
-        trialsSection.style.display = '';
+        showLineEl(trialsSection);
         requestAnimationFrame(() => { trialsSection.style.transition = 'opacity .25s var(--ease-clinical)'; trialsSection.style.opacity = '1'; });
       }
     } catch (err) { console.error('Line trials load failed:', err); }
@@ -2408,7 +2423,7 @@ window._lineTeamData = [];
         </div>`;
       }).join('');
       requestAnimationFrame(() => { teamChips.style.transition = 'opacity .22s var(--ease-clinical)'; teamChips.style.opacity = '1'; });
-      peopleSection.style.display = '';
+      showLineEl(peopleSection);
     }
 
     // Recent publications for this line
@@ -2428,13 +2443,13 @@ window._lineTeamData = [];
           </div>`;
         }).join('');
         pubsSection.style.opacity = '0';
-        pubsSection.style.display = '';
+        showLineEl(pubsSection);
         requestAnimationFrame(() => { pubsSection.style.transition = 'opacity .25s var(--ease-clinical)'; pubsSection.style.opacity = '1'; });
       }
     } catch (err) { console.error('Line publications load failed:', err); }
 
     // Everything above completed without throwing — safe to reveal now.
-    if (heroEl) heroEl.style.display = '';
+    showLineEl(heroEl);
 
   } catch (err) {
     console.error('Research line render failed:', err.message);
@@ -2445,12 +2460,12 @@ window._lineTeamData = [];
     // guarded, and if the dedicated error element is somehow missing
     // we fall back to repurposing the loading element so the visitor
     // always sees *something* rather than white nothing.
-    try { if (heroEl) heroEl.style.display = 'none'; } catch (_) {}
+    try { hideLineEl(heroEl); } catch (_) {}
     if (loadErrorEl) {
-      if (loadingEl) loadingEl.style.display = 'none';
-      loadErrorEl.style.display = '';
+      hideLineEl(loadingEl);
+      showLineEl(loadErrorEl);
     } else if (loadingEl) {
-      loadingEl.style.display = '';
+      showLineEl(loadingEl);
       loadingEl.innerHTML = '<p class="line-load-error">'
         + '<span lang="en">This line couldn\'t be loaded right now. '
         + '<a class="line-load-error__link" href="/clinical/">View all research lines</a>.</span>'
