@@ -1,0 +1,250 @@
+/* ============================================================
+   neumAC R&I — SHARED CROSS-PAGE PATTERNS
+   Phase 3 canonical owner for exact rules previously copied across
+   four or more principal page stylesheets. Loaded before page CSS so
+   page-owned variants retain the final word.
+   ============================================================ */
+/* shared by: clinical, innovation, line, news, team */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .story-typographic-journal{font-family:var(--ff-display,"Fraunces",serif)!important;font-style:italic!important;font-size:.8125rem!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important;color:rgba(255,255,255,.92)!important;background:none!important;border:none!important;border-radius:0!important;padding:0 0 .5rem 0!important;margin-bottom:.65rem!important;display:inline-block!important;position:relative;z-index:1;}
+/* shared by: home, innovation, line, news, team */
+:where(body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .contact-bg .label,:where(body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .team-bg .label,:where(body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .partner-bg .label{color:rgba(0,153,153,.9)!important;}
+/* shared by: clinical, innovation, line, news */
+body:where([data-page="clinical"],[data-page="innovation"],[data-page="line"],[data-page="news"]){font-family:var(--ff-body);background:var(--off-white);color:var(--text-on-light);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-top:68px; padding-top:68px;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) img,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) svg{display:block;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) a{color:inherit;text-decoration:none;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .display{font-family:var(--ff-display);font-weight:700;line-height:1.05;letter-spacing:-0.025em;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .display.xl{font-size:clamp(2.5rem,5vw,4rem);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .display.lg{font-size:clamp(2rem,3.5vw,3rem);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 clamp(1.5rem,5vw,6rem);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section{padding:7rem 0;}
+/* shared by: clinical, home, innovation, line, news, team */
+#pb{position:fixed;top:0;left:0;height:1.5px;width:0;background:var(--teal);z-index:3000;transition:width .08s linear;pointer-events:none;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-toggle:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-toggle.open{border-color:rgba(0,179,179,.4);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease-clinical),transform .5s var(--ease-clinical);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-lang{display:flex;align-items:center;gap:.625rem;padding:.4rem 0;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) [lang="es"]{display:none !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-lang-lbl{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-right:.2rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) [lang="en"]{display:inline;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-lang button{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1); cursor:pointer;padding:.35rem .65rem; font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:600;letter-spacing:.08em; text-transform:uppercase;color:rgba(255,255,255,.36); transition:background .18s,color .18s,border-color .18s;border-radius:6px; min-height:36px;min-width:44px; -webkit-tap-highlight-color:transparent;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) [lang="en"].blk{display:block;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-lang button.active{color:var(--teal-2);background:rgba(0,153,153,.18);border-color:rgba(0,153,153,.3);}
+/* shared by: clinical, home, innovation, line, team */
+:where(body[data-page="clinical"],body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="team"]) .hero-text-link{font-size:.9375rem;font-weight:500;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px;transition:border-color .15s,color .15s;}
+/* shared by: clinical, home, innovation, line, team */
+:where(body[data-page="clinical"],body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="team"]) .hero-text-link:hover{border-color:#fff;color:var(--teal-2);}
+/* shared by: clinical, home, innovation, line */
+:where(body[data-page="clinical"],body[data-page="home"],body[data-page="innovation"],body[data-page="line"]) .form-success.show{display:block;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .reveal-d1{transition-delay:.1s;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-submit,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) button[type="submit"].btn-primary{width:100%; padding:1rem 1.5rem; background:var(--teal-2); color:#fff; font-weight:600; font-size:.9375rem; letter-spacing:.01em; border:none; border-radius:var(--r-sm); cursor:pointer; transition:background .18s,color .18s; font-family:var(--ff-body); display:flex; align-items:center; justify-content:center; gap:.625rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-submit:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) button[type="submit"].btn-primary:hover{background:var(--teal);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-group{margin-bottom:0;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-group label{display:block; font-family:var(--ff-mono); font-size:var(--fs-label); letter-spacing:.12em; text-transform:uppercase; margin-bottom:.5rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card:not(.dark) .form-group input,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card:not(.dark) .form-group select,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card:not(.dark) .form-group textarea{width:100%; background:#fff; border:1px solid var(--mid-grey); border-radius:var(--r-sm); padding:.75rem 1rem; font-size:.9rem; font-family:var(--ff-body); color:var(--text-on-light); transition:border-color .18s; outline:none;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card:not(.dark) .form-group input:focus,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card:not(.dark) .form-group select:focus,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card:not(.dark) .form-group textarea:focus{border-color:var(--teal-2);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark .form-group input,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark .form-group select,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark .form-group textarea{width:100%; background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.2); border-radius:var(--r-sm); padding:.75rem 1rem; font-size:.9rem; font-family:var(--ff-body); color:#F5F5F0; transition:border-color .18s; outline:none;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark .form-group input:focus,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark .form-group select:focus,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark .form-group textarea:focus{border-color:var(--teal-2); background:rgba(255,255,255,.1);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark .form-group label{color:rgba(255,255,255,.55);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark .form-group input::placeholder,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark .form-group textarea::placeholder{color:rgba(255,255,255,.25);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-card.dark h3{color:#F5F5F0;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .hero-cred{color:rgba(255,255,255,.55);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .pstat-label{color:rgba(255,255,255,.55);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .team-role{color:rgba(255,255,255,.55);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .team-line-tag{color:rgba(255,255,255,.5);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .contact-bg .cinfo-label{color:rgba(255,255,255,.5);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .contact-bg .cinfo-value{color:rgba(255,255,255,.85);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .contact-bg .cinfo-value a{color:var(--teal-2);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .paths-section .path-desc{color:rgba(255,255,255,.72);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .paths-section .path-list li{color:rgba(255,255,255,.68);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-bg .pm-desc{color:rgba(255,255,255,.7);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-bg .pm-benefits li{color:rgba(255,255,255,.65);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .hero-desc{color:rgba(255,255,255,.78);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-col address{color:rgba(255,255,255,.52);}
+/* shared by: clinical, home, line, team */
+:where(body[data-page="clinical"],body[data-page="home"],body[data-page="line"],body[data-page="team"]) .btn-text:hover{color:#006666;border-bottom-color:rgba(0,102,102,.5);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partners-strip{background:var(--white); border-top:1px solid var(--rule-l); border-bottom:1px solid var(--rule-l); padding:5rem 0;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partners-inner{display:flex;flex-direction:column;gap:2.5rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .hero-desc{color:rgba(255,255,255,.88) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partners-top{display:flex;align-items:flex-end;justify-content:space-between; gap:2rem;flex-wrap:wrap; padding-bottom:2rem; border-bottom:1px solid var(--rule-l);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .path-desc{color:rgba(255,255,255,.82);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .path-list li{color:rgba(255,255,255,.78);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .pstat-label{color:rgba(255,255,255,.65) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .team-role{color:rgba(255,255,255,.65) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .team-line-tag{color:rgba(255,255,255,.58) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .team-expertise .team-tag{color:rgba(255,255,255,.5) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partners-heading{font-family:var(--ff-display); font-size:clamp(1.375rem,2.5vw,1.875rem); font-weight:700;color:var(--text-on-light); line-height:1.15;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .contact-bg .cinfo-label{color:rgba(255,255,255,.55) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .contact-bg .cinfo-value{color:rgba(255,255,255,.9) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .pm-desc{color:rgba(255,255,255,.8) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .pm-benefits li{color:rgba(255,255,255,.72) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partners-heading em{color:var(--accent);font-style:italic;font-weight:300;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .pm-title{color:#fff !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partners-copy{font-size:.9rem;color:var(--text-on-light-3); max-width:320px;line-height:1.7; text-align:right;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .stage-desc{color:rgba(0,0,0,.72);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .stage-list li{color:rgba(0,0,0,.62);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-col ul a{color:rgba(255,255,255,.6) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-col address{color:rgba(255,255,255,.58) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-affiliate-name{color:rgba(255,255,255,.38) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .focus-desc{color:rgba(255,255,255,.75) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .focus-cohort{color:rgba(255,255,255,.52) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partners-tiles{display:flex;flex-wrap:wrap; border:1px solid var(--rule-l); border-radius:var(--r-lg); overflow:hidden;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .hero-cred{color:rgba(255,255,255,.65) !important;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .contact-bg .sec-head p,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-bg .sec-head p,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .team-bg .sec-head p{color:rgba(255,255,255,.78);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile{flex:1;min-width:140px; padding:1.5rem 1.75rem; border-right:1px solid var(--rule-l); border-bottom:1px solid var(--rule-l); display:flex;flex-direction:column;gap:.375rem; transition:background .18s; cursor:default; position:relative;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile::before{content:"";position:absolute;top:0;left:0;right:0;height:2px; background:transparent;transition:background .25s;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile:hover{background:var(--off-white);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile:hover::before{background:var(--accent);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile:last-child{border-right:none;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile-name{font-family:var(--ff-mono);font-size:.75rem;font-weight:500; letter-spacing:.1em;text-transform:uppercase; color:var(--text-on-light);line-height:1;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile-sub{font-size:.8rem;color:var(--text-on-light-3); line-height:1.45;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile-tag{display:inline-flex;align-items:center; width:fit-content; font-family:var(--ff-mono);font-size:var(--fs-label); letter-spacing:.1em;text-transform:uppercase; padding:.2rem .55rem;border-radius:3px; margin-top:.25rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile-tag.institutional{background:rgba(0,153,153,.08); border:1px solid rgba(0,153,153,.2); color:var(--accent);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile-tag.regulatory{background:rgba(12,68,124,.05); border:1px solid rgba(12,68,124,.12); color:var(--text-on-light-2);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile-tag.industry{background:rgba(74,158,232,.07); border:1px solid rgba(74,158,232,.2); color:#3a7ec8;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partner-tile-tag.government{background:rgba(99,102,241,.07); border:1px solid rgba(99,102,241,.2); color:#5b5fc7;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:.375rem;flex-shrink:0;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-contact{font-size:.8rem;color:rgba(255,255,255,.4);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-contact a{color:rgba(0,179,179,.7);text-decoration:none;transition:color .18s;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-contact a:hover{color:var(--teal-2);}
+/* shared by: clinical, home, innovation, line, news, team */
+.hdr-nav a{font-size: .875rem !important;}
+/* shared by: clinical, home, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .site-footer{background:var(--navy-footer);border-top:1px solid rgba(255,255,255,.06);padding:4rem 0 0;position:relative;overflow:hidden;}
+/* shared by: clinical, home, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-bottom-bar{max-width:1440px;margin:3rem auto 0;padding:1.25rem clamp(1.25rem,4vw,3rem);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-primary,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-secondary,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-primary-alt,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-ghost,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-ghost-dark,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-outline,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-outline-dark,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-violet,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-gold,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-cta,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-trigger-btn,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .path-btn,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .cta-pill,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .hstat-btn,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) a[class*="btn-"],:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) button[class*="btn-"]{display:inline-flex;align-items:center;gap:.5rem; font-family:var(--ff-body);font-size:var(--fs-meta);font-weight:500; padding:.625rem 1.25rem;border-radius:var(--r-md); transition:background .15s,border-color .15s,color .15s,opacity .15s; cursor:pointer;text-decoration:none;border:none;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-primary,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-primary-alt,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-violet,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-gold,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-trigger-btn,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-cta,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .hstat-btn{background:#fff;color:var(--navy-2);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-primary:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-primary-alt:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-violet:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-gold:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .form-trigger-btn:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-cta:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .hstat-btn:hover{background:rgba(255,255,255,.88);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-secondary,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-ghost,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-ghost-dark,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-outline,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-outline-dark,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .path-btn{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-secondary:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-ghost:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-ghost-dark:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-outline:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .btn-outline-dark:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .path-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.55);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-primary,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-primary-alt,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-violet,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-gold,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .form-trigger-btn,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-cta{background:var(--navy-2);color:#fff;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-primary:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-primary-alt:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-violet:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-gold:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .form-trigger-btn:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-cta:hover{background:var(--navy-3);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-secondary,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-ghost,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-outline{background:transparent;color:var(--navy-2);border:1.5px solid var(--blue-200);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-secondary:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-ghost:hover,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section-light .btn-outline:hover{background:var(--blue-50);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .team-tag,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .cap-pill,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .trial-phase,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .trial-status,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .persp-badge,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .stage-node,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tech-tag,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .focus-tag,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-tag,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-affil,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-line,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .lead-tag,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .lead-line-pill,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .lead-affil-pill,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .opp-type,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .story-type-pill,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .spotlight-stage-pill{cursor:default;pointer-events:none;border-radius:var(--r-xs);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) #teamGrid{display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%,320px),1fr)); gap:1px; background:var(--rule-l,rgba(0,0,0,.06)); border:1px solid rgba(0,0,0,.06); border-radius:var(--r-md); overflow:hidden;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .team-card-api{background:#fff; padding:1.5rem; display:flex;align-items:flex-start;gap:1.125rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .team-card-api:hover{background:var(--teal-lt,#E2F0F0);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-name{font-size:var(--fs-body-sm);font-weight:600;color:#111;line-height:1.3;margin-bottom:.2rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-spec{font-size:var(--fs-label);color:#6B6B6B;margin-bottom:.375rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-line{display:inline-flex;align-items:center;gap:.3rem; font-family:var(--ff-mono,monospace);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase; padding:.25rem .55rem; background:var(--blue-50);color:var(--navy-2);border:1px solid var(--blue-100);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-bio{font-size:var(--fs-meta);color:#404040;line-height:1.6;margin-top:.5rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem;}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-tag{font-size:var(--fs-label);padding:.2rem .5rem; background:rgba(0,0,0,.04);color:#6B6B6B;border:1px solid rgba(0,0,0,.06); font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;}
+/* shared by: clinical, home, innovation, line, news, team */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible, textarea:focus-visible,[tabindex]:focus-visible,summary:focus-visible, .toggle-arrow:focus-visible,.line-card:focus-visible{outline:2px solid var(--teal-2);outline-offset:2px;border-radius:var(--r-xs);}
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-affil{font-size:var(--fs-label);padding:.2rem .5rem; background:#FAEEDA;color:#633806;border:1px solid #EF9F27; font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;}
+/* shared by: clinical, home, innovation, line, news, team */
+[data-counter]{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}

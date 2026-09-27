@@ -2,9 +2,7 @@
 <html lang="en" data-lang="en">
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
-  <script>/* blank-page guard: opacity:0 .reveal content must never stay hidden if any script throws */
-window.addEventListener('error',function(){try{document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});}catch(_){}} ,true);
-window.addEventListener('unhandledrejection',function(){try{document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});}catch(_){}} );</script>
+  
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0"/>
   <title>Legal Notice | neumACt R&I · CHUAC · INIBIC</title>
@@ -41,7 +39,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
   <div class="hdr-main">
     <div class="hdr-inner">
       <a href="/" class="hdr-logo" aria-label="neumACt R&amp;I">
-        <img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'">
+        <img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img">
         <span class="hdr-logo-rule" aria-hidden="true"></span>
         <span class="hdr-logo-desc"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
       </a>
@@ -63,8 +61,8 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         <div class="lang-switch" role="radiogroup" aria-label="Language / Idioma">
           <svg class="lang-switch-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 6 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-6-3.8-9s1.3-6.3 3.8-9z"/></svg>
           <span class="lang-switch-knob" aria-hidden="true"></span>
-          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" role="radio" aria-checked="true" tabindex="0">EN</button>
-          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" role="radio" aria-checked="false" tabindex="-1">ES</button>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" role="radio" aria-checked="true" tabindex="0">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" role="radio" aria-checked="false" tabindex="-1">ES</button>
         </div>
         <a href="/#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
         <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
@@ -78,7 +76,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
       <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
     <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </div><div class="mob-lang" role="radiogroup" aria-label="Language / Idioma"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" role="radio" aria-checked="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" role="radio" aria-checked="false">ES</button></div></nav>
+    </div><div class="mob-lang" role="radiogroup" aria-label="Language / Idioma"><button class="lt-btn lt-btn--active" data-lang="en" role="radio" aria-checked="true">EN</button><button class="lt-btn" data-lang="es" role="radio" aria-checked="false">ES</button></div></nav>
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <!-- ═══ PRIVACY POLICY ═══════════════════════════════════ -->
 <!-- ═══ LEGAL NOTICE ══════════════════════════════════════ -->
@@ -247,96 +245,22 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
   <a class="footer-legal-link" href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
   <a class="footer-legal-link" href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
 </div>
-<script>
-if(!localStorage.getItem('cookieOk')){
-  var cb=document.getElementById('cookieBanner');
-  if(cb){cb.style.display='flex';}
-}
-</script>
+
 <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie notice"
  >
   <p class="cookie-banner__copy">
     <span lang="en">This site uses essential cookies only. No tracking, no advertising.</span>
     <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.</span>
   </p>
-  <button class="cookie-banner__button" onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOk','1')"
+  <button class="cookie-banner__button"
    >
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
 
-<script>
-(function(){
-  var mob=document.getElementById('mobToggle'),
-      drawer=document.getElementById('mobDrawer'),overlay=document.getElementById('mobOverlay');
-  // header-enhance.js owns the scrolled-state scroll listener (RAF-
-  // throttled, direction-aware hide/reveal) and the drawer focus
-  // trap (MutationObserver on #mobDrawer's "open" class) -- this
-  // used to also run its own independent scroll listener doing the
-  // same .scrolled toggle. Removed.
-  function openD(){if(drawer)drawer.classList.add('open');if(overlay)overlay.classList.add('open');if(mob)mob.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
-  function closeD(){if(drawer)drawer.classList.remove('open');if(overlay)overlay.classList.remove('open');if(mob)mob.setAttribute('aria-expanded','false');document.body.style.overflow='';}
-  if(mob)mob.addEventListener('click',function(){drawer&&drawer.classList.contains('open')?closeD():openD();});
-  if(overlay)overlay.addEventListener('click',closeD);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeD();});
-  function syncLang(l){document.querySelectorAll('.lt-btn').forEach(function(b){var a=b.dataset.lang===l;b.classList.toggle('lt-btn--active',a);b.setAttribute('aria-checked',String(a));});document.documentElement.lang=l==='es'?'es':'en';}
-  syncLang(document.documentElement.dataset.lang||'en');
-  var _orig=window.selectLang;
-  window.selectLang=function(l){if(_orig)_orig(l);syncLang(l);closeD();};
-})();
-</script>
+
+<script src="../site.js" defer></script>
 <script src="../header-enhance.js" defer></script>
-<script>
-/* ── Reveal safety net — deliberately its own <script> block. ──
-   The main reveal observer is created at the END of a long inline
-   script; a thrown exception anywhere earlier in that block halts it
-   before the observer exists, and every .reveal element (hard-coded
-   opacity:0 in CSS) then stays invisible forever — i.e. a blank
-   page. Exceptions do NOT propagate across script-block boundaries,
-   so this block always runs: it recreates the observer if the main
-   one died, falls back to instant-reveal if IntersectionObserver
-   itself is unavailable, and as a last resort force-reveals anything
-   still hidden in the viewport 2.5s after load. */
-(function(){
-  var recreated=false;
-  try{
-    if(!window._revealObserver){
-      window._revealObserver=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -32px 0px'});
-      document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
-      recreated=true;
-    }
-  }catch(err){
-    // IntersectionObserver unavailable or threw — reveal everything now,
-    // no observer to rely on for below-fold content later.
-    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
-    return;
-  }
-  // Last-resort sweep 2.5s after load: if the primary observer never
-  // ran (an exception earlier in its own script block killed it before
-  // it could observe anything), reveal what's on screen AND wire a
-  // cheap scroll fallback so below-the-fold .reveal elements don't stay
-  // permanently invisible — the original net only handled the current
-  // viewport, which left a blank strip on scroll when the observer died.
-  setTimeout(function(){
-    var orphans=document.querySelectorAll('.reveal:not(.in)');
-    if(!orphans.length)return;
-    function sweep(){
-      document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
-        var r=el.getBoundingClientRect();
-        if(r.top<window.innerHeight&&r.bottom>0)el.classList.add('in');
-      });
-      if(!document.querySelector('.reveal:not(.in)')){
-        window.removeEventListener('scroll',sweep);
-      }
-    }
-    sweep();
-    // Only attach the scroll fallback if the observer clearly isn't
-    // doing its job (orphans still exist after it should have run).
-    if(document.querySelector('.reveal:not(.in)')){
-      window.addEventListener('scroll',sweep,{passive:true});
-    }
-  },2500);
-})();
-</script>
+
 </body>
 </html>

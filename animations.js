@@ -92,18 +92,13 @@
     const heroes = document.querySelectorAll('.hero, .blog-hero, .pg-hero');
     heroes.forEach(hero => {
       const line = document.createElement('div');
-      line.style.cssText = `
-        position:absolute;top:0;left:0;width:3px;height:0;
-        background:linear-gradient(to bottom, var(--teal-2), transparent);
-        z-index:2;transition:height .7s var(--ease-clinical);
-        pointer-events:none;
-      `;
+      line.className = 'hero-accent-line';
       // Only inject if hero is position:relative/absolute
       const pos = getComputedStyle(hero).position;
       if (pos === 'relative' || pos === 'absolute') {
         hero.appendChild(line);
         requestAnimationFrame(() => {
-          setTimeout(() => { line.style.height = '100%'; }, 80);
+          setTimeout(() => { line.classList.add('is-drawn'); }, 80);
         });
       }
     });
@@ -141,8 +136,8 @@
         // Pulse the toggle hint briefly to confirm interaction
         const toggle = card.querySelector('.line-expand-toggle');
         if (toggle) {
-          toggle.style.background = 'rgba(0,153,153,.06)';
-          setTimeout(() => { toggle.style.background = ''; }, 300);
+          toggle.classList.add('is-pulsing');
+          setTimeout(() => { toggle.classList.remove('is-pulsing'); }, 300);
         }
 
         requestAnimationFrame(() => {
@@ -160,7 +155,6 @@
     document.querySelectorAll('.line-expand-toggle').forEach(toggle => {
       toggle.setAttribute('role', 'button');
       toggle.setAttribute('aria-expanded', 'false');
-      toggle.style.cursor = 'pointer';
       // Make the toggle row pulse subtly on first load to hint interactivity
       const card = toggle.closest('.line-card');
       if (card) {

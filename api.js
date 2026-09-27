@@ -119,14 +119,12 @@ function showApiDownBanner() {
   const b = document.createElement('div');
   b.id = 'apiDownBanner';
   b.setAttribute('role', 'status');
-  b.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:2500;' +
-    'background:#0C3868;color:#fff;font-family:var(--ff-body,sans-serif);' +
-    'font-size:.8125rem;padding:.7rem 3rem .7rem 1.25rem;text-align:center;' +
-    'box-shadow:0 -2px 12px rgba(7,17,31,.25);';
+  b.className = 'api-down-banner';
   b.innerHTML =
     '<span lang="en">Live data is temporarily unavailable — page content may be incomplete. Please try again shortly.</span>' +
     '<span lang="es">Los datos en vivo no están disponibles temporalmente; el contenido puede estar incompleto. Inténtelo de nuevo en breve.</span>' +
-    '<button class="api-notice__dismiss" aria-label="Dismiss" onclick="this.parentNode.remove()">×</button>';
+    '<button class="api-notice__dismiss" aria-label="Dismiss">×</button>';
+  b.querySelector('.api-notice__dismiss')?.addEventListener('click', () => b.remove());
   document.body.appendChild(b);
 }
 
@@ -1321,13 +1319,12 @@ function showFormError(form, text) {
   if (!el) {
     el = document.createElement('div');
     el.className = 'form-error-msg';
-    el.style.cssText = 'padding:.625rem .875rem;margin-top:.75rem;border-radius:6px;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);color:#b91c1c;font-size:.8125rem;';
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.insertAdjacentElement('beforebegin', el);
     else form.appendChild(el);
   }
   el.textContent = text;
-  el.style.display = '';
+  el.hidden = false;
 }
 
 function initContactForm() {

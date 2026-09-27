@@ -1272,3 +1272,20 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
 .footer-legal-link,.footer-accreditation,.cookie-banner__copy,.live-ticker,.networks-sec__intro,.line-collab__kicker{color:rgba(255,255,255,.72)!important;}
 .latest-bar__dismiss,.networks-sec__eyebrow,.line-keyword-sep{color:rgba(255,255,255,.58)!important;}
 .team-publications__intro,.pub-card--empty,.line-state--loading{color:rgba(255,255,255,.7)!important;}
+
+/* ============================================================
+   PHASE 3 — shared runtime state classes
+   Behaviour toggles state; CSS owns presentation.
+   ============================================================ */
+body.is-drawer-open{overflow:hidden;}
+.cookie-banner.is-visible{display:flex;}
+.skip-link--nav{top:48px;}
+.skip-link--footer{top:96px;}
+.hero-accent-line{position:absolute;top:0;left:0;width:3px;height:0;background:linear-gradient(to bottom,var(--teal-2),transparent);z-index:2;transition:height .7s var(--ease-clinical);pointer-events:none;}
+.hero-accent-line.is-drawn{height:100%;}
+.line-expand-toggle{cursor:pointer;}
+.line-expand-toggle.is-pulsing{background:rgba(0,153,153,.06);}
+.lead-initials{font-family:var(--ff-body);font-size:2.5rem;font-weight:700;color:#007A7A;opacity:.4;letter-spacing:-.02em;}
+.api-down-banner{position:fixed;left:0;right:0;bottom:0;z-index:2500;background:#0C3868;color:#fff;font-family:var(--ff-body,sans-serif);font-size:.8125rem;padding:.7rem 3rem .7rem 1.25rem;text-align:center;box-shadow:0 -2px 12px rgba(7,17,31,.25);}
+.form-error-msg{padding:.625rem .875rem;margin-top:.75rem;border-radius:6px;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);color:#b91c1c;font-size:.8125rem;}
+.hdr-logo-img.is-image-error{opacity:.3;}

@@ -1,21 +1,16 @@
 /* neumACt R&I — Header Enhancements (shared)
- * - Sliding active/hover pill under the primary nav
- * - Language choice persisted in localStorage + smooth crossfade
- * - Scrolled-state class + scroll-direction hide/reveal on the header
- * Loaded on every page; all guards are null-safe so a missing element
- * never throws.
- * Note: progress-bar (#pb) and back-to-top (#scrollTop) are NOT
- * handled here -- each page already has its own inline implementation
- * of both. This file used to also create its own duplicate, invisible
- * versions of each via injected DOM elements, which meant every page
- * was running two complete, independent scroll-progress systems and
- * two back-to-top buttons at once. Removed; see commit history. */
+ * Header-only interaction layer.
+ * site.js owns language state, the mobile drawer, cookies, scroll
+ * progress/back-to-top, smooth anchors, and reveal safety.
+ * This file owns the nav pill, header scroll-direction behaviour,
+ * focus handling, language-radio keyboard interaction, and other
+ * header-specific accessibility enhancements. All guards are null-safe. */
 (function(){
   'use strict';
 
-  /* ── 1. Language: persist + crossfade ─────────────────────────── */
-  // Wrap the page's existing selectLang (set by inline script) so we add
-  // persistence and a crossfade without losing the original behaviour.
+  /* ── 1. Language control synchronization ─────────────────────── */
+  // Reflect the canonical language state owned by site.js in the
+  // desktop and mobile header controls.
   function syncLangSwitch(lang){
     // .lang-opt is now a role="radio" pair inside a radiogroup, not a
     // plain toggle-button pair — aria-checked (not aria-pressed) is
@@ -42,35 +37,17 @@
       b.classList.toggle('lt-btn--active', on);
     });
   }
-  function applyLangCrossfade(lang){
-    var root = document.documentElement;
-    root.style.transition = 'opacity .18s ease';
-    root.style.opacity = '0.6';
-    setTimeout(function(){
-      root.dataset.lang = lang;
-      root.lang = (lang === 'es') ? 'es' : 'en';
-      syncLangSwitch(lang);
-      try { localStorage.setItem('lang', lang); } catch(e){}
-      root.style.opacity = '1';
-    }, 120);
-  }
-
-  var _original = window.selectLang;
-  window.selectLang = function(lang){
-    if (typeof _original === 'function') {
-      try { _original(lang); } catch(e){}
-    }
-    applyLangCrossfade(lang);
-  };
-
-  // On load, restore saved language (default en)
+  // Language state itself is owned by site.js. Header enhancements only
+  // mirror the canonical state into the desktop/mobile controls.
   function restoreLang(){
-    var saved = 'en';
-    try { saved = localStorage.getItem('lang') || 'en'; } catch(e){}
-    document.documentElement.dataset.lang = saved;
-    document.documentElement.lang = (saved === 'es') ? 'es' : 'en';
-    syncLangSwitch(saved);
+    var saved = document.documentElement.dataset.lang || 'en';
+    try { saved = localStorage.getItem('huac_lang') || localStorage.getItem('lang') || saved; } catch(e){}
+    syncLangSwitch(saved === 'es' ? 'es' : 'en');
   }
+  document.addEventListener('neumac:languagechange', function(e){
+    var lang = e && e.detail && e.detail.lang;
+    if (lang === 'en' || lang === 'es') syncLangSwitch(lang);
+  });
 
   /* ── 2. Sliding nav pill ──────────────────────────────────────── */
   function initNavPill(){
@@ -145,12 +122,9 @@
   }
 
   /* ── 4. Mobile drawer focus trap ──────────────────────────────────
-     Deliberately decoupled from whichever inline open/close function
-     a given page uses (openD/closeD, openMob/closeMob, openDrawer/
-     closeDrawer — naming has drifted across pages over time). Rather
-     than patch N divergent implementations, this watches the
-     drawer's "open" class directly via MutationObserver, so it works
-     identically everywhere with zero per-page wiring. */
+     Drawer state is owned by site.js. This enhancement watches the
+     canonical "open" class via MutationObserver and adds keyboard
+     focus containment without creating a second state owner. */
   function initDrawerFocusTrap(){
     var drawer = document.getElementById('mobDrawer');
     var toggle = document.getElementById('mobToggle');
@@ -299,9 +273,8 @@
   }
 
   /* ── 16: swipe-to-close the drawer ───────────────────────────
-     Rightward swipe on the open drawer closes it via the page's own
-     toggle (so overlay + body scroll are restored by the same code
-     path that opened it). */
+     Rightward swipe delegates to the canonical site.js drawer toggle,
+     preserving the same overlay, aria and body-lock state transition. */
   function initDrawerSwipe(){
     var drawer = document.getElementById('mobDrawer');
     var toggle = document.getElementById('mobToggle');
@@ -342,11 +315,11 @@
     var footer = document.querySelector('.site-footer');
     if (footer && !footer.id) footer.id = 'siteFooter';
     var nav = document.createElement('a');
-    nav.className = 'skip-link'; nav.id = 'skipNav'; nav.href = '#hdr';
-    nav.textContent = 'Skip to navigation'; nav.style.top = '48px';
+    nav.className = 'skip-link skip-link--nav'; nav.id = 'skipNav'; nav.href = '#hdr';
+    nav.textContent = 'Skip to navigation';
     var foot = document.createElement('a');
-    foot.className = 'skip-link'; foot.href = '#' + (footer ? footer.id : 'siteFooter');
-    foot.textContent = 'Skip to footer'; foot.style.top = '96px';
+    foot.className = 'skip-link skip-link--footer'; foot.href = '#' + (footer ? footer.id : 'siteFooter');
+    foot.textContent = 'Skip to footer';
     first.after(nav, foot);
   }
 

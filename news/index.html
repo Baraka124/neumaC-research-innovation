@@ -2,9 +2,7 @@
 <html lang="en" data-lang="en">            
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
-  <script>/* blank-page guard: opacity:0 .reveal content must never stay hidden if any script throws */
-window.addEventListener('error',function(){try{document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});}catch(_){}} ,true);
-window.addEventListener('unhandledrejection',function(){try{document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});}catch(_){}} );</script>
+  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" /> 
   <title>neumACt Articles · Research &amp; Innovation · CHUAC · INIBIC</title>
@@ -29,6 +27,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles/tokens.css">
   <link rel="stylesheet" href="../styles/foundation.css">
+  <link rel="stylesheet" href="../styles/shared.css">
   <link rel="stylesheet" href="../styles/pages/news.css">
 
   <!-- neumAC Design System — buttons, pills, team grid -->
@@ -41,14 +40,14 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0C3868">
 </head>
-<body>
+<body data-page="news">
 <a href="#mainContent" class="skip-link">Skip to main content</a>
 <header class="hdr" id="hdr" data-page="news">
   <!-- Tier 2: primary navigation -->
   <div class="hdr-main">
     <div class="hdr-inner">
       <a href="/" class="hdr-logo" aria-label="neumACt R&amp;I">
-        <img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'">
+        <img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img">
         <span class="hdr-logo-rule" aria-hidden="true"></span>
         <span class="hdr-logo-desc"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
       </a>
@@ -70,8 +69,8 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         <div class="lang-switch" role="radiogroup" aria-label="Language / Idioma">
           <svg class="lang-switch-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 6 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-6-3.8-9s1.3-6.3 3.8-9z"/></svg>
           <span class="lang-switch-knob" aria-hidden="true"></span>
-          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" role="radio" aria-checked="true" tabindex="0">EN</button>
-          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" role="radio" aria-checked="false" tabindex="-1">ES</button>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" role="radio" aria-checked="true" tabindex="0">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" role="radio" aria-checked="false" tabindex="-1">ES</button>
         </div>
         <a href="/#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
         <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
@@ -85,7 +84,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       <a href="/news/" class="current" aria-current="page"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
       <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
     <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </div><div class="mob-lang" role="radiogroup" aria-label="Language / Idioma"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" role="radio" aria-checked="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" role="radio" aria-checked="false">ES</button></div></nav>
+    </div><div class="mob-lang" role="radiogroup" aria-label="Language / Idioma"><button class="lt-btn lt-btn--active" data-lang="en" role="radio" aria-checked="true">EN</button><button class="lt-btn" data-lang="es" role="radio" aria-checked="false">ES</button></div></nav>
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <section class="blog-hero" id="mainContent">
     <!-- Bronchial tree background canvas -->
@@ -345,110 +344,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
   <span class="footer-accreditation"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
 </div>
 
-  <script>
-    /* ── Scroll: header + progress bar + scroll-to-top ── */
-    (function(){
-      var hdr=document.getElementById('hdr'),prg=document.getElementById('pb'),stt=document.getElementById('scrollTop');
-      window.addEventListener('scroll',function(){
-        var y=window.scrollY;
-        if(hdr)hdr.classList.toggle('scrolled',y>40);
-        if(prg){var tot=document.documentElement.scrollHeight-window.innerHeight;prg.style.width=(tot>0?(y/tot*100):0)+'%';}
-        if(stt){var thr=Math.max(400,(document.documentElement.scrollHeight-window.innerHeight)*0.35);stt.classList.toggle('visible',y>thr);}
-      },{passive:true});
-      if(stt)stt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-    })();
-
-    /* ── Mobile drawer ── */
-    var _tog=document.getElementById('mobToggle'),_drw=document.getElementById('mobDrawer'),_ovl=document.getElementById('mobOverlay'),_cls=document.getElementById('mobClose');
-    function openMob(){
-      if(!_tog||!_drw)return;
-      _tog.classList.add('open');_drw.classList.add('open');_ovl&&_ovl.classList.add('open');
-      _tog.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';
-      closeLang();
-    }
-    function closeMob(){
-      if(!_tog||!_drw)return;
-      _tog.classList.remove('open');_drw.classList.remove('open');_ovl&&_ovl.classList.remove('open');
-      _tog.setAttribute('aria-expanded','false');document.body.style.overflow='';
-    }
-    if(_tog)_tog.addEventListener('click',openMob);
-    if(_cls)_cls.addEventListener('click',closeMob);
-    if(_ovl)_ovl.addEventListener('click',closeMob);
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMob();closeLang();}});
-
-    /* ── Language dropdown ── */
-    var _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
-    function openLang(){
-      if(!_lsw||!_lbt)return;
-      closeMob();
-      _lsw.classList.remove('open-up');
-      _lsw.classList.add('open');
-      if(_lbt)_lbt.setAttribute('aria-expanded','true');
-    }
-    function closeLang(){
-      if(!_lsw)return;
-      _lsw.classList.remove('open');
-      if(_lbt)_lbt.setAttribute('aria-expanded','false');
-    }
-    function toggleLang(){
-      if(_lsw&&_lsw.classList.contains('open'))closeLang();else openLang();
-    }
-    if(_lbt){
-      _lbt.addEventListener('click',function(e){e.stopPropagation();toggleLang();});
-    }
-    if(_lsw){
-      _lsw.addEventListener('click',function(e){e.stopPropagation();});
-    }
-    document.addEventListener('click',function(){closeLang();});
-
-    /* ── Language core — NO _busy flag, always reliable ── */
-    function setLang(l){
-      if(!l||!(l==='en'||l==='es'))return;
-      document.documentElement.dataset.lang=l;
-      document.documentElement.lang=l;
-      try{localStorage.setItem('huac_lang',l);}catch(e){}
-    }
-    function selectLang(l){
-      setLang(l);
-      /* Update dropdown options */
-      document.querySelectorAll('.lt-btn').forEach(function(b){
-        var on = b.dataset.lang === l;
-        b.classList.toggle('lt-btn--active', on);
-        b.setAttribute('aria-checked', on ? 'true' : 'false');
-      });
-      /* Update mobile lang buttons */
-      var me=document.getElementById('mobLangEn'),mes=document.getElementById('mobLangEs');
-      if(me)me.classList.toggle('active',l==='en');
-      if(mes)mes.classList.toggle('active',l==='es');
-      /* Update label */
-      if(_lbl)_lbl.textContent=l.toUpperCase();
-      closeLang();
-    }
-    /* Restore saved language */
-    (function(){
-      try{
-        var s=localStorage.getItem('huac_lang');
-        if(s==='en'||s==='es')selectLang(s);
-      }catch(e){}
-    })();
-
-    /* ── Smooth anchor scroll ── */
-    document.querySelectorAll('a[href^="#"]').forEach(function(a){
-      a.addEventListener('click',function(e){
-        var id=a.getAttribute('href').slice(1);if(!id)return;
-        var el=document.getElementById(id);if(!el)return;
-        e.preventDefault();closeMob();
-        setTimeout(function(){window.scrollTo({top:el.offsetTop-92,behavior:'smooth'});try{history.pushState(null,'','#'+id);}catch(x){}},50);
-      });
-    });
-
-    /* ── Reveal observer — exposed globally so api.js can observe
-       dynamically injected elements ── */
-    window._revealObserver=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});
-    },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
-  </script>
+  
 
   <script>
   /* ══════════════════════════════════════════════════════════
@@ -964,29 +860,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
   </script>
   <script src="../animations.js" defer></script>
   <script src="../api.js" defer></script>
-<script>
-(function(){
-  var mob=document.getElementById('mobToggle');
-  var drawer=document.getElementById('mobDrawer');
-  var overlay=document.getElementById('mobOverlay');
-  // header-enhance.js owns the scrolled-state scroll listener and the
-  // drawer focus trap (MutationObserver on #mobDrawer's "open" class
-  // -- works regardless of which function below toggles it). This
-  // used to also sync aria-pressed on the desktop language buttons by
-  // ID, which is now wrong: those buttons are role="radio" inside a
-  // radiogroup (see styles/components.css/header-enhance.js), so the correct
-  // attribute is aria-checked, and header-enhance.js's syncLangSwitch
-  // already keeps it current on every selectLang() call -- this
-  // redundant, now-incorrect sync is removed.
-  var _orig=window.selectLang;
-  window.selectLang=function(l){
-    if(_orig)_orig(l);
-    if(drawer)drawer.classList.remove('open');
-    if(overlay)overlay.classList.remove('open');
-    if(mob)mob.setAttribute('aria-expanded','false');
-  };
-})();
-</script>
+
 
   <script>
   /* ── News hero bronchial tree ─────────────────────────── */
@@ -1100,65 +974,15 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     <span lang="en">This site uses essential cookies only. No tracking, no advertising.</span>
     <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.</span>
   </p>
-  <button class="cookie-banner__button" onclick="this.parentElement.style.display='none';localStorage.setItem('cookieOk','1')"
+  <button class="cookie-banner__button"
    >
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
+
+<script src="../site.js" defer></script>
 <script src="../header-enhance.js" defer></script>
 <script src="../news-enhance.js" defer></script>
-<script>
-/* ── Reveal safety net — deliberately its own <script> block. ──
-   The main reveal observer is created at the END of a long inline
-   script; a thrown exception anywhere earlier in that block halts it
-   before the observer exists, and every .reveal element (hard-coded
-   opacity:0 in CSS) then stays invisible forever — i.e. a blank
-   page. Exceptions do NOT propagate across script-block boundaries,
-   so this block always runs: it recreates the observer if the main
-   one died, falls back to instant-reveal if IntersectionObserver
-   itself is unavailable, and as a last resort force-reveals anything
-   still hidden in the viewport 2.5s after load. */
-(function(){
-  var recreated=false;
-  try{
-    if(!window._revealObserver){
-      window._revealObserver=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -32px 0px'});
-      document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
-      recreated=true;
-    }
-  }catch(err){
-    // IntersectionObserver unavailable or threw — reveal everything now,
-    // no observer to rely on for below-fold content later.
-    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
-    return;
-  }
-  // Last-resort sweep 2.5s after load: if the primary observer never
-  // ran (an exception earlier in its own script block killed it before
-  // it could observe anything), reveal what's on screen AND wire a
-  // cheap scroll fallback so below-the-fold .reveal elements don't stay
-  // permanently invisible — the original net only handled the current
-  // viewport, which left a blank strip on scroll when the observer died.
-  setTimeout(function(){
-    var orphans=document.querySelectorAll('.reveal:not(.in)');
-    if(!orphans.length)return;
-    function sweep(){
-      document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
-        var r=el.getBoundingClientRect();
-        if(r.top<window.innerHeight&&r.bottom>0)el.classList.add('in');
-      });
-      if(!document.querySelector('.reveal:not(.in)')){
-        window.removeEventListener('scroll',sweep);
-      }
-    }
-    sweep();
-    // Only attach the scroll fallback if the observer clearly isn't
-    // doing its job (orphans still exist after it should have run).
-    if(document.querySelector('.reveal:not(.in)')){
-      window.addEventListener('scroll',sweep,{passive:true});
-    }
-  },2500);
-})();
-</script>
+
 </body>
 </html>
