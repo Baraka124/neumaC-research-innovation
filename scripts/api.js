@@ -184,40 +184,105 @@ const PAGE = (() => {
 // 1. RESEARCH LINES (index.html + clinical.html)
 // ─────────────────────────────────────────────
 
-/* 4 ── Research-line "fingerprint": generative, deterministic artwork
-   derived from the line's own data — line_number seeds the pattern,
-   active_trials drives amplitude/energy, the name's length shifts
-   phase. Layered breathing waveforms: every line gets a unique,
-   meaningful mark that changes as its science evolves. No stock
-   imagery, conceptually honest. */
-function _fpRand(seed) {           // mulberry32 — tiny seeded PRNG
-  return function () {
-    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
-    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
-    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  };
-}
-function buildLineFingerprint(line, w = 280, h = 60) {
-  const seed = (line.line_number || 1) * 7919 + (line.name || '').length * 131;
-  const rnd = _fpRand(seed);
-  const energy = Math.min(1, .35 + (line.active_trials || 0) * .12);
-  let paths = '';
-  const waves = 3;
-  for (let k = 0; k < waves; k++) {
-    const amp = h * .18 * energy * (.6 + rnd() * .8);
-    const freq = 1.5 + rnd() * 2.5;
-    const phase = rnd() * Math.PI * 2;
-    const yBase = h * (.3 + k * .2);
-    let d = `M0 ${yBase.toFixed(1)}`;
-    for (let x = 0; x <= w; x += 8) {
-      const y = yBase + Math.sin((x / w) * Math.PI * 2 * freq + phase) * amp
-                      * Math.sin((x / w) * Math.PI);       // taper at edges: a breath
-      d += ` L${x} ${y.toFixed(1)}`;
-    }
-    paths += `<path d="${d}" fill="none" stroke="currentColor" stroke-width="1.2" opacity="${(.5 - k * .13).toFixed(2)}"/>`;
+
+const RESEARCH_LINE_MEDIA = {
+  1: '/assets/research/line-transplantation-pulmonary-hypertension.jpg',
+  2: '/assets/research/line-heroes/airway-diseases.jpg',
+  3: '/assets/research/line-interventional-lung-cancer.jpg',
+  4: '/assets/research/line-heroes/respiratory-failure-sleep.jpg',
+  5: '/assets/research/line-thoracic-surgery.jpg',
+  6: '/assets/research/line-precision-medicine.jpg'
+};
+
+// Phase 6.0 — public coordinator media can be overridden by an approved
+// editorial asset without changing the backend person record. Backend
+// public_photo_url remains the default source for everyone else.
+const LINE_COORDINATOR_MEDIA = {
+  'marina blanco aparicio': '/assets/research/coordinators/marina-blanco-aparicio.jpg',
+  'angélica consuegra vanegas': '/assets/research/coordinators/angelica-consuegra-vanegas.jpg',
+  'angelica consuegra vanegas': '/assets/research/coordinators/angelica-consuegra-vanegas.jpg',
+  'pedro jorge marcos rodríguez': '/assets/research/coordinators/pedro-jorge-marcos-rodriguez.jpg',
+  'pedro jorge marcos rodriguez': '/assets/research/coordinators/pedro-jorge-marcos-rodriguez.jpg'
+};
+
+// Approved public editorial summaries. These are deliberately concise: the
+// line page is about the science, not a staff CV. Backend public_bio remains
+// the fallback for coordinators without an authored public-page summary.
+const LINE_COORDINATOR_EDITORIAL = {
+  'marina blanco aparicio': {
+    en: 'Pulmonologist specialising in airway disease, with a particular focus on severe asthma, COPD, bronchiectasis and cystic fibrosis. Her work brings together clinical characterisation, advanced therapies and precision follow-up.',
+    es: 'Neumóloga especializada en enfermedades de la vía aérea, con especial interés en asma grave, EPOC, bronquiectasias y fibrosis quística. Su trabajo integra caracterización clínica, terapias avanzadas y seguimiento de precisión.'
+  },
+  'angélica consuegra vanegas': {
+    en: 'Pulmonologist specialising in acute and chronic respiratory failure, non-invasive ventilation, home oxygen therapy and sleep medicine. Her research includes multicentre work on ventilatory support and the management of complex respiratory patients.',
+    es: 'Neumóloga especializada en insuficiencia respiratoria aguda y crónica, ventilación no invasiva, oxigenoterapia domiciliaria y medicina del sueño. Su investigación incluye estudios multicéntricos sobre soporte ventilatorio y manejo del paciente respiratorio complejo.'
+  },
+  'angelica consuegra vanegas': {
+    en: 'Pulmonologist specialising in acute and chronic respiratory failure, non-invasive ventilation, home oxygen therapy and sleep medicine. Her research includes multicentre work on ventilatory support and the management of complex respiratory patients.',
+    es: 'Neumóloga especializada en insuficiencia respiratoria aguda y crónica, ventilación no invasiva, oxigenoterapia domiciliaria y medicina del sueño. Su investigación incluye estudios multicéntricos sobre soporte ventilatorio y manejo del paciente respiratorio complejo.'
+  },
+  'pedro jorge marcos rodríguez': {
+    en: 'Pulmonologist and head of service with experience in clinical research, personalised respiratory medicine and healthcare innovation. His work connects clinical leadership, multicentre research and the development of new models of respiratory care.',
+    es: 'Neumólogo y jefe de servicio con experiencia en investigación clínica, medicina respiratoria personalizada e innovación sanitaria. Su trabajo conecta liderazgo clínico, investigación multicéntrica y desarrollo de nuevos modelos de atención respiratoria.'
+  },
+  'pedro jorge marcos rodriguez': {
+    en: 'Pulmonologist and head of service with experience in clinical research, personalised respiratory medicine and healthcare innovation. His work connects clinical leadership, multicentre research and the development of new models of respiratory care.',
+    es: 'Neumólogo y jefe de servicio con experiencia en investigación clínica, medicina respiratoria personalizada e innovación sanitaria. Su trabajo conecta liderazgo clínico, investigación multicéntrica y desarrollo de nuevos modelos de atención respiratoria.'
   }
-  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">${paths}</svg>`;
+};
+
+const NEUMACT_PI_STAFF_ID = 'c290a7e5-7bea-4652-a0ef-251fbc73184d';
+
+function coordinatorEditorialPhoto(person) {
+  if (!person) return '';
+  const key = String(person.full_name || '').trim().toLowerCase();
+  return LINE_COORDINATOR_MEDIA[key] || person.public_photo_url || '';
+}
+
+function coordinatorEditorialBio(person, line) {
+  if (!person) return '';
+  const key = String(person.full_name || '').trim().toLowerCase();
+  const authored = LINE_COORDINATOR_EDITORIAL[key];
+  if (authored) {
+    return `<span lang="en">${escHtml(authored.en)}</span><span lang="es">${escHtml(authored.es)}</span>`;
+  }
+  const raw = publicText(person.public_bio || '').replace(/\s+/g, ' ').trim();
+  if (raw) {
+    const excerpt = raw.length > 420 ? raw.slice(0, 417).replace(/\s+\S*$/, '') + '…' : raw;
+    return escHtml(excerpt);
+  }
+  const lineName = escHtml(line?.short_name || line?.name || 'this research line');
+  return `<span lang="en">Coordinates the ${lineName} research line within neumACt.</span><span lang="es">Coordina la línea ${lineName} dentro de neumACt.</span>`;
+}
+
+function lineDetailHeroMedia(line) {
+  return RESEARCH_LINE_MEDIA[Number(line?.line_number)] || '/assets/research/research-hero-clinician-lungs.jpg';
+}
+
+function lineCleanSummary(value) {
+  return researchOverviewSummary(value);
+}
+
+function lineCalmGlyph() {
+  return '<span class="line-work-item__arrow" aria-hidden="true">›</span>';
+}
+
+function researchOverviewSummary(value) {
+  let text = publicText(typeof value === 'string' ? value : (value?.es || value?.en || ''));
+  if (!text) return '';
+  // The overview explains the scope of each line. Operational listings belong
+  // to the dedicated line page / study portfolio, so strip embedded project or
+  // study inventories from legacy description copy without mutating source data.
+  text = text
+    .replace(/\s*(?:Proyectos activos|Active projects)\s*:\s*[^.]+\.?/ig, ' ')
+    .replace(/\s*(?:Estudios activos|Active studies)\s*:\s*[^.]+\.?/ig, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text;
+}
+
+function researchLineArrow() {
+  return `<svg class="research-line__cta-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h10.5M11.5 6.5 15 10l-3.5 3.5"/></svg>`;
 }
 
 async function loadResearchLines() {
@@ -241,71 +306,46 @@ async function loadResearchLines() {
       return;
     }
 
-    // ── INDEX: 2-column editorial grid ──────────────────────────────
+    // ── INDEX: compact research atlas ─────────────────────────────
     if (indexGrid) {
-      // Skeleton — light section
-      indexGrid.innerHTML = Array(6).fill(
-        `<div class="line-card is-noninteractive">
-           <div class="api-skeleton api-skeleton--line-index"></div>
-           <div class="flex-1">
-             <div class="api-skeleton api-skeleton--line-title"></div>
-             <div class="api-skeleton api-skeleton--line-meta"></div>
-           </div>
-         </div>`
-      ).join('');
-
-      await new Promise(r => setTimeout(r, 0));
-
       indexGrid.style.transition = 'none';
       indexGrid.style.opacity = '0';
-      indexGrid.innerHTML = data.map((line, i) => {
-        const num = String(line.line_number).padStart(2, '0');
+      indexGrid.innerHTML = data.map(line => {
+        const num = `L${String(line.line_number).padStart(2, '0')}`;
         const displayName = line.short_name || line.name;
-        const trialBadge = line.active_trials > 0
-          ? `<span class="line-tag">${line.active_trials} active</span>` : '';
-        const coord = line.coordinator;
-        let coordBlock = '';
-        if (coord?.full_name) {
-          const avatar = buildAvatar(coord, 22);
-          coordBlock = `<div class="line-coord line-coord--inline">${avatar}<span>${escHtml(coord.full_name)}</span></div>`;
-        }
+        const trialMeta = line.active_trials > 0
+          ? `<span class="home-line-meta"><span lang="en">${line.active_trials} active ${line.active_trials === 1 ? 'study' : 'studies'}</span><span lang="es">${line.active_trials} ${line.active_trials === 1 ? 'estudio activo' : 'estudios activos'}</span></span>`
+          : '';
         return `
-          <a href="/line/?id=${line.id}" class="line-card reveal">
-            <div class="line-fp" aria-hidden="true">${buildLineFingerprint(line)}</div>
-            <div class="line-num">${num}</div>
-            <div class="line-body">
-              <div class="line-title">${escHtml(displayName)}</div>
-              ${coordBlock}
-              ${trialBadge ? `<div class="line-meta">${trialBadge}</div>` : ''}
-            </div>
-            <div class="line-arrow">
-              <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </div>
+          <a href="/line/?id=${line.id}" class="home-line-row reveal">
+            <span class="home-line-num">${num}</span>
+            <span class="home-line-copy">
+              <span class="home-line-title">${escHtml(displayName)}</span>
+              ${trialMeta}
+            </span>
+            <span class="home-line-arrow" aria-hidden="true">→</span>
           </a>`;
       }).join('');
-      requestAnimationFrame(() => { indexGrid.style.transition = 'opacity .22s var(--ease-clinical)'; indexGrid.style.opacity = '1'; });
+      requestAnimationFrame(() => {
+        indexGrid.style.transition = 'opacity .22s var(--ease-clinical)';
+        indexGrid.style.opacity = '1';
+      });
       if (window._revealObserver) indexGrid.querySelectorAll('.reveal').forEach(el => window._revealObserver.observe(el));
-
-      // Update stat counters
       _setStat('statLines', data.length);
     }
 
-    // ── CLINICAL: expandable accordion ──────────────────────────────
-    // Build line_number -> id map for trial filter
+    // ── RESEARCH PAGE: accepted editorial media rows ───────────────
+    // Build line_number -> id map for study filtering and populate the
+    // research filter from the same governed source of truth.
     window._researchLineMap = {};
     data.forEach(line => { window._researchLineMap[String(line.line_number)] = line.id; });
 
-    // Populate filterLine dropdown on clinical page
     const filterLineEl = document.getElementById('filterLine');
     if (filterLineEl && filterLineEl.options.length <= 1) {
       data.forEach(line => {
-        const num = String(line.line_number).padStart(2, '0');
-        const shortName = line.name.split(',')[0].split('y ')[0].trim();
         const opt = document.createElement('option');
         opt.value = String(line.line_number);
-        opt.textContent = `${num} — ${shortName}`;
+        opt.textContent = line.short_name || line.name;
         filterLineEl.appendChild(opt);
       });
     }
@@ -313,50 +353,44 @@ async function loadResearchLines() {
     if (clinicalList) {
       clinicalList.style.transition = 'none';
       clinicalList.style.opacity = '0';
-      clinicalList.innerHTML = data.map(line => `
-        <div class="line-card" id="line-${line.id}">
-          <div class="line-head" onclick="toggleLine('line-${line.id}')">
-            <div class="line-num">${String(line.line_number).padStart(2, '0')}</div>
-            <div class="line-meta">
-              ${line.coordinator?.full_name
-                ? `<div class="line-coordinator">
-                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="11" height="11">
-                       <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                     </svg>
-                     <strong>${escHtml(line.coordinator.full_name)}</strong>
-                   </div>`
-                : ''}
-              <div class="line-title">${escHtml(line.name)}</div>
+      clinicalList.innerHTML = data.map(line => {
+        const title = line.short_name || line.name;
+        const coordinator = line.coordinator?.full_name ? escHtml(line.coordinator.full_name) : '';
+        const keywords = Array.isArray(line.keywords)
+          ? line.keywords.filter(Boolean)
+          : String(line.keywords || '').split(',').map(k => k.trim()).filter(Boolean);
+        const summaryRaw = researchOverviewSummary(line.description);
+        const summary = summaryRaw || 'Clinical and translational research across this respiratory medicine area.';
+        const summaryEsc = escHtml(summary);
+        const isLong = summary.length > 245;
+        const focusTerms = keywords.slice(0, 4).map(k => `<span>${escHtml(k)}</span>`).join('');
+        const lineNum = Number(line.line_number) || 0;
+        const media = RESEARCH_LINE_MEDIA[lineNum] || '/assets/research/research-hero-clinician-lungs.jpg';
+        return `
+          <article class="research-line-row" data-line="${lineNum}">
+            <a class="research-line__media" href="/line/?id=${line.id}" tabindex="-1" aria-hidden="true">
+              <img src="${media}" alt="" loading="lazy" decoding="async">
+            </a>
+            <div class="research-line__content">
+              ${focusTerms ? `<div class="research-line__focus" aria-label="Research focus">${focusTerms}</div>` : ''}
+              <h3 class="research-line__heading"><a href="/line/?id=${line.id}" class="research-line__title">${escHtml(title)}</a></h3>
+              <div class="research-line__summary${isLong ? ' is-collapsible' : ''}">
+                <p>${summaryEsc}</p>
+                ${isLong ? `<button type="button" class="research-line__more" aria-expanded="false"><span class="research-line__more-open"><span lang="en">Read more</span><span lang="es">Leer más</span></span><span class="research-line__more-close"><span lang="en">Show less</span><span lang="es">Ver menos</span></span></button>` : ''}
+              </div>
             </div>
-          </div>
-          <div class="line-tags-preview">
-            ${(line.keywords || []).map(k => `<span class="ltag">${escHtml(k)}</span>`).join('')}
-          </div>
-          <div class="line-expand-toggle" onclick="toggleLine('line-${line.id}')">
-            <span class="toggle-label">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13">
-                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-              </svg>
-              <span lang="en">Research scope &amp; capabilities</span>
-              <span lang="es">Alcance y capacidades</span>
-            </span>
-            <div class="toggle-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11">
-                <path d="M19 9l-7 7-7-7"/>
-              </svg>
-            </div>
-          </div>
-          <div class="line-body">
-            <div class="line-body-inner">
-              ${line.description  ? `<p class="line-desc">${escHtml(line.description)}</p>` : ''}
-              ${line.capabilities ? `<p class="line-desc line-desc--spaced">${escHtml(line.capabilities)}</p>` : ''}
-              <a href="/line/?id=${line.id}" class="btn-text btn-text--line-detail"><span lang="en">View full line page</span><span lang="es">Ver página completa de la línea</span> →</a>
-            </div>
-          </div>
-        </div>`
-      ).join('');
-      requestAnimationFrame(() => { clinicalList.style.transition = 'opacity .22s var(--ease-clinical)'; clinicalList.style.opacity = '1'; });
+            <aside class="research-line__side">
+              ${coordinator ? `<p class="research-line__coordinator"><span class="sr-only"><span lang="en">Coordination: </span><span lang="es">Coordinación: </span></span>${coordinator}</p>` : ''}
+              <a href="/line/?id=${line.id}" class="research-line__cta"><span lang="en">View research line</span><span lang="es">Ver línea de investigación</span>${researchLineArrow()}</a>
+            </aside>
+          </article>`;
+      }).join('');
+      requestAnimationFrame(() => {
+        clinicalList.style.transition = 'opacity .22s var(--ease-clinical)';
+        clinicalList.style.opacity = '1';
+      });
     }
+
 
   } catch (err) {
     console.error('Research lines load failed:', err);
@@ -364,6 +398,16 @@ async function loadResearchLines() {
     if (clinicalList) setError(clinicalList);
   }
 }
+
+document.addEventListener('click', event => {
+  const button = event.target.closest('.research-line__more');
+  if (!button) return;
+  const summary = button.closest('.research-line__summary');
+  if (!summary) return;
+  const expanded = button.getAttribute('aria-expanded') === 'true';
+  button.setAttribute('aria-expanded', String(!expanded));
+  summary.classList.toggle('is-expanded', !expanded);
+});
 
 window.toggleLine = function(id) {
   const card = document.getElementById(id);
@@ -375,15 +419,14 @@ window.toggleLine = function(id) {
 // ─────────────────────────────────────────────
 
 async function loadTrials(filters = {}) {
-  const tbody   = document.getElementById('studiesBody');
+  const listEl  = document.getElementById('studiesBody');
   const countEl = document.getElementById('studiesCount');
-  if (!tbody) return;
+  if (!listEl) return;
 
-  setLoading(tbody, 6);
+  setLoading(listEl, 4);
 
   const params = new URLSearchParams();
   if (filters.line && filters.line !== 'all') {
-    // Map line number to UUID using cached research lines data
     const lineId = window._researchLineMap && window._researchLineMap[filters.line];
     if (lineId) params.set('line', lineId);
   }
@@ -393,94 +436,75 @@ async function loadTrials(filters = {}) {
 
   try {
     const { data } = await apiFetch(`/api/clinical-trials/website?${params}`);
-    const trials = data || [];
+    const priority = { 'Reclutando':0, 'Recruiting':0, 'Activo':1, 'Active':1, 'En preparación':2, 'Completado':3, 'Completed':3 };
+    const trials = (data || []).slice().sort((a,b) => (priority[a.status] ?? 9) - (priority[b.status] ?? 9));
 
     if (countEl) countEl.textContent = trials.length;
 
     const studiesShown   = document.getElementById('studiesShown');
     const studiesShownEs = document.getElementById('studiesShownEs');
-    if (studiesShown)   studiesShown.textContent   = trials.length;
+    if (studiesShown) studiesShown.textContent = trials.length;
     if (studiesShownEs) studiesShownEs.textContent = trials.length;
 
+    const expandBtn = document.getElementById('studiesExpandBtn');
     if (!trials.length) {
-      tbody.innerHTML = `
-        <tr><td class="table-empty-state" colspan="6">
-          <span lang="en">No studies match the current filters.</span>
-          <span lang="es">No hay ensayos con los filtros actuales.</span>
-        </td></tr>`;
+      listEl.innerHTML = `<div class="api-error"><span lang="en">No studies match the current filters.</span><span lang="es">No hay estudios que coincidan con los filtros actuales.</span></div>`;
+      if (expandBtn) expandBtn.hidden = true;
       return;
     }
 
-    tbody.innerHTML = trials.map(t => {
+    listEl.classList.remove('show-all');
+    listEl.innerHTML = trials.map((t, index) => {
       window._trialData[t.id] = t;
       const statusClass = STATUS_CLASS[t.status] || 'active';
-      const allLines = [t.research_line, ...(t.additional_lines || [])].filter(Boolean);
-      const lineCell = allLines.length
-        ? allLines.slice(0, 2).map(l => `<span class="trial-line-tag trial-line-tag--spaced" title="${escHtml(l.name)}">L${String(l.line_number).padStart(2,'0')} · ${escHtml(l.short_name || l.name)}</span>`).join('') +
-          (allLines.length > 2 ? `<span class="trial-line-tag" title="${escHtml(allLines.slice(2).map(l => l.name).join(', '))}">+${allLines.length - 2}</span>` : '')
-        : '<span class="trial-line-tag">—</span>';
+      const line = t.research_line || (t.additional_lines || [])[0] || null;
+      const lineText = line ? escHtml(line.short_name || line.name) : '—';
+      const phaseText = t.phase ? escHtml(t.phase) : '—';
+      const hiddenClass = index >= 7 ? ' is-collapsed' : '';
       return `
-        <tr class="is-clickable" onclick="openTrialModal('${t.id}')" title="Click for details">
-          <td><span class="trial-protocol">${escHtml(t.protocol_id)}</span></td>
-          <td><span class="trial-title">${escHtml(t.title)}</span></td>
-          <td>${lineCell}</td>
-          <td><span class="phase-badge">${escHtml(t.phase)}</span></td>
-          <td>
-            <span class="status-badge ${statusClass}">
-              <span lang="en">${STATUS_LABEL_EN[t.status] || t.status}</span>
-              <span lang="es">${t.status}</span>
-            </span>
-          </td>
-          <td>${t.sponsor_name
-            ? `<span class="trial-sponsor">${escHtml(t.sponsor_name)}</span>`
-            : `<span class="text-muted">—</span>`
-          }</td>
-        </tr>`;
+        <button type="button" class="study-row${hiddenClass}" data-trial-id="${escHtml(t.id)}">
+          <span class="study-row__protocol">${escHtml(t.protocol_id || '—')}</span>
+          <span class="study-row__main">
+            <span class="study-row__title">${escHtml(t.title || 'Untitled study')}</span>
+            <span class="study-row__line">${lineText}</span>
+          </span>
+          <span class="study-row__facts">
+            <span>${phaseText}</span>
+            <span class="study-status ${statusClass}"><span lang="en">${STATUS_LABEL_EN[t.status] || escHtml(t.status || '—')}</span><span lang="es">${escHtml(t.status || '—')}</span></span>
+          </span>
+          <span class="study-row__sponsor">${t.sponsor_name ? escHtml(t.sponsor_name) : '—'}</span>
+          <span class="study-row__arrow" aria-hidden="true">→</span>
+        </button>`;
     }).join('');
 
-    _fadeInRows('#studiesBody tr');
+    listEl.querySelectorAll('.study-row[data-trial-id]').forEach(row => {
+      row.addEventListener('click', () => openTrialModal(row.dataset.trialId));
+    });
+
+    if (expandBtn) {
+      expandBtn.hidden = trials.length <= 7;
+      if (!expandBtn.hidden) {
+        const collapsed = trials.length - 7;
+        const setLabel = (open) => {
+          expandBtn.innerHTML = open
+            ? `<span lang="en">Show fewer studies</span><span lang="es">Mostrar menos estudios</span>`
+            : `<span lang="en">Show ${collapsed} more ${collapsed===1?'study':'studies'}</span><span lang="es">Mostrar ${collapsed} ${collapsed===1?'estudio más':'estudios más'}</span>`;
+        };
+        setLabel(false);
+        expandBtn.onclick = () => {
+          const open = listEl.classList.toggle('show-all');
+          setLabel(open);
+        };
+      }
+    }
 
   } catch (err) {
     console.error('Trials load failed:', err);
-    setError(tbody);
+    setError(listEl);
     if (countEl) countEl.textContent = '—';
+    const expandBtn = document.getElementById('studiesExpandBtn');
+    if (expandBtn) expandBtn.hidden = true;
   }
-}
-
-function initTrialFilters() {
-  const filterLine   = document.getElementById('filterLine');
-  const filterPhase  = document.getElementById('filterPhase');
-  const filterStatus = document.getElementById('filterStatus');
-  const filterSearch = document.getElementById('filterSearch');
-
-  if (!filterLine && !filterPhase && !filterStatus) return;
-
-  const getFilters = () => ({
-    line:   filterLine?.value   || 'all',
-    phase:  filterPhase?.value  || 'all',
-    status: filterStatus?.value || 'all',
-    search: filterSearch?.value || ''
-  });
-
-  const refresh = () => loadTrials(getFilters());
-
-  filterLine?.addEventListener('change', refresh);
-  filterPhase?.addEventListener('change', refresh);
-  filterStatus?.addEventListener('change', refresh);
-
-  let searchTimer;
-  filterSearch?.addEventListener('input', () => {
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(refresh, 380);
-  });
-
-  // Support a ?search= URL parameter so a link from elsewhere (e.g. a
-  // named project mentioned in a research line's description) can land
-  // directly on that specific trial, filtered, instead of the generic table.
-  const urlSearch = new URLSearchParams(window.location.search).get('search');
-  if (urlSearch && filterSearch) filterSearch.value = urlSearch;
-
-  loadTrials(getFilters());
 }
 
 // ─────────────────────────────────────────────
@@ -686,14 +710,14 @@ async function loadTeamLeads() {
       // specialization and department affiliation would never say the
       // same thing. When someone's specialization literally is
       // "Neumología" at the Servicio de Neumología, the old fallback
-      // text produced "Neumología · Neumología, CHUAC".
+      // text produced "Neumología · Neumología, Área Sanitaria da Coruña e Cee".
       const specParts = [];
       if (!isChiefCard && roleLine) specParts.push(roleLine);
       if (m.specialization) specParts.push(escHtml(m.specialization));
       if (isAffiliated) {
         specParts.push(escHtml(m.primary_dept_name || 'External'));
       } else if (!(m.specialization && /neumolog/i.test(m.specialization))) {
-        specParts.push('Neumología, CHUAC');
+        specParts.push('Neumología, Área Sanitaria da Coruña e Cee');
       }
       const specLine = specParts.join(' <span class="lead-spec-sep">|</span> ');
 
@@ -1145,9 +1169,17 @@ function _setStat(id, value) {
 // UTILITIES
 // ─────────────────────────────────────────────
 
-function escHtml(str) {
+function publicText(str) {
   if (!str) return '';
   return String(str)
+    // Public identity rule: use the broad institutional name rather than
+    // the hospital acronym even when legacy backend copy still contains it.
+    .replace(/\bCHUAC\b/gi, 'Área Sanitaria da Coruña e Cee');
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return publicText(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -1182,7 +1214,7 @@ function buildAvatar(person, sizePx, shape = 'circle') {
 
 // Every bio in the database opens with a role/affiliation sentence
 // ("Head of Research Line N (neumACt – INIBIC)...", "Head of the
-// Pulmonology Department at CHUAC and Principal Investigator of...")
+// Pulmonology Department within the Área Sanitaria da Coruña e Cee and Principal Investigator of...")
 // that's now redundant — role and line are shown as structured fields
 // above the bio. Strips that one leading sentence if it matches the
 // pattern; leaves the bio untouched otherwise, so this never mangles
@@ -1449,43 +1481,43 @@ if (!document.getElementById('api-spin-style')) {
 
 async function loadHeaderResearchDropdown(isRetry = false) {
   const menu = document.getElementById('hdrResearchLines');
-  const allLink = document.getElementById('hdrResearchLinesAll');
   if (!menu) return;
+
+  if (!isRetry) {
+    menu.setAttribute('aria-busy', 'true');
+    menu.innerHTML = '<div class="hdr-dd-loading" aria-hidden="true">' +
+      Array(6).fill('<div class="hdr-dd-loading-item"></div>').join('') +
+      '</div>';
+  }
+
   try {
     const { data } = await apiFetch('/api/research-lines/website');
-    const lines = data || [];
+    const lines = (data || []).slice().sort((a,b) => Number(a.line_number || 0) - Number(b.line_number || 0));
     if (!lines.length) {
       if (!isRetry) { setTimeout(() => loadHeaderResearchDropdown(true), 800); return; }
-      menu.innerHTML = '';
-      if (allLink) { allLink.hidden = false; }
+      menu.removeAttribute('aria-busy');
+      menu.innerHTML = '<div class="hdr-dd-unavailable"><p class="hdr-dd-unavailable-copy"><span lang="en">Live research lines are temporarily unavailable. The Research portfolio remains available from the link on the left.</span><span lang="es">Las líneas de investigación en vivo no están disponibles temporalmente. La cartera de investigación sigue disponible desde el enlace de la izquierda.</span></p></div>';
       return;
     }
 
+    menu.removeAttribute('aria-busy');
     menu.style.transition = 'none';
     menu.style.opacity = '0';
     menu.innerHTML = lines.map(l => {
       const trials = Number(l.active_trials || 0);
       const meta = trials > 0
         ? `<span class="hdr-dd-meta"><span lang="en">${trials} active stud${trials===1?'y':'ies'}</span><span lang="es">${trials} estudio${trials===1?'':'s'} activo${trials===1?'':'s'}</span></span>`
-        : `<span class="hdr-dd-meta"><span lang="en">Research line</span><span lang="es">Línea de investigación</span></span>`;
-      const fp = typeof buildLineFingerprint === 'function' ? buildLineFingerprint(l, 96, 64) : '';
+        : '';
       return `
       <a class="hdr-dd-item" href="/line/?id=${l.id}">
-        <span class="hdr-dd-thumb" aria-hidden="true">${fp}</span>
+        <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
         <span class="hdr-dd-body">
-          <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
           <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
           ${meta}
         </span>
         <span class="hdr-dd-arrow" aria-hidden="true">→</span>
       </a>`;
     }).join('');
-
-    const totalActive = lines.reduce((s, l) => s + Number(l.active_trials || 0), 0);
-    const lineCount = document.getElementById('hdrMegaLinesCount');
-    const studiesCount = document.getElementById('hdrMegaStudiesCount');
-    if (lineCount) lineCount.textContent = String(lines.length);
-    if (studiesCount) studiesCount.textContent = totalActive > 0 ? String(totalActive) : '—';
 
     const drawerNav = document.querySelector('#mobDrawer .mob-drawer-nav');
     if (drawerNav && !document.getElementById('mobLines')) {
@@ -1509,13 +1541,16 @@ async function loadHeaderResearchDropdown(isRetry = false) {
         tgl.setAttribute('aria-expanded', String(on));
       });
     }
-    if (allLink) { allLink.hidden = false; }
-    requestAnimationFrame(() => { menu.style.transition = 'opacity .18s var(--ease-clinical)'; menu.style.opacity = '1'; });
+
+    requestAnimationFrame(() => {
+      menu.style.transition = 'opacity .16s var(--ease-clinical)';
+      menu.style.opacity = '1';
+    });
   } catch (err) {
     console.error('Header research dropdown failed:', err);
     if (!isRetry) { setTimeout(() => loadHeaderResearchDropdown(true), 800); return; }
-    menu.innerHTML = '';
-    if (allLink) allLink.hidden = false;
+    menu.removeAttribute('aria-busy');
+    menu.innerHTML = '<div class="hdr-dd-unavailable"><p class="hdr-dd-unavailable-copy"><span lang="en">Live research lines could not be loaded. If you are testing locally, use port 8080 so the production API accepts the local origin.</span><span lang="es">No se pudieron cargar las líneas de investigación. Si está probando en local, use el puerto 8080 para que la API de producción acepte el origen local.</span></p></div>';
   }
 }
 
@@ -1566,18 +1601,18 @@ function initHeaderDropdown() {
   });
 
   dd.addEventListener('click', (e) => {
-    if (e.target.closest('.hdr-dd-item, .hdr-dd-all')) close();
+    if (e.target.closest('.hdr-dd-item')) close();
   });
 
   // Full keyboard operability (WAI-ARIA menu-button pattern): ArrowDown
   // on the trigger opens the panel and moves focus to the first item;
-  // Up/Down cycle through items (including the "view all" link);
+  // Up/Down cycle through the research-line items;
   // Home/End jump to the ends. Items are real <a>s so Enter/click work
   // for free. Without this the panel could be opened by keyboard but
   // not traversed — you'd have to Tab through every item blindly.
   function items() {
     return Array.prototype.slice.call(
-      dd.querySelectorAll('.hdr-dd-item, .hdr-dd-all:not([hidden])')
+      dd.querySelectorAll('.hdr-dd-item')
     );
   }
   function focusItem(list, i) {
@@ -1681,7 +1716,6 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
     case 'clinical':
       loadResearchLines();
-      loadTeam();
       initTrialFilters();
       initContactForm();
       break;
@@ -1705,6 +1739,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+function initTrialFilters() {
+  const listEl = document.getElementById('studiesBody');
+  if (!listEl) return;
+  const line = document.getElementById('filterLine');
+  const phase = document.getElementById('filterPhase');
+  const status = document.getElementById('filterStatus');
+  const search = document.getElementById('filterSearch');
+  let timer = null;
+  const run = () => loadTrials({
+    line: line?.value || 'all',
+    phase: phase?.value || 'all',
+    status: status?.value || 'all',
+    search: (search?.value || '').trim()
+  });
+  [line, phase, status].forEach(el => el?.addEventListener('change', run));
+  search?.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(run, 220);
+  });
+  run();
+}
+
 // ─────────────────────────────────────────────
 // 6. HOMEPAGE STORY SECTION
 // Fetches featured posts first, fills remainder from recent public posts
@@ -1721,172 +1777,77 @@ async function loadFeaturedStories() {
     const posts = data || [];
 
     if (!posts.length) {
-      if (skeleton) skeleton.innerHTML = '<p class="content-empty-state">No posts available.</p>';
+      section.innerHTML = '<p class="content-empty-state"><span lang="en">No public activity is available right now.</span><span lang="es">No hay actividad pública disponible en este momento.</span></p>';
       return;
     }
 
     const typeLabel = {
-      publication: 'Publication', article: 'Article',
-      highlight: 'Highlight', update: 'Update', photo_story: 'Photo Story'
-    };
-    const typePill = {
-      publication: 'pill-pub', article: 'pill-article',
-      highlight: 'pill-highlight', update: 'pill-update', photo_story: 'pill-article'
+      publication: ['Publication','Publicación'],
+      article: ['Article','Artículo'],
+      highlight: ['Highlight','Destacado'],
+      update: ['Update','Actualización'],
+      photo_story: ['Photo story','Historia visual']
     };
 
-    function formatDate(d) {
+    const labelFor = (post) => {
+      const labels = typeLabel[post.post_type] || [post.post_type || 'Research','Investigación'];
+      return `<span lang="en">${escHtml(labels[0])}</span><span lang="es">${escHtml(labels[1])}</span>`;
+    };
+
+    const dateMarkup = (d) => {
       if (!d) return '';
       const dt = new Date(d);
-      return dt.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-    }
+      if (Number.isNaN(dt.getTime())) return '';
+      const en = dt.toLocaleDateString('en-GB', { month:'short', year:'numeric' });
+      const es = dt.toLocaleDateString('es-ES', { month:'short', year:'numeric' });
+      return `<span lang="en">${escHtml(en)}</span><span lang="es">${escHtml(es)}</span>`;
+    };
 
-    // Hero candidate pool: featured posts first, top up to 4 with recent posts.
-    // The hero never auto-rotates — publication titles take real reading time,
-    // so the visitor drives this via dot indicators, not a timer.
-    const featuredPool = posts.filter(p => p.is_featured);
-    const heroPool = (featuredPool.length ? featuredPool : posts).slice(0, 4);
-    let activeHeroIdx = 0;
+    // A governed featured item gets the lead position. If none is explicitly
+    // featured, use the newest public item. Titles are clamped in CSS so the
+    // homepage remains stable regardless of publication-title length.
+    const feature = posts.find(p => p.is_featured) || posts[0];
+    const recent = posts.filter(p => p.id !== feature.id).slice(0, 3);
 
-    const MOTIF_SVG = `<div class="story-typographic-motif" aria-hidden="true"><svg viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g stroke="currentColor" stroke-linecap="round">
-        <path d="M40 320 L40 220" stroke-width="2.4" opacity="0.5"/>
-        <path d="M40 220 L20 150" stroke-width="1.8" opacity="0.45"/>
-        <path d="M40 220 L80 160" stroke-width="1.8" opacity="0.45"/>
-        <path d="M20 150 L0 95" stroke-width="1.2" opacity="0.4"/>
-        <path d="M20 150 L45 90" stroke-width="1.2" opacity="0.4"/>
-        <path d="M80 160 L60 100" stroke-width="1.2" opacity="0.4"/>
-        <path d="M80 160 L120 105" stroke-width="1.2" opacity="0.4"/>
-        <path d="M0 95 L-15 45" stroke-width="0.8" opacity="0.35"/>
-        <path d="M0 95 L20 40" stroke-width="0.8" opacity="0.35"/>
-        <path d="M45 90 L30 35" stroke-width="0.8" opacity="0.35"/>
-        <path d="M45 90 L70 38" stroke-width="0.8" opacity="0.35"/>
-        <path d="M60 100 L45 45" stroke-width="0.8" opacity="0.35"/>
-        <path d="M120 105 L105 50" stroke-width="0.8" opacity="0.35"/>
-        <path d="M120 105 L150 55" stroke-width="0.8" opacity="0.35"/>
-      </g>
-      <g fill="currentColor">
-        <circle cx="40" cy="220" r="2.4" opacity="0.4"/><circle cx="20" cy="150" r="2" opacity="0.4"/>
-        <circle cx="80" cy="160" r="2" opacity="0.4"/><circle cx="0" cy="95" r="1.6" opacity="0.35"/>
-        <circle cx="45" cy="90" r="1.6" opacity="0.35"/><circle cx="60" cy="100" r="1.6" opacity="0.35"/>
-        <circle cx="120" cy="105" r="1.6" opacity="0.35"/>
-      </g>
-    </svg></div>`;
+    const motif = `<div class="home-pulse-feature-motif" aria-hidden="true"><svg viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="currentColor" stroke-linecap="round"><path d="M40 320 L40 220" stroke-width="2.4" opacity=".5"/><path d="M40 220 L20 150" stroke-width="1.8" opacity=".45"/><path d="M40 220 L80 160" stroke-width="1.8" opacity=".45"/><path d="M20 150 L0 95" stroke-width="1.2" opacity=".4"/><path d="M20 150 L45 90" stroke-width="1.2" opacity=".4"/><path d="M80 160 L60 100" stroke-width="1.2" opacity=".4"/><path d="M80 160 L120 105" stroke-width="1.2" opacity=".4"/><path d="M120 105 L150 55" stroke-width=".8" opacity=".35"/></g></svg></div>`;
 
-    function renderHero(feature) {
-      const hasImg = !!feature.featured_image_url;
-      const topArea = hasImg
-        ? `<div class="story-main-img">
-             <img src="${escHtml(feature.featured_image_url)}" alt="${escHtml(feature.title)}" loading="eager"/>
-           </div>`
-        : `<div class="story-main-typographic">
-             ${MOTIF_SVG}
-             ${feature.journal_name ? `<div class="story-typographic-journal">${escHtml(feature.journal_name)}</div>` : ''}
-             <div class="story-typographic-title">${escHtml(feature.title)}</div>
-           </div>`;
+    const featureImage = feature.featured_image_url
+      ? `<img class="home-pulse-feature-img" src="${escHtml(feature.featured_image_url)}" alt="" loading="lazy">`
+      : motif;
 
-      const dotsHTML = heroPool.length > 1
-        ? `<div class="story-dots" role="tablist" aria-label="More featured stories">
-             ${heroPool.map((_, i) => `<button class="story-dot${i === activeHeroIdx ? ' active' : ''}" role="tab" aria-selected="${i === activeHeroIdx}" aria-label="Story ${i + 1} of ${heroPool.length}" data-idx="${i}"></button>`).join('')}
-           </div>`
-        : '';
+    const recentMarkup = recent.length
+      ? recent.map(p => `
+          <a class="home-pulse-item" href="/news/" aria-label="${escHtml(p.title)}">
+            <span class="home-pulse-item-type">${p.journal_name ? escHtml(p.journal_name) : labelFor(p)}</span>
+            <span class="home-pulse-item-title">${escHtml(p.title)}</span>
+            <span class="home-pulse-item-meta">${dateMarkup(p.published_at)}${p.author?.full_name ? ` · ${escHtml(p.author.full_name)}` : ''}</span>
+          </a>`).join('')
+      : `<div class="content-empty-state"><span lang="en">More public outputs will appear here.</span><span lang="es">Aquí aparecerán más resultados públicos.</span></div>`;
 
-      return `
-        <div class="story-main">
-          ${topArea}
-          <div class="story-main-body">
-            <span class="story-type-pill ${typePill[feature.post_type] || 'pill-article'}">
-              ${typeLabel[feature.post_type] || feature.post_type}
-              ${feature.is_featured ? ' · Featured' : ''}
-            </span>
-            ${hasImg ? `<div class="story-main-title">${escHtml(feature.title)}</div>` : ''}
-            <div class="story-main-meta">
-              ${feature.author?.full_name ? `<span>${escHtml(feature.author.full_name)}</span><span class="story-meta-sep">·</span>` : ''}
-              ${feature.journal_name && !hasImg ? '' : feature.journal_name ? `<span class="story-meta__journal">${escHtml(feature.journal_name)}</span><span class="story-meta-sep">·</span>` : ''}
-              <span>${formatDate(feature.published_at)}</span>
-              ${feature.doi ? `<span class="story-meta-sep">·</span><a href="https://doi.org/${escHtml(feature.doi)}" target="_blank" rel="noopener">DOI</a>` : ''}
+    section.innerHTML = `
+      <div class="home-pulse-layout">
+        <article class="home-pulse-feature${feature.featured_image_url ? ' has-image' : ''}">
+          ${featureImage}
+          <div class="home-pulse-feature-content">
+            <span class="home-pulse-type">${labelFor(feature)}${feature.is_featured ? ' · <span lang="en">Featured</span><span lang="es">Destacado</span>' : ''}</span>
+            <h3 class="home-pulse-feature-title">${escHtml(feature.title)}</h3>
+            <div class="home-pulse-feature-meta">
+              ${feature.journal_name ? `<span>${escHtml(feature.journal_name)}</span>` : ''}
+              ${feature.author?.full_name ? `<span>${escHtml(feature.author.full_name)}</span>` : ''}
+              ${dateMarkup(feature.published_at)}
             </div>
-            ${dotsHTML}
+            <a class="home-pulse-feature-link" href="/news/"><span lang="en">Open activity</span><span lang="es">Abrir actividad</span><span aria-hidden="true">→</span></a>
           </div>
-        </div>`;
-    }
+        </article>
+        <div class="home-pulse-latest">
+          <div class="home-pulse-latest-head"><span lang="en">Recent public outputs</span><span lang="es">Resultados públicos recientes</span></div>
+          ${recentMarkup}
+        </div>
+      </div>`;
 
-    // Sidebar: always shows the same 4 non-hero posts (so content stays put while
-    // reading), but a thin progress sliver auto-advances which item is "in focus" —
-    // visible motion without ever changing what's on screen mid-read.
-    function renderSidebar() {
-      const sidebarPosts = posts.filter(p => !heroPool.some(h => h.id === p.id)).slice(0, 4);
-      return `
-        <div class="story-sidebar">
-          ${sidebarPosts.map((p, i) => `
-            <a class="story-side-item" href="/news" aria-label="${escHtml(p.title)}" data-side-idx="${i}">
-              <div class="story-side-progress"><span></span></div>
-              ${p.journal_name ? `<div class="story-side-journal">${escHtml(p.journal_name)}</div>` : ''}
-              <div class="story-side-title">${escHtml(p.title)}</div>
-              <div class="story-side-meta">${formatDate(p.published_at)}${p.author?.full_name ? ' · ' + escHtml(p.author.full_name) : ''}</div>
-            </a>`).join('')}
-        </div>`;
-    }
-
-    let sidebarTimer = null;
-    let activeSideIdx = 0;
-
-    function runSidebarProgress() {
-      const items = section.querySelectorAll('.story-side-item');
-      if (!items.length) return;
-      items.forEach((item, i) => {
-        item.classList.toggle('in-focus', i === activeSideIdx);
-        const bar = item.querySelector('.story-side-progress > span');
-        if (bar) {
-          bar.style.transition = 'none';
-          bar.style.width = i === activeSideIdx ? '0%' : (i < activeSideIdx ? '100%' : '0%');
-        }
-      });
-      requestAnimationFrame(() => {
-        const activeBar = section.querySelector(`.story-side-item[data-side-idx="${activeSideIdx}"] .story-side-progress > span`);
-        if (activeBar) {
-          activeBar.style.transition = 'width 6.5s linear';
-          activeBar.style.width = '100%';
-        }
-      });
-      clearTimeout(sidebarTimer);
-      sidebarTimer = setTimeout(() => {
-        activeSideIdx = (activeSideIdx + 1) % items.length;
-        runSidebarProgress();
-      }, 6500);
-    }
-
-    function render() {
-      const layout = `<div class="story-layout reveal-pending">${renderHero(heroPool[activeHeroIdx])}${renderSidebar()}</div>`;
-      section.innerHTML = layout;
-      requestAnimationFrame(() => {
-        const l = section.querySelector('.story-layout');
-        if (l) l.style.opacity = '1';
-      });
-      activeSideIdx = 0;
-      runSidebarProgress();
-
-      section.querySelectorAll('.story-dot').forEach(dot => {
-        dot.addEventListener('click', () => {
-          const idx = parseInt(dot.dataset.idx, 10);
-          if (idx === activeHeroIdx) return;
-          const l = section.querySelector('.story-layout');
-          if (l) {
-            l.style.transition = 'opacity .3s ease';
-            l.style.opacity = '0';
-            setTimeout(() => { activeHeroIdx = idx; render(); }, 300);
-          } else {
-            activeHeroIdx = idx;
-            render();
-          }
-        });
-      });
-    }
-
-    render();
-
-  } catch (err) {  
-    console.error('Story section load failed:', err);
-    if (skeleton) skeleton.innerHTML = '<p class="content-empty-state">Unable to load recent posts.</p>';
+  } catch (err) {
+    console.error('Homepage activity load failed:', err);
+    section.innerHTML = '<p class="content-empty-state"><span lang="en">Recent public activity is temporarily unavailable.</span><span lang="es">La actividad pública reciente no está disponible temporalmente.</span></p>';
   }
 }
 
@@ -1895,7 +1856,7 @@ async function loadFeaturedStories() {
 // /api/innovation-projects/website already only returns projects with
 // featured_in_website=true (the publish gate). Within that set, prefer
 // ones flagged is_featured (the homepage-spotlight pick, curated by an
-// editor in neumDesk), same two-tier pattern as the news story section.
+// editor in internal research system), same two-tier pattern as the news story section.
 // ─────────────────────────────────────────────
 
 const STAGE_LABEL = {
@@ -1905,7 +1866,6 @@ const STAGE_LABEL = {
 
 async function loadInnovationSpotlight() {
   const section = document.getElementById('spotlightSection');
-  const skeleton = document.getElementById('spotlightSkeleton');
   if (!section) return;
 
   try {
@@ -1913,77 +1873,30 @@ async function loadInnovationSpotlight() {
     const projects = data || [];
 
     if (!projects.length) {
-      // No published projects — hide the whole section rather than show an empty card
       const sec = document.getElementById('innovation-spotlight');
       if (sec) sec.style.display = 'none';
       return;
     }
 
-    const featuredPool = projects.filter(p => p.is_featured);
-    const spotlightPool = (featuredPool.length ? featuredPool : projects).slice(0, 4);
-    let activeSpotlightIdx = 0;
+    // One governed spotlight is enough on the landing page. The portfolio
+    // page carries the full set; the homepage should not become a carousel.
+    const p = projects.find(project => project.is_featured) || projects[0];
+    const stageLabel = STAGE_LABEL[p.current_stage] || STAGE_LABEL[p.development_stage] || p.current_stage || '';
 
-    // Real count for the homepage "Partnering with us" section — built
-    // from data already fetched here rather than a second request.
-    const seekingCount = projects.filter(p => p.partner_found === false).length;
-    const seekingEl = document.getElementById('seekingPartnerCount');
-    if (seekingEl) {
-      seekingEl.innerHTML = seekingCount > 0
-        ? `<span lang="en">${seekingCount} open innovation project${seekingCount === 1 ? '' : 's'}</span><span lang="es">${seekingCount} proyecto${seekingCount === 1 ? '' : 's'} de innovación abierto${seekingCount === 1 ? '' : 's'}</span>`
-        : `<span lang="en">Open innovation projects</span><span lang="es">Proyectos de innovación abiertos</span>`;
-    }
-
-    function renderSpotlight() {
-      const p = spotlightPool[activeSpotlightIdx];
-      const stageLabel = STAGE_LABEL[p.current_stage] || STAGE_LABEL[p.development_stage] || p.current_stage || '';
-      const dotsHTML = spotlightPool.length > 1
-        ? `<div class="story-dots" role="tablist" aria-label="More projects">
-             ${spotlightPool.map((_, i) => `<button class="story-dot${i === activeSpotlightIdx ? ' active' : ''}" role="tab" aria-selected="${i === activeSpotlightIdx}" aria-label="Project ${i + 1} of ${spotlightPool.length}" data-idx="${i}"></button>`).join('')}
-           </div>`
-        : '';
-      const html = `
-        <div class="spotlight-card reveal-pending">
-          <span class="spotlight-stage-pill">
-            ${escHtml(p.category || 'Project')}${stageLabel ? ' · ' + escHtml(stageLabel) : ''}
-          </span>
-          <div class="spotlight-title">${escHtml(p.title)}</div>
-          ${p.description ? `<div class="spotlight-desc">${escHtml(p.description)}</div>` : ''}
-          <div class="spotlight-meta">
-            ${p.research_line?.name ? `<span>${escHtml(p.research_line.name)}</span><span>·</span>` : ''}
-            <a href="/innovation">
-              <span lang="en">Learn more</span><span lang="es">Saber más</span>
-            </a>
-          </div>
-          ${dotsHTML}
-        </div>`;
-      section.innerHTML = html;
-      requestAnimationFrame(() => {
-        const card = section.querySelector('.spotlight-card');
-        if (card) card.style.opacity = '1';
-      });
-
-      section.querySelectorAll('.story-dot').forEach(dot => {
-        dot.addEventListener('click', () => {
-          const idx = parseInt(dot.dataset.idx, 10);
-          if (idx === activeSpotlightIdx) return;
-          const card = section.querySelector('.spotlight-card');
-          if (card) {
-            card.style.transition = 'opacity .3s ease';
-            card.style.opacity = '0';
-            setTimeout(() => { activeSpotlightIdx = idx; renderSpotlight(); }, 300);
-          } else {
-            activeSpotlightIdx = idx;
-            renderSpotlight();
-          }
-        });
-      });
-    }
-
-    renderSpotlight();
+    section.innerHTML = `
+      <div class="spotlight-card reveal-pending">
+        <span class="spotlight-stage-pill">${escHtml(p.category || 'Project')}${stageLabel ? ' · ' + escHtml(stageLabel) : ''}</span>
+        <div class="spotlight-title">${escHtml(p.title)}</div>
+        ${p.description ? `<div class="spotlight-desc">${escHtml(p.description)}</div>` : ''}
+        <div class="spotlight-meta">
+          ${p.research_line?.name ? `<span>${escHtml(p.research_line.name)}</span><span>·</span>` : ''}
+          <a href="/innovation/"><span lang="en">Explore project</span><span lang="es">Explorar proyecto</span><span aria-hidden="true"> →</span></a>
+        </div>
+      </div>`;
 
   } catch (err) {
     console.error('Innovation spotlight load failed:', err);
-    if (skeleton) skeleton.innerHTML = '<p class="content-empty-state">Unable to load projects.</p>';
+    section.innerHTML = '<p class="content-empty-state"><span lang="en">Innovation projects are temporarily unavailable.</span><span lang="es">Los proyectos de innovación no están disponibles temporalmente.</span></p>';
   }
 }
 
@@ -1998,6 +1911,87 @@ async function loadInnovationSpotlight() {
 // deep_content — an empty section is worse than no section.
 // ─────────────────────────────────────────────
 
+
+function lineMetricIcon(kind) {
+  const common = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+  const icons = {
+    trial: `<svg ${common}><path d="M9 3h6"/><path d="M10 3v5l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 17l-5-9V3"/><path d="M8 14h8"/></svg>`,
+    study: `<svg ${common}><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 12h6M9 16h6"/></svg>`,
+    innovation: `<svg ${common}><path d="M9 18h6"/><path d="M10 21h4"/><path d="M8.5 14.5C7.5 13.6 7 12.3 7 11a5 5 0 0 1 10 0c0 1.3-.5 2.6-1.5 3.5-.8.7-1.3 1.5-1.5 2.5h-4c-.2-1-.7-1.8-1.5-2.5z"/></svg>`,
+    publication: `<svg ${common}><path d="M4 5.5C6.3 4.5 8.7 4.5 11 6v13c-2.3-1.5-4.7-1.5-7-.5z"/><path d="M20 5.5c-2.3-1-4.7-1-7 .5v13c2.3-1.5 4.7-1.5 7-.5z"/><path d="M12 6v13"/></svg>`
+  };
+  return icons[kind] || icons.study;
+}
+
+function lineChartEmpty(el, en, es) {
+  if (!el) return;
+  el.innerHTML = `<div class="line-chart__empty"><span lang="en">${escHtml(en)}</span><span lang="es">${escHtml(es)}</span></div>`;
+}
+
+function renderLineActivityChart(el, values) {
+  if (!el) return;
+  const items = [
+    { value: values.trials || 0, cls: 'chart-bar', en: 'Clinical trials', es: 'Ensayos clínicos' },
+    { value: values.studies || 0, cls: 'chart-bar--muted', en: 'Clinical studies', es: 'Estudios clínicos' },
+    { value: values.innovation || 0, cls: 'chart-bar--innovation', en: 'Clinical innovation', es: 'Innovación clínica' }
+  ];
+  const max = Math.max(1, ...items.map(i => i.value));
+  const xs = [52, 146, 240];
+  const bars = items.map((item, i) => {
+    const h = Math.max(item.value ? 8 : 1.5, (item.value / max) * 68);
+    const y = 94 - h;
+    return `<rect class="${item.cls}" x="${xs[i]-25}" y="${y.toFixed(1)}" width="50" height="${h.toFixed(1)}" rx="3"/><text class="chart-value" x="${xs[i]}" y="${Math.max(14,y-6).toFixed(1)}" text-anchor="middle" font-size="11">${item.value}</text>`;
+  }).join('');
+  el.innerHTML = `<svg viewBox="0 0 292 110" role="img" aria-label="Current research activity by type">
+    <line class="chart-grid" x1="18" y1="26" x2="274" y2="26"/><line class="chart-grid" x1="18" y1="60" x2="274" y2="60"/><line class="chart-axis" x1="18" y1="95" x2="274" y2="95"/>
+    ${bars}
+  </svg><div class="line-chart-legend line-chart-legend--3">${items.map(i=>`<span><i class="${i.cls}"></i><span lang="en">${i.en}</span><span lang="es">${i.es}</span></span>`).join('')}</div>`;
+}
+
+function renderLinePublicationChart(el, publications) {
+  if (!el) return;
+  const byYear = new Map();
+  (publications || []).forEach(p => {
+    if (!p?.published_at) return;
+    const y = new Date(p.published_at).getFullYear();
+    if (!Number.isFinite(y)) return;
+    byYear.set(y, (byYear.get(y) || 0) + 1);
+  });
+  const years = [...byYear.keys()].sort((a,b)=>a-b).slice(-5);
+  if (!years.length) return lineChartEmpty(el, 'No public publication history yet.', 'Aún no hay histórico público de publicaciones.');
+  const vals = years.map(y => byYear.get(y));
+  const max = Math.max(1, ...vals);
+  const left=24,right=274,top=18,bottom=88;
+  const coords = years.map((y,i) => {
+    const x = years.length===1 ? (left+right)/2 : left + (i/(years.length-1))*(right-left);
+    const yy = bottom - (vals[i]/max)*(bottom-top);
+    return [x,yy];
+  });
+  const linePath = coords.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const areaPath = `${linePath} L ${coords[coords.length-1][0].toFixed(1)} ${bottom} L ${coords[0][0].toFixed(1)} ${bottom} Z`;
+  const points = coords.map((p,i)=>`<circle class="chart-point" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.1"/><text class="chart-value" x="${p[0].toFixed(1)}" y="${Math.max(10,p[1]-8).toFixed(1)}" text-anchor="middle" font-size="9.5">${vals[i]}</text><text x="${p[0].toFixed(1)}" y="104" text-anchor="middle" font-size="7.5">${years[i]}</text>`).join('');
+  el.innerHTML = `<svg viewBox="0 0 292 110" role="img" aria-label="Publications by year"><line class="chart-grid" x1="18" y1="52" x2="278" y2="52"/><line class="chart-axis" x1="18" y1="88" x2="278" y2="88"/><path class="chart-area" d="${areaPath}"/><path class="chart-line" d="${linePath}"/>${points}</svg>`;
+}
+
+function renderLineInnovationChart(el, projects) {
+  if (!el) return;
+  const stageNames = [
+    ['concept','Concept','Concepto'],['development','Development','Desarrollo'],['pilot','Pilot','Piloto'],['validation','Validation','Validación'],['scaling','Scaling','Escalado']
+  ];
+  const counts = stageNames.map(([key,en,es]) => ({key,en,es,value:(projects||[]).filter(p=>String(p.current_stage||'').toLowerCase()===key).length})).filter(x=>x.value>0);
+  const total = counts.reduce((s,x)=>s+x.value,0);
+  if (!total) return lineChartEmpty(el, 'No active clinical innovation stages yet.', 'Aún no hay etapas activas de innovación clínica.');
+  let offset = 0;
+  const segClasses=['chart-donut-seg--1','chart-donut-seg--2','chart-donut-seg--3','chart-donut-seg--4'];
+  const segs = counts.map((x,i)=>{
+    const pct=(x.value/total)*100;
+    const out=`<circle class="chart-donut-seg ${segClasses[i%segClasses.length]}" cx="62" cy="56" r="36" pathLength="100" stroke-dasharray="${pct.toFixed(2)} ${(100-pct).toFixed(2)}" stroke-dashoffset="${(-offset).toFixed(2)}"/>`;
+    offset += pct;
+    return out;
+  }).join('');
+  el.innerHTML = `<div class="line-chart-donut-wrap"><svg viewBox="0 0 128 112" role="img" aria-label="Clinical innovation maturity"><circle class="chart-donut-bg" cx="62" cy="56" r="36" pathLength="100"/>${segs}<text class="chart-center-number" x="62" y="54" text-anchor="middle">${total}</text><text class="chart-center-label" x="62" y="66" text-anchor="middle">projects</text></svg><div class="line-chart-legend line-chart-legend--vertical">${counts.map((x,i)=>`<span><i class="${segClasses[i%segClasses.length]}"></i><span lang="en">${x.en}</span><span lang="es">${x.es}</span><b>${x.value}</b></span>`).join('')}</div></div>`;
+}
+
 async function loadLineDetail() {
   const params = new URLSearchParams(location.search);
   const lineId = params.get('id');
@@ -2006,10 +2000,6 @@ async function loadLineDetail() {
   const loadErrorEl = document.getElementById('lineLoadError');
   const heroEl      = document.getElementById('lineHero');
 
-  // Phase 4.2: visibility is class-owned. Phase 2 moved the line page's
-  // default hidden states into CSS, so setting element.style.display=''
-  // no longer reveals anything — the stylesheet still wins with
-  // display:none. Keep state transitions semantic and explicit.
   const showLineEl = (el) => {
     if (!el) return;
     el.classList.remove('is-hidden');
@@ -2020,6 +2010,27 @@ async function loadLineDetail() {
     el.classList.remove('is-visible');
     el.classList.add('is-hidden');
   };
+  const statusLabel = (status) => {
+    const key = String(status || '').toLowerCase();
+    if (['reclutando','recruiting'].includes(key)) return ['Recruiting','Reclutando'];
+    if (['activo','active'].includes(key)) return ['Active','Activo'];
+    if (['completado','completed'].includes(key)) return ['Completed','Completado'];
+    if (['en preparación','preparing'].includes(key)) return ['In preparation','En preparación'];
+    return [status || '', status || ''];
+  };
+  const stageLabel = (stage) => ({
+    concept: ['Concept', 'Concepto'], development: ['Development', 'Desarrollo'],
+    pilot: ['Pilot', 'Piloto'], validation: ['Validation', 'Validación'],
+    scaling: ['Scaling', 'Escalado'], completed: ['Completed', 'Completado']
+  }[String(stage || '').toLowerCase()] || [stage || '', stage || '']);
+  const studyTypeLabel = (type) => {
+    const key = String(type || '').toLowerCase();
+    if (key === 'interventional') return ['Clinical trial','Ensayo clínico'];
+    if (key === 'observational') return ['Observational study','Estudio observacional'];
+    if (key === 'expanded access') return ['Expanded access','Acceso expandido'];
+    return ['Clinical study','Estudio clínico'];
+  };
+  const bilingual = (en, es) => `<span lang="en">${escHtml(en)}</span><span lang="es">${escHtml(es)}</span>`;
 
   if (!lineId) {
     hideLineEl(loadingEl);
@@ -2031,9 +2042,7 @@ async function loadLineDetail() {
   try {
     ({ data: line } = await apiFetch(`/api/research-lines/${lineId}/website`));
     if (!line) {
-      // Retry once — a genuine fetch hiccup shouldn't land on the same
-      // "this line doesn't exist" dead-end as an actually-invalid URL.
-      await new Promise(r => setTimeout(r, 800));
+      await new Promise(r => setTimeout(r, 500));
       ({ data: line } = await apiFetch(`/api/research-lines/${lineId}/website`));
     }
     if (!line) throw new Error('not found');
@@ -2044,406 +2053,201 @@ async function loadLineDetail() {
     return;
   }
 
-  /* 12 ── contextual crumb tier: "Research → L03 Severe asthma"
-     under the nav. Deep pages get a visible place in the hierarchy
-     instead of feeling orphaned. */
   try {
+    // Fetch every public evidence stream before revealing the page. The loader
+    // therefore represents real work rather than disappearing while graphs and
+    // lists continue to jump into place underneath the user.
+    const [studiesResult, projectsResult, pubsResult] = await Promise.allSettled([
+      apiFetch(`/api/clinical-trials/website?line=${encodeURIComponent(lineId)}`),
+      apiFetch(`/api/innovation-projects/website?line=${encodeURIComponent(lineId)}`),
+      apiFetch(`/api/news/website?type=publication&line=${encodeURIComponent(lineId)}&limit=100`)
+    ]);
+    const allStudies = studiesResult.status === 'fulfilled' ? (studiesResult.value?.data || []) : [];
+    const allProjects = projectsResult.status === 'fulfilled' ? (projectsResult.value?.data || []) : [];
+    const allPublications = pubsResult.status === 'fulfilled' ? (pubsResult.value?.data || []) : [];
+
+    const activeStatuses = new Set(['reclutando','activo','active','recruiting','en preparación','preparing']);
+    const activeStudies = allStudies.filter(t => activeStatuses.has(String(t.status || '').toLowerCase()));
+    const activeProjects = allProjects.filter(p => String(p.current_stage || '').toLowerCase() !== 'completed');
+    const clinicalTrials = activeStudies.filter(t => String(t.study_type || '').toLowerCase() === 'interventional');
+    const clinicalStudies = activeStudies.filter(t => String(t.study_type || '').toLowerCase() !== 'interventional');
+
+    // Calm deep-page breadcrumb integrated directly into the canonical header.
     const hdrMain = document.querySelector('.hdr .hdr-main');
     if (hdrMain && !document.getElementById('hdrCrumb')) {
       const crumb = document.createElement('div');
-      crumb.className = 'hdr-crumb'; crumb.id = 'hdrCrumb';
+      crumb.className = 'hdr-crumb';
+      crumb.id = 'hdrCrumb';
       crumb.innerHTML = `<a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
-        &nbsp;→&nbsp; <b>L${String(line.line_number).padStart(2,'0')} ${escHtml(line.short_name || line.name || '')}</b>`;
+        <span class="hc-sep">/</span> <b>L${String(line.line_number).padStart(2,'0')} ${escHtml(line.short_name || line.name || '')}</b>`;
       hdrMain.appendChild(crumb);
     }
-  } catch (e) { /* decorative */ }
 
-  try {
-    hideLineEl(loadingEl);
-    // heroEl is intentionally NOT shown here. Showing it before the render
-    // below completes means any exception partway through this block
-    // (a malformed field on one specific line, a slow/failed secondary
-    // fetch, etc.) leaves a half-populated, already-visible page on
-    // screen with no error state — which is indistinguishable from a
-    // blank page to a visitor. heroEl is shown only once everything in
-    // this block has finished without throwing (see end of try block).
-    const collabEl = document.getElementById('lineCollabSection');
-    showLineEl(collabEl);
-
-    // Page title / description, since this is one template for six lines
+    // SEO identity for the shared line template.
     const titleText = `${line.short_name || line.name} | neumACt R&I`;
     document.title = titleText;
-    const titleTag = document.getElementById('pageTitle');
-    if (titleTag) titleTag.textContent = titleText;
+    const summary = lineCleanSummary(line.description || '');
     const descTag = document.getElementById('pageDescription');
-    if (descTag && line.description) descTag.setAttribute('content', line.description);
-
-    // Canonical + JSON-LD — previously static and identical across all six
-    // line pages, which tells search engines to treat five of the six as
-    // duplicates of whichever one they happened to crawl first.
+    if (descTag && summary) descTag.setAttribute('content', summary);
     const canonicalTag = document.getElementById('canonicalLink');
     if (canonicalTag) canonicalTag.setAttribute('href', `${window.NEUMAC_CONFIG.siteBase}/line/?id=${lineId}`);
     const jsonLdTag = document.getElementById('lineJsonLd');
     if (jsonLdTag) {
       jsonLdTag.textContent = JSON.stringify({
-        '@context': 'https://schema.org', '@type': 'WebPage',
-        name: titleText,
-        description: line.description || `Research line ${line.line_number} at neumACt R&I.`,
+        '@context': 'https://schema.org', '@type': 'WebPage', name: titleText,
+        description: summary || `Research line ${line.line_number} at neumACt R&I.`,
         isPartOf: { '@type': 'WebSite', url: window.NEUMAC_CONFIG.siteBase, name: 'neumACt R&I' }
       });
     }
-    const collabLink = document.getElementById('lineCollabLink');
-    if (collabLink) collabLink.setAttribute('href', `/?line=${encodeURIComponent(line.short_name || line.name)}#contact`);
 
-    // Hero
+    // Hero owns the scientific identity. The content below no longer repeats a
+    // second "about this line" essay.
     const eyebrowEl = document.getElementById('lineEyebrow');
     if (eyebrowEl) {
-      eyebrowEl.innerHTML = `<span lang="en">Research line ${String(line.line_number).padStart(2,'0')}</span><span lang="es">Línea de investigación ${String(line.line_number).padStart(2,'0')}</span>`;
+      const n = String(line.line_number).padStart(2,'0');
+      eyebrowEl.innerHTML = `<span lang="en">L${n} · Research line within neumACt</span><span lang="es">L${n} · Línea de investigación de neumACt</span>`;
     }
     const titleEl = document.getElementById('lineTitle');
-    if (titleEl) titleEl.textContent = line.name || line.short_name;
-
-    // Research-as-questions (#8): the elite research sites frame each
-    // line as the question it chases, not a noun label. This slot
-    // renders line.research_question (EN) / research_question_es (ES)
-    // as the hero's driving statement the moment that field is filled
-    // in neumDesk — until then it stays invisible, no empty box.
-    const questionEl = document.getElementById('lineQuestion');
-    if (questionEl) {
-      const qEn = line.research_question || '';
-      const qEs = line.research_question_es || line.research_question || '';
-      if (qEn) {
-        questionEl.innerHTML =
-          `<span lang="en">${escHtml(qEn)}</span><span lang="es">${escHtml(qEs)}</span>`;
-        showLineEl(questionEl);
-      } else {
-        hideLineEl(questionEl);
-      }
+    if (titleEl) titleEl.textContent = line.name || line.short_name || '';
+    const summaryEl = document.getElementById('lineHeroSummary');
+    if (summaryEl) summaryEl.textContent = summary;
+    const heroImg = document.getElementById('lineHeroImage');
+    if (heroImg) {
+      heroImg.src = lineDetailHeroMedia(line);
+      heroImg.alt = `${line.short_name || line.name || 'Research line'} — neumACt`;
     }
-
-    const pillsEl = document.getElementById('lineStatPills');
-    if (pillsEl) {
-      const pills = [];
-      if (line.active_trials > 0) {
-        pills.push(`<span class="hstat-label hstat-label--pill"><span lang="en">${line.active_trials} recruiting ${line.active_trials===1?'trial':'trials'}</span><span lang="es">${line.active_trials} ${line.active_trials===1?'ensayo':'ensayos'} en reclutamiento</span></span>`);
-      }
-      if (line.active_projects > 0) {
-        pills.push(`<span class="hstat-label hstat-label--pill"><span lang="en">${line.active_projects} active ${line.active_projects===1?'project':'projects'}</span><span lang="es">${line.active_projects} ${line.active_projects===1?'proyecto':'proyectos'} activo${line.active_projects===1?'':'s'}</span></span>`);
-      }
-      pillsEl.innerHTML = pills.join('');
-    }
-
     const keywordsEl = document.getElementById('lineKeywords');
-    if (keywordsEl && line.keywords && line.keywords.length) {
-      keywordsEl.innerHTML = line.keywords.map(k =>
-        `<span class="line-keyword">${escHtml(k)}</span>`
-      ).join('<span class="line-keyword-sep">·</span>');
+    if (keywordsEl && Array.isArray(line.keywords)) {
+      keywordsEl.innerHTML = line.keywords.slice(0, 6).map(k => `<span class="line-keyword">${escHtml(k)}</span>`).join('');
     }
-
-    // Coordinator — first, visually distinguished row in the merged
-    // "People" section (larger avatar, chief/PI badge), not a separate
-    // bordered card with its own design language.
-    const peopleSection = document.getElementById('linePeopleSection');
-    const coordCard = document.getElementById('lineCoordinatorCard');
-    if (line.coordinator && peopleSection && coordCard) {
-      const c = line.coordinator;
-      const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
-      const coordAvId = 'cav' + Math.random().toString(36).slice(2, 9);
-      const avatar = c.public_photo_url
-        ? `<div class="line-coordinator-avatar"><img class="media-cover" src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" loading="lazy" onerror="this.style.display='none';document.getElementById('${coordAvId}').style.display='flex';"><div id="${coordAvId}" class="line-coordinator-avatar__fallback line-coordinator-avatar--monogram">${escHtml(initials)}</div></div>`
-        : `<div class="line-coordinator-avatar line-coordinator-avatar--fallback line-coordinator-avatar--monogram">${escHtml(initials)}</div>`;
-
-      // Every real role this person holds gets its own badge — these are
-      // independent facts (chief, PI, and line coordinator are not
-      // mutually exclusive), not a single slot picking the "best" one.
-      // Previously an if/else-if meant a chief who was also a PI never
-      // had that second, equally true fact shown at all.
-      const roleBadges = [
-        c.is_chief_of_department ? `<span class="role-badge role-badge--line"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '',
-        c.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d'
-          ? `<span class="role-badge role-badge--line"><span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span></span>`
-          : (c.can_be_pi ? `<span class="role-badge role-badge--line"><span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span></span>` : ''),
-      ].filter(Boolean).join('');
-
-      coordCard.innerHTML = `
-        <div class="line-coordinator">
-          <div class="line-coordinator__main">
-            ${avatar}
-            <div class="flex-1 min-w-0">
-              <p class="line-coordinator__name">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
-              <p class="line-coordinator__role">
-                <span lang="en">Coordinator, this line</span><span lang="es">Coordinador de esta línea</span>${c.specialization ? ' · ' + (c.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Pulmonologist</span><span lang="es">Neumólogo</span>' : escHtml(c.specialization)) : ''}
-              </p>
-              <p class="line-coordinator__affiliation">
-                <span lang="en">Servicio de Neumología, CHUAC</span><span lang="es">Servicio de Neumología, CHUAC</span>
-              </p>
-            </div>
-          </div>
-          ${roleBadges ? `<div class="line-coordinator__badges">${roleBadges}</div>` : ''}
-        </div>`;
-      peopleSection.style.opacity = '0';
-      showLineEl(peopleSection);
-      requestAnimationFrame(() => { peopleSection.style.transition = 'opacity .25s var(--ease-clinical)'; peopleSection.style.opacity = '1'; });
-    }
-
-    // About this line — description/capabilities/keywords are real,
-    // populated fields on every line, so this renders unconditionally.
-    // deep_content (long-form, written by a coordinator) is additional,
-    // optional substance — shown as a second block only once it exists,
-    // not the only thing gating this section.
-    const aboutSection = document.getElementById('lineAboutSection');
-    const aboutContent = document.getElementById('lineAboutContent');
-    if (aboutSection && aboutContent) {
-      let html = '';
-      if (line.description) {
-        // Named projects mentioned in free-text description (e.g.
-        // "CATARS-VAC, TUCUVI-LOLA, EARCO") are often real trials already
-        // in the database — link each mention to the real record instead
-        // of leaving it as inert text disconnected from the actual table.
-        //
-        // IMPORTANT: every match is found against the original plain-text
-        // description, never against a string that already contains
-        // inserted HTML from a previous match. Running a second regex
-        // against partially-built HTML risks matching text that's sitting
-        // inside an already-inserted <a> tag's attributes (e.g. a later
-        // candidate name that happens to be a substring of an earlier
-        // match's protocol_id once URL-encoded into the href), which
-        // would split that tag and leak its closing fragment as visible
-        // text. Collecting all match ranges up front and building the
-        // final string in one left-to-right pass makes that impossible.
-        const desc = line.description;
-        const ranges = []; // {start, end, name, protocolId}
-        (line.trials_list || []).forEach(t => {
-          const shortName = (t.title || '').split(/[—-]/)[0].trim();
-          const candidates = [...new Set([shortName, t.protocol_id].filter(s => s && s.length > 2))];
-          candidates.forEach(name => {
-            const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const re = new RegExp(`(?<![\\w-])${escapedName}(?![\\w-])`, 'g');
-            let m;
-            while ((m = re.exec(desc))) {
-              ranges.push({ start: m.index, end: m.index + name.length, name, protocolId: t.protocol_id || shortName });
-            }
-          });
-        });
-        // Sort by start position, then drop any range that overlaps one
-        // already kept (first/longest match wins at a given position —
-        // prevents double-linking the same span from two candidate names).
-        ranges.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
-        const kept = [];
-        let lastEnd = -1;
-        for (const r of ranges) {
-          if (r.start >= lastEnd) { kept.push(r); lastEnd = r.end; }
-        }
-        let descHtml = '';
-        let cursor = 0;
-        for (const r of kept) {
-          descHtml += escHtml(desc.slice(cursor, r.start));
-          descHtml += `<a href="/clinical?search=${encodeURIComponent(r.protocolId)}" class="btn-text btn-text--inline">${escHtml(r.name)}</a>`;
-          cursor = r.end;
-        }
-        descHtml += escHtml(desc.slice(cursor));
-        html += `<p class="line-about-paragraph">${descHtml}</p>`;
-      }
-      if (line.capabilities) {
-        const caps = line.capabilities.split(',').map(c => c.trim()).filter(Boolean);
-        if (caps.length) {
-          html += `<div class="line-capabilities${line.deep_content ? ' line-capabilities--with-deep' : ''}">
-            ${caps.map(c => `<span class="ltag">${escHtml(c)}</span>`).join('')}
-          </div>`;
-        }
-      }
-      if (line.deep_content) {
-        html += `<div class="line-deep-content">
-          ${line.deep_content.split(/\n\n+/).map(p => `<p class="line-deep-content__paragraph">${escHtml(p)}</p>`).join('')}
-        </div>`;
-      }
-      if (html) {
-        aboutContent.innerHTML = html;
-        aboutSection.style.opacity = '0';
-        showLineEl(aboutSection);
-        requestAnimationFrame(() => { aboutSection.style.transition = 'opacity .25s var(--ease-clinical)'; aboutSection.style.opacity = '1'; });
-      }
-
-      // Quick-facts panel — sits beside the About text, breaking the
-      // full-width band rhythm. Uses only real, already-fetched counts;
-      // no invented "established" date or similar, since that's not
-      // a real field anywhere in this data.
-      const factsEl = document.getElementById('lineQuickFacts');
-      if (factsEl) {
-        const facts = [
-          { num: line.total_trials || 0, labelEn: line.total_trials === 1 ? 'Clinical trial' : 'Clinical trials', labelEs: line.total_trials === 1 ? 'Ensayo clínico' : 'Ensayos clínicos' },
-          { num: line.total_projects || 0, labelEn: line.total_projects === 1 ? 'Innovation project' : 'Innovation projects', labelEs: line.total_projects === 1 ? 'Proyecto de innovación' : 'Proyectos de innovación' },
-        ].filter(f => f.num > 0);
-        if (facts.length) {
-          factsEl.innerHTML = facts.map((f, i) => `
-            <div class="line-fact${i > 0 ? ' line-fact--divided' : ''}">
-              <p class="line-fact__value">${f.num}</p>
-              <p class="line-fact__label"><span lang="en">${f.labelEn}</span><span lang="es">${f.labelEs}</span></p>
-            </div>`).join('');
-          factsEl.style.opacity = '0';
-          showLineEl(factsEl);
-          requestAnimationFrame(() => { factsEl.style.transition = 'opacity .25s var(--ease-clinical)'; factsEl.style.opacity = '1'; });
-        }
-      }
-    }
-
-    // Track record — discrete, asserted facts about this line's standing.
-    // Only renders if populated; this is content someone has to actually
-    // write and stand behind, not something derivable from other fields.
-    const trackSection = document.getElementById('lineTrackRecordSection');
-    const trackList = document.getElementById('lineTrackRecordList');
-    if (trackSection && trackList && line.track_record && line.track_record.length) {
-      trackList.innerHTML = line.track_record.map(item =>
-        `<li class="ltr-item"><span class="ltr-mark">—</span><span>${escHtml(item)}</span></li>`
-      ).join('');
-      trackSection.style.opacity = '0';
-      showLineEl(trackSection);
-      requestAnimationFrame(() => { trackSection.style.transition = 'opacity .25s var(--ease-clinical)'; trackSection.style.opacity = '1'; });
-    }
-
-    // Active trials — reuses the existing public trials endpoint, filtered by line
-    const trialsSection = document.getElementById('lineTrialsSection');
-    const trialsList = document.getElementById('lineTrialsList');
-    try {
-      const { data: trials } = await apiFetch(`/api/clinical-trials/website?line=${lineId}`);
-      const activeTrials = (trials || []).filter(t => ['Reclutando','Activo','Active','Recruiting'].includes(t.status));
-      if (activeTrials.length && trialsSection && trialsList) {
-        trialsList.innerHTML = activeTrials.slice(0, 6).map((t, i) => `
-          <a href="/clinical#research-lines" class="lt-trial-row${i > 0 ? ' lt-trial-row--divided' : ''}">
-            <span class="lt-trial-phase">${escHtml(t.phase || 'Clinical study')}</span>
-            <span class="lt-trial-title">${escHtml(t.title || t.protocol_id || '—')}</span>
-            <svg class="lt-trial-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>`).join('');
-        trialsSection.style.opacity = '0';
-        showLineEl(trialsSection);
-        requestAnimationFrame(() => { trialsSection.style.transition = 'opacity .25s var(--ease-clinical)'; trialsSection.style.opacity = '1'; });
-      }
-    } catch (err) { console.error('Line trials load failed:', err); }
-
-    // Team on this line — derived from trial/project investigators and
-    // explicit research_line_members, server-side. Coordinator excluded
-    // here since they're already shown, distinguished, just above.
-    // Full-bleed photo cards: the photo fills the whole card, the name
-    // overlays directly on it like a real photo credit, rather than a
-    // small circular avatar sitting beside a block of text. A real
-    // photo drops in with zero markup change — gradient+initials is
-    // just today's fallback for this same card shape, not the design.
-    const teamChips = document.getElementById('lineTeamChips');
-    if (line.team && line.team.length && peopleSection && teamChips) {
-      const teamWithoutCoordinator = line.team.filter(m => m.id !== line.coordinator?.id);
-      const roleTextFor = (m) => m.role_on_line ? escHtml(m.role_on_line)
-        : m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>'
-        : m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>'
-        : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
-        : (m.specialization ? escHtml(m.specialization) : '');
-
-// Toggles a line.html team-member card open/closed — shared by both
-// click and keyboard (Enter/Space) activation, so the expand logic
-// lives in one place instead of being duplicated inline per event type.
-// Opens a line.html team member's bio in the same fixed-overlay modal
-// used on team.html — previously this page used an inline accordion that
-// pushed every card below it down the moment one expanded, which felt
-// jarring on a multi-column grid. The overlay shows the bio without
-// touching the page's layout at all.
-function openLineProfileModal(m) {
-  const overlay = document.getElementById('profileModalOverlay');
-  const content = document.getElementById('profileModalContent');
-  if (!overlay || !content) return;
-  const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
-  const avatar = buildAvatar(m, 72);
-  const roleText = m.role_on_line ? escHtml(m.role_on_line)
-    : m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>'
-    : m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>'
-    : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
-    : (m.specialization ? escHtml(m.specialization) : '');
-  content.innerHTML = `
-    <div class="profile-summary">
-      ${avatar}
-      <div>
-        <p class="profile-summary__name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
-        ${roleText ? `<p class="profile-summary__role">${roleText}</p>` : ''}
-      </div>
-    </div>
-    ${m.public_bio
-      ? `<p class="profile-summary__bio">${escHtml(m.public_bio)}</p>`
-      : `<p class="profile-summary__bio profile-summary__bio--empty">Bio not yet added.</p>`}
-  `;
-  overlay.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-window.openLineProfileModal = openLineProfileModal;
-window._lineTeamData = [];
-
-      window._lineTeamData = teamWithoutCoordinator;
-      teamChips.style.transition = 'none';
-      teamChips.style.opacity = '0';
-      teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
-        const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
-        const lineAvId = 'ltav' + i;
-        const avatarInner = m.public_photo_url
-          ? `<img class="media-cover" src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" loading="lazy" onerror="this.style.display='none';document.getElementById('${lineAvId}').style.display='flex';this.parentElement.classList.add('line-team-avatar--monogram');"><span class="line-team-avatar__fallback" id="${lineAvId}">${escHtml(initials)}</span>`
-          : escHtml(initials);
-        const avatarClass = m.public_photo_url ? 'line-team-avatar' : 'line-team-avatar line-team-avatar--monogram';
-        return `<div class="line-team-card">
-          <div class="line-team-header" onclick="openLineProfileModal(window._lineTeamData[${i}])" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLineProfileModal(window._lineTeamData[${i}]);}" tabindex="0" role="button" aria-label="${escHtml(m.full_name)} — view full profile">
-            <div class="${avatarClass}">${avatarInner}</div>
-            <div class="line-team-copy">
-              <p class="line-team-name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
-              ${roleTextFor(m) ? `<p class="line-team-role">${roleTextFor(m)}</p>` : ''}
-            </div>
-            <svg class="line-team-chevron line-team-chevron--collapsed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-        </div>`;
-      }).join('');
-      requestAnimationFrame(() => { teamChips.style.transition = 'opacity .22s var(--ease-clinical)'; teamChips.style.opacity = '1'; });
-      showLineEl(peopleSection);
-    }
-
-    // Recent publications for this line
-    const pubsSection = document.getElementById('linePubsSection');
-    const pubsList = document.getElementById('linePubsList');
-    try {
-      const { data: pubs } = await apiFetch(`/api/news/website?type=publication&line=${lineId}&limit=5`);
-      if (pubs && pubs.length && pubsSection && pubsList) {
-        pubsList.innerHTML = pubs.map((p, i) => {
-          const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
-          return `<div class="line-pub${i > 0 ? ' line-pub--divided' : ''}">
-            <div class="line-pub__meta">
-              ${p.journal_name ? `<span class="line-pub__journal">${escHtml(p.journal_name)}</span>` : '<span></span>'}
-              <span class="line-pub__year">${year}</span>
-            </div>
-            <p class="line-pub__title">${escHtml(p.title)}</p>
-          </div>`;
-        }).join('');
-        pubsSection.style.opacity = '0';
-        showLineEl(pubsSection);
-        requestAnimationFrame(() => { pubsSection.style.transition = 'opacity .25s var(--ease-clinical)'; pubsSection.style.opacity = '1'; });
-      }
-    } catch (err) { console.error('Line publications load failed:', err); }
-
-    // Everything above completed without throwing — safe to reveal now.
     showLineEl(heroEl);
 
+    // Coordinator is the human anchor of the line. Approved public portraits
+    // override brittle backend URLs where we have an explicitly supplied asset.
+    const introSection = document.getElementById('lineIntroSection');
+    const coordCard = document.getElementById('lineCoordinatorCard');
+    if (coordCard && line.coordinator) {
+      const c = line.coordinator;
+      const displayName = String(c.full_name || '').replace(/^(?:Prof\.?\s*)?(?:Dr\.?|Dra\.?)\s+/i, '').trim();
+      const initials = displayName.split(' ').filter(Boolean).slice(0,2).map(n => n[0]).join('').toUpperCase();
+      const photo = coordinatorEditorialPhoto(c);
+      const portrait = photo
+        ? `<div class="line-lead__portrait"><img src="${escHtml(photo)}" alt="${escHtml(c.full_name)}" loading="eager" onerror="this.parentElement.innerHTML='<div class=&quot;line-lead__portrait-fallback&quot;>${escHtml(initials)}</div>'"></div>`
+        : `<div class="line-lead__portrait"><div class="line-lead__portrait-fallback">${escHtml(initials)}</div></div>`;
+      coordCard.innerHTML = `${portrait}<div class="line-lead__copy">
+        <p class="line-lead__kicker"><span lang="en">Line coordination</span><span lang="es">Coordinación de la línea</span></p>
+        <h2 class="line-lead__name">${escHtml(displayName)}</h2>
+        ${c.specialization ? `<p class="line-lead__specialty">${escHtml(c.specialization)}</p>` : ''}
+        <p class="line-lead__affiliation">Servicio de Neumología · Área Sanitaria da Coruña e Cee</p>
+        <div class="line-lead__bio">${coordinatorEditorialBio(c, line)}</div>
+      </div>`;
+    }
+
+    // Live activity metrics. Every number shown is derived from a public record
+    // fetched for this line on this page load — no decorative placeholder KPIs.
+    const metrics = {
+      trials: clinicalTrials.length,
+      studies: clinicalStudies.length,
+      innovation: activeProjects.length,
+      publications: allPublications.length
+    };
+    const metricMap = [
+      ['lineMetricTrials',metrics.trials],['lineMetricStudies',metrics.studies],
+      ['lineMetricInnovation',metrics.innovation],['lineMetricPublications',metrics.publications]
+    ];
+    metricMap.forEach(([id,val]) => { const el=document.getElementById(id); if(el) el.textContent=String(val); });
+    document.querySelectorAll('.line-metric__icon[data-icon]').forEach(el => { el.innerHTML = lineMetricIcon(el.dataset.icon); });
+    renderLineActivityChart(document.getElementById('lineChartActivity'), metrics);
+    renderLinePublicationChart(document.getElementById('lineChartPublications'), allPublications);
+    renderLineInnovationChart(document.getElementById('lineChartInnovation'), activeProjects);
+    showLineEl(introSection);
+
+    // Current clinical work remains evidence, not a dashboard dump. Clinical
+    // studies/trials and clinical innovation are intentionally kept distinct.
+    const workSection = document.getElementById('lineWorkSection');
+    const trialsSection = document.getElementById('lineTrialsSection');
+    const trialsList = document.getElementById('lineTrialsList');
+    const projectsSection = document.getElementById('lineProjectsSection');
+    const projectsList = document.getElementById('lineProjectsList');
+
+    if (trialsList && activeStudies.length) {
+      trialsList.innerHTML = activeStudies.slice(0, 4).map(t => {
+        const type = studyTypeLabel(t.study_type);
+        const status = statusLabel(t.status);
+        const phaseEn = t.phase || '';
+        const phaseEs = t.phase ? String(t.phase).replace(/^Phase\s*/i, 'Fase ') : '';
+        const metaBits = [bilingual(type[0],type[1])];
+        if (phaseEn) metaBits.push(bilingual(phaseEn,phaseEs));
+        if (status[0]) metaBits.push(bilingual(status[0],status[1]));
+        return `<a class="line-work-item" href="/clinical/"><div>
+          <p class="line-work-item__meta">${metaBits.join(' · ')}</p>
+          <p class="line-work-item__title">${escHtml(t.title || t.protocol_id || 'Clinical study')}</p>
+          ${t.description ? `<p class="line-work-item__summary">${escHtml(publicText(t.description))}</p>` : ''}
+        </div>${lineCalmGlyph()}</a>`;
+      }).join('');
+    } else if (trialsSection) trialsSection.hidden = true;
+
+    if (projectsList && activeProjects.length) {
+      projectsList.innerHTML = activeProjects.slice(0, 4).map(p => {
+        const stage = stageLabel(p.current_stage);
+        const category = p.category || 'Clinical innovation';
+        return `<a class="line-work-item" href="/innovation/"><div>
+          <p class="line-work-item__meta"><span lang="en">Clinical innovation</span><span lang="es">Innovación clínica</span> · ${escHtml(category)}${stage[0] ? ` · ${bilingual(stage[0],stage[1])}` : ''}</p>
+          <p class="line-work-item__title">${escHtml(p.title || 'Innovation project')}</p>
+          ${p.description ? `<p class="line-work-item__summary">${escHtml(publicText(p.description))}</p>` : ''}
+        </div>${lineCalmGlyph()}</a>`;
+      }).join('');
+    } else if (projectsSection) projectsSection.hidden = true;
+
+    if (activeStudies.length || activeProjects.length) showLineEl(workSection);
+
+    // Publication evidence: fetch broadly for the live chart, show only a compact
+    // editorial selection in the page body.
+    const pubsSection = document.getElementById('linePubsSection');
+    const pubsList = document.getElementById('linePubsList');
+    if (pubsList && allPublications.length) {
+      pubsList.innerHTML = allPublications.slice(0, 5).map(p => {
+        const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
+        return `<article class="line-pub"><div class="line-pub__meta">
+          ${p.journal_name ? `<span class="line-pub__journal">${escHtml(p.journal_name)}</span>` : '<span></span>'}
+          <span class="line-pub__year">${year}</span></div>
+          <p class="line-pub__title">${escHtml(p.title || '')}</p></article>`;
+      }).join('');
+      showLineEl(pubsSection);
+    }
+
+    // Team: coordinator already owns the main human feature. The programme PI is
+    // not repeated on every line unless he is himself the coordinator (e.g. L06).
+    const peopleSection = document.getElementById('linePeopleSection');
+    const teamChips = document.getElementById('lineTeamChips');
+    if (teamChips && Array.isArray(line.team)) {
+      const team = line.team.filter(m => m && m.id !== line.coordinator?.id && !(m.id === NEUMACT_PI_STAFF_ID && line.coordinator?.id !== NEUMACT_PI_STAFF_ID));
+      if (team.length) {
+        teamChips.innerHTML = team.slice(0, 8).map(m => {
+          const initials = (m.full_name || '').split(' ').filter(Boolean).slice(0,2).map(x => x[0]).join('').toUpperCase();
+          const photo = m.public_photo_url || '';
+          const avatar = photo
+            ? `<div class="line-team-avatar"><img src="${escHtml(photo)}" alt="${escHtml(m.full_name)}" loading="lazy" onerror="this.parentElement.textContent='${escHtml(initials)}'"></div>`
+            : `<div class="line-team-avatar">${escHtml(initials)}</div>`;
+          const role = m.role_on_line || m.specialization || '';
+          return `<article class="line-team-card">${avatar}<div><p class="line-team-name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>${role ? `<p class="line-team-role">${escHtml(role)}</p>` : ''}</div></article>`;
+        }).join('');
+        showLineEl(peopleSection);
+      }
+    }
+
+    const collabEl = document.getElementById('lineCollabSection');
+    const collabLink = document.getElementById('lineCollabLink');
+    if (collabLink) collabLink.setAttribute('href', `/?line=${encodeURIComponent(line.short_name || line.name || '')}#contact`);
+    showLineEl(collabEl);
+
+    // The complete page is now stable: reveal it and retire the skeleton.
+    hideLineEl(loadingEl);
   } catch (err) {
     console.error('Research line render failed:', err.message);
-    // Null-guarded: previously this catch itself threw when
-    // #lineLoadError didn't exist in the markup (it was referenced
-    // here but never added to the HTML), which turned a recoverable
-    // render error into a fully blank page. Now every access is
-    // guarded, and if the dedicated error element is somehow missing
-    // we fall back to repurposing the loading element so the visitor
-    // always sees *something* rather than white nothing.
-    try { hideLineEl(heroEl); } catch (_) {}
-    if (loadErrorEl) {
-      hideLineEl(loadingEl);
-      showLineEl(loadErrorEl);
-    } else if (loadingEl) {
-      showLineEl(loadingEl);
-      loadingEl.innerHTML = '<p class="line-load-error">'
-        + '<span lang="en">This line couldn\'t be loaded right now. '
-        + '<a class="line-load-error__link" href="/clinical/">View all research lines</a>.</span>'
-        + '<span lang="es">No se pudo cargar esta línea. '
-        + '<a class="line-load-error__link" href="/clinical/">Ver todas las líneas</a>.</span></p>';
-    }
+    hideLineEl(heroEl);
+    hideLineEl(loadingEl);
+    showLineEl(loadErrorEl);
   }
-}  
+}
+

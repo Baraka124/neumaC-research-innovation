@@ -22,12 +22,12 @@
     return '<?xml version="1.0" encoding="UTF-8"?>\n'+
       '<feed xmlns="http://www.w3.org/2005/Atom">\n'+
       '  <title>neumACt R&amp;I — Articles</title>\n'+
-      '  <subtitle>Research updates and publications from the Servicio de Neumología, CHUAC.</subtitle>\n'+
+      '  <subtitle>Research updates and publications from the Servicio de Neumología, Área Sanitaria da Coruña e Cee.</subtitle>\n'+
       '  <link href="'+SITE+'/news/"/>\n'+
       '  <link rel="self" href="'+SITE+'/feed/"/>\n'+
       '  <id>'+SITE+'/</id>\n'+
       '  <updated>'+updated+'</updated>\n'+
-      '  <author><name>neumACt R&amp;I · Servicio de Neumología · CHUAC</name></author>\n'+
+      '  <author><name>neumACt R&amp;I · Servicio de Neumología · Área Sanitaria da Coruña e Cee</name></author>\n'+
       entries+'\n</feed>\n';
   }
   fetch(API+'/api/news/website?limit=40')

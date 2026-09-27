@@ -58,7 +58,7 @@
       var date   = fmtDate(p.published_at || p.created_at);
       // Publications already show the real academic author list via
       // authors_text (e.g. "Gonzalez-Rivas D, Manolache V, et al.").
-      // p.author is whoever curated/submitted the post in neumDesk, not
+      // p.author is whoever curated/submitted the post in internal research system, not
       // necessarily a paper author — showing both was redundant at best
       // and actively misleading at worst, since the two names can differ.
       var author = (p.author && type !== 'publication') ? p.author.full_name : '';

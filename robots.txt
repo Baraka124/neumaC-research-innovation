@@ -1,4 +1,4 @@
-# neumACt R&I — Servicio de Neumología, CHUAC
+# neumACt R&I — neumACt R&I · Área Sanitaria da Coruña e Cee
 User-agent: *
 Allow: /
 Disallow: /cdn-cgi/

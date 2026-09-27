@@ -1,6 +1,8 @@
+> Canonical visual and editorial principles: see `DESIGN_PRINCIPLES.md`.
+
 # neumACt R&I — Site Reference Guide
 
-**Servicio de Neumología · Hospital Universitario A Coruña (CHUAC) · SERGAS**
+**Servicio de Neumología · Área Sanitaria da Coruña e Cee · SERGAS**
 *Research & Innovation in Respiratory Medicine*
 
 ---
@@ -65,7 +67,7 @@ Every sentence should be writeable on a Nature Medicine methods section or a NEJ
 | "Partnership models" | Commercial framing for an academic page | "Collaboration formats" |
 | ✓ checkmarks in lists | AI-generated content pattern | Remove — use plain list items |
 | "—" before eyebrow labels as decoration | AI tell | Remove |
-| "~1K", "approximately 1,000", "close to 1,000" | Approximation of a known exact fact | "1,000 lung transplants performed at CHUAC, May 2026" |
+| "~1K", "approximately 1,000", "close to 1,000" | Approximation of a known exact fact | "1,000 lung transplants performed within the Área Sanitaria da Coruña e Cee, May 2026" |
 | "world-class", "state-of-the-art", "cutting-edge" | Superlatives — unprovable and generic | Cite the specific achievement instead |
 | Listing project names (AIRWAYSCOPE, SCOPE-3D, TUCUVI-LOLA) in the first paragraph | Assumes prior knowledge the reader does not have | Describe the problem they solve, then name them |
 | "Translational and Precision Respiratory Medicine" as a branding phrase | Jargon as identity, not description | Describe what the research actually does |
@@ -80,7 +82,7 @@ If a concept is established once, it does not need to be stated again on the sam
 |---|---|
 | "research line(s)" | 3 — once in the hero, once as a section heading, once in context |
 | "INIBIC" | 2 — full name on first use: "Fundación Galega de Investigación Biomédica (INIBIC)", abbreviation thereafter |
-| "CHUAC" | 4 |
+| "Área Sanitaria da Coruña e Cee" | 4 |
 | "SERGAS" | 2 |
 | "coordinator" | Prefer "physician-investigator" or just the name; do not use as a prefix on every card |
 | "six" (describing the research lines) | 2 — once is enough |
@@ -97,7 +99,7 @@ Large heading  ← display serif (h2, clamp 2–3rem) — WHAT
 Body paragraph ← body sans (.9–1.0625rem) — WHY or HOW
 ```
 
-The eyebrow and the heading below it must say **different things**. "Contact / Enquiries" is two words for the same action — broken hierarchy. The correct pattern is "Servicio de Neumología · CHUAC / Enquiries" — context then content.
+The eyebrow and the heading below it must say **different things**. "Contact / Enquiries" is two words for the same action — broken hierarchy. The correct pattern is "Servicio de Neumología · Área Sanitaria da Coruña e Cee / Enquiries" — context then content.
 
 ---
 
@@ -137,7 +139,7 @@ Stat numbers (`.hstat-num`, `.stat-num`) must be `color: #fff !important` with `
 
 This is a precise fact, not an estimate.
 
-**Correct:** "1,000 lung transplants performed at CHUAC — milestone reached May 2026"
+**Correct:** "1,000 lung transplants performed within the Área Sanitaria da Coruña e Cee — milestone reached May 2026"
 **Wrong:** "~1K", "approximately 1,000", "close to 1,000", "nearly 1,000", "1K", "~1,000"
 
 It appears in: the index hero stats panel, the team stats panel, the first research line card description (transplantation line), and the index latest banner.
@@ -255,4 +257,4 @@ Before publishing or committing any change to the site, ask:
 
 ---
 
-*Last updated: June 2026 · neumACt R&I · Servicio de Neumología · CHUAC*
+*Last updated: June 2026 · neumACt R&I · Servicio de Neumología · Área Sanitaria da Coruña e Cee*

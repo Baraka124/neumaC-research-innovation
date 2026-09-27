@@ -32,8 +32,8 @@
   --ff-display: "Fraunces",Georgia,serif;
   --ff-body: "DM Sans",system-ui,sans-serif;
   --ff-mono: "DM Mono","Courier New",monospace;
-  --hdr: 74px;
-  --hdr-mobile: 64px;
+  --hdr: 68px;
+  --hdr-mobile: 62px;
   --max: 1380px;
   --pad: clamp(1.25rem,4vw,3rem);
   --r-xs: 4px;

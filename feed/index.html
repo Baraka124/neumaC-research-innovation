@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+  <script src="/scripts/bootstrap.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <title>Feed · neumACt R&I</title>
   <meta name="robots" content="noindex"/>
   <link rel="stylesheet" href="../styles/tokens.css">
@@ -10,7 +15,83 @@
   <link rel="stylesheet" href="../styles/components.css">
   <link rel="stylesheet" href="../styles/pages/feed.css">
 </head>
-<body>
+<body data-page="feed">
+<!-- Canonical public header: shared visual owner = styles/components.css; shared behaviour = scripts/site.js -->
+<header class="hdr" id="hdr" data-page="feed">
+  <div class="hdr-main">
+    <div class="hdr-inner">
+      <a href="/" class="hdr-logo" aria-label="neumACt Research &amp; Innovation">
+        <img src="/logo.svg" alt="neumACt R&I" class="hdr-logo-img">
+        <span class="hdr-brand-meta">
+          <span class="hdr-brand-title"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
+          <span class="hdr-brand-org">Área Sanitaria da Coruña e Cee · INIBIC · SERGAS</span>
+        </span>
+      </a>
+
+      <nav class="hdr-nav" aria-label="Primary navigation">
+        <a href="/" class="hdr-nav-link" data-nav="home"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+        <div class="hdr-dd" data-nav="research">
+          <span class="hdr-dd-trigger">
+            <a href="/clinical/" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true" aria-controls="researchMegaMenu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+          </span>
+
+          <div class="hdr-dd-panel" id="researchMegaMenu" aria-label="Research navigation">
+            <div class="hdr-mega-intro">
+              <p class="hdr-mega-kicker"><span lang="en">Research</span><span lang="es">Investigación</span></p>
+              <h2 class="hdr-mega-title"><span lang="en">Clinical &amp; translational respiratory research</span><span lang="es">Investigación clínica y traslacional en neumología</span></h2>
+              <p class="hdr-mega-copy"><span lang="en">Six specialist lines connecting clinical questions, trials and translational research across respiratory medicine.</span><span lang="es">Seis líneas especializadas que conectan preguntas clínicas, ensayos e investigación traslacional en medicina respiratoria.</span></p>
+              <a class="hdr-mega-portfolio" href="/clinical/">
+                <span lang="en">View all research</span><span lang="es">Ver toda la investigación</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+
+            <div class="hdr-mega-lines">
+              <div class="hdr-mega-head">
+                <p><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></p>
+              </div>
+              <div class="hdr-dd-panel-inner" id="hdrResearchLines"></div>
+            </div>
+          </div>
+        </div>
+        <a href="/innovation/" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+        <a href="/news/" class="hdr-nav-link" data-nav="news"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+        <a href="/team/" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+      </nav>
+
+      <div class="hdr-right">
+        <button class="hdr-search-btn" id="hdrSearchBtn" type="button" aria-label="Search / Buscar" title="Search / Buscar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
+        </button>
+        <div class="lang-switch" role="radiogroup" aria-label="Language / Idioma">
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" role="radio" aria-checked="true" tabindex="0">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" role="radio" aria-checked="false" tabindex="-1">ES</button>
+        </div>
+        <a href="/#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span><span class="hdr-contact-arrow" aria-hidden="true">→</span></a>
+        <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="mob-overlay" id="mobOverlay"></div>
+<nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation">
+  <div class="mob-drawer-nav">
+      <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+      <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+      <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+      <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+      <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+      <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+  </div>
+  <div class="mob-lang" role="radiogroup" aria-label="Language / Idioma">
+    <button class="lt-btn lt-btn--active" data-lang="en" role="radio" aria-checked="true">EN</button>
+    <button class="lt-btn" data-lang="es" role="radio" aria-checked="false">ES</button>
+  </div>
+</nav>
+
   <div class="feed-wrap">
     <h1>Article feed</h1>
     <p>Follow neumACt R&amp;I's latest articles and publications in your reader. This feed is generated live from the department's current output.</p>
@@ -22,7 +103,8 @@
     <pre id="feedPreview"></pre>
   </div>
 
-<script src="/scripts/bootstrap.js"></script>
+<script src="/scripts/site.js" defer></script>
+<script src="/scripts/api.js" defer></script>
 <script src="/scripts/pages/feed.js" defer></script>
 </body>
 </html>

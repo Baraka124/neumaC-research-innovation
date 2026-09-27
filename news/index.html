@@ -5,9 +5,9 @@
   
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" /> 
-  <title>neumACt Articles · Research &amp; Innovation · CHUAC · INIBIC</title>
+  <title>neumACt Articles · Research &amp; Innovation · Área Sanitaria da Coruña e Cee · INIBIC</title>
   <link rel="icon" type="image/svg+xml" href="../logo.svg"/>
-  <meta name="description" content="neumACt — Medicina Respiratoria Traslacional y de Precisión. Research updates, scientific publications, and clinical innovation notes from the neumACt group at CHUAC · INIBIC · SERGAS." />
+  <meta name="description" content="neumACt — Medicina Respiratoria Traslacional y de Precisión. Research updates, scientific publications, and clinical innovation notes from the neumACt group within the Área Sanitaria da Coruña e Cee · INIBIC · SERGAS." />
     <link rel="alternate" hreflang="es" href="https://neumact.org/news/"/>
   <link rel="alternate" hreflang="en" href="https://neumact.org/news/"/>
   <link rel="alternate" hreflang="x-default" href="https://neumact.org/news/"/>
@@ -34,7 +34,7 @@
   
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"neumACt Articles","description":"Peer-reviewed publications from the Servicio de Neumología research group, CHUAC, A Coruña.","isPartOf":{"@type":"WebSite","url":"https://neumact.org","name":"neumACt R&I"}}
+{"@context":"https://schema.org","@type":"WebPage","name":"neumACt Articles","description":"Peer-reviewed publications from the Servicio de Neumología research group, Área Sanitaria da Coruña e Cee, A Coruña.","isPartOf":{"@type":"WebSite","url":"https://neumact.org","name":"neumACt R&I"}}
 </script>
   <link rel="stylesheet" href="../styles/components.css">
   <link rel="manifest" href="/manifest.json">
@@ -42,45 +42,44 @@
 </head>
 <body data-page="news">
 <a href="#mainContent" class="skip-link">Skip to main content</a>
+<!-- Canonical public header: shared visual owner = styles/components.css; shared behaviour = scripts/site.js -->
 <header class="hdr" id="hdr" data-page="news">
-  <!-- Tier 2: primary navigation -->
   <div class="hdr-main">
     <div class="hdr-inner">
-      <a href="/" class="hdr-logo" aria-label="neumACt R&amp;I">
-        <img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img">
+      <a href="/" class="hdr-logo" aria-label="neumACt Research &amp; Innovation">
+        <img src="/logo.svg" alt="neumACt R&I" class="hdr-logo-img">
         <span class="hdr-brand-meta">
           <span class="hdr-brand-title"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
-          <span class="hdr-brand-org">CHUAC · INIBIC · SERGAS</span>
+          <span class="hdr-brand-org">Área Sanitaria da Coruña e Cee · INIBIC · SERGAS</span>
         </span>
       </a>
+
       <nav class="hdr-nav" aria-label="Primary navigation">
         <a href="/" class="hdr-nav-link" data-nav="home"><span lang="en">Home</span><span lang="es">Inicio</span></a>
         <div class="hdr-dd" data-nav="research">
           <span class="hdr-dd-trigger">
             <a href="/clinical/" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
-            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true" aria-controls="researchMegaMenu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
           </span>
-          <div class="hdr-dd-panel" aria-label="Research navigation">
+
+          <div class="hdr-dd-panel" id="researchMegaMenu" aria-label="Research navigation">
             <div class="hdr-mega-intro">
               <p class="hdr-mega-kicker"><span lang="en">Research</span><span lang="es">Investigación</span></p>
               <h2 class="hdr-mega-title"><span lang="en">Clinical &amp; translational respiratory research</span><span lang="es">Investigación clínica y traslacional en neumología</span></h2>
               <p class="hdr-mega-copy"><span lang="en">Six specialist lines connecting clinical questions, trials and translational research across respiratory medicine.</span><span lang="es">Seis líneas especializadas que conectan preguntas clínicas, ensayos e investigación traslacional en medicina respiratoria.</span></p>
               <a class="hdr-mega-portfolio" href="/clinical/">
-                <span lang="en">Explore research portfolio</span><span lang="es">Explorar cartera de investigación</span>
+                <span lang="en">View all research</span><span lang="es">Ver toda la investigación</span>
                 <span aria-hidden="true">→</span>
               </a>
-              <div class="hdr-mega-metrics" aria-label="Research portfolio summary">
-                <div><strong id="hdrMegaLinesCount">6</strong><span><span lang="en">Research lines</span><span lang="es">Líneas</span></span></div>
-                <div><strong id="hdrMegaStudiesCount">8+</strong><span><span lang="en">Active studies</span><span lang="es">Estudios activos</span></span></div>
-              </div>
             </div>
+
             <div class="hdr-mega-lines">
               <div class="hdr-mega-head">
                 <p><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></p>
-                <span class="hdr-mega-head-note"><span lang="en">Open a line</span><span lang="es">Abrir una línea</span></span>
               </div>
               <div class="hdr-dd-panel-inner" id="hdrResearchLines"></div>
-              <a class="hdr-dd-all" id="hdrResearchLinesAll" href="/clinical/#research-lines" hidden><span lang="en">View all research lines</span><span lang="es">Ver todas las líneas</span> <span aria-hidden="true">→</span></a>
             </div>
           </div>
         </div>
@@ -88,12 +87,12 @@
         <a href="/news/" class="hdr-nav-link" data-nav="news" data-current="true" aria-current="page"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
         <a href="/team/" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
+
       <div class="hdr-right">
         <button class="hdr-search-btn" id="hdrSearchBtn" type="button" aria-label="Search / Buscar" title="Search / Buscar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
         </button>
         <div class="lang-switch" role="radiogroup" aria-label="Language / Idioma">
-          <span class="lang-switch-knob" aria-hidden="true"></span>
           <button class="lang-opt" data-lang="en" id="ltBtnEn" role="radio" aria-checked="true" tabindex="0">EN</button>
           <button class="lang-opt" data-lang="es" id="ltBtnEs" role="radio" aria-checked="false" tabindex="-1">ES</button>
         </div>
@@ -102,14 +101,23 @@
       </div>
     </div>
   </div>
-</header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
+</header>
+<div class="mob-overlay" id="mobOverlay"></div>
+<nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation">
+  <div class="mob-drawer-nav">
       <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
       <a href="/news/" class="current" aria-current="page"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
       <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-    <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </div><div class="mob-lang" role="radiogroup" aria-label="Language / Idioma"><button class="lt-btn lt-btn--active" data-lang="en" role="radio" aria-checked="true">EN</button><button class="lt-btn" data-lang="es" role="radio" aria-checked="false">ES</button></div></nav>
+      <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+  </div>
+  <div class="mob-lang" role="radiogroup" aria-label="Language / Idioma">
+    <button class="lt-btn lt-btn--active" data-lang="en" role="radio" aria-checked="true">EN</button>
+    <button class="lt-btn" data-lang="es" role="radio" aria-checked="false">ES</button>
+  </div>
+</nav>
+
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <section class="blog-hero" id="mainContent">
     <!-- Bronchial tree background canvas -->
@@ -120,7 +128,7 @@
         <div class="gz-nameplate">
           <span class="gz-name">neumACt Articles</span>
           <span class="gz-rule" aria-hidden="true"></span>
-          <span class="gz-sub"><span lang="en">Research &amp; Innovation · Servicio de Neumología · CHUAC</span><span lang="es">Investigación e Innovación · Servicio de Neumología · CHUAC</span></span>
+          <span class="gz-sub"><span lang="en">Research &amp; Innovation · Servicio de Neumología · Área Sanitaria da Coruña e Cee</span><span lang="es">Investigación e Innovación · Servicio de Neumología · Área Sanitaria da Coruña e Cee</span></span>
         </div>
         <h1 class="blog-hero-h1">
           <span lang="en">Clinical research,<br><em>in their own words.</em></span>
@@ -287,35 +295,35 @@
       </a>
 
       <!-- PLACEHOLDER 1 -->
-      <div class="affil-card affil-card--placeholder" aria-label="Partner slot — upload logo in neumDesk">
+      <div class="affil-card affil-card--placeholder" aria-label="Collaboration profile pending publication">
         <div class="affil-card-logo affil-card-logo--ph">
           <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 20v8M20 24h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name affil-card-name--ph"><span lang="en">Add partner</span><span lang="es">Añadir colaborador</span></div>
-          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Upload a logo and short description via neumDesk.</span><span lang="es">Suba el logotipo y una descripción breve desde neumDesk.</span></div>
+          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Collaboration profile to be published when available.</span><span lang="es">Perfil de colaboración pendiente de publicación.</span></div>
         </div>
       </div>
 
       <!-- PLACEHOLDER 2 -->
-      <div class="affil-card affil-card--placeholder" aria-label="Partner slot — upload logo in neumDesk">
+      <div class="affil-card affil-card--placeholder" aria-label="Collaboration profile pending publication">
         <div class="affil-card-logo affil-card-logo--ph">
           <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 20v8M20 24h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name affil-card-name--ph"><span lang="en">Add partner</span><span lang="es">Añadir colaborador</span></div>
-          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Upload a logo and short description via neumDesk.</span><span lang="es">Suba el logotipo y una descripción breve desde neumDesk.</span></div>
+          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Collaboration profile to be published when available.</span><span lang="es">Perfil de colaboración pendiente de publicación.</span></div>
         </div>
       </div>
 
       <!-- PLACEHOLDER 3 -->
-      <div class="affil-card affil-card--placeholder" aria-label="Partner slot — upload logo in neumDesk">
+      <div class="affil-card affil-card--placeholder" aria-label="Collaboration profile pending publication">
         <div class="affil-card-logo affil-card-logo--ph">
           <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 20v8M20 24h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
         <div class="affil-card-body">
           <div class="affil-card-name affil-card-name--ph"><span lang="en">Add partner</span><span lang="es">Añadir colaborador</span></div>
-          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Upload a logo and short description via neumDesk.</span><span lang="es">Suba el logotipo y una descripción breve desde neumDesk.</span></div>
+          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Collaboration profile to be published when available.</span><span lang="es">Perfil de colaboración pendiente de publicación.</span></div>
         </div>
       </div>
 
@@ -345,7 +353,7 @@
     <div class="footer-col-contact">
       <p class="footer-nav-label"><span lang="en">Contact</span><span lang="es">Contacto</span></p>
       <address class="footer-address">
-        <strong>Servicio de Neumología · CHUAC</strong>
+        <strong>Servicio de Neumología · Área Sanitaria da Coruña e Cee</strong>
         As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
         <a class="footer-enquiry-link" href="/#contact">
           <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>

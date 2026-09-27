@@ -205,9 +205,31 @@
     window.addEventListener('unhandledrejection',rescue);
   }
 
+  function initResearchInquiry(){
+    var toggle=document.getElementById('researchInquiryToggle');
+    var panel=document.getElementById('researchInquiryPanel');
+    var close=document.getElementById('researchInquiryClose');
+    if(!toggle||!panel)return;
+    function setOpen(open,moveFocus){
+      toggle.setAttribute('aria-expanded',open?'true':'false');
+      panel.hidden=!open;
+      if(open&&moveFocus){
+        var first=panel.querySelector('input,select,textarea,button');
+        if(first)requestAnimationFrame(function(){first.focus();});
+      }else if(!open&&moveFocus){
+        requestAnimationFrame(function(){toggle.focus();});
+      }
+    }
+    toggle.addEventListener('click',function(){setOpen(toggle.getAttribute('aria-expanded')!=='true',true);});
+    if(close)close.addEventListener('click',function(){setOpen(false,true);});
+    document.querySelectorAll('a.research-text-link[href="#contact"],a.research-modal-contact[href="#contact"]').forEach(function(link){
+      link.addEventListener('click',function(){setOpen(true,false);});
+    });
+  }
+
   function bootCore(){
     setLang(getSavedLang(),false);
-    initChrome(); initScrollUI(); initAnchors(); initReveal(); initCookie(); initImageFallbacks(); initErrorSafety();
+    initChrome(); initScrollUI(); initAnchors(); initReveal(); initCookie(); initImageFallbacks(); initErrorSafety(); initResearchInquiry();
   }
 
   /* ================================================================
@@ -361,21 +383,6 @@
   /* ── 15: connection status dot ───────────────────────────────
      Amber when the network drops or the API banner fires; hover
      explains. Status belongs in the chrome, quietly. */
-  function initStatusDot(){
-    var right = document.querySelector('.hdr-right');
-    if (!right) return;
-    var dot = document.createElement('span');
-    dot.className = 'hdr-status-dot'; dot.id = 'hdrStatusDot';
-    dot.title = 'Connection issue — live data may be unavailable';
-    right.insertBefore(dot, right.firstChild);
-    function set(down){ dot.setAttribute('data-state', down ? 'down' : 'ok'); }
-    window.addEventListener('offline', function(){ set(true); });
-    window.addEventListener('online', function(){ set(false); });
-    new MutationObserver(function(){
-      if (document.getElementById('apiDownBanner')) set(true);
-    }).observe(document.body, {childList:true});
-  }
-
   /* ── 16: swipe-to-close the drawer ───────────────────────────
      Rightward swipe delegates to the canonical site.js drawer toggle,
      preserving the same overlay, aria and body-lock state transition. */
@@ -565,7 +572,6 @@
     initDrawerFocusTrap();
     initLangRovingTabindex();
     initLangToast();
-    initStatusDot();
     initDrawerSwipe();
     initSkipMenu();
     initKeyboardLayer();

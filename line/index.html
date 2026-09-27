@@ -5,9 +5,9 @@
   
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title id="pageTitle">Research line | neumACt R&I · CHUAC · INIBIC</title>
+  <title id="pageTitle">Research line | neumACt R&I · Área Sanitaria da Coruña e Cee · INIBIC</title>
   <link rel="icon" type="image/svg+xml" href="../logo.svg"/>
-  <meta name="description" id="pageDescription" content="A specialist research line at the Servicio de Neumología, CHUAC — coordinator, active trials, and team." />
+  <meta name="description" id="pageDescription" content="A specialist research line at the Servicio de Neumología, Área Sanitaria da Coruña e Cee — coordinator, active trials, and team." />
     <link rel="alternate" hreflang="es" href="https://neumact.org/line/"/>
   <link rel="alternate" hreflang="en" href="https://neumact.org/line/"/>
   <link rel="alternate" hreflang="x-default" href="https://neumact.org/line/"/>
@@ -16,7 +16,7 @@
   <meta property="og:site_name" content="neumACt R&I"/> 
   <meta property="og:url" content="https://neumact.org/line"/>
   <meta property="og:title" content="Research line | neumACt R&I"/>
-  <meta property="og:description" content="A specialist research line at the Servicio de Neumología, CHUAC."/>
+  <meta property="og:description" content="A specialist research line at the Servicio de Neumología, Área Sanitaria da Coruña e Cee."/>
   <meta property="og:image" content="https://neumact.org/og-clinical.jpg"/>
   <meta property="og:image" content="https://neumact.org/assets/og-card.png"/>
   <meta property="og:image:width" content="1200"/>
@@ -42,45 +42,44 @@
 </head>
 <body data-page="line">
 <a href="#top" class="skip-link">Skip to main content</a>
+<!-- Canonical public header: shared visual owner = styles/components.css; shared behaviour = scripts/site.js -->
 <header class="hdr" id="hdr" data-page="line">
-  <!-- Tier 2: primary navigation -->
   <div class="hdr-main">
     <div class="hdr-inner">
-      <a href="/" class="hdr-logo" aria-label="neumACt R&amp;I">
-        <img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img">
+      <a href="/" class="hdr-logo" aria-label="neumACt Research &amp; Innovation">
+        <img src="/logo.svg" alt="neumACt R&I" class="hdr-logo-img">
         <span class="hdr-brand-meta">
           <span class="hdr-brand-title"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
-          <span class="hdr-brand-org">CHUAC · INIBIC · SERGAS</span>
+          <span class="hdr-brand-org">Área Sanitaria da Coruña e Cee · INIBIC · SERGAS</span>
         </span>
       </a>
+
       <nav class="hdr-nav" aria-label="Primary navigation">
         <a href="/" class="hdr-nav-link" data-nav="home"><span lang="en">Home</span><span lang="es">Inicio</span></a>
         <div class="hdr-dd" data-nav="research">
           <span class="hdr-dd-trigger">
-            <a href="/clinical/" class="hdr-nav-link" data-nav="research" data-current="true"><span lang="en">Research</span><span lang="es">Investigación</span></a>
-            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <a href="/clinical/" class="hdr-nav-link" data-nav="research" data-current="true" aria-current="page"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true" aria-controls="researchMegaMenu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
           </span>
-          <div class="hdr-dd-panel" aria-label="Research navigation">
+
+          <div class="hdr-dd-panel" id="researchMegaMenu" aria-label="Research navigation">
             <div class="hdr-mega-intro">
               <p class="hdr-mega-kicker"><span lang="en">Research</span><span lang="es">Investigación</span></p>
               <h2 class="hdr-mega-title"><span lang="en">Clinical &amp; translational respiratory research</span><span lang="es">Investigación clínica y traslacional en neumología</span></h2>
               <p class="hdr-mega-copy"><span lang="en">Six specialist lines connecting clinical questions, trials and translational research across respiratory medicine.</span><span lang="es">Seis líneas especializadas que conectan preguntas clínicas, ensayos e investigación traslacional en medicina respiratoria.</span></p>
               <a class="hdr-mega-portfolio" href="/clinical/">
-                <span lang="en">Explore research portfolio</span><span lang="es">Explorar cartera de investigación</span>
+                <span lang="en">View all research</span><span lang="es">Ver toda la investigación</span>
                 <span aria-hidden="true">→</span>
               </a>
-              <div class="hdr-mega-metrics" aria-label="Research portfolio summary">
-                <div><strong id="hdrMegaLinesCount">6</strong><span><span lang="en">Research lines</span><span lang="es">Líneas</span></span></div>
-                <div><strong id="hdrMegaStudiesCount">8+</strong><span><span lang="en">Active studies</span><span lang="es">Estudios activos</span></span></div>
-              </div>
             </div>
+
             <div class="hdr-mega-lines">
               <div class="hdr-mega-head">
                 <p><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></p>
-                <span class="hdr-mega-head-note"><span lang="en">Open a line</span><span lang="es">Abrir una línea</span></span>
               </div>
               <div class="hdr-dd-panel-inner" id="hdrResearchLines"></div>
-              <a class="hdr-dd-all" id="hdrResearchLinesAll" href="/clinical/#research-lines" hidden><span lang="en">View all research lines</span><span lang="es">Ver todas las líneas</span> <span aria-hidden="true">→</span></a>
             </div>
           </div>
         </div>
@@ -88,12 +87,12 @@
         <a href="/news/" class="hdr-nav-link" data-nav="news"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
         <a href="/team/" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
+
       <div class="hdr-right">
         <button class="hdr-search-btn" id="hdrSearchBtn" type="button" aria-label="Search / Buscar" title="Search / Buscar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
         </button>
         <div class="lang-switch" role="radiogroup" aria-label="Language / Idioma">
-          <span class="lang-switch-knob" aria-hidden="true"></span>
           <button class="lang-opt" data-lang="en" id="ltBtnEn" role="radio" aria-checked="true" tabindex="0">EN</button>
           <button class="lang-opt" data-lang="es" id="ltBtnEs" role="radio" aria-checked="false" tabindex="-1">ES</button>
         </div>
@@ -102,121 +101,172 @@
       </div>
     </div>
   </div>
-</header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
+</header>
+<div class="mob-overlay" id="mobOverlay"></div>
+<nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation">
+  <div class="mob-drawer-nav">
       <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="/clinical/" class="current" aria-current="page"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
       <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
       <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-    <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </div><div class="mob-lang" role="radiogroup" aria-label="Language / Idioma"><button class="lt-btn lt-btn--active" data-lang="en" role="radio" aria-checked="true">EN</button><button class="lt-btn" data-lang="es" role="radio" aria-checked="false">ES</button></div></nav>
+      <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+  </div>
+  <div class="mob-lang" role="radiogroup" aria-label="Language / Idioma">
+    <button class="lt-btn lt-btn--active" data-lang="en" role="radio" aria-checked="true">EN</button>
+    <button class="lt-btn" data-lang="es" role="radio" aria-checked="false">ES</button>
+  </div>
+</nav>
+
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 
-<section class="hero line-hero-shell" id="top">
-  <div class="line-state line-state--loading" id="lineLoadingState">
-    <span lang="en">Loading research line…</span><span lang="es">Cargando línea de investigación…</span>
-  </div>
-  <div class="line-state line-state--hidden" id="lineNotFound">
-    <p class="line-state__message">
-      <span lang="en">This research line could not be found.</span><span lang="es">No se encontró esta línea de investigación.</span>
-    </p>
-    <a href="/clinical/" class="btn-primary"><span lang="en">View all research lines</span><span lang="es">Ver todas las líneas</span></a>
-  </div>
-  <div class="line-state line-state--hidden" id="lineLoadError">
-    <p class="line-state__message">
-      <span lang="en">This line couldn't be loaded right now. Please try again.</span><span lang="es">No se pudo cargar esta línea ahora mismo. Inténtelo de nuevo.</span>
-    </p>
-    <a href="/clinical/" class="btn-primary"><span lang="en">View all research lines</span><span lang="es">Ver todas las líneas</span></a>
-  </div>
-
-  <div class="line-hero-content" id="lineHero">
-    <div class="wrap line-wrap">
-      <p class="eyebrow line-eyebrow--spaced" id="lineEyebrow"></p>
-      <h1 class="display lg line-title" id="lineTitle"></h1>
-      <p class="line-question" id="lineQuestion"></p>
-      <div class="line-stat-pills" id="lineStatPills"></div>
-      <div class="line-keywords" id="lineKeywords"></div>
+<main id="top" class="line-page">
+  <section class="line-state-wrap" aria-live="polite">
+    <div class="line-state line-state--loading" id="lineLoadingState">
+      <div class="line-loader" aria-hidden="true">
+        <div class="line-loader__hero">
+          <div class="line-loader__copy"><span></span><span></span><span></span><span></span></div>
+          <div class="line-loader__media"></div>
+        </div>
+        <div class="line-loader__body">
+          <div class="line-loader__profile"></div>
+          <div class="line-loader__dashboard">
+            <div class="line-loader__metrics"><span></span><span></span><span></span><span></span></div>
+            <div class="line-loader__charts"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+      <p class="line-loading-copy"><span lang="en">Loading current research activity…</span><span lang="es">Cargando actividad de investigación actual…</span></p>
     </div>
-  </div>
-</section>
-
-<section class="line-section line-section--surface" id="lineAboutSection">
-  <div class="wrap line-wrap">
-    <p class="eyebrow line-eyebrow--spaced"><span lang="en">About this line</span><span lang="es">Sobre esta línea</span></p>
-    <div class="line-about-grid">
-      <div class="line-about-content" id="lineAboutContent"></div>
-      <div class="line-quick-facts" id="lineQuickFacts"></div>
+    <div class="line-state line-state--hidden" id="lineNotFound">
+      <p class="line-state__message"><span lang="en">This research line could not be found.</span><span lang="es">No se encontró esta línea de investigación.</span></p>
+      <a href="/clinical/" class="btn-primary"><span lang="en">View research programme</span><span lang="es">Ver programa de investigación</span></a>
     </div>
-  </div>
-</section>
-
-<section class="line-section line-section--white" id="lineTrackRecordSection">
-  <div class="wrap line-wrap">
-    <p class="eyebrow line-eyebrow--roomy"><span lang="en">Track record</span><span lang="es">Trayectoria</span></p>
-    <ul class="line-track-list" id="lineTrackRecordList"></ul>
-  </div>
-</section>
-
-<section class="line-section line-section--surface" id="lineTrialsSection">
-  <div class="wrap line-wrap">
-    <div class="line-section-heading">
-      <p class="eyebrow line-eyebrow--flush"><span lang="en">Active trials</span><span lang="es">Ensayos activos</span></p>
-      <a href="/clinical/" class="btn-text"><span lang="en">View all trials</span><span lang="es">Ver todos los ensayos</span> →</a>
+    <div class="line-state line-state--hidden" id="lineLoadError">
+      <p class="line-state__message"><span lang="en">This line couldn't be loaded right now. Please try again.</span><span lang="es">No se pudo cargar esta línea ahora mismo. Inténtelo de nuevo.</span></p>
+      <a href="/clinical/" class="btn-primary"><span lang="en">View research programme</span><span lang="es">Ver programa de investigación</span></a>
     </div>
-    <div class="line-trials-list" id="lineTrialsList"></div>
-  </div>
-</section>
+  </section>
 
-<section class="line-section line-section--white" id="linePubsSection">
-  <div class="wrap line-wrap">
-    <div class="line-section-heading">
-      <p class="eyebrow line-eyebrow--flush"><span lang="en">Recent publications</span><span lang="es">Publicaciones recientes</span></p>
-      <a href="/news/" class="btn-text"><span lang="en">All publications</span><span lang="es">Todas las publicaciones</span> →</a>
+  <section class="line-hero" id="lineHero">
+    <div class="line-hero__inner">
+      <div class="line-hero__copy">
+        <p class="line-hero__meta" id="lineEyebrow"></p>
+        <h1 class="line-hero__title" id="lineTitle"></h1>
+        <p class="line-hero__summary" id="lineHeroSummary"></p>
+        <div class="line-keywords" id="lineKeywords"></div>
+      </div>
+      <figure class="line-hero__media">
+        <img id="lineHeroImage" src="" alt="" decoding="async" fetchpriority="high">
+      </figure>
     </div>
-    <div id="linePubsList"></div>
-  </div>
-</section>
+  </section>
 
-<!-- THE PEOPLE — coordinator and supporting team merged into one section,
-     positioned last. Substance (about/track-record/trials/publications)
-     now reads as one uninterrupted flow; this is the "who" reference at
-     the end, not a structural detour in the middle. The coordinator is
-     visually distinguished within this same list (larger, chief/PI
-     badge), not a separate card with its own design language. -->
-<section class="line-section line-section--people" id="linePeopleSection">
-  <div class="wrap line-wrap">
-    <p class="eyebrow line-people__eyebrow"><span lang="en">The people</span><span lang="es">El equipo</span></p>
-    <div class="line-coordinator-card" id="lineCoordinatorCard"></div>
-    <div class="line-team-grid" id="lineTeamChips"></div>
-  </div>
-</section>
+  <section class="line-activity line-section" id="lineIntroSection">
+    <div class="line-section__inner line-activity__inner">
+      <article class="line-lead" id="lineCoordinatorCard" aria-label="Research line coordinator"></article>
 
-<section class="line-collab" id="lineCollabSection">
-  <div class="wrap line-collab__inner">
-    <div class="line-collab__copy">
-      <p class="line-collab__kicker">
-        <span lang="en">Collaborate</span><span lang="es">Colaborar</span>
-      </p>
-      <h2 class="line-collab__title">
-        <span lang="en">Interested in this line's work?</span><span lang="es">¿Te interesa el trabajo de esta línea?</span>
-      </h2>
-      <p class="line-collab__text">
-        <span lang="en">Reach out for collaboration, referrals, or to discuss an active study.</span><span lang="es">Contacta para colaboración, derivaciones, o para hablar sobre un estudio activo.</span>
-      </p>
+      <section class="line-dashboard" aria-labelledby="lineDashboardTitle">
+        <div class="line-dashboard__head">
+          <div>
+            <p class="line-label"><span lang="en">Current research activity</span><span lang="es">Actividad de investigación actual</span></p>
+            <h2 class="line-dashboard__title" id="lineDashboardTitle"><span lang="en">Live portfolio</span><span lang="es">Cartera en tiempo real</span></h2>
+          </div>
+          <p class="line-dashboard__note"><span lang="en">Built from the current public records linked to this line.</span><span lang="es">Construido con los registros públicos actuales vinculados a esta línea.</span></p>
+        </div>
+
+        <div class="line-metrics" id="lineMetrics">
+          <article class="line-metric"><span class="line-metric__icon" data-icon="trial"></span><div><strong id="lineMetricTrials">0</strong><p><span lang="en">Active clinical trials</span><span lang="es">Ensayos clínicos activos</span></p></div></article>
+          <article class="line-metric"><span class="line-metric__icon" data-icon="study"></span><div><strong id="lineMetricStudies">0</strong><p><span lang="en">Clinical studies in progress</span><span lang="es">Estudios clínicos en curso</span></p></div></article>
+          <article class="line-metric"><span class="line-metric__icon" data-icon="innovation"></span><div><strong id="lineMetricInnovation">0</strong><p><span lang="en">Clinical innovation projects</span><span lang="es">Proyectos de innovación clínica</span></p></div></article>
+          <article class="line-metric"><span class="line-metric__icon" data-icon="publication"></span><div><strong id="lineMetricPublications">0</strong><p><span lang="en">Public publications</span><span lang="es">Publicaciones públicas</span></p></div></article>
+        </div>
+
+        <div class="line-charts">
+          <article class="line-chart-card">
+            <div class="line-chart-card__head"><h3><span lang="en">Current activity by type</span><span lang="es">Actividad actual por tipo</span></h3></div>
+            <div class="line-chart" id="lineChartActivity"></div>
+          </article>
+          <article class="line-chart-card">
+            <div class="line-chart-card__head"><h3><span lang="en">Publications by year</span><span lang="es">Publicaciones por año</span></h3></div>
+            <div class="line-chart" id="lineChartPublications"></div>
+          </article>
+          <article class="line-chart-card">
+            <div class="line-chart-card__head"><h3><span lang="en">Clinical innovation maturity</span><span lang="es">Madurez de la innovación clínica</span></h3></div>
+            <div class="line-chart" id="lineChartInnovation"></div>
+          </article>
+        </div>
+      </section>
     </div>
-    <a href="/#contact" class="hero-text-link line-collab__link" id="lineCollabLink">
-      <span lang="en">Get in touch</span><span lang="es">Contactar</span> →
-    </a>
-  </div>
-</section>
+  </section>
+
+  <section class="line-current line-section" id="lineWorkSection">
+    <div class="line-section__inner line-current__grid">
+      <article class="line-current__column" aria-labelledby="currentWorkTitle">
+        <div class="line-current__head">
+          <div>
+            <p class="line-label"><span lang="en">Current work</span><span lang="es">Trabajo actual</span></p>
+            <h2 class="line-section-title" id="currentWorkTitle"><span lang="en">Studies and clinical innovation</span><span lang="es">Estudios e innovación clínica</span></h2>
+          </div>
+          <a href="/clinical/" class="line-subtle-link"><span lang="en">Research portfolio</span><span lang="es">Cartera de investigación</span><span class="line-link-glyph" aria-hidden="true">›</span></a>
+        </div>
+        <div class="line-work-group" id="lineTrialsSection">
+          <p class="line-work-group__label"><span lang="en">Clinical studies &amp; trials</span><span lang="es">Ensayos y estudios clínicos</span></p>
+          <div class="line-work-list" id="lineTrialsList"></div>
+        </div>
+        <div class="line-work-group" id="lineProjectsSection">
+          <p class="line-work-group__label"><span lang="en">Clinical innovation</span><span lang="es">Innovación clínica</span></p>
+          <div class="line-work-list" id="lineProjectsList"></div>
+        </div>
+      </article>
+
+      <article class="line-current__column line-current__column--publications" id="linePubsSection" aria-labelledby="linePubsTitle">
+        <div class="line-current__head">
+          <div>
+            <p class="line-label"><span lang="en">Selected evidence</span><span lang="es">Evidencia seleccionada</span></p>
+            <h2 class="line-section-title" id="linePubsTitle"><span lang="en">Recent publications</span><span lang="es">Publicaciones recientes</span></h2>
+          </div>
+          <a href="/news/" class="line-subtle-link"><span lang="en">All publications</span><span lang="es">Todas</span><span class="line-link-glyph" aria-hidden="true">›</span></a>
+        </div>
+        <div class="line-publications__list" id="linePubsList"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="line-section line-team" id="linePeopleSection">
+    <div class="line-section__inner">
+      <div class="line-section-head line-section-head--inline">
+        <div>
+          <p class="line-label"><span lang="en">People</span><span lang="es">Personas</span></p>
+          <h2 class="line-section-title"><span lang="en">Team connected to this line</span><span lang="es">Equipo vinculado a esta línea</span></h2>
+        </div>
+        <a href="/team/" class="line-subtle-link"><span lang="en">Meet the team</span><span lang="es">Conocer el equipo</span><span class="line-link-glyph" aria-hidden="true">›</span></a>
+      </div>
+      <div class="line-team-grid" id="lineTeamChips"></div>
+    </div>
+  </section>
+
+  <section class="line-collab" id="lineCollabSection">
+    <div class="line-collab__inner">
+      <div class="line-collab__copy">
+        <p class="line-collab__kicker"><span lang="en">Collaborate with this line</span><span lang="es">Colaborar con esta línea</span></p>
+        <h2 class="line-collab__title"><span lang="en">Research shaped around real respiratory health needs.</span><span lang="es">Investigación orientada a necesidades reales de salud respiratoria.</span></h2>
+      </div>
+      <div class="line-collab__action">
+        <p class="line-collab__text"><span lang="en">Contact the team about studies, research collaboration or clinical innovation.</span><span lang="es">Contacta con el equipo sobre estudios, colaboración científica o innovación clínica.</span></p>
+        <a href="/#contact" class="line-collab__link" id="lineCollabLink"><span lang="en">Contact</span><span lang="es">Contactar</span><span class="line-link-glyph" aria-hidden="true">›</span></a>
+      </div>
+    </div>
+  </section>
+</main>
 
 <footer class="site-footer">
   <div class="footer-grid">
     <div class="footer-col-brand">
       <img src="../logo.svg" alt="neumACt R&I" class="footer-logo-img">
       <p class="footer-tagline">
-        <span lang="en">Servicio de Neumología<br>Hospital Universitario A Coruña<br>Área Sanitaria de A Coruña y Cee</span>
-        <span lang="es">Servicio de Neumología<br>Hospital Universitario A Coruña<br>Área Sanitaria de A Coruña y Cee</span>
+        <span lang="en">Servicio de Neumología<br>Área Sanitaria da Coruña e Cee<br>INIBIC · SERGAS</span>
+        <span lang="es">Servicio de Neumología<br>Área Sanitaria da Coruña e Cee<br>INIBIC · SERGAS</span>
       </p>
     </div>
     <div class="footer-col-nav">
@@ -232,7 +282,7 @@
     <div class="footer-col-contact">
       <p class="footer-nav-label"><span lang="en">Contact</span><span lang="es">Contacto</span></p>
       <address class="footer-address">
-        <strong>Servicio de Neumología · CHUAC</strong>
+        <strong>Servicio de Neumología · Área Sanitaria da Coruña e Cee</strong>
         As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
         <a class="footer-enquiry-link" href="/#contact">
           <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>

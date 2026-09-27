@@ -73,6 +73,47 @@ for f in PAGES:
     check(f'{f} no inline cookie handlers',not re.search(r'onclick="[^"]*cookieOk',c))
     check(f'{f} no inline header image presentation handlers','onerror="this.style' not in c)
 
+# Phase 5.1B: one restrained public header contract on every HTML page.
+for f in PAGES:
+    c=Path(f).read_text(encoding='utf-8')
+    check(f'{f} has canonical public header', 'id="hdr"' in c and 'id="researchMegaMenu"' in c)
+    check(f'{f} uses real root logo', 'src="/logo.svg"' in c)
+    check(f'{f} has compact utility cluster', 'id="hdrSearchBtn"' in c and 'class="lang-switch"' in c and 'class="hdr-contact-btn"' in c)
+    retired_header_bits=('hdr-mega-metrics','hdr-mega-head-note','hdr-dd-all','hdr-dd-thumb')
+    present=[x for x in retired_header_bits if x in c]
+    check(f'{f} no retired header ornaments', not present, ', '.join(present))
+
+# Header visuals are shared; page styles must not fork the chrome again.
+def _without_print_media(css):
+    out=[]; i=0; n=len(css)
+    pat=re.compile(r'@media\s+print\s*\{',re.I)
+    while i<n:
+        m=pat.search(css,i)
+        if not m:
+            out.append(css[i:]); break
+        out.append(css[i:m.start()])
+        j=m.end(); depth=1; quote=None; esc=False
+        while j<n and depth:
+            ch=css[j]
+            if quote:
+                if esc: esc=False
+                elif ch=='\\': esc=True
+                elif ch==quote: quote=None
+            else:
+                if ch in ('"',"'"): quote=ch
+                elif ch=='{': depth+=1
+                elif ch=='}': depth-=1
+            j+=1
+        i=j
+    return ''.join(out)
+
+header_forks=[]
+for f in Path('styles/pages').glob('*.css'):
+    c=_without_print_media(f.read_text(encoding='utf-8'))
+    if re.search(r'(^|[,{\s])\.hdr(?:[-\w]|\b)|\.lang-switch\b|\.hdr-dd\b', c):
+        header_forks.append(str(f))
+check('no page stylesheet forks the canonical header', not header_forks, ', '.join(header_forks))
+
 # Script-loading contract: bootstrap is synchronous; every other local runtime is deferred.
 for f in PAGES:
     c=Path(f).read_text(encoding='utf-8')
@@ -205,8 +246,8 @@ for f in js_files:
 api_literal='https://neumac-manage-back-end-production.up.railway.app'
 site_literal='https://neumact.org'
 all_js=sorted(set(Path('.').glob('*.js')) | set(Path('scripts').rglob('*.js')))
-api_owners=[str(f) for f in all_js if api_literal in f.read_text(encoding='utf-8')]
-site_owners=[str(f) for f in all_js if site_literal in f.read_text(encoding='utf-8')]
+api_owners=[f.as_posix() for f in all_js if api_literal in f.read_text(encoding='utf-8')]
+site_owners=[f.as_posix() for f in all_js if site_literal in f.read_text(encoding='utf-8')]
 check('API base URL has one owner',api_owners==['scripts/bootstrap.js'],', '.join(api_owners))
 check('site base URL has one owner',site_owners==['scripts/bootstrap.js'],', '.join(site_owners))
 
@@ -218,6 +259,84 @@ for f in css_files:
     if f.name=='tokens.css': continue
     if re.search(r':root\s*\{',f.read_text(encoding='utf-8')): other_roots.append(str(f))
 check('no page/component token redefinitions',not other_roots,', '.join(other_roots))
+
+# Public identity and design-governance guards.
+principles=Path('DESIGN_PRINCIPLES.md')
+check('DESIGN_PRINCIPLES.md exists', principles.exists())
+public_text_files=[]
+for pattern in ('*.html','*.md','*.json','*.txt','*.xml'):
+    public_text_files.extend(Path('.').rglob(pattern))
+legacy_identity=[]
+for f in sorted(set(public_text_files)):
+    text=f.read_text(encoding='utf-8',errors='ignore')
+    if 'CHUAC' in text:
+        legacy_identity.append(f.as_posix())
+check('public identity uses Área Sanitaria da Coruña e Cee, not CHUAC', not legacy_identity, ', '.join(legacy_identity[:8]))
+
+internal_name=[]
+for f in sorted(set(public_text_files)):
+    text=f.read_text(encoding='utf-8',errors='ignore')
+    internal_brand = 'neum' + 'Desk'
+    if internal_brand in text or internal_brand.lower() in text.lower():
+        internal_name.append(f.as_posix())
+check('public files do not expose internal platform naming', not internal_name, ', '.join(internal_name[:8]))
+home_html=Path('index.html').read_text(encoding='utf-8')
+check('homepage does not duplicate the six-line research taxonomy', 'researchLinesGrid' not in home_html)
+check('homepage uses progressive-disclosure contact', 'home-contact-disclosure' in home_html and '<details' in home_html)
+clinical_html=Path('clinical/index.html').read_text(encoding='utf-8')
+check('research page uses accepted media-row research system', 'research-line-list' in clinical_html and 'research-pi__panel' in clinical_html)
+shared_css_text=Path('styles/shared.css').read_text(encoding='utf-8')
+clinical_css_text=Path('styles/pages/clinical.css').read_text(encoding='utf-8')
+check('shared CSS does not force research line container into a legacy grid', '#researchLinesList{display:grid' not in shared_css_text.replace(' ',''))
+check('clinical research line container is explicitly sequential', '.research-line-list{display:block;' in clinical_css_text.replace(' ',''))
+check('research page removed legacy study dashboard table', '<table class="trials"' not in clinical_html and 'study-summary' not in clinical_html)
+check('research page removed affiliation placeholder wall', 'affil-card--placeholder' not in clinical_html and 'affil-section' not in clinical_html)
+check('research page uses explicit button-driven contact disclosure', 'id="researchInquiryToggle"' in clinical_html and 'id="researchInquiryPanel"' in clinical_html and 'aria-expanded="false"' in clinical_html)
+check('research page contains no decorative scientific motifs', 'research-chapter__motif' not in clinical_html)
+check('research page contains no design-commentary pullquote', 'The description matters as much as the title' not in clinical_html and 'La descripción importa tanto como el título' not in clinical_html)
+check('research page avoids repetitive programme eyebrow', 'Research programme' not in clinical_html and 'Programa de investigación' not in clinical_html)
+check('research page features principal investigator leadership', 'id="researchPiName"' in clinical_html and 'Pedro Jorge Marcos Rodríguez' in clinical_html and 'Investigador principal' in clinical_html)
+for media in [
+    'assets/research/pi-pedro-marcos.jpg',
+    'assets/research/research-hero-clinician-lungs.jpg',
+    'assets/research/line-transplantation-pulmonary-hypertension.jpg',
+    'assets/research/line-airway-diseases.jpg',
+    'assets/research/line-interventional-lung-cancer.jpg',
+    'assets/research/line-respiratory-failure-sleep.jpg',
+    'assets/research/line-thoracic-surgery.jpg',
+    'assets/research/line-precision-medicine.jpg',
+]:
+    check(f'research editorial media exists: {Path(media).name}', Path(media).is_file())
+api_js_text=Path('scripts/api.js').read_text(encoding='utf-8')
+check('research overview renders compact editorial media rows', 'research-line-row' in api_js_text and 'research-line__media' in api_js_text and 'research-line__side' in api_js_text)
+check('research overview supports professional read-more disclosure', 'research-line__more' in api_js_text and 'researchOverviewSummary' in api_js_text)
+check('research overview does not inject active-study metadata into line rows', 'research-chapter__fact-label' not in api_js_text and 'Current studies</span>' not in api_js_text)
+check('backend-derived public copy normalises legacy hospital acronym', 'function publicText' in api_js_text and 'Área Sanitaria da Coruña e Cee' in api_js_text)
+
+line_html=Path('line/index.html').read_text(encoding='utf-8')
+line_css_text=Path('styles/pages/line.css').read_text(encoding='utf-8')
+check('line detail uses inherited editorial architecture', all(x in line_html for x in ['id="lineCoordinatorCard"','id="lineTrialsSection"','id="lineProjectsSection"','id="linePubsSection"','id="linePeopleSection"']))
+check('line detail has no hero KPI pill container', 'lineStatPills' not in line_html and 'hstat-label--pill' not in line_html)
+check('line detail separates studies and clinical innovation', 'Ensayos y estudios clínicos' in line_html and 'Proyectos de innovación' in line_html)
+check('line detail uses calm textual work metadata', 'line-work-item__meta' in api_js_text and 'lt-trial-phase' not in api_js_text)
+check('line coordinator is a primary editorial feature', 'line-lead__portrait' in line_css_text and 'line-lead__name' in line_css_text)
+check('Marina approved public portrait exists', Path('assets/research/coordinators/marina-blanco-aparicio.jpg').is_file())
+check('Airway dedicated hero media exists', Path('assets/research/line-heroes/airway-diseases.jpg').is_file())
+check('programme PI is not repeated across every line team', 'NEUMACT_PI_STAFF_ID' in api_js_text and 'line.coordinator?.id !== NEUMACT_PI_STAFF_ID' in api_js_text)
+check('line lead uses authored coordinator editorial summary support', 'LINE_COORDINATOR_EDITORIAL' in api_js_text and 'coordinatorEditorialBio' in api_js_text)
+check('line lead large name excludes honorific prefix', "c.title ? c.title + ' ' + c.full_name" not in api_js_text)
+check('line lead does not use full-height coordinator/scope divider', 'border-left:1px solid rgba(12,56,104,.12)' not in line_css_text)
+check('line lead protects readable name measure', 'max-width:12ch' in line_css_text and 'text-wrap:balance' in line_css_text)
+check('line hero owns the scientific narrative without duplicate about block', 'lineAboutContent' not in line_html and 'Scientific scope' not in line_html)
+check('line page has live evidence dashboard contract', all(x in line_html for x in ['id="lineMetricTrials"','id="lineMetricStudies"','id="lineMetricInnovation"','id="lineMetricPublications"','id="lineChartActivity"','id="lineChartPublications"','id="lineChartInnovation"']))
+check('line live figures derive from fetched public records', all(x in api_js_text for x in ['clinicalTrials.length','clinicalStudies.length','activeProjects.length','allPublications.length']))
+check('line dashboard explicitly preserves clinical innovation', 'Clinical innovation projects' in line_html and 'Innovación clínica' in line_html and 'renderLineInnovationChart' in api_js_text)
+check('line dashboard uses responsive SVG charts', 'viewBox=\"0 0 292 110\"' in api_js_text and 'minmax(0,1fr)' in line_css_text)
+check('line page has geometry-matched loading skeleton', 'line-loader__hero' in line_html and 'line-loader__dashboard' in line_html and 'Promise.allSettled' in api_js_text)
+check('Angelica approved public portrait exists', Path('assets/research/coordinators/angelica-consuegra-vanegas.jpg').is_file())
+check('Pedro approved coordinator portrait exists', Path('assets/research/coordinators/pedro-jorge-marcos-rodriguez.jpg').is_file())
+check('Respiratory failure dedicated hero media exists', Path('assets/research/line-heroes/respiratory-failure-sleep.jpg').is_file())
+check('approved coordinator media mappings include Marina Angelica and Pedro', all(name in api_js_text for name in ['marina blanco aparicio','angelica consuegra vanegas','pedro jorge marcos rodriguez']))
 
 # Contrast regression guard on --ink-4.
 def lum(r,g,b):
