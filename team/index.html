@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-lang="en">    
 <head>
-  <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
+  <script src="/scripts/bootstrap.js"></script>
   
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0"/>
@@ -391,97 +391,12 @@
   <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
-<script src="../api.js"></script>
+<script src="/scripts/api.js" defer></script>
 
 
-<script>
-/* ══ BRONCHIAL TREE ══ */
-(function(){
-  var REDUCED=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function drawTree(ctx,W,H,breath,dir,cx,originY,trunkH,mainLen){
-    ctx.lineCap='round';var nodes=[];
-    function branch(x,y,angle,len,depth){
-      if(depth>8||len<1.5)return;
-      var ex=x+Math.sin(angle)*len,ey=y+dir*Math.cos(angle)*len;
-      var sw=Math.max(0.12,0.9*Math.pow(0.67,depth));
-      var alpha=Math.max(0.06,0.52*Math.pow(0.77,depth));
-      ctx.lineWidth=sw;ctx.strokeStyle='rgba(0,179,179,'+alpha.toFixed(3)+')';
-      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(ex,ey);ctx.stroke();
-      nodes.push({x:ex,y:ey,depth:depth});
-      var spread=0.40+breath*0.06;
-      branch(ex,ey,angle-spread,len*0.69,depth+1);
-      branch(ex,ey,angle+spread,len*0.69,depth+1);
-    }
-    ctx.lineWidth=0.85;ctx.strokeStyle='rgba(0,179,179,0.48)';
-    ctx.beginPath();ctx.moveTo(cx,originY);ctx.lineTo(cx,originY+dir*trunkH);ctx.stroke();
-    nodes.push({x:cx,y:originY+dir*trunkH,depth:-1});
-    var bo=breath*0.03;
-    branch(cx,originY+dir*trunkH,-(0.30+bo),mainLen,0);
-    branch(cx,originY+dir*trunkH,(0.25+bo),mainLen*0.94,0);
-    nodes.forEach(function(n){
-      var r=n.depth<0?2.2:Math.max(0.7,2.2*Math.pow(0.72,n.depth+1));
-      var a=Math.max(0.08,0.55*Math.pow(0.78,Math.max(n.depth,0)));
-      ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);
-      ctx.fillStyle='rgba(0,179,179,'+a.toFixed(3)+')';ctx.fill();
-    });
-    var sc=Math.min(H*0.36,W*0.17),cy=originY+dir*(trunkH+mainLen*1.1);
-    var lo=0.07+breath*0.04,lx=cx-sc*0.18,rx=cx+sc*0.18;
-    ctx.lineWidth=0.35;ctx.strokeStyle='rgba(0,179,179,'+lo.toFixed(3)+')';
-    ctx.beginPath();ctx.moveTo(cx,cy-dir*sc);ctx.bezierCurveTo(lx-sc*1.05,cy-dir*sc*0.65,lx-sc*1.15,cy+dir*sc*0.45,lx-sc*0.12,cy+dir*sc);ctx.bezierCurveTo(cx-sc*0.04,cy+dir*sc*0.55,cx,cy+dir*sc*0.25,cx,cy-dir*sc);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(cx,cy-dir*sc);ctx.bezierCurveTo(rx+sc*1.05,cy-dir*sc*0.65,rx+sc*1.15,cy+dir*sc*0.45,rx+sc*0.12,cy+dir*sc);ctx.bezierCurveTo(cx+sc*0.04,cy+dir*sc*0.55,cx,cy+dir*sc*0.25,cx,cy-dir*sc);ctx.stroke();
-  }
-  function bootCanvas(id,getCx,dir,getOriginY,getTrunkH,getMainLen,phaseOffset){
-    var canvas=document.getElementById(id);if(!canvas)return;
-    var ctx=canvas.getContext('2d'),W,H,paused=false;
-    function resize(){W=canvas.width=canvas.parentElement.offsetWidth;H=canvas.height=canvas.parentElement.offsetHeight;}
-    document.addEventListener('visibilitychange',function(){paused=document.hidden;if(!paused)requestAnimationFrame(draw);});
-    function draw(t){
-      if(paused)return;ctx.clearRect(0,0,W,H);
-      var mobile=W<960;canvas.style.opacity=mobile?'0.25':'0.7';
-      var breath=REDUCED?0.5:Math.sin((t+phaseOffset)*0.00075)*0.5+0.5;
-      drawTree(ctx,W,H,breath,dir,getCx(W,mobile),getOriginY(H),getTrunkH(H),getMainLen(H));
-      if(!REDUCED)requestAnimationFrame(draw);
-    }
-    resize();window.addEventListener('resize',resize);
-    if(REDUCED){requestAnimationFrame(function(t){draw(t);});}else{requestAnimationFrame(draw);}
-  }
-  function boot(){
-    bootCanvas('heroBg',function(W,mobile){return mobile?W*0.85:W*0.75;},1,function(H){return H*0.02;},function(H){return H*0.14;},function(H){return H*0.15;},0);
-    bootCanvas('footerBg',function(W,mobile){return mobile?W*0.82:W*0.72;},-1,function(H){return H;},function(H){return H*0.1;},function(H){return H*0.14;},3000);
-  }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
-})();
-</script>
+<script src="/scripts/pages/team.js" defer></script>
 
-<script>
-// Auto-generate initials in avatars
-document.querySelectorAll('.tm-avatar').forEach(function(av){
-  var card = av.closest('.team-member');
-  if(!card) return;
-  var nameEl = card.querySelector('.tm-name');
-  if(nameEl){
-    var name = nameEl.textContent.replace(/Dr\.|Dra\./g,'').trim();
-    var parts = name.split(' ').filter(Boolean);
-    var initials = parts.length >= 2 ? parts[0][0]+parts[parts.length-1][0] : (parts[0]||'?')[0];
-    av.textContent = initials.toUpperCase();
-  }
-});
-// Also update lead photo initials
-document.querySelectorAll('.lead-photo').forEach(function(ph){
-  if(ph.querySelector('img')) return; // has real photo
-  var card = ph.closest('.lead-card,[class*="lead"]');
-  var nameEl = card && card.querySelector('h3,.lead-name,[class*="name"]');
-  if(nameEl && !ph.querySelector('.lead-initials')){
-    var name = nameEl.textContent.replace(/Dr\.|Dra\./g,'').trim();
-    var parts = name.split(' ').filter(Boolean);
-    var initials = parts.length >= 2 ? parts[0][0]+parts[parts.length-1][0] : (parts[0]||'')[0];
-    var span = document.createElement('span');
-    span.className = 'lead-initials';
-    span.textContent = (initials||'?').toUpperCase();
-    ph.appendChild(span);
-  }
-});
-</script>
+
 
 
 <footer class="site-footer">
@@ -542,8 +457,7 @@ document.querySelectorAll('.lead-photo').forEach(function(ph){
 </div>
 
 
-<script src="../site.js" defer></script>
-<script src="../header-enhance.js" defer></script>
+<script src="/scripts/site.js" defer></script>
 
 </body>
 </html>

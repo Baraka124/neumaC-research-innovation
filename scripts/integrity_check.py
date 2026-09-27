@@ -23,6 +23,29 @@ for f in PAGES:
     check(f'{f} no retired CSS refs', 'core.css' not in c and 'polish.css' not in c)
     check(f'{f} no embedded base64 images','data:image/png;base64,/9j' not in c)
 
+
+# Phase 4: local resource references must resolve in the static tree.
+class _ResourceParser(html.parser.HTMLParser):
+    def __init__(self):
+        super().__init__(); self.refs=[]
+    def handle_starttag(self,tag,attrs):
+        a=dict(attrs)
+        if tag in ('script','img','source') and a.get('src'):
+            self.refs.append((tag,a['src']))
+        elif tag=='link' and a.get('href'):
+            rel=(a.get('rel') or '').lower()
+            if any(k in rel for k in ('stylesheet','icon','manifest','preload')):
+                self.refs.append((tag,a['href']))
+for f in PAGES:
+    c=Path(f).read_text(encoding='utf-8'); rp=_ResourceParser(); rp.feed(c); missing=[]
+    for tag,ref in rp.refs:
+        if ref.startswith(('http:','https:','//','data:','#')): continue
+        raw=ref.split('?',1)[0].split('#',1)[0]
+        if not raw: continue
+        target=Path(raw.lstrip('/')) if raw.startswith('/') else Path(f).parent/raw
+        if not target.exists(): missing.append(f'{tag}:{ref}')
+    check(f'{f} local resources resolve',not missing,', '.join(missing[:5]))
+
 css_files=sorted(Path('styles').rglob('*.css'))
 for f in css_files:
     c=f.read_text(encoding='utf-8')
@@ -30,24 +53,56 @@ for f in css_files:
     check(f'{f} no style-attribute selectors', not re.search(r'\[style(?:[*^$|~]?=|\])', c, re.I))
 
 
-# Phase 3: shared runtime must own common chrome behaviour.
+# Phase 4: one shared runtime file owns chrome/header behaviour.
+check('retired header-enhance.js removed', not Path('header-enhance.js').exists())
 chrome_pages=[]
 for f in PAGES:
     c=Path(f).read_text(encoding='utf-8')
-    if 'header-enhance.js' not in c:
+    if '/scripts/site.js' not in c:
         continue
     chrome_pages.append(f)
-    site_pos=c.find('site.js')
-    hdr_pos=c.find('header-enhance.js')
+    site_pos=c.find('/scripts/site.js')
+    boot_pos=c.find('/scripts/bootstrap.js')
+    check(f'{f} includes bootstrap.js',boot_pos!=-1)
     check(f'{f} includes site.js',site_pos!=-1)
-    check(f'{f} loads site.js before header-enhance',site_pos!=-1 and hdr_pos!=-1 and site_pos<hdr_pos)
+    check(f'{f} bootstrap precedes site runtime',boot_pos!=-1 and site_pos!=-1 and boot_pos<site_pos)
+    check(f'{f} no retired header-enhance reference','header-enhance.js' not in c)
     shared_defs=re.findall(r'function\s+(openD|closeD|openMob|closeMob|openDrawer|closeDrawer|setLang|selectLang|sweep)\b',c)
     check(f'{f} no duplicated shared runtime functions',not shared_defs,', '.join(shared_defs))
     check(f'{f} no inline language handlers','onclick="selectLang(' not in c)
     check(f'{f} no inline cookie handlers',not re.search(r'onclick="[^"]*cookieOk',c))
     check(f'{f} no inline header image presentation handlers','onerror="this.style' not in c)
 
-# Phase 3 CSS architecture guard. The checker intentionally uses only the
+# Script-loading contract: bootstrap is synchronous; every other local runtime is deferred.
+for f in PAGES:
+    c=Path(f).read_text(encoding='utf-8')
+    bad=[]
+    for m in re.finditer(r'<script\b(?P<attrs>[^>]*)\bsrc=["\'](?P<src>/scripts/[^"\']+)["\'](?P<tail>[^>]*)>',c,re.I):
+        attrs=(m.group('attrs') or '')+(m.group('tail') or '')
+        src=m.group('src')
+        has_defer=bool(re.search(r'\bdefer\b',attrs,re.I))
+        if src=='/scripts/bootstrap.js':
+            if has_defer: bad.append(src+' must be synchronous')
+        elif not has_defer:
+            bad.append(src+' missing defer')
+    check(f'{f} script loading contract',not bad,', '.join(bad[:5]))
+
+# Executable behaviour belongs in external JS. JSON-LD remains inline by design.
+script_block=re.compile(r'<script(?P<attrs>[^>]*)>(?P<body>.*?)</script>',re.I|re.S)
+for f in PAGES:
+    c=Path(f).read_text(encoding='utf-8')
+    inline=[]
+    for m in script_block.finditer(c):
+        attrs=m.group('attrs') or ''
+        body=m.group('body').strip()
+        if not body or re.search(r'\bsrc\s*=',attrs,re.I):
+            continue
+        if re.search(r'\btype\s*=\s*["\']application/(?:ld\+json|json)["\']',attrs,re.I):
+            continue
+        inline.append(body[:40].replace('\n',' '))
+    check(f'{f} no executable inline scripts',not inline,' | '.join(inline[:3]))
+
+# Phase 4 CSS architecture guard. The checker intentionally uses only the
 # Python standard library so contributors do not need a parser dependency.
 principal_pages={
     'home':'index.html',
@@ -141,10 +196,19 @@ check('no shared top-level rule copied across 4+ page stylesheets',not regrown,'
 # Runtime templates must use the same class-owned presentation model as HTML.
 # Imperative element.style changes used for state/animation are allowed here;
 # literal style= attributes embedded in JS-generated markup are not.
-js_files=sorted(Path('.').glob('*.js'))
+js_files=sorted(set(Path('.').glob('*.js')) | set(Path('scripts').rglob('*.js')))
 for f in js_files:
     c=f.read_text(encoding='utf-8')
     check(f'{f} no generated inline style attributes', not re.search(r'\bstyle\s*=', c, re.I))
+
+# Runtime endpoint configuration has one owner.
+api_literal='https://neumac-manage-back-end-production.up.railway.app'
+site_literal='https://neumact.org'
+all_js=sorted(set(Path('.').glob('*.js')) | set(Path('scripts').rglob('*.js')))
+api_owners=[str(f) for f in all_js if api_literal in f.read_text(encoding='utf-8')]
+site_owners=[str(f) for f in all_js if site_literal in f.read_text(encoding='utf-8')]
+check('API base URL has one owner',api_owners==['scripts/bootstrap.js'],', '.join(api_owners))
+check('site base URL has one owner',site_owners==['scripts/bootstrap.js'],', '.join(site_owners))
 
 # Tokens are the only normal source of global custom properties.
 tokens=Path('styles/tokens.css').read_text(encoding='utf-8')

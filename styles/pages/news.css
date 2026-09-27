@@ -225,13 +225,13 @@
    redesigned cross-rule hero-stats (no boxed cells) and the unique
    story-typographic-journal rules are kept, since they're not
    duplicated below. */
-.hero-stats{display:flex!important;gap:0!important;border-radius:0!important;}
-.hstat{padding:0 1.5rem!important;border-bottom:none!important;border-right:1px solid rgba(255,255,255,.12)!important;flex:1!important;flex-direction:column!important;align-items:flex-start!important;}
-.hstat:first-child{padding-left:0!important;}
-.hstat:last-child{border-right:none!important;padding-right:0!important;}
-.hstat-num{font-size:1.625rem!important;line-height:1!important;}
-.hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
-.hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
+
+
+
+
+
+
+
 
 
 /* DARK BG — all headings white */
@@ -257,8 +257,8 @@
 .eyebrow{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:var(--accent);}
     .eyebrow.light{color:var(--teal-2);}
     
-    @media(min-width:1600px){.container{padding:0 clamp(4rem,8vw,10rem);}}
-@media(min-width:1024px){}
+    
+
     
     
     
@@ -284,10 +284,7 @@
     
 
     /* ── Responsive header ── */
-@media(max-width:480px){
-      
-      .mob-toggle{width:40px;height:40px;}
-    }
+
 
     /* ── HERO ── */
     .blog-hero{
@@ -378,9 +375,9 @@
       font-family:var(--ff-mono);font-size:var(--fs-label);
       color:rgba(255,255,255,.4);letter-spacing:.04em;
     }
-    .story-dots{display:flex;gap:7px;margin-top:1rem;}
+    
     .story-dot{width:7px;height:7px;border-radius:50%;border:none;background:rgba(255,255,255,.3);cursor:pointer;padding:0;transition:background .2s,transform .15s;}
-    .story-dot:hover{transform:scale(1.2);}
+    
     .story-dot.active{background:#fff;}
     @media(max-width:640px){
       .blog-hero-h1{font-size:2.75rem;}
@@ -574,10 +571,7 @@
     
     
     
-    @media(max-width:640px){
-      .partners-top{flex-direction:column;align-items:flex-start;}
-      .partners-copy{text-align:left;max-width:100%;}
-    }
+    
     /* Tile table */
     
     
@@ -598,17 +592,15 @@
     
     
     
-    @media(max-width:860px){
-      .footer-right{align-items:flex-start;}
-      }
-        
-    
-    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
-    @supports(padding:env(safe-area-inset-bottom)){}
     
         
-    @media(min-width:1400px){.section{padding:9rem 0;}}
-    @media(max-width:768px){.section{padding:4rem 0;}}
+    
+    
+    
+    
+        
+    
+    
     
   
     /* ── FORM — refined submit + fields ── */
@@ -706,16 +698,10 @@
 /* Path cards / collaboration cards — warmer bg */
 
 
-@media print {
-  .hdr,.mob-drawer,.mob-overlay,.mob-toggle,.site-footer .footer-col-nav,
-  .btn,.latest-bar,#scrollTop,canvas{display:none!important;}
-  body{background:#fff!important;color:#000!important;font-size:11pt;padding-top:0!important;}
-  a[href]::after{content:" ("attr(href)")";font-size:8pt;color:#555;}
-  a[href^="#"]::after,a[href^="javascript"]::after{content:"";}
-}
 
 
-/* Loading skeleton shimmer — referenced by setLoading() in api.js on
+
+/* Loading skeleton shimmer — referenced by setLoading() in scripts/api.js on
    every page, but the CSS itself never actually existed anywhere in
    this file. Every loading-state shimmer site-wide was rendering as
    an invisible, unstyled box until now. */
@@ -740,13 +726,7 @@
     
     
     
-    .tca-avatar {
-      width:40px;height:40px;border-radius:var(--r-sm);flex-shrink:0;
-      background:var(--navy-2);
-      display:flex;align-items:center;justify-content:center;
-      font-family:var(--ff-mono,monospace);font-size:var(--fs-label);
-      font-weight:600;letter-spacing:.05em;color:#fff;
-    }
+    
     
     
     

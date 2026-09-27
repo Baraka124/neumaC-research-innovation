@@ -14,9 +14,7 @@ jobs:
         run: python3 scripts/integrity_check.py
       - name: JS syntax
         run: |
-          node --check api.js
-          node --check header-enhance.js
-          node --check animations.js
+          find scripts -name '*.js' -print0 | xargs -0 -n1 node --check
   smoke:
     runs-on: ubuntu-latest
     steps:

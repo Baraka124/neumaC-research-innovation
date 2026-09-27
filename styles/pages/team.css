@@ -25,9 +25,9 @@
 .hero-stats{display:grid!important;grid-template-columns:1fr 1fr!important;border-radius:2px!important;}
 .hstat{padding:.75rem 1.125rem!important;border-bottom:1px solid rgba(255,255,255,.07)!important;border-right:1px solid rgba(255,255,255,.07)!important;flex-direction:column!important;align-items:flex-start!important;}
 .hstat:nth-child(even){border-right:none!important;}
-.hstat-num{font-size:1.625rem!important;line-height:1!important;}
-.hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
-.hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
+
+
+
 /* .affil-img: unused in markup, same destructive invert pattern removed. */
 
 
@@ -70,13 +70,13 @@
       line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;
       padding-top:68px;  padding-top:68px;
   }
-    ::selection{background:var(--teal-lt);color:var(--ink);}
+    
     
 
     /* ══ PAGE LAYOUT ══ */
-    .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);}
-    .section{padding:5rem 0;}
-    @media(max-width:768px){.section{padding:3.5rem 0;}}
+    
+    
+    
 
     /* ══ HERO — minimal, editorial ══ */
     .hero{
@@ -85,10 +85,10 @@
       border-bottom:1px solid var(--border-d);
       position:relative;overflow:hidden;
     }
-    .hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+    
     .hero-inner{position:relative;z-index:1;}
     .hero-kicker{display:flex;align-items:center;gap:.625rem;margin-bottom:1.75rem;}
-    .hero-kicker-line{display:none;}
+    
     .label{font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
     .label.on-dark{color:rgba(255,255,255,.85);}
     .hero-h1{
@@ -121,8 +121,8 @@
     }
 
     /* ══ SECTION INTRO ══ */
-    .sec-kicker{display:flex;align-items:center;gap:.625rem;margin-bottom:1.25rem;}
-    .sec-kicker-line{width:20px;height:1px;background:var(--teal);}
+    
+    
     .display-md{font-family:var(--ff-display);font-size:clamp(1.5rem,2.5vw,2.125rem);font-weight:700;line-height:1.1;letter-spacing:-.025em;}
     .sec-body{font-size:1rem;color:var(--ink-3);max-width:540px;line-height:1.7;margin-top:.875rem;}
 
@@ -387,7 +387,7 @@
       transition:color .15s;
     }
     .opp-link:hover{color:#006666;}
-    @keyframes shimmer{to{background-position:200% center;}}
+    
     .skel{border-radius:2px;
       background:linear-gradient(90deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.02) 50%,rgba(0,0,0,.05) 75%);
       background-size:200%;animation:shimmer 1.4s ease-in-out infinite;}
@@ -418,23 +418,23 @@
     
     
     .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.625rem 1.25rem;font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;border-radius:var(--r-md);cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;border:1px solid transparent;}
-    .btn-primary{background:#fff;color:var(--navy-2);border-color:#fff;}
-    .btn-primary:hover{background:rgba(255,255,255,.88);}
-    .btn-ghost{background:transparent;color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.3);}
-    .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);color:#fff;}
-    .btn-text{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-meta);font-weight:500;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);padding-bottom:1px;transition:color .15s,border-color .15s;}
+    
+    
+    
+    
+    
     
 
     /* ══ FOOTER ══ */
     .footer canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.35;}
     /* ══ SCROLL TO TOP ══ */
     #scrollTop{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;background:var(--navy);border:1px solid var(--border-d);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.55);opacity:0;pointer-events:none;transition:opacity .2s,background .15s;z-index:500;}
-    #scrollTop.visible{opacity:1;pointer-events:auto;} #scrollTop:hover{background:var(--navy-2);color:#fff;}
-    #scrollTop svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+     #scrollTop:hover{background:var(--navy-2);color:#fff;}
+    
 
     /* ══ REVEAL ══ */
-    .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
-    .reveal-d1{transition-delay:.08s;} .reveal-d2{transition-delay:.16s;} .reveal-d3{transition-delay:.24s;}
+    
+      
 
     /* ══ RESPONSIVE ══ */
     @media(max-width:640px){
@@ -451,11 +451,7 @@
     ══════════════════════════════════════════════════════ */
 
     /* Tag/pill stays informational, never an action */
-    .line-tag, .lead-line-pill, .lead-line-num,
-    .story-type-pill, .opp-type, .tca-line, .tca-affil,
-    .lead-tag {
-      cursor: default; pointer-events: none;
-    }
+    
 
 
 .lead-photo::before {
@@ -503,16 +499,10 @@
 /* Path cards / collaboration cards — warmer bg */
 
 
-@media print {
-  .hdr,.mob-drawer,.mob-overlay,.mob-toggle,.site-footer .footer-col-nav,
-  .btn,.latest-bar,#scrollTop,canvas{display:none!important;}
-  body{background:#fff!important;color:#000!important;font-size:11pt;padding-top:0!important;}
-  a[href]::after{content:" ("attr(href)")";font-size:8pt;color:#555;}
-  a[href^="#"]::after,a[href^="javascript"]::after{content:"";}
-}
 
 
-/* Loading skeleton shimmer — referenced by setLoading() in api.js on
+
+/* Loading skeleton shimmer — referenced by setLoading() in scripts/api.js on
    every page, but the CSS itself never actually existed anywhere in
    this file. Every loading-state shimmer site-wide was rendering as
    an invisible, unstyled box until now. */

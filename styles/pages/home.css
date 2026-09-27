@@ -55,7 +55,7 @@
     ══════════════════════════════════════════════ */
     
     
-    ::selection{background:var(--teal-lt);color:var(--ink);}
+    
 
     /* ── TYPOGRAPHY SCALE ── */
     .display-xl{font-family:var(--ff-display);font-weight:700;font-size:clamp(3rem,6vw,5.25rem);line-height:1.0;letter-spacing:-.03em;}
@@ -65,9 +65,9 @@
     .label.on-dark{color:rgba(255,255,255,.65);}
 
     /* ── LAYOUT ── */
-    .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);}
-    .section{padding:5rem 0;}
-    @media(max-width:768px){.section{padding:3.5rem 0;}}
+    
+    
+    
 
     /* ── PROGRESS BAR ── */
     
@@ -81,7 +81,7 @@
       position:relative;overflow:hidden;
       border-bottom:1px solid var(--border-d);
     }
-    .hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+    
     
     
     .hero-inner{
@@ -95,7 +95,7 @@
       display:inline-flex;align-items:center;gap:.625rem;
       margin-bottom:1.75rem;
     }
-    .hero-kicker-line{display:none;}
+    
     .hero-h1{margin-bottom:1.5rem;color:#fff; text-shadow: 0 2px 40px rgba(0,0,0,.3);}
     .hero-h1 em{font-style:italic;font-weight:300;color:rgba(255,255,255,.45);display:block;margin-top:.15em;}
     .hero-desc{
@@ -115,10 +115,10 @@
       transition:background .15s,color .15s,border-color .15s;
       border:1px solid transparent;
     }
-    .btn-primary{background:#fff;color:var(--navy-2);border-color:#fff;}
-    .btn-primary:hover{background:rgba(255,255,255,.88);}
-    .btn-ghost{background:transparent;color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.3);}
-    .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);color:#fff;}
+    
+    
+    
+    
     .btn-ghost-dark{background:transparent;color:var(--ink-2);border-color:var(--border-l);}
     .btn-ghost-dark:hover{background:var(--surface);border-color:rgba(0,0,0,.15);color:var(--ink);}
     .btn-text{
@@ -214,10 +214,8 @@
 
     /* ══ RESEARCH LINES ══════════════════════════ */
     .sec-intro{margin-bottom:3rem;}
-    .sec-kicker{
-      display:flex;align-items:center;gap:.625rem;margin-bottom:1.25rem;
-    }
-    .sec-kicker-line{width:20px;height:1px;background:var(--teal);}
+    
+    
     .sec-h2{margin-bottom:1rem;}
     .sec-body{font-size:1rem;color:var(--ink-3);max-width:560px;line-height:1.7;}
 
@@ -367,9 +365,9 @@
     }
     .story-main-meta a{color:var(--teal);text-decoration:none;font-weight:500;}
     .story-meta-sep{color:var(--border-l);font-size:.875em;}
-    .story-dots{display:flex;gap:7px;margin-top:1rem;}
+    
     .story-dot{width:7px;height:7px;border-radius:50%;border:none;background:var(--border-l);cursor:pointer;padding:0;transition:background .2s,transform .15s;}
-    .story-dot:hover{transform:scale(1.2);}
+    
     .story-dot.active{background:var(--navy-2);}
 
     /* Sidebar stories (right) */
@@ -395,7 +393,7 @@
     .story-skeleton{background:var(--surface);border-radius:var(--r-md);overflow:hidden;
       border:1px solid var(--border-l);display:grid;grid-template-columns:1fr 300px;}
     @media(max-width:860px){.story-skeleton{grid-template-columns:1fr;}}
-    @keyframes shimmer{to{background-position:200% center;}}
+    
     .skel{border-radius:2px;background:linear-gradient(90deg,var(--border-l) 25%,rgba(0,0,0,.03) 50%,var(--border-l) 75%);
       background-size:200%;animation:shimmer 1.4s ease-in-out infinite;}
 
@@ -522,15 +520,15 @@
       cursor:pointer;color:rgba(255,255,255,.55);
       opacity:0;pointer-events:none;transition:opacity .2s,background .15s;z-index:500;
     }
-    #scrollTop.visible{opacity:1;pointer-events:auto;}
+    
     #scrollTop:hover{background:var(--navy-3);color:#fff;}
-    #scrollTop svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+    
 
     /* ══ REVEAL ══════════════════════════════════ */
-    .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
-    .reveal-d1{transition-delay:.08s;}
-    .reveal-d2{transition-delay:.16s;}
-    .reveal-d3{transition-delay:.24s;}
+    
+    
+    
+    
 
     /* ══ RESPONSIVE ══════════════════════════════ */
     @media(max-width:768px){
@@ -559,11 +557,7 @@
     ══════════════════════════════════════════════════════ */
 
     /* Tag/pill stays informational, never an action */
-    .line-tag, .lead-line-pill, .lead-line-num,
-    .story-type-pill, .opp-type, .tca-line, .tca-affil,
-    .lead-tag {
-      cursor: default; pointer-events: none;
-    }
+    
     .inst-composite-logo {
       margin: 0; padding: 0;
       background: var(--white);
@@ -679,7 +673,7 @@ html:not(.bar-dismissed) body { padding-top: calc(var(--hdr) + 30px); }
 }
 
 
-/* Loading skeleton shimmer — referenced by setLoading() in api.js on
+/* Loading skeleton shimmer — referenced by setLoading() in scripts/api.js on
    every page, but the CSS itself never actually existed anywhere in
    this file. Every loading-state shimmer site-wide was rendering as
    an invisible, unstyled box until now. */

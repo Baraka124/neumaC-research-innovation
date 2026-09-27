@@ -145,7 +145,7 @@ html{ scroll-behavior:smooth; }
 /* ── Premium language switch ───────────────────────────────────────
    A true two-state segmented control (role="radiogroup"/"radio"),
    not a flat button pair — arrow-key roving tabindex is wired in
-   header-enhance.js. Globe glyph sits to the left of the pill as a
+   scripts/site.js. Globe glyph sits to the left of the pill as a
    resting-state affordance ("this control is about language"), the
    knob slides with a touch of overshoot rather than a flat ease so
    the motion reads as considered rather than mechanical. ─────────── */
@@ -937,7 +937,7 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
 
 /* ════════════════════════════════════════════════════════════════
    HEADER ×20 — supporting styles for the twenty upgrades
-   (JS lives in header-enhance.js + api.js; every hook below matches
+   (JS lives in scripts/site.js + scripts/api.js; every hook below matches
    a class those files create. Numbers reference the agreed list.)
    ════════════════════════════════════════════════════════════════ */
 

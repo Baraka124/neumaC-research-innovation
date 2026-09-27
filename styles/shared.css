@@ -9,7 +9,7 @@
 /* shared by: home, innovation, line, news, team */
 :where(body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .contact-bg .label,:where(body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .team-bg .label,:where(body[data-page="home"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .partner-bg .label{color:rgba(0,153,153,.9)!important;}
 /* shared by: clinical, innovation, line, news */
-body:where([data-page="clinical"],[data-page="innovation"],[data-page="line"],[data-page="news"]){font-family:var(--ff-body);background:var(--off-white);color:var(--text-on-light);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-top:68px; padding-top:68px;}
+body:where([data-page="clinical"],[data-page="innovation"],[data-page="line"],[data-page="news"]){font-family:var(--ff-body);background:var(--off-white);color:var(--text-on-light);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-top:68px;}
 /* shared by: clinical, innovation, line, news */
 :where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) img,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) svg{display:block;}
 /* shared by: clinical, innovation, line, news */
@@ -248,3 +248,544 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible, t
 :where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-affil{font-size:var(--fs-label);padding:.2rem .5rem; background:#FAEEDA;color:#633806;border:1px solid #EF9F27; font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;}
 /* shared by: clinical, home, innovation, line, news, team */
 [data-counter]{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+
+/* ============================================================
+   PHASE 4 — promoted exact cross-page rules
+   Same selector + declarations + at-rule context, with one occurrence
+   per participating page. Zero-specificity page scoping preserves the
+   original component weight while removing duplicate page ownership.
+   ============================================================ */
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) ::selection{background:var(--teal-lt);color:var(--ink);}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .section{padding:5rem 0;}
+@media (max-width:768px){
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .section{padding:3.5rem 0;}
+}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .hero-kicker-line{display:none;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .btn-primary{background:#fff;color:var(--navy-2);border-color:#fff;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .btn-primary:hover{background:rgba(255,255,255,.88);}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .btn-ghost{background:transparent;color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.3);}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);color:#fff;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .sec-kicker{display:flex;align-items:center;gap:.625rem;margin-bottom:1.25rem;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .sec-kicker-line{width:20px;height:1px;background:var(--teal);}
+/* shared by: home, news */
+:where(body[data-page="home"],body[data-page="news"]) .story-dots{display:flex;gap:7px;margin-top:1rem;}
+/* shared by: home, news */
+:where(body[data-page="home"],body[data-page="news"]) .story-dot:hover{transform:scale(1.2);}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) #scrollTop.visible{opacity:1;pointer-events:auto;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) #scrollTop svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .reveal-d1{transition-delay:.08s;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .reveal-d2{transition-delay:.16s;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .reveal-d3{transition-delay:.24s;}
+/* shared by: home, team */
+:where(body[data-page="home"],body[data-page="team"]) .line-tag,:where(body[data-page="home"],body[data-page="team"]) .lead-line-pill,:where(body[data-page="home"],body[data-page="team"]) .lead-line-num,:where(body[data-page="home"],body[data-page="team"]) .story-type-pill,:where(body[data-page="home"],body[data-page="team"]) .opp-type,:where(body[data-page="home"],body[data-page="team"]) .tca-line,:where(body[data-page="home"],body[data-page="team"]) .tca-affil,:where(body[data-page="home"],body[data-page="team"]) .lead-tag{cursor: default; pointer-events: none;}
+/* shared by: clinical, news */
+:where(body[data-page="clinical"],body[data-page="news"]) .hero-stats{display:flex!important;gap:0!important;border-radius:0!important;}
+/* shared by: clinical, news */
+:where(body[data-page="clinical"],body[data-page="news"]) .hstat{padding:0 1.5rem!important;border-bottom:none!important;border-right:1px solid rgba(255,255,255,.12)!important;flex:1!important;flex-direction:column!important;align-items:flex-start!important;}
+/* shared by: clinical, news */
+:where(body[data-page="clinical"],body[data-page="news"]) .hstat:first-child{padding-left:0!important;}
+/* shared by: clinical, news */
+:where(body[data-page="clinical"],body[data-page="news"]) .hstat:last-child{border-right:none!important;padding-right:0!important;}
+/* shared by: clinical, news, team */
+:where(body[data-page="clinical"],body[data-page="news"],body[data-page="team"]) .hstat-num{font-size:1.625rem!important;line-height:1!important;}
+/* shared by: clinical, news, team */
+:where(body[data-page="clinical"],body[data-page="news"],body[data-page="team"]) .hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
+/* shared by: clinical, news, team */
+:where(body[data-page="clinical"],body[data-page="news"],body[data-page="team"]) .hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .display.md{font-size:clamp(1.5rem,2.5vw,2rem);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .display.sm{font-size:clamp(1.2rem,1.8vw,1.5rem);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .eyebrow,:where(body[data-page="clinical"],body[data-page="line"]) .label{font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .eyebrow.light,:where(body[data-page="clinical"],body[data-page="line"]) .label.light{color:rgba(255,255,255,.75);font-weight:600;letter-spacing:.14em;}
+@media (min-width:1600px){
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .container{padding:0 clamp(4rem,8vw,10rem);}
+}
+@media (min-width:1400px){
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section{padding:9rem 0;}
+}
+@media (max-width:768px){
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .section{padding:4rem 0;}
+}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-primary:hover{background:var(--accent);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-secondary{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-secondary:hover{background:#007a7a;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-primary-alt{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-primary-alt:hover{background:var(--accent);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(255,255,255,.25);color:var(--text-on-dark);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.06);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-ghost-dark{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid var(--rule-l);color:var(--ink-2);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-ghost-dark:hover{border-color:var(--accent);color:var(--accent);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-outline{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid currentColor;color:var(--text-on-dark);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;opacity:.7;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-outline:hover{opacity:1;background:rgba(255,255,255,.06);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-violet{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .btn-violet:hover{background:var(--accent);}
+@media (prefers-reduced-motion:reduce){
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .reveal{opacity:1;transform:none;transition:none;}
+}
+@media (max-width:768px){
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .hero{padding:3.5rem 0 3rem;}
+}
+@media (max-width:768px){
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .hero-inner{grid-template-columns:1fr;gap:2.5rem;}
+}
+@media (max-width:480px){
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .mob-toggle{width:40px;height:40px;}
+}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hero{background:var(--navy-2);border-bottom:1px solid var(--rule-d);position:relative;overflow:hidden;padding:5rem 0 0;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .hero::before{content:"";position:absolute;inset:0;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hero::after{content:"";position:absolute;width:500px;height:500px;background:radial-gradient(circle,var(--teal-dim) 0%,transparent 70%);top:-150px;right:-100px;pointer-events:none;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:3rem;}
+@media (min-width:861px){
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hero-inner{grid-template-columns:1fr 300px;align-items:start;}
+}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .breadcrumb{display:flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .breadcrumb a{font-size:.8rem;color:var(--text-muted);transition:color .2s;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .breadcrumb a:hover{color:var(--text-primary);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .breadcrumb svg{width:10px;height:10px;color:var(--text-muted);flex-shrink:0;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .breadcrumb span{font-size:.8rem;color:var(--teal);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;border:1px solid rgba(58,191,191,0.3);background:var(--teal-dim);padding:.4rem .9rem;border-radius:3px;margin-bottom:1.5rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hero-eyebrow svg{width:12px;height:12px;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .hero-title{margin-bottom:1.25rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hero-desc{font-size:1.0625rem;line-height:1.75;color:var(--text-secondary);max-width:580px;margin-bottom:2rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:0;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hero-strip{border-top:1px solid var(--rule-d);background:var(--navy-3, #162340);margin-top:3rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hero-strip-inner{display:flex;flex-wrap:wrap;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hstrip-item{flex:1;min-width:140px;padding:1.375rem 1.75rem;border-right:1px solid var(--rule-d);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hstrip-item:last-child{border-right:none;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hstrip-num{font-family:var(--ff-display);font-size:1.5rem;font-weight:900;color:var(--teal);line-height:1;margin-bottom:.3rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hstrip-label{font-size:var(--fs-label);font-family:var(--ff-mono);color:var(--text-muted);line-height:1.3;}
+@media (max-width:640px){
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hstrip-item{min-width:50%;border-bottom:1px solid var(--rule-d);}
+}
+@media (max-width:640px){
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hstrip-item:nth-child(2n){border-right:none;}
+}
+@media (max-width:640px){
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .hstrip-item:last-child,:where(body[data-page="clinical"],body[data-page="line"]) .hstrip-item:nth-last-child(2){border-bottom:none;}
+}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .text-center{text-align:center;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .lines-bg{background:var(--off-white);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) #researchLinesList{display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;}
+@media (max-width:860px){
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) #researchLinesList{grid-template-columns:1fr;}
+}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-card{background:var(--white); border:1px solid var(--rule-l); border-radius:var(--r-lg); overflow:hidden; transition:box-shadow .22s,border-color .22s,transform .22s; position:relative; cursor:pointer; display:flex;flex-direction:column;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px; background:transparent;transition:background .22s;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-card:hover{box-shadow:0 6px 32px rgba(0,153,153,.1),0 2px 8px rgba(0,0,0,.06); border-color:rgba(0,153,153,.22); transform:translateY(-2px);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-card:hover::before{background:var(--accent);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-head{padding:1.75rem 2rem 1.25rem;cursor:pointer;flex:1;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-num{font-family:var(--ff-display);font-size:2.5rem;font-weight:700; color:var(--rule-l);line-height:1;margin-bottom:.875rem; transition:color .22s;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-card:hover .line-num{color:rgba(0,153,153,.18);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-meta{flex:1;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-coordinator{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em; text-transform:uppercase;color:var(--accent); margin-bottom:.5rem;display:flex;align-items:center;gap:.375rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-coordinator svg{display:none;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-coordinator strong{font-weight:500;color:var(--accent);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-tags-preview{display:flex;flex-wrap:wrap;gap:.25rem; padding:0 2rem 1.125rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .ltag{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.07em; text-transform:uppercase;color:var(--text-on-light-3);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .ltag+.ltag::before{content:"·";margin-right:.25rem;color:var(--mid-grey);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-expand-toggle{display:flex;align-items:center;justify-content:space-between; padding:.75rem 2rem; border-top:1px solid var(--rule-l); background:var(--off-white); cursor:pointer; transition:background .18s;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-card:hover .line-expand-toggle{background:var(--teal-lt);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .toggle-label{display:flex;align-items:center;gap:.5rem; font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em; text-transform:uppercase;color:var(--text-on-light-3);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .toggle-label svg{display:none;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .toggle-arrow{width:22px;height:22px;border-radius:50%; border:1px solid var(--mid-grey); display:flex;align-items:center;justify-content:center; color:var(--text-on-light-3); transition:all .2s;flex-shrink:0;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .toggle-arrow svg{width:11px;height:11px;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-card:hover .toggle-arrow{border-color:var(--accent);color:var(--accent);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-card.open .toggle-arrow{transform:rotate(180deg);background:var(--teal-lt);border-color:var(--accent);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-body{max-height:0;overflow:hidden;transition:max-height .4s var(--ease-clinical);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-card.open .line-body{max-height:500px;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-body-inner{padding:1.25rem 2rem 1.75rem;border-top:1px solid var(--rule-l);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-desc{font-size:.9rem;line-height:1.75;color:var(--text-on-light-2);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials-bg{background:var(--white);border-top:1px solid var(--rule-l);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .filter-bar{display:flex;flex-wrap:wrap;gap:.875rem;margin-bottom:1.75rem;padding:1.25rem 0;border-bottom:1px solid var(--rule-l);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .filter-grp label{display:block;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);margin-bottom:.45rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .filter-grp select{width:100%;background:var(--white);border:1px solid var(--mid-grey);border-radius:var(--r-sm);padding:.575rem .8rem;color:var(--text-on-light);font-family:var(--ff-body);font-size:.8125rem;transition:border .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23767676' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;padding-right:2.25rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .filter-grp select:focus{outline:none;border-color:var(--teal-2);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .filter-grp select option{background:var(--white);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .search-wrap{position:relative;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .search-wrap svg{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--text-on-light-3);pointer-events:none;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .filter-grp input[type="text"]{width:100%;background:var(--white);border:1px solid var(--mid-grey);border-radius:var(--r-sm);padding:.575rem .8rem .575rem 2.125rem;color:var(--text-on-light);font-family:var(--ff-body);font-size:.8125rem;transition:border .2s;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .filter-grp input[type="text"]:focus{outline:none;border-color:var(--teal);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .filter-grp input[type="text"]::placeholder{color:var(--text-muted);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials-count-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;flex-wrap:wrap;gap:.75rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials-count-bar span{font-size:.875rem;color:var(--text-on-light-2);font-family:var(--ff-mono);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials-count-bar strong{color:var(--teal);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials thead{background:var(--white);border-bottom:2px solid var(--rule-l);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials th{padding:1rem 1.25rem;text-align:left;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);border-bottom:2px solid var(--mid-grey);white-space:nowrap;font-weight:600;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials td{padding:1.1rem 1.25rem;border-bottom:1px solid var(--rule-l);vertical-align:middle;font-size:.9rem;color:var(--text-on-light-2);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials tbody tr:last-child td{border-bottom:none;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials tbody tr{background:var(--white);transition:background .15s;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trial-protocol{font-family:var(--ff-mono);font-size:.75rem;color:var(--text-on-light-3);white-space:nowrap;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .phase-badge{display:inline-flex;align-items:center;padding:.22rem .55rem;border-radius:3px;font-size:var(--fs-label);font-family:var(--ff-mono);letter-spacing:.05em;border:1px solid rgba(0,153,153,.15);color:var(--teal-2);background:rgba(0,153,153,.06);white-space:nowrap;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border-radius:20px;font-size:var(--fs-label);font-weight:600;white-space:nowrap;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge::before{content:"";width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge.recruiting{background:rgba(58,191,191,.1);color:var(--teal);border:1px solid rgba(58,191,191,.2);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge.recruiting::before{background:var(--teal);box-shadow:0 0 6px var(--teal);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge.active{background:rgba(0,153,153,.08);color:var(--teal-2);border:1px solid rgba(0,153,153,.15);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge.active::before{background:var(--teal-2);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge.completed{background:rgba(90,100,115,.15);color:var(--text-muted);border:1px solid var(--rule-d);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge.completed::before{background:var(--text-muted);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge.prep{background:rgba(0,153,153,.06);color:var(--teal-2);border:1px solid rgba(0,153,153,.15);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .status-badge.prep::before{background:var(--violet);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .no-results{padding:2.5rem;text-align:center;color:var(--text-muted);font-size:.875rem;display:none;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .no-results svg{width:28px;height:28px;margin:0 auto .75rem;opacity:.3;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials-footer{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:var(--white);border-top:1px solid var(--rule-l);flex-wrap:wrap;gap:.875rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials-footer-info{font-size:.8rem;font-family:var(--ff-mono);color:var(--text-on-light-3);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials-footer-db{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-family:var(--ff-mono);color:var(--text-on-light-3);border:1px solid var(--rule-l);border-radius:3px;padding:.25rem .65rem;margin-top:.35rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials-footer-db svg{width:10px;height:10px;color:var(--teal-2);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-bg{background:#0B2222;color:var(--text-on-dark);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-grid{display:flex;flex-direction:column;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-card{display:flex;align-items:flex-start;gap:2.5rem; padding:2rem 1rem; border-bottom:1px solid rgba(255,255,255,.07); border-radius:var(--r-sm); transition:background .18s,margin .18s; margin:0 -1rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-card:last-child{border-bottom:none;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-card:hover{background:rgba(255,255,255,.03);padding-left:0;border-radius:var(--r-sm);margin:0 -1rem;padding-left:1rem;padding-right:1rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-avatar{width:52px;height:52px;border-radius:50%; background:linear-gradient(135deg,rgba(0,153,153,.35),rgba(0,179,179,.15)); border:1px solid rgba(0,179,179,.3); display:flex;align-items:center;justify-content:center; flex-shrink:0; font-family:var(--ff-display);font-size:1.1rem;font-weight:700; color:var(--teal-2);letter-spacing:-.02em; overflow:hidden;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-line-num{font-family:var(--ff-mono);font-size:var(--fs-label); color:rgba(255,255,255,.22); letter-spacing:.05em; flex-shrink:0; width:1.5rem; text-align:right; padding-top:.3rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-body{flex:1;min-width:0;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-name{font-family:var(--ff-display);font-size:1.0625rem;font-weight:700; color:#F5F5F0;line-height:1.2;margin-bottom:.2rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-role{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em; text-transform:uppercase;color:rgba(255,255,255,.36); margin-bottom:.5rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-line-tag{font-family:var(--ff-mono);font-size:var(--fs-label); color:rgba(255,255,255,.35); border-left:2px solid rgba(0,179,179,.38); padding-left:.5rem; margin-bottom:.5rem; display:block;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-bio{font-size:.8125rem;line-height:1.7; color:rgba(255,255,255,.52); margin-top:.5rem;max-width:580px;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-expertise{font-family:var(--ff-mono);font-size:var(--fs-label); color:rgba(255,255,255,.3);letter-spacing:.03em; margin-top:.4rem;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-expertise .team-tag{display:inline;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-expertise .team-tag + .team-tag::before{content:" · "; color:rgba(255,255,255,.45);}
+@media (max-width:480px){
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-card{gap:1.375rem;padding:1.375rem 0;}
+}
+@media (max-width:480px){
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-name{font-size:1rem;}
+}
+@media (max-width:480px){
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .team-avatar{width:44px;height:44px;font-size:.95rem;}
+}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .contact-bg{background:var(--navy-2);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .contact-layout{display:grid;grid-template-columns:1fr;gap:3rem;}
+@media (min-width:861px){
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .contact-layout{grid-template-columns:1fr 1.2fr;align-items:start;}
+}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .contact-info-list{display:flex;flex-direction:column;gap:.875rem;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .cinfo{display:flex;align-items:flex-start;gap:.875rem;padding:1rem 0;border-bottom:1px solid var(--rule-d);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .cinfo-icon{width:34px;height:34px;flex-shrink:0;background:var(--teal-dim);border-radius:6px;display:flex;align-items:center;justify-content:center;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .cinfo-icon svg{width:15px;height:15px;color:var(--teal-2);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .cinfo-label{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.25rem;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .cinfo-value{font-size:.875rem;color:var(--text-on-dark);line-height:1.5;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .cinfo-value a{color:var(--teal);transition:color .2s;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .cinfo-value a:hover{color:#6dd6d6;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger{position:relative;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2.25rem;cursor:pointer;border-radius:var(--r-lg);background:rgba(255,255,255,.05);border:1px solid var(--rule-d);transition:background .25s,border-color .25s,transform .25s,box-shadow .25s;gap:1.25rem;overflow:hidden;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(0,179,179,.10) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s var(--ease-clinical);pointer-events:none;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger:hover::before{transform:translateX(120%);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger:hover{background:rgba(255,255,255,.09);border-color:rgba(0,179,179,.4);transform:translateY(-2px);box-shadow:0 10px 28px -10px rgba(0,0,0,.4);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger[aria-expanded="true"]{background:rgba(0,179,179,.07);border-color:var(--teal-2);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger-icon{position:relative;flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--teal-dim);display:flex;align-items:center;justify-content:center;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger-icon svg{width:18px;height:18px;color:var(--teal-2);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger-icon::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--teal-2);opacity:.55;animation:trigPulse 2.6s ease-out infinite;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger[aria-expanded="true"] .form-trigger-icon::after{display:none;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger-text{flex:1;min-width:0;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger-label{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:var(--teal-2);margin-bottom:.375rem;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger-title{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:#ffffff;line-height:1.2;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem;background:var(--accent-2);color:#fff;font-weight:600;padding:.625rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;white-space:nowrap;transition:background .18s;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger:hover .form-trigger-btn{background:var(--accent);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger-btn svg{width:12px;height:12px;flex-shrink:0;transition:transform .35s var(--ease-clinical);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-trigger[aria-expanded="true"] .form-trigger-btn svg{transform:rotate(180deg);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-body{max-height:0;overflow:hidden;transition:max-height .45s var(--ease-clinical),opacity .3s var(--ease-clinical);opacity:0;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-body.open{opacity:1;overflow:visible;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .form-card{background:var(--navy-3, #162340);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:2rem;position:relative;overflow:hidden;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .form-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal-2));}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-grid{display:grid;grid-template-columns:1fr;gap:1.125rem;}
+@media (min-width:640px){
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-grid{grid-template-columns:1fr 1fr;}
+}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-grid .span-2{grid-column:1/-1;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-group label{display:block;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);margin-bottom:.45rem;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-group input,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-group select,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-group textarea{width:100%;background:var(--off-white);border:1px solid var(--mid-grey);border-radius:var(--r-sm);padding:.7rem .9rem;color:var(--text-on-light);font-family:var(--ff-body);font-size:.875rem;transition:border .2s;resize:vertical;}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-group input::placeholder,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-group textarea::placeholder{color:var(--text-on-light-3);}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .form-group input:focus,:where(body[data-page="clinical"],body[data-page="line"]) .form-group select:focus,:where(body[data-page="clinical"],body[data-page="line"]) .form-group textarea:focus{outline:none;border-color:var(--teal);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23767676' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .875rem center;padding-right:2.25rem;background-color:var(--off-white);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-group select option{background:var(--white);color:var(--text-on-light);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease-clinical),transform .6s var(--ease-clinical);}
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .reveal.in{opacity:1;transform:none;}
+/* shared by: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .eyebrow{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:var(--accent);opacity:1;}
+@media (max-width:640px){
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partners-top{flex-direction:column;align-items:flex-start;}
+}
+@media (max-width:640px){
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .partners-copy{text-align:left;max-width:100%;}
+}
+@media (max-width:860px){
+/* shared by: clinical, innovation, line, news */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .footer-right{align-items:flex-start;}
+}
+@media (max-width:480px){
+/* shared by: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-grid{grid-template-columns:1fr;}
+}
+@media print{
+/* shared by: clinical, innovation, line, news, team */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .hdr,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .mob-drawer,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .mob-overlay,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .mob-toggle,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .site-footer .footer-col-nav,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .btn,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) .latest-bar,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) #scrollTop,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) canvas{display:none!important;}
+}
+@media print{
+/* shared by: clinical, innovation, line, news, team */
+body:where([data-page="clinical"],[data-page="innovation"],[data-page="line"],[data-page="news"],[data-page="team"]){background:#fff!important;color:#000!important;font-size:11pt;padding-top:0!important;}
+}
+@media print{
+/* shared by: clinical, innovation, line, news, team */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) a[href]::after{content:" ("attr(href)")";font-size:8pt;color:#555;}
+}
+@media print{
+/* shared by: clinical, innovation, line, news, team */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) a[href^="#"]::after,:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"],body[data-page="news"],body[data-page="team"]) a[href^="javascript"]::after{content:"";}
+}
+/* shared by: clinical, line, team */
+:where(body[data-page="clinical"],body[data-page="line"],body[data-page="team"]) .btn-text{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-meta);font-weight:500;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);padding-bottom:1px;transition:color .15s,border-color .15s;}
+/* shared by: innovation, line, news */
+:where(body[data-page="innovation"],body[data-page="line"],body[data-page="news"]) .tca-avatar{width:40px;height:40px;border-radius:var(--r-sm);flex-shrink:0; background:var(--navy-2); display:flex;align-items:center;justify-content:center; font-family:var(--ff-mono,monospace);font-size:var(--fs-label); font-weight:600;letter-spacing:.05em;color:#fff;}
+
+/* PHASE 4 — promoted common base rules with page-owned later variants */
+/* shared base: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .trials tbody tr:hover td{background:rgba(0,122,122,.025)!important;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .sec-head p{margin-top:1rem;font-size:1.0625rem;line-height:1.75;color:var(--text-on-light-2);max-width:580px;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .sec-head h2{margin-top:.75rem;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .sec-head{margin-bottom:3.5rem;}
+/* shared base: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .line-title{font-family:var(--ff-display); font-size:clamp(1rem,1.5vw,1.125rem); font-weight:700;color:var(--text-on-light);line-height:1.3;}
+/* shared base: clinical, line */
+:where(body[data-page="clinical"],body[data-page="line"]) .filter-grp{flex:1;min-width:140px;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .form-success{display:none;margin-top:1rem;padding:.875rem;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:var(--r-sm);font-size:.875rem;color:#059669;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-top{display:grid; grid-template-columns:1fr; gap:4rem; padding-bottom:4rem; border-bottom:1px solid rgba(255,255,255,.07);}
+@media (min-width:768px){
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-top{grid-template-columns:1.6fr 1fr 1fr;}
+}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-affiliate{display:flex;align-items:baseline;gap:1rem; font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-affiliate-abbr{color:rgba(0,179,179,.65);flex-shrink:0;width:3rem;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-affiliate-name{color:rgba(255,255,255,.25);}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-col-head{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.15em; text-transform:uppercase;color:rgba(255,255,255,.28); margin-bottom:1.25rem; padding-bottom:.75rem; border-bottom:1px solid rgba(255,255,255,.06);}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.625rem;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-col ul a{font-size:.875rem;color:rgba(255,255,255,.45); transition:color .18s; display:inline-block;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-col ul a:hover{color:rgba(255,255,255,.85);}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-col address{font-style:normal;font-size:.875rem; color:rgba(255,255,255,.38);line-height:1.85;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-col address a{color:rgba(255,255,255,.45); transition:color .18s; border-bottom:1px solid rgba(255,255,255,.1);}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .footer-col address a:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.3);}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .reveal-d2{transition-delay:.2s;}
+/* shared base: clinical, innovation, line */
+:where(body[data-page="clinical"],body[data-page="innovation"],body[data-page="line"]) .reveal-d3{transition-delay:.3s;}
+
+/* PHASE 4 — canonical shared motion primitives */
+@keyframes shimmer{to{background-position:200% center;}}
+@keyframes trigPulse{0%{transform:scale(1);opacity:.55;}70%{transform:scale(1.4);opacity:0;}100%{opacity:0;}}

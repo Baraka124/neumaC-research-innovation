@@ -14,7 +14,7 @@
  *   GET /api/news/website?type=&line=
  */
 
-const API_BASE = 'https://neumac-manage-back-end-production.up.railway.app';
+const API_BASE = window.NEUMAC_CONFIG.apiBase;
 
 // ─────────────────────────────────────────────
 // HELPERS
@@ -2094,14 +2094,14 @@ async function loadLineDetail() {
     // line pages, which tells search engines to treat five of the six as
     // duplicates of whichever one they happened to crawl first.
     const canonicalTag = document.getElementById('canonicalLink');
-    if (canonicalTag) canonicalTag.setAttribute('href', `https://neumact.org/line/?id=${lineId}`);
+    if (canonicalTag) canonicalTag.setAttribute('href', `${window.NEUMAC_CONFIG.siteBase}/line/?id=${lineId}`);
     const jsonLdTag = document.getElementById('lineJsonLd');
     if (jsonLdTag) {
       jsonLdTag.textContent = JSON.stringify({
         '@context': 'https://schema.org', '@type': 'WebPage',
         name: titleText,
         description: line.description || `Research line ${line.line_number} at neumACt R&I.`,
-        isPartOf: { '@type': 'WebSite', url: 'https://neumact.org', name: 'neumACt R&I' }
+        isPartOf: { '@type': 'WebSite', url: window.NEUMAC_CONFIG.siteBase, name: 'neumACt R&I' }
       });
     }
     const collabLink = document.getElementById('lineCollabLink');

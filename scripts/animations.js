@@ -167,7 +167,7 @@
   }
 
 
-  // Public API for api.js integration
+  // Public API for scripts/api.js integration
   window._animateCounter = function(el, raw) {
     const parsed = parseStatValue(String(raw));
     if (parsed) {
