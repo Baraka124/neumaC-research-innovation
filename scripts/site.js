@@ -128,20 +128,8 @@
         var path=location.pathname.replace(/\/+$/,'')||'/';
         if(path==='/'||path==='/team') hdr.classList.toggle('light',y>60);
         hdr.classList.toggle('scrolled',y>40);
-
-        var movingDown=y>lastY;
-        if(movingDown!==goingDown){
-          goingDown=movingDown;
-          directionStartY=lastY;
-        }
-        if(y<240){
-          hdr.classList.remove('hdr-hidden');
-        }else if(goingDown && y-directionStartY>6){
-          hdr.classList.add('hdr-hidden');
-        }else if(!goingDown && directionStartY-y>6){
-          hdr.classList.remove('hdr-hidden');
-        }
-      }
+        hdr.classList.remove('hdr-hidden');
+}
 
       if(cur){
         var progress=total>0?Math.min(1,y/total):0;
@@ -473,19 +461,9 @@
         gTimer = setTimeout(function(){ pendingG = false; }, 900);
       }
     });
-
-    /* visible ⌘K affordance for pointer users (desktop only) */
-    var right = document.querySelector('.hdr-right');
-    if (right && !document.getElementById('cmdkHint')){
-      var hint = document.createElement('button');
-      hint.className = 'cmdk-hint'; hint.id = 'cmdkHint';
-      hint.type = 'button'; hint.setAttribute('aria-label','Open quick search');
-      hint.textContent = (navigator.platform || '').indexOf('Mac') > -1 ? '⌘K' : 'Ctrl K';
-      hint.addEventListener('click', openPalette);
-      var contact = right.querySelector('.hdr-contact-btn');
-      right.insertBefore(hint, contact || null);
-    }
-  }
+    var searchBtn=document.getElementById('hdrSearchBtn');
+    if(searchBtn) searchBtn.addEventListener('click', openPalette);
+}
 
   function openHelp(){
     if (document.querySelector('.kbd-help')) return;
@@ -584,13 +562,11 @@
   }
 
   function bootEnhancements(){
-    initNavPill();
     initDrawerFocusTrap();
     initLangRovingTabindex();
     initLangToast();
     initStatusDot();
     initDrawerSwipe();
-    initHeaderTheming();
     initSkipMenu();
     initKeyboardLayer();
   }

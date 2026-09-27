@@ -10,6 +10,5 @@
   try {
     var lang = localStorage.getItem('huac_lang') || localStorage.getItem('lang');
     if (lang === 'en' || lang === 'es') document.documentElement.dataset.lang = lang;
-    if (localStorage.getItem('latestBarDismissed')) document.documentElement.classList.add('bar-dismissed');
   } catch (e) {}
 })();

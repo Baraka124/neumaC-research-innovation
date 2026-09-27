@@ -638,70 +638,6 @@
   section { page-break-inside: avoid; }
 }
 
-.latest-bar {
-  background: #005F5F;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  position: fixed; top: 0; left: 0; right: 0; z-index: 901;
-  transition: transform .3s;
-}
-.latest-bar-inner {
-  max-width: 1440px; margin: 0 auto;
-  padding: .45rem clamp(1.25rem,4vw,3rem);
-  display: flex; align-items: center; gap: 1rem;
-}
-.latest-label {
-  font-family: var(--ff-mono,"DM Mono",monospace);
-  font-size: .55rem; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(255,255,255,.5); flex-shrink: 0;
-}
-.latest-text {
-  font-size: .75rem; color: rgba(255,255,255,.75);
-  flex: 1; min-width: 0; overflow: hidden;
-  white-space: nowrap; text-overflow: ellipsis;
-}
-/* Push header down while the latest bar is visible (homepage only —
-   foundation.css defaults every page, including this one before JS runs,
-   to top:0/padding-top:68px since most pages have no bar at all).
-   html.bar-dismissed below restores those defaults once dismissed
-   so there's no permanent gap above the header afterward. */
-html:not(.bar-dismissed) .hdr { top: 30px; }
-html:not(.bar-dismissed) body { padding-top: calc(var(--hdr) + 30px); }
-@media(max-width:860px) {
-  .latest-text { font-size: .7rem; }
-  html:not(.bar-dismissed) .hdr { top: 28px; }
-  html:not(.bar-dismissed) body { padding-top: calc(var(--hdr-mobile) + 28px); }
-}
-
-
-/* Loading skeleton shimmer — referenced by setLoading() in scripts/api.js on
-   every page, but the CSS itself never actually existed anywhere in
-   this file. Every loading-state shimmer site-wide was rendering as
-   an invisible, unstyled box until now. */
-
-/* Networks & Standards — replaces the old 6-card grid, which used
-   #007A7A teal labels on navy-2 background at 1.91:1 contrast (fails
-   WCAG AA badly) and felt dense with every description always visible.
-   This is one quiet row; descriptions expand on click, contrast fixed
-   throughout. */
-.netstd-row{border-top:1px solid rgba(255,255,255,.08);}
-.netstd-item{
-  width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:1.125rem 0;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.08);
-  cursor:pointer;text-align:left;
-}
-.netstd-name{font-size:.9375rem;font-weight:500;color:#fff;}
-.netstd-chevron{width:14px;height:14px;color:rgba(255,255,255,.5);flex-shrink:0;transition:transform .2s;}
-.netstd-item[aria-expanded="true"] .netstd-chevron{transform:rotate(180deg);}
-.netstd-detail{max-height:0;overflow:hidden;transition:max-height .25s var(--ease-clinical);border-bottom:1px solid rgba(255,255,255,.08);}
-.netstd-detail p{font-size:.875rem;color:rgba(255,255,255,.65);line-height:1.65;margin:0;padding:0 0 1.125rem;max-width:42rem;}
-
-    /* ── Signature motion + accessibility additions ──────────── */
-    
-    
-
-
-/* ── Phase 2: semantic presentation ownership (migrated from markup) ── */
-.latest-bar__dismiss{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:1rem;line-height:1;padding:0 0 0 .5rem;}
 .live-ticker{margin-top:1.75rem;font-family:var(--ff-mono,"DM Mono",monospace);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);opacity:0;transition:opacity .35s var(--ease-clinical);min-height:1.2em;}
 .section--white{background:var(--white);}
 .line-card--static{cursor:default;}
@@ -740,3 +676,18 @@ html:not(.bar-dismissed) body { padding-top: calc(var(--hdr) + 30px); }
 .networks-sec__eyebrow{font-family:var(--ff-mono,"DM Mono",monospace);font-size:var(--fs-label);letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);}
 .networks-sec__title{font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:#fff;margin:0 0 1rem;max-width:48rem;line-height:1.15;}
 .networks-sec__intro{color:rgba(255,255,255,.5);font-size:.9375rem;max-width:44rem;margin:0 0 3.5rem;line-height:1.7;}
+
+/* Phase 5.1A — premium photographic hero surface. */
+body[data-page="home"] .hero{
+  background-color:#06294d;
+  background-image:linear-gradient(90deg,rgba(3,24,46,.98) 0%,rgba(4,31,58,.91) 39%,rgba(5,43,79,.54) 66%,rgba(5,43,79,.16) 100%),url('/assets/hero-lungs.webp');
+  background-size:cover;background-position:center center;background-repeat:no-repeat;
+}
+body[data-page="home"] .hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(2,18,35,.08),rgba(2,18,35,.18));
+}
+body[data-page="home"] #heroBg{display:none!important;}
+body[data-page="home"] .hero-inner{z-index:2;}
+body[data-page="home"] .hero-h1{text-shadow:0 4px 32px rgba(2,18,35,.32);max-width:11.2ch;}
+body[data-page="home"] .hero-desc{color:rgba(255,255,255,.72);text-shadow:0 2px 18px rgba(2,18,35,.28);}

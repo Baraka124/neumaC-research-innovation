@@ -71,17 +71,6 @@ textarea:focus-visible,[tabindex]:focus-visible,summary:focus-visible{
 .btn-cta-solid:hover,.btn-primary:hover,.cta-btn:hover{ box-shadow:var(--shadow-md); transform:translateY(-1px); }
 .btn-cta-solid:active,.btn-primary:active,.cta-btn:active{ transform:translateY(0); box-shadow:var(--shadow-xs); }
 
-/* ── 10. Header: hairline + blur for a crisper, layered top edge ── */
-.hdr{ backdrop-filter:saturate(140%) blur(8px); -webkit-backdrop-filter:saturate(140%) blur(8px); }
-.hdr.scrolled{ box-shadow:0 1px 0 rgba(255,255,255,.06), 0 6px 24px rgba(7,17,31,.28); }
-
-/* ── 11. Nav links: refined active indicator ────────────────────── */
-.hdr-nav a{ position:relative; }
-.hdr-nav a.current::after{
-  content:""; position:absolute; left:.9rem; right:.9rem; bottom:6px; height:1.5px;
-  background:var(--teal-2,#00B3B3); border-radius:2px;
-}
-
 /* ── 12. Language toggle: pill-grouped, cleaner ─────────────────── */
 /* .lang-toggle (the wrapper this border-radius/transition override
    was originally written for) has zero usage in current markup —
@@ -132,232 +121,6 @@ hr,.divider,.section-divider{
 /* ── Bonus: smoother global scroll anchoring ────────────────────── */
 html{ scroll-behavior:smooth; }
 @media(prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
-
-/* ════════════════════════════════════════════════════════════════
-   PREMIUM LANGUAGE SWITCH
-   The old two-tier header this section was originally written for
-   no longer exists in the markup (removed when the utility strip
-   was dropped) — its .hdr{} rule was deleted here since it was
-   silently overriding foundation.css's top/height/z-index (this file
-   loads after foundation.css, so any property it redeclared always won).
-   ════════════════════════════════════════════════════════════════ */
-
-/* ── Premium language switch ───────────────────────────────────────
-   A true two-state segmented control (role="radiogroup"/"radio"),
-   not a flat button pair — arrow-key roving tabindex is wired in
-   scripts/site.js. Globe glyph sits to the left of the pill as a
-   resting-state affordance ("this control is about language"), the
-   knob slides with a touch of overshoot rather than a flat ease so
-   the motion reads as considered rather than mechanical. ─────────── */
-.lang-switch{
-  position:relative; display:inline-flex; align-items:center; gap:.4rem;
-  padding:2px .1rem 2px 2px;
-}
-.lang-switch-globe{
-  width:13px; height:13px; flex-shrink:0;
-  /* .38 measured 2.76:1 against --navy-2 (#0C447C) — under WCAG
-     1.4.11's 3:1 minimum for meaningful UI graphics (this glyph is
-     the resting-state affordance for "this control is about
-     language", not purely decorative). .42 clears it at 3.05:1. */
-  color:rgba(255,255,255,.42);
-  transition:color .2s var(--ease-clinical);
-}
-.lang-switch:focus-within .lang-switch-globe,
-.lang-switch:hover .lang-switch-globe{ color:rgba(255,255,255,.6); }
-.lang-switch::before{
-  content:''; position:absolute; left:18px; right:0; top:0; bottom:0;
-  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.10);
-  border-radius:100px; z-index:0;
-}
-.lang-switch-knob{
-  position:absolute; top:2px; bottom:2px; left:20px; width:calc(50% - 11px);
-  background:#fff; border-radius:100px; z-index:0;
-  transition:transform .42s cubic-bezier(.34,1.56,.64,1);
-  box-shadow:0 1px 3px rgba(0,0,0,.2), 0 1px 1px rgba(0,0,0,.1);
-}
-html[data-lang="es"] .lang-switch-knob{ transform:translateX(calc(100% + 2px)); }
-.lang-opt{
-  position:relative; z-index:1; appearance:none; border:none; background:none;
-  cursor:pointer; padding:.18rem .62rem; min-width:34px;
-  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.66rem; font-weight:600;
-  letter-spacing:.08em; line-height:1; border-radius:100px;
-  color:rgba(255,255,255,.6); transition:color .28s var(--ease-clinical);
-}
-.lang-opt[aria-checked="true"]{ color:var(--navy,#0C3868); }
-/* Keyboard focus on a segmented control needs to read as "this
-   specific option is focused", not just "something in here has
-   focus" — ring sits tight to the individual button, on top of the
-   sliding knob, and is visible whichever side currently holds it. */
-.lang-opt:focus-visible{
-  outline:none;
-  box-shadow:0 0 0 2px var(--navy-2,#0C447C), 0 0 0 4px rgba(0,179,179,.55);
-}
-
-/* ── Tier 2: main nav bar ───────────────────────────────────────── */
-.hdr-main{
-  background:rgba(12,68,124,.82);
-  backdrop-filter:saturate(160%) blur(14px);
-  -webkit-backdrop-filter:saturate(160%) blur(14px);
-  border-bottom:1px solid rgba(255,255,255,.08);
-  transition:height .35s var(--ease-clinical), background .35s, box-shadow .35s;
-}
-.hdr-inner{
-  max-width:1440px; margin:0 auto; height:var(--hdr);
-  padding:0 clamp(1.25rem,4vw,3rem);
-  display:flex; align-items:center; gap:2rem;
-  transition:height .35s var(--ease-clinical);
-}
-
-/* Logo lockup with hairline rule + descriptor */
-.hdr-logo{ display:flex; align-items:center; gap:.85rem; text-decoration:none; flex-shrink:0; }
-.hdr-logo-img{
-  display:block; height:30px; width:auto; max-width:240px; object-fit:contain;
-  filter:brightness(0) invert(1); opacity:.96;
-  transition:height .35s var(--ease-clinical);
-  view-transition-name:site-logo;   /* 10 — the logo persists across page morphs */
-}
-.hdr-logo-rule{ width:1px; height:26px; background:rgba(255,255,255,.18); flex-shrink:0; transition:opacity .3s var(--ease-clinical), width .3s var(--ease-clinical), margin .3s var(--ease-clinical); }
-.hdr-logo-desc{
-  font-family:var(--ff-mono,'DM Mono',monospace);
-  font-size:.6rem; line-height:1.25; letter-spacing:.05em; text-transform:uppercase;
-  color:rgba(255,255,255,.6); max-width:130px;
-  transition:opacity .25s var(--ease-clinical), max-width .3s var(--ease-clinical);
-  overflow:hidden; white-space:nowrap;
-}
-/* Scrolled state collapses the descriptor and divider away entirely
-   rather than just scaling the whole lockup down — the goal is a
-   denser, more functional header once someone is mid-page, not a
-   uniformly-shrunk copy of the resting state. The wordmark itself
-   stays legible at a slightly reduced size (set further down,
-   .hdr.scrolled .hdr-logo-img). */
-.hdr.scrolled .hdr-logo-rule{ width:0; opacity:0; margin:0; }
-.hdr.scrolled .hdr-logo-desc{ max-width:0; opacity:0; }
-
-/* Nav with sliding active pill */
-.hdr-nav{ position:relative; display:flex; align-items:center; gap:2px; flex:1; min-width:0; }
-.hdr-nav-pill{
-  position:absolute; top:50%; left:0;
-  height:34px; width:1px; border-radius:8px; background:rgba(255,255,255,.12);
-  z-index:0; opacity:0; pointer-events:none;
-  transform-origin:left center;
-  transform:translateY(-50%) scaleX(1);
-  /* transform + opacity only — both GPU-composited, so the pill
-     glides between nav items at a solid 60fps without triggering
-     layout on every frame (the previous left/width animation
-     re-laid-out the header on each tick — visible jank on lower-end
-     devices and a needless main-thread cost). width stays a fixed
-     1px base that scaleX stretches to the target. */
-  transition:transform .34s var(--ease-clinical), opacity .25s;
-  will-change:transform;
-}
-.hdr-nav-link{
-  position:relative; z-index:1; display:inline-block; padding:.55rem .9rem;
-  font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.875rem; font-weight:500;
-  letter-spacing:.01em; color:rgba(255,255,255,.78); text-decoration:none; white-space:nowrap;
-  border-radius:8px; transition:color .2s, padding .3s var(--ease-clinical);
-}
-.hdr-nav-link:hover{ color:#fff; }
-.hdr-nav-link[data-current="true"]{ color:#fff; }
-.hdr-nav-link[data-current="true"]::after{
-  content:""; position:absolute; left:.9rem; right:.9rem; bottom:4px; height:1.5px;
-  background:var(--teal-2,#00B3B3); border-radius:2px;
-}
-
-/* Right cluster: contact button */
-.hdr-right{ display:flex; align-items:center; gap:1rem; flex-shrink:0; }
-.hdr-contact-btn{
-  display:inline-block; padding:.5rem 1.15rem;
-  font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.84rem; font-weight:600;
-  letter-spacing:.01em; color:#fff; text-decoration:none;
-  border:1px solid rgba(255,255,255,.28); border-radius:100px;
-  transition:background .25s var(--ease-clinical), border-color .25s, transform .2s, box-shadow .3s, padding .3s var(--ease-clinical);
-}
-.hdr-contact-btn:hover{
-  background:var(--teal-2,#00B3B3); border-color:var(--teal-2,#00B3B3);
-  transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,179,179,.3);
-}
-
-/* Scrolled state — condense tier 2. Beyond the height/logo shrink
-   already here, the nav links and contact pill also tighten their
-   own padding (not just the overall header height), and the logo's
-   divider+descriptor collapse away above — the combined effect is a
-   header that reads as "compact, working mode" rather than "the
-   same header, just smaller". */
-.hdr.scrolled .hdr-main{ box-shadow:0 4px 24px rgba(7,17,31,.32); background:rgba(12,56,104,.94); }
-.hdr.scrolled .hdr-inner{ height:58px; }
-.hdr.scrolled .hdr-logo-img{ height:26px; }
-.hdr.scrolled .hdr-nav-link{ padding:.5rem .7rem; }
-.hdr.scrolled .hdr-contact-btn{ padding:.4rem .95rem; }
-
-
-.hdr ~ main, main{ scroll-margin-top:110px; }
-
-/* ── Research mega-dropdown panel ───────────────────────────────── */
-.hdr-dd{ position:relative; display:flex; align-items:center; z-index:1; }
-.hdr-dd-trigger{ display:inline-flex; align-items:center; }
-.hdr-dd-chevron{
-  appearance:none; background:none; border:none; cursor:pointer; padding:.3rem;
-  color:rgba(255,255,255,.6); display:flex; transition:transform .3s var(--ease-clinical), color .2s;
-}
-.hdr-dd-chevron svg{ width:14px; height:14px; }
-.hdr-dd:hover .hdr-dd-chevron{ color:#fff; }
-.hdr-dd:hover .hdr-dd-chevron, .hdr-dd-chevron[aria-expanded="true"]{ transform:rotate(180deg); }
-.hdr-dd-panel{
-  position:absolute; top:calc(100% + 16px); left:-1rem; width:380px;
-  background:#fff; border-radius:16px;
-  box-shadow:0 24px 48px -12px rgba(7,17,31,.28), 0 2px 8px rgba(7,17,31,.08);
-  padding:1.5rem 1.25rem 1.25rem; opacity:0; visibility:hidden;
-  transform:translateY(-8px); transition:opacity .28s var(--ease-clinical), transform .28s var(--ease-clinical), visibility .28s;
-}
-.hdr-dd-panel::before{
-  content:''; position:absolute; top:-7px; left:2.25rem; width:14px; height:14px;
-  background:#fff; transform:rotate(45deg); border-radius:3px 0 0 0;
-  box-shadow:-2px -2px 4px -2px rgba(7,17,31,.06);
-}
-/* Panel opens via the .open class only. Raw :hover-open caused
-   flicker on diagonal cursor travel and sticky panels on hybrid
-   touch devices — replaced by JS hover-intent in initHeaderDropdown
-   (120ms open delay, 250ms close grace, gated to (hover:hover)). */
-.hdr-dd.open .hdr-dd-panel{ opacity:1; visibility:visible; transform:translateY(0); }
-.hdr-dd-panel-title{
-  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.68rem; font-weight:600;
-  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-4,#767676);
-  margin:0 0 .75rem; padding-bottom:1rem;
-  /* 17 — the flat border became the expiratory curve */
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 18' preserveAspectRatio='none'%3E%3Cpath d='M0 15 C 18 14.5 30 11 38 3 C 44 -1 52 1 60 4 C 100 12 220 14 320 15' fill='none' stroke='%23007A7A' stroke-opacity='.28' stroke-width='1.2'/%3E%3C/svg%3E");
-  background-repeat:no-repeat; background-position:bottom; background-size:100% 14px;
-}
-.hdr-dd-panel-inner{
-  display:flex; flex-direction:column; gap:.05rem;
-  max-height:min(60vh,420px); overflow-y:auto; margin:0 -.25rem; padding:.25rem .25rem 0;
-}
-/* .hdr-dd-item / .hdr-dd-num / .hdr-dd-name are defined once, in full,
-   further down this file (search "Research mega-dropdown: richer
-   items") — that version includes the coordinator subline and
-   trial-count badge. Defining them here too, then overriding most of
-   the same properties later, is exactly the kind of split-definition
-   that's made past header bugs (.hdr.scrolled, .team-member hover)
-   hard to reason about; consolidated to one definition. */
-.hdr-dd-all{
-  flex-shrink:0; margin-top:.65rem; padding:.85rem .5rem .15rem; border-top:1px solid rgba(12,56,104,.08);
-  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem; font-weight:600; letter-spacing:.06em;
-  color:var(--teal,#007A7A); text-decoration:none; text-transform:uppercase; transition:color .2s,gap .2s;
-  display:flex; align-items:center; justify-content:space-between; gap:.5rem;
-}
-.hdr-dd-all[hidden]{ display:none; }
-.hdr-dd-all:hover{ color:var(--navy-2,#0C447C); gap:.75rem; }
-
-/* ── Mobile: show hamburger, hide desktop nav ───────────────────── */
-@media(max-width:880px){
-  .hdr-logo-rule, .hdr-logo-desc{ display:none; }
-  .hdr-nav{ display:none; }
-  .hdr-contact-btn{ display:none; }
-  .mob-toggle{ display:flex!important; }
-  .hdr-inner{ height:var(--hdr-mobile); }
-}
-@media(min-width:881px){
-  .mob-toggle{ display:none; }
-}
 
 /* Back-to-top button */
 .to-top{
@@ -535,76 +298,6 @@ p a:not([class]):hover,li a:not([class]):hover{ color:var(--navy-2,#0C447C); }
    confirmed present in the pages. Consistent, accessible, no markup
    changes required for the CSS-expressible improvements.
    ════════════════════════════════════════════════════════════════ */
-
-/* ─────────────────────────────────────────────────────────────────
-   HEADER ZONE
-   ───────────────────────────────────────────────────────────────── */
-
-/* #4 Scroll-progress bar under the header */
-.scroll-progress{
-  position:fixed; top:0; left:0; height:2px; width:0%;
-  background:linear-gradient(90deg, var(--teal,#007A7A), var(--teal-2,#00B3B3));
-  z-index:1100; transition:width .1s linear; pointer-events:none;
-}
-
-/* #3 Scroll-direction hide/reveal (class toggled by JS) + the
-   homepage announcement-bar top-offset (set in index.html's inline
-   <style>, html:not(.bar-dismissed) .hdr{top:30px}) — both transition
-   properties belong on the SAME declaration here, since this is the
-   .hdr rule that actually wins the cascade (components.css loads after
-   foundation.css, and `transition` as a shorthand fully replaces rather
-   than merges with any earlier declaration of the same property).
-   foundation.css used to also declare its own .hdr transition; that value
-   was being silently discarded by this one loading after it, which
-   meant the bar-dismiss top-offset change was snapping instantly
-   instead of animating. Removed there, consolidated here. */
-.hdr{ transition:transform .4s var(--ease-clinical), top .3s var(--ease-clinical); }
-.hdr.hdr-hidden{ transform:translateY(-100%); }
-
-/* #7 Contact pill gains fill once scrolled past hero */
-.hdr.scrolled .hdr-contact-btn{
-  background:var(--teal,#007A7A); border-color:var(--teal,#007A7A);
-}
-.hdr.scrolled .hdr-contact-btn:hover{
-  background:var(--teal-2,#00B3B3); border-color:var(--teal-2,#00B3B3);
-}
-
-.hdr-dd-item{
-  display:flex; align-items:center; gap:.85rem;
-  text-decoration:none; padding:.55rem .5rem; border-radius:10px; transition:background .2s var(--ease-clinical);
-}
-.hdr-dd-item:hover{ background:var(--teal-lt,#E2F0F0); }
-.hdr-dd-item:hover .hdr-dd-num{ color:var(--navy-2,#0C447C); }
-.hdr-dd-num{
-  font-family:var(--ff-display,'Fraunces',serif); font-size:.95rem; font-weight:600;
-  color:var(--teal,#007A7A); line-height:1.4; flex-shrink:0;
-  min-width:1.6rem; transition:color .2s;
-}
-.hdr-dd-body{ display:flex; flex-direction:column; gap:.18rem; min-width:0; flex:1; }
-.hdr-dd-name{ font-size:.85rem; font-weight:500; color:var(--navy,#0C3868); line-height:1.3; }
-/* Coordinator subline — same buildAvatar() treatment (real photo or
-   typographic monogram) used on the homepage research-area grid, at
-   a size that fits a dense dropdown row. Surfacing who leads each
-   line here, not just its name, is the real content this panel was
-   missing — the data was already being fetched for the homepage
-   grid, just under-displayed in the nav. */
-.hdr-dd-coord{
-  display:flex; align-items:center; gap:.4rem;
-  font-size:.7rem; color:var(--ink-4,#767676); line-height:1.3;
-  font-family:var(--ff-body,'DM Sans',sans-serif); letter-spacing:0;
-}
-.hdr-dd-coord > span:first-child{ flex-shrink:0; width:18px; height:18px; }
-.hdr-dd-trials{
-  flex-shrink:0; align-self:flex-start; margin-top:.15rem;
-  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem; font-weight:600;
-  letter-spacing:.04em; color:var(--teal,#007A7A); background:var(--teal-lt,#E2F0F0);
-  padding:.15rem .4rem; border-radius:100px; white-space:nowrap;
-}
-.hdr-dd-item:hover .hdr-dd-trials{ background:#fff; }
-
-/* #6 Keyboard-operable dropdown: open on focus-within too */
-.hdr-dd:focus-within .hdr-dd-panel{ opacity:1; visibility:visible; transform:translateY(0); }
-.hdr-dd:focus-within .hdr-dd-chevron{ transform:rotate(180deg); }
 
 /* ─────────────────────────────────────────────────────────────────
    NEWS / PUBLICATIONS ZONE
@@ -838,8 +531,6 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
     scroll-behavior:auto !important;
   }
   .reveal{ opacity:1 !important; transform:none !important; }
-  .hdr.hdr-hidden{ transform:none !important; }   /* header never slides away */
-  .hdr-nav-pill{ display:none; }                   /* hover pill is pure motion-decoration */
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -935,78 +626,6 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
 .line-fp svg{ display:block; width:100%; height:auto; }
 .line-card:hover .line-fp{ opacity:.85; }
 
-/* ════════════════════════════════════════════════════════════════
-   HEADER ×20 — supporting styles for the twenty upgrades
-   (JS lives in scripts/site.js + scripts/api.js; every hook below matches
-   a class those files create. Numbers reference the agreed list.)
-   ════════════════════════════════════════════════════════════════ */
-
-/* 4 ── notched-device safe areas */
-.hdr{ padding-left:env(safe-area-inset-left); padding-right:env(safe-area-inset-right); }
-.mob-drawer{ padding-right:env(safe-area-inset-right); padding-top:calc(84px + env(safe-area-inset-top)); }
-
-/* 5 ── live pulse on Research: breathes only while trials enroll */
-.hdr-live-dot{
-  display:inline-block; width:5px; height:5px; border-radius:50%;
-  background:var(--teal-2,#00B3B3); margin-left:.45rem; vertical-align:2px;
-  animation:heroBreathe 5.5s ease-in-out infinite;
-}
-
-/* 19 ── "enrolling" chip on the busiest line */
-.hdr-dd-hot{
-  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.56rem; font-weight:600;
-  letter-spacing:.08em; text-transform:uppercase; color:#fff;
-  background:var(--teal,#007A7A); border-radius:100px; padding:.14rem .45rem;
-  margin-left:.45rem; vertical-align:1px; white-space:nowrap;
-}
-
-/* 6 ── quiet fact line pinned under the panel's view-all link */
-.hdr-dd-fact{
-  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem;
-  letter-spacing:.06em; color:var(--ink-4,#767676); padding:.6rem .5rem 0;
-}
-
-/* 11 ── dropdown items cascade in (18ms apart) */
-@keyframes ddItemIn{ from{opacity:0;transform:translateY(4px);} to{opacity:1;transform:none;} }
-.hdr-dd.open .hdr-dd-item{ animation:ddItemIn .28s var(--ease-clinical) backwards; }
-.hdr-dd.open .hdr-dd-item:nth-child(2){animation-delay:.018s}
-.hdr-dd.open .hdr-dd-item:nth-child(3){animation-delay:.036s}
-.hdr-dd.open .hdr-dd-item:nth-child(4){animation-delay:.054s}
-.hdr-dd.open .hdr-dd-item:nth-child(5){animation-delay:.072s}
-.hdr-dd.open .hdr-dd-item:nth-child(6){animation-delay:.09s}
-.hdr-dd.open .hdr-dd-item:nth-child(n+7){animation-delay:.108s}
-
-
-/* 13 ── the current page's underline fills as you read (JS sets
-   --navprog 0→1). Base is a soft track; the bright fill grows. */
-.hdr-nav-link[data-current="true"]::after{
-  background:linear-gradient(90deg,
-    var(--teal-2,#00B3B3) calc(var(--navprog,0)*100%),
-    rgba(0,179,179,.32) calc(var(--navprog,0)*100%));
-}
-
-/* 3 ── research lines inside the mobile drawer */
-.mob-lines-toggle{
-  display:flex; align-items:center; justify-content:space-between; width:100%;
-  padding:.875rem 1rem .875rem 1.125rem; background:none; border:none; cursor:pointer;
-  font-family:var(--ff-body,'DM Sans',sans-serif); font-size:1rem; font-weight:500;
-  color:rgba(255,255,255,.82); border-radius:10px; text-align:left;
-  transition:background .18s,color .18s;
-}
-.mob-lines-toggle:hover{ background:rgba(255,255,255,.08); color:#fff; }
-.mob-lines-toggle svg{ width:16px; height:16px; transition:transform .25s var(--ease-clinical); flex-shrink:0; }
-.mob-lines-toggle[aria-expanded="true"] svg{ transform:rotate(180deg); }
-.mob-lines{ max-height:0; overflow:hidden; transition:max-height .35s var(--ease-clinical); }
-.mob-lines.open{ max-height:480px; }
-.mob-lines a{
-  display:flex; align-items:center; gap:.6rem;
-  padding:.55rem 1rem .55rem 1.75rem !important; font-size:.875rem !important;
-}
-.mob-lines .ml-num{
-  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.68rem;
-  color:var(--teal-2,#00B3B3); flex-shrink:0;
-}
-
 /* 14 ── first-visit language suggestion */
 .lang-toast{
   position:fixed; right:1rem; bottom:1rem; z-index:2600;
@@ -1022,37 +641,6 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
 }
 .lang-toast .lt-yes{ background:#fff; color:var(--navy-2,#0C447C); border:none; }
 .lang-toast .lt-no{ background:none; color:rgba(255,255,255,.75); border:1px solid rgba(255,255,255,.3); }
-
-/* 15 ── connection status dot (amber when offline / API down) */
-.hdr-status-dot{ display:none; width:7px; height:7px; border-radius:50%; background:#E5A63B; flex-shrink:0; }
-.hdr-status-dot[data-state="down"]{ display:inline-block; }
-
-/* 18 ── scroll-linked theming: over sections marked data-hdr="light"
-   the header frosts light and its ink inverts */
-.hdr.over-light .hdr-main{ background:rgba(247,246,243,.9); border-bottom-color:rgba(12,56,104,.1); }
-.hdr.over-light .hdr-nav-link{ color:rgba(12,56,104,.75); }
-.hdr.over-light .hdr-nav-link:hover,
-.hdr.over-light .hdr-nav-link[data-current="true"]{ color:var(--navy,#0C3868); }
-.hdr.over-light .hdr-nav-pill{ background:rgba(12,56,104,.08); }
-.hdr.over-light .hdr-logo-img{ filter:none; opacity:1; }
-.hdr.over-light .hdr-logo-rule{ background:rgba(12,56,104,.2); }
-.hdr.over-light .hdr-logo-desc{ color:rgba(12,56,104,.55); }
-.hdr.over-light .hdr-contact-btn{ color:var(--navy,#0C3868); border-color:rgba(12,56,104,.3); }
-.hdr.over-light .lang-switch-globe{ color:rgba(12,56,104,.45); }
-.hdr.over-light .lang-switch::before{ background:rgba(12,56,104,.06); border-color:rgba(12,56,104,.12); }
-.hdr.over-light .lang-opt{ color:rgba(12,56,104,.6); }
-.hdr.over-light .lang-opt[aria-checked="true"]{ color:#fff; }
-.hdr.over-light .lang-switch-knob{ background:var(--navy-2,#0C447C); }
-
-/* 12 ── contextual crumb tier on /line/ pages */
-.hdr-crumb{
-  background:rgba(7,17,31,.92); color:rgba(255,255,255,.65);
-  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.68rem;
-  letter-spacing:.06em; padding:.4rem clamp(1.25rem,4vw,3rem);
-  display:flex; align-items:center; gap:.5rem;
-}
-.hdr-crumb a{ color:var(--teal-2,#00B3B3); text-decoration:none; }
-.hdr-crumb .hc-sep{ opacity:.4; }
 
 /* 8+9 ── command palette + shortcuts help */
 .cmdk-overlay{
@@ -1081,13 +669,6 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
   border:1px solid rgba(0,122,122,.25); border-radius:5px; padding:.1rem .35rem; flex-shrink:0;
 }
 .cmdk-empty{ padding:1.25rem; text-align:center; color:var(--ink-4,#767676); font-size:.875rem; }
-.cmdk-hint{
-  display:none; font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem;
-  color:rgba(255,255,255,.5); border:1px solid rgba(255,255,255,.2);
-  border-radius:6px; padding:.2rem .45rem; cursor:pointer; background:none;
-}
-@media(min-width:1100px){ .cmdk-hint{ display:inline-block; } }
-.hdr.over-light .cmdk-hint{ color:rgba(12,56,104,.5); border-color:rgba(12,56,104,.2); }
 .kbd-help{ position:fixed; inset:0; z-index:3000; background:rgba(7,17,31,.55); display:flex; align-items:center; justify-content:center; }
 .kbd-help-card{
   background:#fff; border-radius:16px; padding:1.75rem 2rem; width:min(92vw,420px);
@@ -1288,4 +869,240 @@ body.is-drawer-open{overflow:hidden;}
 .lead-initials{font-family:var(--ff-body);font-size:2.5rem;font-weight:700;color:#007A7A;opacity:.4;letter-spacing:-.02em;}
 .api-down-banner{position:fixed;left:0;right:0;bottom:0;z-index:2500;background:#0C3868;color:#fff;font-family:var(--ff-body,sans-serif);font-size:.8125rem;padding:.7rem 3rem .7rem 1.25rem;text-align:center;box-shadow:0 -2px 12px rgba(7,17,31,.25);}
 .form-error-msg{padding:.625rem .875rem;margin-top:.75rem;border-radius:6px;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);color:#b91c1c;font-size:.8125rem;}
-.hdr-logo-img.is-image-error{opacity:.3;}
+
+/* ════════════════════════════════════════════════════════════════
+   PREMIUM NAVIGATION SYSTEM — Phase 5.1A
+   Canonical owner for the public-site header, research mega-menu,
+   language control and mobile navigation. No utility strip.
+   ════════════════════════════════════════════════════════════════ */
+.hdr{
+  top:0; height:74px; z-index:1200; transform:none;
+  background:rgba(5,42,78,.96);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:none;
+  backdrop-filter:saturate(135%) blur(18px);
+  -webkit-backdrop-filter:saturate(135%) blur(18px);
+  transition:background .25s var(--ease-clinical),box-shadow .25s var(--ease-clinical),height .25s var(--ease-clinical);
+}
+.hdr.hdr-hidden{transform:none;}
+.hdr-main{height:100%;background:transparent;}
+.hdr-inner{
+  max-width:1540px;margin:0 auto;height:74px;padding:0 clamp(1.25rem,3.2vw,3.5rem);
+  display:flex;align-items:center;gap:clamp(1.5rem,2.4vw,2.6rem);
+  transition:height .25s var(--ease-clinical);
+}
+.hdr.scrolled{
+  height:62px;background:rgba(4,34,64,.985);
+  box-shadow:0 10px 36px rgba(2,20,39,.20);
+}
+.hdr.scrolled .hdr-inner{height:62px;}
+
+/* Real neumACt asset + institutional lockup. */
+.hdr-logo{display:flex;align-items:center;gap:1.05rem;text-decoration:none;flex-shrink:0;min-width:0;}
+.hdr-logo-img{
+  display:block;height:34px;width:auto;max-width:180px;object-fit:contain;
+  filter:brightness(0) invert(1);opacity:1;
+  transition:height .25s var(--ease-clinical),opacity .2s;
+}
+.hdr.scrolled .hdr-logo-img{height:30px;}
+.hdr-brand-meta{
+  display:flex;flex-direction:column;gap:.18rem;padding-left:1rem;
+  border-left:1px solid rgba(255,255,255,.22);white-space:nowrap;
+}
+.hdr-brand-title{
+  font-family:var(--ff-mono,'DM Mono',monospace);font-size:.62rem;font-weight:500;
+  letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.82);line-height:1.2;
+}
+.hdr-brand-org{
+  font-family:var(--ff-mono,'DM Mono',monospace);font-size:.54rem;font-weight:500;
+  letter-spacing:.11em;text-transform:uppercase;color:rgba(255,255,255,.43);line-height:1.2;
+}
+.hdr.scrolled .hdr-brand-meta{opacity:.72;}
+
+/* Primary nav: restraint, not dashboard chrome. */
+.hdr-nav{display:flex;align-items:center;justify-content:center;gap:clamp(.3rem,.7vw,.7rem);flex:1;min-width:0;}
+.hdr-nav-pill{display:none!important;}
+.hdr-nav-link{
+  position:relative;display:inline-flex;align-items:center;padding:.75rem .72rem;
+  font-family:var(--ff-body,'DM Sans',sans-serif);font-size:.91rem;font-weight:500;
+  letter-spacing:-.005em;color:rgba(255,255,255,.76);text-decoration:none;white-space:nowrap;
+  transition:color .18s var(--ease-clinical);
+}
+.hdr-nav-link:hover,.hdr-nav-link[data-current="true"]{color:#fff;}
+.hdr-nav-link[data-current="true"]::after{
+  content:"";position:absolute;left:.72rem;right:.72rem;bottom:.35rem;height:2px;
+  border-radius:999px;background:var(--teal-2,#00B3B3);transform:none;
+}
+.hdr-dd{display:flex;align-items:center;position:relative;}
+.hdr-dd-trigger{display:inline-flex;align-items:center;}
+.hdr-dd-chevron{
+  appearance:none;border:0;background:none;color:rgba(255,255,255,.64);cursor:pointer;
+  width:30px;height:34px;display:grid;place-items:center;padding:0;margin-left:-.35rem;
+  border-radius:8px;transition:color .18s,background .18s,transform .22s var(--ease-clinical);
+}
+.hdr-dd-chevron:hover,.hdr-dd-chevron:focus-visible{color:#fff;background:rgba(255,255,255,.07);outline:none;}
+.hdr-dd-chevron svg{width:14px;height:14px;transition:transform .22s var(--ease-clinical);}
+.hdr-dd.open .hdr-dd-chevron svg,.hdr-dd-chevron[aria-expanded="true"] svg{transform:rotate(180deg);}
+
+/* Quiet utility cluster. */
+.hdr-right{display:flex;align-items:center;gap:.8rem;flex-shrink:0;}
+.hdr-search-btn{
+  appearance:none;border:0;background:transparent;color:rgba(255,255,255,.76);cursor:pointer;
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  transition:color .18s,background .18s,transform .18s;
+}
+.hdr-search-btn svg{width:20px;height:20px;}
+.hdr-search-btn:hover,.hdr-search-btn:focus-visible{color:#fff;background:rgba(255,255,255,.08);outline:none;}
+.hdr-search-btn:active{transform:scale(.96);}
+.lang-switch{
+  position:relative;display:inline-grid;grid-template-columns:1fr 1fr;align-items:center;
+  min-width:76px;padding:3px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.08);border-radius:999px;
+}
+.lang-switch::before{content:none;}
+.lang-switch-knob{
+  position:absolute;left:3px;top:3px;bottom:3px;width:calc(50% - 3px);
+  background:#fff;border-radius:999px;box-shadow:0 2px 8px rgba(2,20,39,.18);
+  transition:transform .28s cubic-bezier(.2,.8,.2,1);
+}
+html[data-lang="es"] .lang-switch-knob{transform:translateX(100%);}
+.lang-opt{
+  position:relative;z-index:1;appearance:none;border:0;background:none;cursor:pointer;
+  min-width:34px;padding:.28rem .5rem;border-radius:999px;
+  font-family:var(--ff-body,'DM Sans',sans-serif);font-size:.72rem;font-weight:650;
+  letter-spacing:.04em;color:rgba(255,255,255,.68);line-height:1;
+  transition:color .2s;
+}
+.lang-opt[aria-checked="true"]{color:#07325c;}
+.lang-opt:focus-visible{outline:2px solid var(--teal-2,#00B3B3);outline-offset:3px;}
+.hdr-contact-btn{
+  display:inline-flex;align-items:center;gap:.7rem;padding:.68rem 1.18rem;
+  border:1px solid rgba(255,255,255,.28);border-radius:999px;
+  color:#fff;text-decoration:none;font-size:.86rem;font-weight:600;letter-spacing:.005em;
+  background:rgba(255,255,255,.02);
+  transition:background .2s,border-color .2s,transform .2s,box-shadow .2s;
+}
+.hdr-contact-btn:hover{
+  background:#fff;color:#07325c;border-color:#fff;transform:translateY(-1px);
+  box-shadow:0 10px 26px rgba(2,20,39,.22);
+}
+.hdr-contact-arrow{font-size:1.02rem;line-height:1;transition:transform .2s;}
+.hdr-contact-btn:hover .hdr-contact-arrow{transform:translateX(2px);}
+
+/* Research mega-menu: an editorial research surface, not a generic card. */
+.hdr-dd-panel{
+  position:fixed;left:50%;top:74px;width:min(1040px,calc(100vw - 48px));
+  display:grid;grid-template-columns:minmax(260px,.78fr) minmax(0,1.72fr);
+  background:rgba(252,253,254,.985);color:#0b2e53;
+  border:1px solid rgba(12,56,104,.10);border-radius:0 0 22px 22px;
+  box-shadow:0 30px 70px rgba(2,20,39,.24),0 3px 12px rgba(2,20,39,.08);
+  overflow:hidden;opacity:0;visibility:hidden;pointer-events:none;
+  transform:translate(-50%,-10px);transform-origin:top center;
+  transition:opacity .22s var(--ease-clinical),transform .26s var(--ease-clinical),visibility .22s;
+}
+.hdr.scrolled .hdr-dd-panel{top:62px;}
+.hdr-dd.open .hdr-dd-panel,.hdr-dd:focus-within .hdr-dd-panel{
+  opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0);
+}
+.hdr-mega-intro{
+  position:relative;padding:2.25rem 2.15rem 2rem;
+  background:linear-gradient(145deg,#f8fbfd 0%,#eef5f8 100%);
+  border-right:1px solid rgba(12,56,104,.09);overflow:hidden;
+}
+.hdr-mega-intro::after{
+  content:"";position:absolute;inset:auto -80px -80px auto;width:240px;height:240px;
+  background:url('/assets/hero-lungs.webp') center/cover no-repeat;border-radius:50%;opacity:.075;filter:saturate(.7);
+}
+.hdr-mega-kicker{
+  position:relative;z-index:1;margin:0 0 .75rem;font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.65rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#007f8d;
+}
+.hdr-mega-title{
+  position:relative;z-index:1;margin:0 0 .9rem;max-width:13ch;
+  font-family:var(--ff-display,'Fraunces',serif);font-size:clamp(1.65rem,2.1vw,2.2rem);
+  font-weight:600;line-height:1.05;letter-spacing:-.025em;color:#0b2e53;
+}
+.hdr-mega-copy{
+  position:relative;z-index:1;margin:0 0 1.45rem;max-width:34ch;
+  font-size:.88rem;line-height:1.65;color:#586b7e;
+}
+.hdr-mega-portfolio{
+  position:relative;z-index:1;display:inline-flex;align-items:center;gap:.65rem;
+  padding:.7rem 1rem;border:1px solid rgba(7,50,92,.22);border-radius:999px;
+  color:#07325c;text-decoration:none;font-size:.8rem;font-weight:650;background:#fff;
+  transition:background .18s,color .18s,border-color .18s,transform .18s;
+}
+.hdr-mega-portfolio:hover{background:#07325c;color:#fff;border-color:#07325c;transform:translateY(-1px);}
+.hdr-mega-metrics{
+  position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+  margin-top:1.7rem;padding-top:1.3rem;border-top:1px solid rgba(12,56,104,.10);
+}
+.hdr-mega-metrics>div{display:flex;align-items:baseline;gap:.55rem;}
+.hdr-mega-metrics strong{font-family:var(--ff-display,'Fraunces',serif);font-size:1.6rem;line-height:1;color:#07325c;}
+.hdr-mega-metrics span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:.56rem;line-height:1.35;letter-spacing:.06em;text-transform:uppercase;color:#748292;}
+.hdr-mega-lines{padding:1.7rem 1.8rem 1.5rem;min-width:0;background:#fff;}
+.hdr-mega-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;padding:0 .15rem;}
+.hdr-mega-head p{margin:0;font-family:var(--ff-mono,'DM Mono',monospace);font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#6a7a8a;}
+.hdr-mega-head-note{font-size:.72rem;color:#99a4af;}
+.hdr-dd-panel-inner{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .8rem;max-height:none;overflow:visible;margin:0;padding:0;}
+.hdr-dd-item{
+  display:grid;grid-template-columns:64px minmax(0,1fr) 20px;align-items:center;gap:.85rem;
+  padding:.65rem;border-radius:12px;text-decoration:none;color:#0b2e53;
+  border:1px solid transparent;transition:background .18s,border-color .18s,transform .18s;
+}
+.hdr-dd-item:hover,.hdr-dd-item:focus-visible{
+  background:#f4f8fa;border-color:rgba(12,56,104,.08);transform:translateY(-1px);outline:none;
+}
+.hdr-dd-thumb{
+  width:64px;height:48px;border-radius:9px;overflow:hidden;display:block;
+  background:linear-gradient(145deg,#062d56,#0b5b84);color:#34d1d1;position:relative;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.hdr-dd-thumb svg{width:100%;height:100%;display:block;opacity:.95;}
+.hdr-dd-body{display:flex;flex-direction:column;gap:.24rem;min-width:0;}
+.hdr-dd-num{font-family:var(--ff-mono,'DM Mono',monospace);font-size:.61rem;font-weight:700;letter-spacing:.06em;color:#008a99;}
+.hdr-dd-name{font-size:.82rem;font-weight:600;line-height:1.28;color:#0b2e53;}
+.hdr-dd-meta{font-size:.68rem;color:#8793a0;line-height:1.25;}
+.hdr-dd-arrow{display:grid;place-items:center;color:#315c7d;font-size:1rem;transition:transform .18s,color .18s;}
+.hdr-dd-item:hover .hdr-dd-arrow{transform:translateX(2px);color:#008a99;}
+.hdr-dd-all{
+  display:flex;align-items:center;justify-content:flex-end;gap:.5rem;margin-top:.8rem;padding:.8rem .15rem 0;
+  border-top:1px solid rgba(12,56,104,.08);font-size:.76rem;font-weight:650;color:#0b5f75;text-decoration:none;
+}
+.hdr-dd-all[hidden]{display:none;}
+.hdr-dd-all:hover{color:#07325c;}
+
+/* Context crumb stays dark and integrated directly under the header. */
+.hdr-crumb{
+  background:#061b31;color:rgba(255,255,255,.62);font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.66rem;letter-spacing:.05em;padding:.48rem clamp(1.25rem,4vw,3rem);display:flex;align-items:center;gap:.55rem;
+}
+.hdr-crumb a{color:#47cbd0;text-decoration:none;}.hdr-crumb .hc-sep{opacity:.38;}
+.hdr-status-dot{display:none;width:6px;height:6px;border-radius:50%;background:#e5a63b;}.hdr-status-dot[data-state="down"]{display:inline-block;}
+.hdr-logo-img.is-image-error{opacity:.35;}
+
+/* Mobile navigation follows the same visual system. */
+@media(max-width:1100px){.hdr-brand-meta{display:none}.hdr-inner{gap:1.1rem}.hdr-nav{gap:.15rem}.hdr-nav-link{padding-inline:.55rem}.hdr-contact-btn{padding-inline:1rem}}
+@media(max-width:880px){
+  .hdr,.hdr.scrolled{height:64px}.hdr-inner,.hdr.scrolled .hdr-inner{height:64px;padding:0 1rem;gap:.75rem}
+  .hdr-logo-img,.hdr.scrolled .hdr-logo-img{height:30px;max-width:150px}.hdr-nav,.hdr-contact-btn{display:none}
+  .hdr-right{gap:.35rem;margin-left:auto}.hdr-search-btn{width:36px;height:36px}.lang-switch{min-width:70px}
+  .mob-toggle{display:flex!important;width:40px;height:40px;border-radius:50%;background:transparent;border:1px solid rgba(255,255,255,.12)}
+  .mob-toggle span{width:18px;background:#fff}
+  .mob-overlay{background:rgba(2,18,35,.58);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+  .mob-drawer{width:min(390px,92vw);padding-top:82px;background:linear-gradient(165deg,#052d55 0%,#061a31 100%);box-shadow:-22px 0 60px rgba(2,18,35,.38)}
+  .mob-drawer-nav{padding:1.2rem 1rem .8rem;gap:.15rem}.mob-drawer-nav a{font-size:1.06rem;padding:.9rem 1rem;border-radius:12px}
+  .mob-drawer-nav a.current{background:rgba(255,255,255,.07)}.mob-drawer-nav a.current::before{display:none}
+  .mob-lines-toggle{font-size:.92rem;padding:.8rem 1rem;color:rgba(255,255,255,.72)}
+  .mob-lines-toggle svg{width:15px;height:15px;transition:transform .22s var(--ease-clinical)}
+  .mob-lines-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+  .mob-lines{max-height:0;overflow:hidden;transition:max-height .3s var(--ease-clinical)}
+  .mob-lines.open{max-height:520px}
+  .mob-lines .ml-num{font-family:var(--ff-mono,'DM Mono',monospace);font-size:.65rem;color:#57d4d5;flex-shrink:0}
+  .mob-lines a{display:flex!important;align-items:center;gap:.65rem}
+  .mob-lines a{padding:.6rem 1rem .6rem 1.5rem!important;font-size:.84rem!important}
+  .mob-lang{padding:1rem 1.25rem 1.35rem;border-top:1px solid rgba(255,255,255,.1)}
+  .hdr-dd-panel{display:none!important}
+}
+@media(min-width:881px){.mob-toggle{display:none!important}}
+@media(max-width:560px){.hdr-search-btn{display:none}.hdr-right{gap:.25rem}.lang-switch{min-width:66px}.lang-opt{padding-inline:.38rem}.hdr-logo-img{height:28px}}

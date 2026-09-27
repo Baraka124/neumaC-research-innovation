@@ -1456,58 +1456,37 @@ async function loadHeaderResearchDropdown(isRetry = false) {
     const lines = data || [];
     if (!lines.length) {
       if (!isRetry) { setTimeout(() => loadHeaderResearchDropdown(true), 800); return; }
-      // Both attempts came back empty — leave a real, working link instead
-      // of silently wiping the menu, which previously looked like the
-      // dropdown had simply lost its contents with no way to recover.
       menu.innerHTML = '';
-      if (allLink) {
-        allLink.hidden = false;
-        allLink.innerHTML = '<span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →';
-      }
+      if (allLink) { allLink.hidden = false; }
       return;
     }
+
     menu.style.transition = 'none';
     menu.style.opacity = '0';
-    /* 19 ── the line with the most active trials gets a quiet
-       "enrolling" chip — attention goes where the department wants
-       recruitment attention. Only when it's meaningfully ahead. */
-    let hotId = null, maxTrials = 0;
-    lines.forEach(l => { if ((l.active_trials||0) > maxTrials) { maxTrials = l.active_trials; hotId = l.id; } });
-    if (maxTrials < 2) hotId = null;
     menu.innerHTML = lines.map(l => {
-      const coord = l.coordinator;
-      const avatar = coord?.full_name ? buildAvatar(coord, 20) : '';
-      const trialCount = l.active_trials > 0
-        ? `<span class="hdr-dd-trials">${l.active_trials}</span>` : '';
-      const hot = l.id === hotId
-        ? '<span class="hdr-dd-hot"><span lang="en">enrolling</span><span lang="es">reclutando</span></span>' : '';
+      const trials = Number(l.active_trials || 0);
+      const meta = trials > 0
+        ? `<span class="hdr-dd-meta"><span lang="en">${trials} active stud${trials===1?'y':'ies'}</span><span lang="es">${trials} estudio${trials===1?'':'s'} activo${trials===1?'':'s'}</span></span>`
+        : `<span class="hdr-dd-meta"><span lang="en">Research line</span><span lang="es">Línea de investigación</span></span>`;
+      const fp = typeof buildLineFingerprint === 'function' ? buildLineFingerprint(l, 96, 64) : '';
       return `
       <a class="hdr-dd-item" href="/line/?id=${l.id}">
-        <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
+        <span class="hdr-dd-thumb" aria-hidden="true">${fp}</span>
         <span class="hdr-dd-body">
-          <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}${hot}</span>
-          ${coord?.full_name ? `<span class="hdr-dd-coord">${avatar}<span>${escHtml(coord.full_name)}</span></span>` : ''}
+          <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
+          <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
+          ${meta}
         </span>
-        ${trialCount}
+        <span class="hdr-dd-arrow" aria-hidden="true">→</span>
       </a>`;
     }).join('');
 
-    /* 5 ── live pulse on the "Research" trigger while anything is
-       actively enrolling — a 5px dot breathing at the hero's tidal
-       rhythm. Status, not ornament: absent when nothing enrolls. */
-    const totalActive = lines.reduce((s, l) => s + (l.active_trials || 0), 0);
-    const trigger = document.querySelector('.hdr-dd .hdr-nav-link');
-    if (totalActive > 0 && trigger && !trigger.querySelector('.hdr-live-dot')) {
-      const dot = document.createElement('span');
-      dot.className = 'hdr-live-dot';
-      dot.setAttribute('aria-hidden', 'true');
-      trigger.appendChild(dot);
-    }
+    const totalActive = lines.reduce((s, l) => s + Number(l.active_trials || 0), 0);
+    const lineCount = document.getElementById('hdrMegaLinesCount');
+    const studiesCount = document.getElementById('hdrMegaStudiesCount');
+    if (lineCount) lineCount.textContent = String(lines.length);
+    if (studiesCount) studiesCount.textContent = totalActive > 0 ? String(totalActive) : '—';
 
-    /* 3 ── the drawer finally gets the header's best content: an
-       expandable "Research lines" group built from this same data.
-       Before this, the richest nav content was desktop-only — on
-       the device most visitors actually use, it didn't exist. */
     const drawerNav = document.querySelector('#mobDrawer .mob-drawer-nav');
     if (drawerNav && !document.getElementById('mobLines')) {
       const researchLink = drawerNav.querySelector('a[href="/clinical/"]');
@@ -1530,19 +1509,13 @@ async function loadHeaderResearchDropdown(isRetry = false) {
         tgl.setAttribute('aria-expanded', String(on));
       });
     }
-    if (allLink) {
-      allLink.hidden = false;
-      allLink.innerHTML = `<span lang="en">View all ${lines.length} lines</span><span lang="es">Ver las ${lines.length} líneas</span> →`;
-    }
+    if (allLink) { allLink.hidden = false; }
     requestAnimationFrame(() => { menu.style.transition = 'opacity .18s var(--ease-clinical)'; menu.style.opacity = '1'; });
   } catch (err) {
     console.error('Header research dropdown failed:', err);
     if (!isRetry) { setTimeout(() => loadHeaderResearchDropdown(true), 800); return; }
     menu.innerHTML = '';
-    if (allLink) {
-      allLink.hidden = false;
-      allLink.innerHTML = '<span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →';
-    }
+    if (allLink) allLink.hidden = false;
   }
 }
 
@@ -1557,7 +1530,7 @@ function initHeaderDropdown() {
   if (!chevron) return;
 
   function close() { dd.classList.remove('open'); chevron.setAttribute('aria-expanded', 'false'); }
-  function open() { dd.classList.add('open'); chevron.setAttribute('aria-expanded', 'true'); loadDropdownFact(dd); }
+  function open() { dd.classList.add('open'); chevron.setAttribute('aria-expanded', 'true'); }
 
   /* 2 ── hover-intent: raw :hover-open flickered on diagonal cursor
      travel and stuck on hybrid touch devices. 120ms before opening

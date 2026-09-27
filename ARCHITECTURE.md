@@ -138,3 +138,7 @@ node --check scripts/pages/feed.js
 ## Deliberately not part of consolidation
 
 The consolidation does not change backend contracts, Supabase/Railway behaviour, research/study/project data semantics, editorial content or the intended visual identity. The next major work can therefore be a visual/experience redesign on top of a stable ownership model rather than another patch layer.
+
+## Phase 5.1A — premium navigation system
+
+The public header is owned by `styles/components.css` and the existing shared runtimes. It uses the real `/logo.svg` asset, a persistent dark institutional shell, a semantic EN/ES control without a redundant globe glyph, a search trigger bound to the command palette, and an editorial research mega-menu populated from the public research-lines endpoint. The homepage hero uses `/assets/hero-lungs.webp`; the previous announcement strip and animated hero canvas are retired.

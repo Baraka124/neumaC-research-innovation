@@ -72,3 +72,15 @@ test('research line detail reveals after API render', async ({ page }) => {
   await expect(page.locator('#lineTitle')).toContainText('Transplantation');
   await expect(page.locator('#lineLoadingState')).toBeHidden();
 });
+
+test('premium header research menu and search remain interactive', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#hdrSearchBtn')).toBeVisible();
+  await page.click('.hdr-dd-chevron');
+  await expect(page.locator('.hdr-dd')).toHaveClass(/open/);
+  await expect(page.locator('.hdr-dd-panel')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.hdr-dd')).not.toHaveClass(/open/);
+  await page.click('#hdrSearchBtn');
+  await expect(page.locator('.cmdk-overlay')).toBeVisible();
+});
