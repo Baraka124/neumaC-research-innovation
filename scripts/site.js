@@ -15,7 +15,7 @@
   }
 
   function syncLangControls(lang){
-    document.querySelectorAll('[data-lang]').forEach(function(btn){
+    document.querySelectorAll('.lang-opt[data-lang], .lt-btn[data-lang]').forEach(function(btn){
       var on=btn.dataset.lang===lang;
       if(btn.classList.contains('lt-btn')) btn.classList.toggle('lt-btn--active',on);
       if(btn.classList.contains('lang-opt')) btn.tabIndex=on?0:-1;
@@ -92,7 +92,7 @@
     if(langSw)langSw.addEventListener('click',function(e){e.stopPropagation();});
 
     document.addEventListener('click',function(e){
-      var langButton=e.target.closest('[data-lang]');
+      var langButton=e.target.closest('.lang-opt[data-lang], .lt-btn[data-lang]');
       if(langButton){
         var lang=langButton.dataset.lang;
         if(lang==='en'||lang==='es'){e.preventDefault();window.selectLang(lang);}
