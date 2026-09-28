@@ -42,6 +42,333 @@
   }
   window.selectLang=function(lang){setLang(lang,true);};
 
+  /* ================================================================
+     GLOBAL H1 — EDITORIAL INDEX MASTHEAD
+     Shared across every public page. The existing primary navigation remains
+     visible on desktop; Index/Search open one common editorial surface.
+     On tablet/mobile the same surface becomes the full navigation reader.
+     ================================================================ */
+  var INDEX_BREAKPOINT=880;
+  var indexState={
+    panel:null,surface:null,indexView:null,searchView:null,input:null,results:null,
+    mode:'index',open:false,lastFocus:null,lines:[],people:[],posts:[],loaded:false,loading:false,
+    filter:'all',projects:[]
+  };
+
+  function ixEsc(v){
+    return String(v==null?'':v).replace(/[&<>'\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c];});
+  }
+  function ixBi(en,es){return '<span lang="en">'+ixEsc(en)+'</span><span lang="es">'+ixEsc(es)+'</span>';}
+  function ixSlug(v){
+    return String(v||'').replace(/\b(?:Dra|Dr|Prof)\.?\s*/gi,'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  }
+  var IX_LINE_LABELS={
+    1:['Transplantation & Pulmonary Hypertension','Trasplante e hipertensión pulmonar'],
+    2:['Airway Diseases','Enfermedades de la vía aérea'],
+    3:['Interventional Pneumology & Lung Cancer','Neumología intervencionista y cáncer de pulmón'],
+    4:['Respiratory Failure & Sleep Medicine','Insuficiencia respiratoria y medicina del sueño'],
+    5:['Innovation in Thoracic Surgery','Innovación en cirugía torácica'],
+    6:['Precision Medicine & Clinical Innovation','Medicina de precisión e innovación clínica']
+  };
+  var IX_ROLE_LABELS={
+    attending_physician:['Physician','Médico/a'],specialist_physician:['Physician','Médico/a'],
+    primary_care_physician:['Primary care physician','Médico/a de atención primaria'],
+    medical_resident:['Resident physician','Médico/a residente'],researcher:['Researcher','Investigador/a'],
+    research_scientist:['Research scientist','Personal investigador'],biologist:['Biologist','Biólogo/a'],
+    nurse:['Nurse','Enfermero/a'],research_nurse:['Research nurse','Enfermero/a de investigación'],
+    biomedical_engineer:['Biomedical engineer','Ingeniero/a biomédico/a'],computer_scientist:['Computer scientist','Profesional de informática'],
+    data_scientist:['Data science','Ciencia de datos'],data_manager:['Data manager','Gestor/a de datos']
+  };
+  function ixReadLocalized(obj,key,lang){
+    if(!obj)return '';
+    var direct=obj[key+'_'+lang]; if(direct!=null&&String(direct).trim())return String(direct).trim();
+    var value=obj[key];
+    if(value&&typeof value==='object'&&value[lang]!=null&&String(value[lang]).trim())return String(value[lang]).trim();
+    return value!=null&&typeof value!=='object'?String(value).trim():'';
+  }
+  function ixLinePair(l){
+    var mapped=IX_LINE_LABELS[Number(l&&l.line_number||0)]||['',''];
+    var en=ixReadLocalized(l,'short_name','en')||ixReadLocalized(l,'name','en')||mapped[0]||String(l&&l.short_name||l&&l.name||'').trim();
+    var es=ixReadLocalized(l,'short_name','es')||ixReadLocalized(l,'name','es')||mapped[1]||en;
+    return [en,es];
+  }
+  function ixPersonRolePair(p){
+    if(p&&IX_ROLE_LABELS[p.staff_type])return IX_ROLE_LABELS[p.staff_type];
+    var raw=String(p&&p.public_role||p&&p.specialization||'').trim();
+    if(/^neumolog[ií]a$/i.test(raw)||/^pulmonology$/i.test(raw))return ['Pulmonology','Neumología'];
+    if(/^medicina de familia$/i.test(raw)||/^family medicine$/i.test(raw))return ['Family Medicine','Medicina de Familia'];
+    return raw?[raw,raw]:['Team','Equipo'];
+  }
+  function ixProjectPair(p,key){
+    var en=ixReadLocalized(p,key,'en');var es=ixReadLocalized(p,key,'es');
+    if(!en)en=es||'';if(!es)es=en||'';return [en,es];
+  }
+  function ixSearchSvg(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>';}
+  function ixApi(path){
+    if(!window.fetch)return Promise.reject(new Error('fetch unavailable'));
+    var base=(window.NEUMAC_CONFIG&&window.NEUMAC_CONFIG.apiBase)||'';
+    return fetch(base+path,{headers:{'Accept':'application/json'}}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();});
+  }
+  function ixPageKey(){
+    var h=document.getElementById('hdr');
+    var p=(h&&h.dataset.page)||'';
+    if(p==='clinical'||p==='line')return 'research';
+    if(p==='news')return 'articles';
+    return p;
+  }
+  function ixBuild(){
+    if(indexState.panel)return;
+    var hdr=document.getElementById('hdr'); if(!hdr)return;
+
+    var right=hdr.querySelector('.hdr-right');
+    if(right&&!document.getElementById('hdrIndexBtn')){
+      var indexBtn=document.createElement('button');
+      indexBtn.type='button'; indexBtn.className='hdr-index-btn'; indexBtn.id='hdrIndexBtn';
+      indexBtn.setAttribute('aria-haspopup','dialog'); indexBtn.setAttribute('aria-controls','globalIndex'); indexBtn.setAttribute('aria-expanded','false');
+      indexBtn.innerHTML=ixBi('Index','Índice');
+      var contact=right.querySelector('.hdr-contact-btn');
+      if(contact)right.insertBefore(indexBtn,contact); else right.appendChild(indexBtn);
+    }
+
+    var active=ixPageKey();
+    var wrap=document.createElement('div');
+    wrap.className='global-index'; wrap.id='globalIndex'; wrap.hidden=true; wrap.setAttribute('aria-hidden','true');
+    wrap.innerHTML='\
+      <div class="global-index__backdrop" id="globalIndexBackdrop" aria-hidden="true"></div>\
+      <section class="global-index__surface" id="globalIndexSurface" role="dialog" aria-modal="true" aria-labelledby="globalIndexTitle" tabindex="-1">\
+        <div class="global-index__mobile-head">\
+          <a href="/" class="global-index__mobile-brand" aria-label="neumACt"><img src="/logo.svg" alt="neumACt"></a>\
+          <button type="button" class="global-index__close global-index__close--mobile" data-index-close aria-label="Close / Cerrar"><span aria-hidden="true">×</span></button>\
+        </div>\
+        <div class="global-index__toolbar">\
+          <p class="global-index__title" id="globalIndexTitle">'+ixBi('Index','Índice')+'</p>\
+          <div class="global-index__toolbar-actions">\
+            <button type="button" class="global-index__search-trigger" id="globalIndexSearchOpen">'+ixSearchSvg()+'<span>'+ixBi('Search neumACt…','Buscar en neumACt…')+'</span></button>\
+            <button type="button" class="global-index__close" data-index-close aria-label="Close / Cerrar"><span aria-hidden="true">×</span></button>\
+          </div>\
+        </div>\
+        <div class="global-index__index-view" id="globalIndexIndexView">\
+          <nav class="global-index__chapters" aria-label="Site index">\
+            <a href="/clinical/" class="global-index__chapter '+(active==='research'?'is-current':'')+'"><span class="global-index__chapter-no">01</span><span class="global-index__chapter-name">'+ixBi('Research','Investigación')+'</span></a>\
+            <a href="/innovation/" class="global-index__chapter '+(active==='innovation'?'is-current':'')+'"><span class="global-index__chapter-no">02</span><span class="global-index__chapter-name">'+ixBi('Innovation','Innovación')+'</span></a>\
+            <a href="/news/" class="global-index__chapter '+(active==='articles'?'is-current':'')+'"><span class="global-index__chapter-no">03</span><span class="global-index__chapter-name">'+ixBi('Publications','Publicaciones')+'</span></a>\
+            <a href="/team/" class="global-index__chapter '+(active==='team'?'is-current':'')+'"><span class="global-index__chapter-no">04</span><span class="global-index__chapter-name">'+ixBi('Team','Equipo')+'</span></a>\
+          </nav>\
+          <section class="global-index__lines" aria-labelledby="globalIndexLinesTitle">\
+            <div class="global-index__section-head">\
+              <h2 id="globalIndexLinesTitle">'+ixBi('Research lines','Líneas de investigación')+'</h2>\
+              <a href="/clinical/">'+ixBi('View research','Ver investigación')+'</a>\
+            </div>\
+            <div class="global-index__line-list" id="globalIndexLines"><div class="global-index__loading">'+ixBi('Loading research lines…','Cargando líneas de investigación…')+'</div></div>\
+          </section>\
+          <aside class="global-index__utilities">\
+            <p class="global-index__utility-label">'+ixBi('Explore','Explorar')+'</p>\
+            <button type="button" class="global-index__utility-link" data-open-index-search>'+ixBi('Search neumACt','Buscar en neumACt')+'</button>\
+            <a class="global-index__utility-link" href="/#contact">'+ixBi('Contact','Contacto')+'</a>\
+            <div class="global-index__latest" id="globalIndexLatest" hidden></div>\
+            <div class="global-index__institutions" aria-label="Institutions">\
+              <span>Área Sanitaria da Coruña e Cee</span><span>INIBIC</span><span>SERGAS</span>\
+            </div>\
+          </aside>\
+        </div>\
+        <div class="global-index__search-view" id="globalIndexSearchView" hidden>\
+          <div class="global-search__head">\
+            <button type="button" class="global-search__back" id="globalIndexSearchBack">← '+ixBi('Index','Índice')+'</button>\
+            <p>'+ixBi('Search neumACt','Buscar en neumACt')+'</p>\
+            <button type="button" class="global-index__close global-search__close" data-index-close aria-label="Close / Cerrar"><span aria-hidden="true">×</span></button>\
+          </div>\
+          <label class="global-search__field">\
+            <span class="global-search__icon" aria-hidden="true">'+ixSearchSvg()+'</span>\
+            <input id="globalIndexSearchInput" type="search" autocomplete="off" aria-label="Search neumACt / Buscar en neumACt" placeholder="Search research, people, publications…" data-placeholder-en="Search research, people, publications…" data-placeholder-es="Buscar investigación, personas, publicaciones…">\
+          </label>\
+          <div class="global-search__filters" id="globalIndexSearchFilters" role="group" aria-label="Search filters">\
+            <button type="button" data-filter="all" class="is-active">'+ixBi('All','Todo')+'</button>\
+            <button type="button" data-filter="research">'+ixBi('Research','Investigación')+'</button>\
+            <button type="button" data-filter="people">'+ixBi('People','Personas')+'</button>\
+            <button type="button" data-filter="articles">'+ixBi('Publications','Publicaciones')+'</button>\
+            <button type="button" data-filter="innovation">'+ixBi('Innovation','Innovación')+'</button>\
+          </div>\
+          <div class="global-search__results" id="globalIndexSearchResults" aria-live="polite"></div>\
+        </div>\
+        <div class="global-index__footer">\
+          <span>Área Sanitaria da Coruña e Cee</span><span aria-hidden="true">·</span><span>INIBIC</span><span aria-hidden="true">·</span><span>SERGAS</span>\
+          <div class="global-index__footer-lang" role="radiogroup" aria-label="Language / Idioma">\
+            <button class="lt-btn" data-lang="en" role="radio">EN</button><button class="lt-btn" data-lang="es" role="radio">ES</button>\
+          </div>\
+        </div>\
+      </section>';
+    hdr.after(wrap);
+    indexState.panel=wrap;
+    indexState.surface=wrap.querySelector('#globalIndexSurface');
+    indexState.indexView=wrap.querySelector('#globalIndexIndexView');
+    indexState.searchView=wrap.querySelector('#globalIndexSearchView');
+    indexState.input=wrap.querySelector('#globalIndexSearchInput');
+    indexState.results=wrap.querySelector('#globalIndexSearchResults');
+
+    var idxBtn=document.getElementById('hdrIndexBtn');
+    if(idxBtn)idxBtn.addEventListener('click',function(){indexState.open?ixClose(true):ixOpen('index',idxBtn);});
+    wrap.querySelectorAll('[data-index-close]').forEach(function(btn){btn.addEventListener('click',function(){ixClose(true);});});
+    wrap.querySelector('#globalIndexBackdrop').addEventListener('click',function(){ixClose(true);});
+    wrap.querySelector('#globalIndexSearchOpen').addEventListener('click',function(){ixSetMode('search',true);});
+    wrap.querySelectorAll('[data-open-index-search]').forEach(function(btn){btn.addEventListener('click',function(){ixSetMode('search',true);});});
+    wrap.querySelector('#globalIndexSearchBack').addEventListener('click',function(){ixSetMode('index',true);});
+    wrap.querySelector('#globalIndexSearchFilters').addEventListener('click',function(e){
+      var b=e.target.closest('[data-filter]');if(!b)return;
+      indexState.filter=b.dataset.filter||'all';
+      wrap.querySelectorAll('#globalIndexSearchFilters [data-filter]').forEach(function(x){x.classList.toggle('is-active',x===b);});
+      ixRenderSearch();
+    });
+    indexState.input.addEventListener('input',ixRenderSearch);
+    wrap.addEventListener('click',function(e){if(e.target.closest('a[href]'))ixClose(false);});
+
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&indexState.open){e.preventDefault();ixClose(true);return;}
+      if(e.key!=='Tab'||!indexState.open)return;
+      var focusable=Array.prototype.slice.call(indexState.surface.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(function(el){return !el.hidden&&el.offsetParent!==null;});
+      if(!focusable.length)return;
+      var first=focusable[0],last=focusable[focusable.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    });
+    document.addEventListener('neumac:languagechange',function(){ixSyncLanguage();ixRenderLines();ixRenderLatest();ixRenderSearch();});
+    ixSyncLanguage();
+  }
+
+  function ixSyncLanguage(){
+    if(!indexState.panel)return;
+    var lang=root.dataset.lang||'en';
+    if(indexState.input)indexState.input.placeholder=indexState.input.getAttribute('data-placeholder-'+lang)||'';
+    indexState.panel.querySelectorAll('.global-index__footer-lang [data-lang]').forEach(function(btn){
+      var on=btn.dataset.lang===lang;btn.classList.toggle('lt-btn--active',on);btn.setAttribute('aria-checked',String(on));
+    });
+  }
+
+  function ixOpen(mode,trigger){
+    ixBuild(); if(!indexState.panel)return;
+    if(indexState.open&&mode===indexState.mode){return;}
+    indexState.lastFocus=trigger||document.activeElement;
+    indexState.panel.hidden=false;indexState.panel.setAttribute('aria-hidden','false');
+    document.body.classList.add('is-index-open');
+    indexState.open=true;
+    var idxBtn=document.getElementById('hdrIndexBtn'); if(idxBtn)idxBtn.setAttribute('aria-expanded','true');
+    var mob=document.getElementById('mobToggle'); if(mob)mob.setAttribute('aria-expanded','true');
+    ixSetMode(mode||'index',false);
+    requestAnimationFrame(function(){indexState.panel.classList.add('is-open');if(mode==='search'&&indexState.input)indexState.input.focus();else indexState.surface.focus({preventScroll:true});});
+    ixLoadData();
+  }
+  function ixClose(restore){
+    if(!indexState.panel||!indexState.open)return;
+    indexState.panel.classList.remove('is-open');indexState.panel.setAttribute('aria-hidden','true');
+    document.body.classList.remove('is-index-open');indexState.open=false;
+    var idxBtn=document.getElementById('hdrIndexBtn'); if(idxBtn)idxBtn.setAttribute('aria-expanded','false');
+    var mob=document.getElementById('mobToggle'); if(mob)mob.setAttribute('aria-expanded','false');
+    setTimeout(function(){if(indexState.panel&&!indexState.open)indexState.panel.hidden=true;},230);
+    if(restore&&indexState.lastFocus&&document.contains(indexState.lastFocus)){try{indexState.lastFocus.focus({preventScroll:true});}catch(_e){}}
+  }
+  function ixSetMode(mode,focus){
+    ixBuild();
+    indexState.mode=mode==='search'?'search':'index';
+    indexState.indexView.hidden=indexState.mode!=='index';
+    indexState.searchView.hidden=indexState.mode!=='search';
+    indexState.panel.classList.toggle('is-search',indexState.mode==='search');
+    if(indexState.mode==='search'){
+      ixLoadData();ixRenderSearch();
+      if(focus&&indexState.input)requestAnimationFrame(function(){indexState.input.focus();});
+    }else if(focus){requestAnimationFrame(function(){indexState.surface.focus({preventScroll:true});});}
+  }
+
+  function ixLineLabel(l){var pair=ixLinePair(l);return pair[root.dataset.lang==='es'?1:0]||pair[0]||'';}
+  function ixRenderLines(){
+    var host=document.getElementById('globalIndexLines');if(!host)return;
+    if(!indexState.lines.length){host.innerHTML='<div class="global-index__loading">'+ixBi('Research lines are temporarily unavailable.','Las líneas de investigación no están disponibles temporalmente.')+'</div>';return;}
+    host.innerHTML=indexState.lines.map(function(l){return '<a class="global-index__line" href="/line/?id='+encodeURIComponent(l.id)+'"><strong>'+ixEsc(ixLineLabel(l))+'</strong></a>';}).join('');
+  }
+  function ixRenderLatest(){
+    var host=document.getElementById('globalIndexLatest');if(!host)return;
+    var p=indexState.posts[0];if(!p){host.hidden=true;return;}
+    var when=p.published_at||p.created_at||'';
+    var d='';try{d=when?new Intl.DateTimeFormat(root.dataset.lang==='es'?'es-ES':'en-GB',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(when)):'';}catch(_e){}
+    host.hidden=false;
+    host.innerHTML='<p>'+ixBi('Latest publication','Última publicación')+'</p><a href="/news/?post='+encodeURIComponent(p.id)+'"><strong>'+ixEsc(p.title||'')+'</strong>'+(d?'<span>'+ixEsc(d)+'</span>':'')+'</a>';
+  }
+  function ixLoadData(){
+    if(indexState.loaded||indexState.loading)return;
+    indexState.loading=true;
+    Promise.allSettled([
+      ixApi('/api/research-lines/website'),
+      ixApi('/api/team/website'),
+      ixApi('/api/news/website?limit=24'),
+      ixApi('/api/innovation-projects/website')
+    ]).then(function(res){
+      indexState.lines=res[0].status==='fulfilled'?((res[0].value&&res[0].value.data)||[]):[];
+      indexState.people=res[1].status==='fulfilled'?((res[1].value&&res[1].value.data)||[]):[];
+      indexState.posts=res[2].status==='fulfilled'?((res[2].value&&res[2].value.data)||[]):[];
+      indexState.projects=res[3].status==='fulfilled'?((res[3].value&&res[3].value.data)||[]):[];
+      indexState.lines.sort(function(a,b){return Number(a.line_number||0)-Number(b.line_number||0);});
+      indexState.posts.sort(function(a,b){return new Date(b.published_at||b.created_at||0)-new Date(a.published_at||a.created_at||0);});
+      indexState.loaded=true;indexState.loading=false;
+      ixRenderLines();ixRenderLatest();ixRenderSearch();
+    });
+  }
+  function ixSearchItems(){
+    var items=[
+      {type:'research',code:'01',title:['Research','Investigación'],sub:['Research overview','Resumen de investigación'],href:'/clinical/',keywords:''},
+      {type:'innovation',code:'02',title:['Innovation','Innovación'],sub:['Clinical innovation projects','Proyectos de innovación clínica'],href:'/innovation/',keywords:''},
+      {type:'articles',code:'03',title:['Publications','Publicaciones'],sub:['Scientific publications, articles and updates','Publicaciones científicas, artículos y actualizaciones'],href:'/news/',keywords:''},
+      {type:'people',code:'04',title:['Team','Equipo'],sub:['Multidisciplinary team','Equipo multidisciplinar'],href:'/team/',keywords:''}
+    ];
+    indexState.lines.forEach(function(l){var pair=ixLinePair(l);items.push({type:'research',code:'',title:pair,sub:['Research line','Línea de investigación'],href:'/line/?id='+encodeURIComponent(l.id),keywords:pair.join(' ')+' L'+String(l.line_number||'').padStart(2,'0')});});
+    indexState.people.forEach(function(p){var n=p.display_name||p.full_name||'';if(!n)return;var role=ixPersonRolePair(p);items.push({type:'people',code:'Person',title:[n,n],sub:role,href:'/team/?person='+ixSlug(n),keywords:[role[0],role[1],p.specialization||'',p.primary_dept_name||''].join(' ')});});
+    indexState.posts.slice(0,30).forEach(function(p){if(!p.title)return;items.push({type:'articles',code:(p.post_type||'article'),title:[p.title,p.title],sub:['Publication / article','Publicación / artículo'],href:'/news/?post='+encodeURIComponent(p.id),keywords:String(p.excerpt||p.summary||'')});});
+    indexState.projects.forEach(function(p){var title=ixProjectPair(p,'title');if(!title[0]&&!title[1])return;var desc=ixProjectPair(p,'description');items.push({type:'innovation',code:'INN',title:title,sub:['Innovation project','Proyecto de innovación'],href:'/innovation/',keywords:[desc[0],desc[1],ixReadLocalized(p,'category','en'),ixReadLocalized(p,'category','es')].join(' ')});});
+    return items;
+  }
+
+  function ixRenderSearch(){
+    if(!indexState.results)return;
+    var q=(indexState.input?indexState.input.value:'').trim().toLowerCase();
+    if(!q){
+      indexState.results.innerHTML='<div class="global-search__prompt"><strong>'+ixBi('Research · People · Publications · Innovation','Investigación · Personas · Publicaciones · Innovación')+'</strong><p>'+ixBi('Type a name, topic or DOI.','Escriba un nombre, tema o DOI.')+'</p></div>';
+      return;
+    }
+    var lang=root.dataset.lang==='es'?1:0;
+    var hits=ixSearchItems().filter(function(it){
+      if(indexState.filter!=='all'&&it.type!==indexState.filter)return false;
+      return (it.title[lang]+' '+it.title[0]+' '+it.title[1]+' '+it.sub[lang]+' '+it.sub[0]+' '+it.sub[1]+' '+it.code+' '+(it.keywords||'')).toLowerCase().indexOf(q)>-1;
+    }).slice(0,14);
+    indexState.results.innerHTML=hits.length?hits.map(function(it){return '<a class="global-search__result'+(!it.code?' global-search__result--no-code':'')+'" href="'+ixEsc(it.href)+'">'+(it.code?'<span class="global-search__result-code">'+ixEsc(it.code)+'</span>':'')+'<span><strong>'+ixEsc(it.title[lang])+'</strong><small>'+ixEsc(it.sub[lang])+'</small></span></a>';}).join(''):'<div class="global-search__prompt"><strong>'+ixBi('No matches','Sin resultados')+'</strong><p>'+ixBi('Try another name or topic.','Pruebe otro nombre o tema.')+'</p></div>';
+  }
+
+  function normalizePublicationsLabel(){
+    document.querySelectorAll('a[href="/news/"]').forEach(function(a){
+      var en=a.querySelector('[lang="en"]');
+      var es=a.querySelector('[lang="es"]');
+      if(en)en.textContent='Publications';
+      if(es)es.textContent='Publicaciones';
+    });
+  }
+
+  function initEditorialIndex(){
+    ixBuild();
+    if(!indexState.panel)return;
+    var mob=document.getElementById('mobToggle');
+    if(mob){
+      mob.setAttribute('aria-controls','globalIndex');
+      mob.setAttribute('aria-label','Open index / Abrir índice');
+    }
+    window.neumACIndex={
+      open:function(){ixOpen('index',document.getElementById('hdrIndexBtn')||document.getElementById('mobToggle'));},
+      openSearch:function(){ixOpen('search',document.getElementById('hdrSearchBtn'));},
+      close:function(){ixClose(true);},
+      isOpen:function(){return indexState.open;}
+    };
+  }
+
+  function openGlobalSearch(){
+    if(window.neumACIndex&&window.neumACIndex.openSearch)window.neumACIndex.openSearch();
+    else openPalette();
+  }
+
   function drawerParts(){
     return {
       toggle:document.getElementById('mobToggle'),
@@ -51,6 +378,7 @@
     };
   }
   function openDrawer(){
+    if(window.innerWidth<=INDEX_BREAKPOINT&&window.neumACIndex){window.neumACIndex.open();return;}
     var p=drawerParts(); if(!p.drawer)return;
     p.drawer.classList.add('open');
     if(p.overlay)p.overlay.classList.add('open');
@@ -59,6 +387,7 @@
     closeLangMenu();
   }
   function closeDrawer(){
+    if(window.neumACIndex&&window.neumACIndex.isOpen&&window.neumACIndex.isOpen()){window.neumACIndex.close();return;}
     var p=drawerParts();
     if(p.drawer)p.drawer.classList.remove('open');
     if(p.overlay)p.overlay.classList.remove('open');
@@ -82,6 +411,10 @@
   function initChrome(){
     var p=drawerParts();
     if(p.toggle)p.toggle.addEventListener('click',function(){
+      if(window.innerWidth<=INDEX_BREAKPOINT&&window.neumACIndex){
+        if(window.neumACIndex.isOpen&&window.neumACIndex.isOpen())window.neumACIndex.close();else window.neumACIndex.open();
+        return;
+      }
       if(p.drawer&&p.drawer.classList.contains('open'))closeDrawer();else openDrawer();
     });
     if(p.close)p.close.addEventListener('click',closeDrawer);
@@ -229,6 +562,8 @@
 
   function bootCore(){
     setLang(getSavedLang(),false);
+    normalizePublicationsLabel();
+    initEditorialIndex();
     initChrome(); initScrollUI(); initAnchors(); initReveal(); initCookie(); initImageFallbacks(); initErrorSafety(); initResearchInquiry();
   }
 
@@ -257,16 +592,12 @@
     }
     function reset(){
       var current = nav.querySelector('.hdr-nav-link[data-current="true"]')
-                 || nav.querySelector('.hdr-dd .hdr-nav-link[data-current="true"]');
+;
       if (current) moveTo(current); else pill.style.opacity = '0';
     }
 
     nav.querySelectorAll('.hdr-nav-link').forEach(function(link){
       link.addEventListener('mouseenter', function(){ moveTo(link); });
-    });
-    var dd = nav.querySelector('.hdr-dd');
-    if (dd) dd.addEventListener('mouseenter', function(){
-      var l = dd.querySelector('.hdr-nav-link'); if (l) moveTo(l);
     });
     nav.addEventListener('mouseleave', reset);
     nav.addEventListener('focusin', function(e){
@@ -449,7 +780,7 @@
 
       /* palette: Cmd/Ctrl+K */
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){
-        e.preventDefault(); openPalette(); return;
+        e.preventDefault(); openGlobalSearch(); return;
       }
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
@@ -469,7 +800,7 @@
       }
     });
     var searchBtn=document.getElementById('hdrSearchBtn');
-    if(searchBtn) searchBtn.addEventListener('click', openPalette);
+    if(searchBtn) searchBtn.addEventListener('click', openGlobalSearch);
 }
 
   function openHelp(){
@@ -481,7 +812,7 @@
       '<dt><kbd>g h</kbd></dt><dd>Home</dd>' +
       '<dt><kbd>g r</kbd></dt><dd>Research</dd>' +
       '<dt><kbd>g i</kbd></dt><dd>Innovation</dd>' +
-      '<dt><kbd>g a</kbd></dt><dd>Articles</dd>' +
+      '<dt><kbd>g a</kbd></dt><dd>Publications</dd>' +
       '<dt><kbd>g t</kbd></dt><dd>Team</dd>' +
       '<dt><kbd>g p</kbd></dt><dd>Annual report</dd>' +
       '<dt><kbd>?</kbd></dt><dd>This overlay</dd></dl></div>';
@@ -499,7 +830,7 @@
     {k:'page', t:'Home · Inicio', href:'/'},
     {k:'page', t:'Research · Investigación', href:'/clinical/'},
     {k:'page', t:'Innovation · Innovación', href:'/innovation/'},
-    {k:'page', t:'Articles · Artículos', href:'/news/'},
+    {k:'page', t:'Publications · Publicaciones', href:'/news/'},
     {k:'page', t:'Team · Equipo', href:'/team/'},
     {k:'page', t:'Annual report · Memoria anual', href:'/report/'},
     {k:'page', t:'Contact · Contacto', href:'/#contact'},

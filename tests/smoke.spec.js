@@ -87,38 +87,22 @@ test('research line detail reveals after API render', async ({ page }) => {
   await expect(page.locator('#lineMetricStudies')).toHaveText('1');
   await expect(page.locator('#lineMetricInnovation')).toHaveText('1');
   await expect(page.locator('#lineMetricPublications')).toHaveText('2');
-  await expect(page.locator('#lineChartActivity svg')).toBeVisible();
-  await expect(page.locator('#lineChartPublications svg')).toBeVisible();
-  await expect(page.locator('#lineChartInnovation svg')).toBeVisible();
-  const widths = await page.locator('.line-chart-card').evaluateAll(nodes => nodes.map(n => ({scroll:n.scrollWidth, client:n.clientWidth})));
-  expect(widths.every(w => w.scroll <= w.client + 2)).toBeTruthy();
+  await expect(page.locator('.line-chart-card')).toHaveCount(0);
+  await expect(page.locator('.line-fact')).toHaveCount(4);
+  await expect(page.locator('#linePubsList .line-pub')).toHaveCount(2);
 });
 
-test('premium header is shared and research menu stays editorial', async ({ page }) => {
-  await page.route('**/api/research-lines/website', route => route.fulfill({
-    status: 200,
-    contentType: 'application/json',
-    body: JSON.stringify({ data: [
-      { id:'l1', line_number:1, short_name:'Transplantation & Pulmonary Hypertension', active_trials:0 },
-      { id:'l2', line_number:2, short_name:'Airway Diseases', active_trials:3 },
-      { id:'l3', line_number:3, short_name:'Interventional Pneumology & Lung Cancer', active_trials:0 },
-      { id:'l4', line_number:4, short_name:'Respiratory Failure & Sleep Medicine', active_trials:0 },
-      { id:'l5', line_number:5, short_name:'Innovation in Thoracic Surgery', active_trials:5 },
-      { id:'l6', line_number:6, short_name:'Precision Medicine & Clinical Innovation', active_trials:0 }
-    ]})
-  }));
+test('premium header keeps Research as a direct primary destination', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#hdrSearchBtn')).toBeVisible();
-  await page.click('.hdr-dd-chevron');
-  await expect(page.locator('.hdr-dd')).toHaveClass(/open/);
-  await expect(page.locator('.hdr-dd-panel')).toBeVisible();
-  await expect(page.locator('.hdr-dd-item')).toHaveCount(6);
-  await expect(page.locator('.hdr-dd-thumb')).toHaveCount(0);
-  await expect(page.locator('.hdr-mega-metrics')).toHaveCount(0);
-  await expect(page.locator('.hdr-mega-head-note')).toHaveCount(0);
-  await expect(page.locator('.hdr-mega-portfolio')).toContainText(/View all research|Ver toda la investigación/);
+  const research = page.locator('.hdr-nav-link[data-nav="research"]');
+  await expect(research).toHaveAttribute('href', '/clinical/');
+  await expect(page.locator('.hdr-dd-chevron')).toHaveCount(0);
+  await expect(page.locator('#researchMegaMenu')).toHaveCount(0);
+  await expect(page.locator('#hdrIndexBtn')).toBeVisible();
+  await page.click('#hdrIndexBtn');
+  await expect(page.locator('#globalIndex')).toHaveClass(/is-open/);
   await page.keyboard.press('Escape');
-  await expect(page.locator('.hdr-dd')).not.toHaveClass(/open/);
   await page.click('#hdrSearchBtn');
   await expect(page.locator('.cmdk-overlay')).toBeVisible();
 });
@@ -155,12 +139,13 @@ test('final landing page renders its live editorial surfaces', async ({ page }) 
 
   await page.goto('/');
   await expect(page.locator('.home-hero-title')).toBeVisible();
-  await expect(page.locator('.home-identity')).toBeVisible();
-  await expect(page.locator('.home-method-row')).toHaveCount(5);
-  await expect(page.locator('#researchLinesGrid')).toHaveCount(0);
-  await expect(page.locator('#storySection .home-pulse-layout')).toBeVisible({ timeout: 6000 });
-  await expect(page.locator('.home-agenda')).toBeVisible();
-  await expect(page.locator('#spotlightSection .spotlight-card')).toBeVisible({ timeout: 6000 });
+  await expect(page.locator('.home-programme-panel')).toBeVisible();
+  await expect(page.locator('#researchLinesGrid .home-line-row')).toHaveCount(6);
+  await expect(page.locator('#storySection .home-current-grid')).toBeVisible({ timeout: 6000 });
+  await expect(page.locator('#storySection .home-current-record--publication')).toBeVisible();
+  await expect(page.locator('#storySection .home-current-record--innovation')).toBeVisible();
+  await expect(page.locator('.home-agenda')).toHaveCount(0);
+  await expect(page.locator('.home-method-row')).toHaveCount(0);
   await expect(page.locator('.home-network')).toBeVisible();
   await expect(page.locator('.home-contact-disclosure')).toBeVisible();
   await expect(page.locator('.home-contact-disclosure')).not.toHaveAttribute('open', '');
@@ -197,12 +182,12 @@ test('research page uses compact editorial portfolio instead of legacy dashboard
   }));
   await page.goto('/clinical/');
   await expect(page.locator('.research-hero')).toBeVisible();
-  await expect(page.locator('.research-pi__panel')).toBeVisible();
-  await expect(page.locator('.research-pi__portrait img')).toHaveAttribute('src', /pi-pedro-marcos\.jpg/);
+  await expect(page.locator('.research-hero__sheet')).toBeVisible();
+  await expect(page.locator('.research-leadership__portrait img')).toHaveAttribute('src', /pi-pedro-marcos\.jpg/);
   await expect(page.locator('#researchLinesList .research-line-row')).toHaveCount(6, { timeout:6000 });
   await expect(page.locator('#researchLinesList .research-line__media img')).toHaveCount(6);
   await expect(page.locator('#researchLinesList .research-line__title')).toHaveCount(6);
-  await expect(page.locator('#researchLinesList .research-line__cta')).toHaveCount(6);
+  await expect(page.locator('#researchLinesList .research-line__num')).toHaveCount(6);
   await expect(page.locator('#researchLinesList .research-line__coordinator')).toHaveCount(6);
   await expect(page.locator('#researchLinesList')).toHaveCSS('display', 'block');
   const rowPositions = await page.locator('#researchLinesList .research-line-row').evaluateAll(nodes => nodes.slice(0,2).map(n => ({ top:n.getBoundingClientRect().top, left:n.getBoundingClientRect().left, width:n.getBoundingClientRect().width })));
@@ -211,17 +196,12 @@ test('research page uses compact editorial portfolio instead of legacy dashboard
   expect(Math.abs(rowPositions[1].width - rowPositions[0].width)).toBeLessThan(4);
   await expect(page.locator('#researchLinesList .research-line-code')).toHaveCount(0);
   await expect(page.locator('#researchLinesList .research-chapter__motif')).toHaveCount(0);
-  const more = page.locator('#researchLinesList .research-line__more').first();
-  await expect(more).toBeVisible();
-  await expect(more).toHaveAttribute('aria-expanded', 'false');
-  await more.click();
-  await expect(more).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.getByText(/The description matters as much as the title|La descripción importa tanto como el título/)).toHaveCount(0);
+  await expect(page.locator('#researchLinesList .research-line__more')).toHaveCount(0);
   await expect(page.locator('table.trials')).toHaveCount(0);
   await expect(page.locator('.study-summary')).toHaveCount(0);
   await expect(page.locator('.affil-section')).toHaveCount(0);
   await expect(page.locator('#studiesBody .study-row')).toHaveCount(9, { timeout:6000 });
-  await expect(page.locator('#studiesBody .study-row:visible')).toHaveCount(7);
+  await expect(page.locator('#studiesBody .study-row:visible')).toHaveCount(6);
   await expect(page.locator('#studiesExpandBtn')).toBeVisible();
   await page.locator('#studiesExpandBtn').click();
   await expect(page.locator('#studiesBody .study-row:visible')).toHaveCount(9);

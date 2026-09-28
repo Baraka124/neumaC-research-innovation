@@ -113,9 +113,9 @@ Large serif typography must be controlled by content length. Dynamic titles use 
 The header is a site-wide component, not a homepage component.
 
 - Real neumACt logo only.
-- Research label navigates to the Research page.
-- Its adjacent chevron opens the research mega-menu.
-- Search, EN/ES and Contact are the only utility controls.
+- Research is a direct primary navigation destination; it must never compete with a neighbouring line-menu trigger.
+- Research-line shortcuts live in the global Índice and on the Research programme page itself.
+- Search, EN/ES, Índice and Contact are the only utility controls.
 - The active state is quiet and precise.
 - Shared header visual ownership lives in `styles/components.css`.
 - Shared header interaction lives in `scripts/site.js`.
@@ -126,9 +126,9 @@ Page CSS must not redefine the header.
 
 Research lines belong in:
 
-- the Research mega-menu for rapid navigation;
-- the Research portfolio page for depth;
-- individual line pages for detail.
+- the global Índice for rapid cross-site navigation;
+- the Research programme page as the primary scientific gateway;
+- individual line pages for evidence and detail.
 
 The homepage should explain the group's research mindset and scientific scope instead of listing the same L01–L06 taxonomy again.
 
@@ -472,3 +472,235 @@ A loading state should approximate the final geometry so that content does not s
 All research lines inherit the same hierarchy, data contract and responsive rules. Their character can still differ through truthful hero media, coordinator portraits and the mix of evidence returned by the line.
 
 Variation must come from the science and the public records, not from six separate templates.
+
+## 66. Clinical innovation begins with a problem, not a technology category
+
+The public Innovation page begins with a respiratory clinical or research need: something that may need to be measured, monitored, visualised, decided, communicated or organised differently.
+
+AI, devices, software, imaging, logistics and other technologies appear only when a real project or defined use case requires them. Do not organise the page around a catalogue of fashionable technologies.
+
+## 67. Innovation projects are evidence, not a carousel
+
+Current public innovation projects demonstrate how the programme works. Present them as readable editorial records with title, concise scope, category and current stage when those fields are available from the public API.
+
+Do not fabricate clinical questions, outcomes, investigators, validation results, funding, regulatory status or project maturity to complete a composition. Missing information should disappear cleanly.
+
+## 68. Capability claims must be specific and supportable
+
+Do not publish unsupported performance numbers, recruitment promises, regulatory-pathway claims, institutional-access promises or generic statements such as “world-class”, “cutting-edge” or “rapid validation”.
+
+When a capability genuinely matters, describe the concrete environment, infrastructure or documented experience that supports it. Evidence should carry the prestige.
+
+## 69. Innovation collaboration is scientific, not a commercial package
+
+Public collaboration language should start from a defined clinical or research need. Appropriate routes can include clinical/research collaboration, technology evaluation and co-development.
+
+Avoid sales language about priority access, exclusive opportunities, shared reward, guaranteed timelines, network access or intellectual-property arrangements unless a specific approved public programme actually establishes those terms.
+
+## 70. Synthetic editorial media must remain replaceable and non-evidentiary
+
+Synthetic imagery may establish composition when approved clinical photography is not yet available, but it must never imply that a depicted person, facility, device or result belongs to neumACt.
+
+Document synthetic provenance in the asset folder rather than publishing internal design commentary on the page. Store the image in a stable semantic media slot so approved photography can replace it without changing the template or API contract.
+
+## 71. Destination pages inherit the established public visual grammar
+
+Research, Innovation, Team, Articles and line-detail pages are not independent redesign opportunities. They inherit the visual system established by Landing and the accepted Research page: the same Fraunces/DM Sans/DM Mono hierarchy, the same navy/teal/off-white palette, the same container widths, rule language, section density, focus treatment and editorial footer.
+
+A destination page may vary its composition when the content requires it, but it must not introduce a new palette, a new display-weight convention, a new card language or a different spacing system merely to appear distinctive.
+
+## 72. Image crop and focal position are part of the component contract
+
+Approved and placeholder media must be tested inside the actual responsive slot, not judged as standalone images. Define the expected aspect ratio, `object-fit` and focal `object-position` for each semantic slot.
+
+Portraits should preserve faces and shoulders without forcing important facial features against the crop. Clinical hero media should keep the relevant clinical action or evidence inside the crop across desktop and mobile widths. When a crop cannot do this reliably, replace the source image rather than compensating with overlays or decorative framing.
+
+## 73. Leadership is a role within the team, not a separate caste
+
+A Team page may orient visitors with programme leadership and research-line coordinators, but those roles must not visually demote the wider team. Leadership is shown first for scientific orientation; the complete public roster remains a first-class section with readable names, professional contributions and research relationships.
+
+Do not turn non-leadership profiles into tiny directory rows after giving coordinators oversized editorial treatments.
+
+## 74. Multidisciplinary team pages explain why the mix of professions matters
+
+The Team page should explain that contemporary respiratory research can require specialist and primary care, nursing, biomedical and laboratory research, study coordination, engineering, computing, data and contributions from other clinical services or research partners.
+
+Describe disciplines in relation to the research question and patient pathway, not as an organisational chart or a collection of professional silos. Cross-service participation should not be mislabeled as external collaboration merely because a person sits outside Pulmonology.
+
+## 75. Portrait systems are editorial infrastructure
+
+Public people imagery should use a deliberate crop contract rather than relying on the raw source proportions. Leadership, coordinator and roster portraits may use different display sizes, but they should share consistent face-safe framing, restrained tonal treatment and stable aspect ratios.
+
+Do not crop foreheads, chins or identifying features simply to fill a slot. When a known approved portrait needs a different focal position, encode that position explicitly in the public renderer or page CSS.
+
+## 76. The complete team deserves readable scale
+
+Once leadership and coordination roles have been explained, the complete public roster must still read as a primary institutional section. Do not compress the remaining team into tiny rows, badges or low-contrast metadata simply because more people are present.
+
+Use enough portrait and typographic scale for names, professional contribution and research-line relationships to be readable without interaction. Filters and profile drawers are optional utilities, not prerequisites for understanding who is in the group.
+
+## 77. Public people roles are shown once; research-line links are not ownership
+
+On the Team page, programme leadership and named research-line coordinators may receive dedicated orientation sections, but the same people should not be rendered again in the remaining-team roster. Each public person should have one primary placement in the page hierarchy.
+
+Research-line relationships on a person profile describe current public research activity or contribution. They must not imply that multidisciplinary staff are owned by, permanently assigned to, or restricted to one research line. The wider team can work across lines and services according to the clinical or scientific question.
+
+## 78. Public people metadata follows the selected language
+
+Names remain as authored, but professional roles, common specialties, department labels and the six canonical research-line names should follow the active EN/ES language when a reliable public translation is known.
+
+Do not allow a Spanish page to become a patchwork of English line names, or an English page to inherit untranslated routine labels such as `Neumología`, merely because the source record is shared. Unknown authored terms may remain unchanged rather than being guessed.
+
+## 79. Editorial hero media must be delivered for the slot, not only composed for it
+
+Once a hero image is accepted visually, prepare responsive production derivatives that preserve its focal subject at desktop, tablet and mobile widths. Use efficient modern formats where possible, keep the original source as a fallback, and preload only the variant appropriate to the current breakpoint.
+
+Performance optimisation must not change the intended crop, invent content or reduce important faces/actions to unreadable scale.
+
+
+## 80. Public people copy is descriptive, not philosophical
+
+Team pages should state who participates, what roles they hold and how collaboration is organised. Avoid contrastive or manifesto-style language such as “not professional silos”, explanations of the page design, or claims about interdisciplinarity that the roster already demonstrates.
+
+When cross-service participation matters, describe it literally: which kinds of services or expertise may contribute, and under what project/study context. Do not invent fixed organisational relationships from public data.
+
+
+## 81. Hero imagery and opening content may form one editorial composition
+
+A destination-page hero does not have to end before the page content begins. When the accepted imagery benefits from it, the opening content surface may overlap the lower edge of the hero slightly so image and information read as one editorial composition.
+
+Keep the overlap shallow, preserve the shared container width, and avoid floating-card styling or heavy shadows. Local visual cues such as a city skyline should remain atmospheric; do not add redundant location labels when the image already supplies the context.
+
+## 82. Deeper team profiles use progressive editorial disclosure
+
+The multidisciplinary roster should remain readable without interaction. When a visitor wants more context on a non-leadership team member, open a restrained right-side editorial profile sheet rather than replacing the roster with cards, accordions or a generic centred modal.
+
+The sheet may show only governed public information: portrait, professional role, affiliation, authored public biography, current research-line relationships and approved scholarly-profile links. Omit missing sections cleanly rather than inventing biography, expertise or outputs. Programme leadership and research-line coordinators continue to use their dedicated research-line pathways instead of duplicating the same profile interaction.
+
+
+## 83. The wider team is an editorial people index
+
+The multidisciplinary roster should not look like an HR directory or a grid of employee cards. Keep people first-class through generous name typography, restrained portrait/monogram treatment, horizontal editorial rhythm and progressive disclosure. The compact roster shows identity and professional context; deeper research relationships, biography and scholarly profiles belong in the profile reading surface. Missing public data is omitted rather than replaced with generic prose.
+
+
+83. Adaptive editorial profile behaviour: multidisciplinary team profiles must not use one fixed spatial model across all devices. Large desktop may use an inset side sheet, laptops a tighter drawer, tablets a wide or bottom-origin reader, and mobile a full-screen vertical reader.
+84. Replaceable placeholder portrait contract: when approved portraits are unavailable, Team may use clearly non-documentary editorial placeholders. Placeholder assets should be named with stable person slugs so real portraits can later replace them without code changes.
+
+85. Team profile deep links and browsing: public multidisciplinary profiles may expose stable person-slug URLs and previous/next navigation, but must preserve the same factual public-data rules and return cleanly to the Team context.
+
+
+85. Synthetic team placeholders stay neutral: placeholder portraits may use the Team rabbit visual language, but they must read as institutional portrait surrogates — one rabbit, posed toward camera, neutral professional clothing, no human hair, no sexualized anatomy, and no activity scene. Real approved portraits always take precedence.
+86. One strong layered opening is enough: the Team introduction may rise into the hero as a single editorial surface, but later sections should return to flat institutional rhythm rather than repeating floating cards.
+
+
+## Global H1 — Editorial Index Masthead
+
+85. **The masthead is a site-wide system, never a page-specific composition.** Landing, Research, Innovation, Articles, Team, research-line pages and secondary public pages inherit the same header behaviour from shared owners.
+86. **Primary destinations remain visible on desktop.** `Inicio / Home`, `Investigación / Research`, `Innovación / Innovation`, `Artículos / Articles` and `Equipo / Team` are not hidden behind a hamburger on ordinary desktop/laptop widths.
+87. **Índice / Index is the programme map.** The Index control opens one editorial navigation surface containing the four programme chapters, the six research lines, institutional utilities and current-content context. It is not a card dashboard.
+88. **Research keeps a fast path.** The chevron beside Research may expose the six research lines directly; explanatory research copy belongs to the research page or Index rather than a second competing mega-menu.
+89. **Search belongs to the masthead spatial system.** Header search and `Cmd/Ctrl+K` open Search inside the same Index surface. Search may resolve pages, research lines, people and public articles; it must not launch a visually unrelated modal.
+90. **Responsive navigation re-composes.** Large desktop uses an attached editorial surface below the navy masthead; tablets simplify its columns; iPad portrait and mobile use a full-height editorial index rather than a narrow off-canvas drawer.
+91. **Institutional navigation uses typography and rules, not decorative cards.** Fraunces chapter titles, DM Mono identifiers, whitespace, hairline separators and the existing teal orientation accent carry hierarchy.
+92. **The header is intentionally calm while closed.** Creative depth appears only when the visitor explicitly opens Index or Search. The closed masthead must not become a utility portal or compete with page content.
+
+
+93. **Navigation labels follow the active language.** The global Index and Search must use reliable EN/ES names for canonical research lines and routine people metadata rather than exposing whichever source-language string happens to arrive from the API.
+94. **Editorial interaction should not move the layout.** Hover and focus states in the Index, line list and Search results may change colour, background and arrow position, but should not shift the text block itself through padding changes.
+95. **Mobile Index prioritises navigation immediately.** The full-height mobile Index uses one compact brand/action bar; avoid stacking a second toolbar above the chapter list when Search can live in the same top action cluster.
+96. **Search reflects real public content.** When a filter is offered for a public content type, Search should query/index the corresponding public records when available rather than presenting only the destination landing page.
+
+## Publications editorial rules
+
+- Publications is an editorial index, not a dashboard. Avoid hero KPIs, duplicate counts, sidebars and decorative output timelines.
+- Do not force publications, articles, updates and highlights into one generic card system; each content object should expose the metadata appropriate to its type.
+- Featured content is a single editorial decision, never an auto-rotating carousel.
+- The Publications hero uses one stable governed media slot. Live post imagery belongs to the featured/content surfaces and must not unexpectedly replace the page identity image.
+- The main page title should stand on its own without redundant mono metadata immediately above it.
+- A scholarly publication record is not automatically a neumACt-authored article. Bibliographic records and long-form editorial reading surfaces must remain distinct.
+
+
+## Publications K1.2 — advanced editorial architecture
+- Publications is a progressive-disclosure research index: discover → browse → read. The public surface must not expose backend complexity as dashboard UI.
+- Different publication object types must retain distinct visual grammar. Scholarly records do not require imagery; articles/highlights may use media; updates remain compact.
+- One curated Selection replaces carousels and rotating featured content.
+- Research-line filtering is a secondary facet, not a duplicate Research page.
+- Detail surfaces adapt spatially: large-screen editorial reader, desktop drawer, tablet raised sheet, mobile full-screen reader.
+- H1.1 masthead remains a shared global owner and must not be forked inside Publications.
+
+
+## Publications K1.3 / Global H1.2
+
+- Publications uses a compact image-led opening: the hero establishes scientific context, while the raised editorial panel carries the page title and factual scope. The image must never force the reader to scroll excessively before reaching content.
+- Scholarly output is presented as an index, not as repeated cards. Publication rows prioritize date, title/authors, journal/DOI and research-line context. Decorative arrows are not repeated on every row.
+- Metadata labels are permitted when they describe the content object itself (for example `Publicación científica`), but not as decorative kickers above major page titles.
+- The Global Index is a compact editorial navigation surface, not a second page. Desktop Index height should remain controlled, use the same shared H1 owner files, and avoid repeated utilities or decorative arrows.
+- Public-facing copy must remain factual. Avoid slogans, self-congratulatory claims and language that implies clinical impact or authorship beyond the recorded data.
+
+## Global H1.3 — institutional masthead lockup
+- The neumACt wordmark, research descriptor and institutional affiliation form one canonical lockup. They must align as a unit and must never wrap independently into ad-hoc header layouts.
+- On wide desktop, the masthead uses a three-zone optical grid: brand lockup / primary navigation / utilities. This keeps primary navigation truly centred regardless of the unequal left and right content widths.
+- Responsive simplification is intentional: full lockup on wide desktop; affiliation line drops first; descriptor drops next; mobile keeps the wordmark only.
+- The right utility cluster has hierarchy. Index is the primary interface control; Contact remains present but visually quieter. Search and language are utilities, not competing calls to action.
+- Masthead refinements belong only to the shared header owner. Page styles must not locally override the brand lockup.
+
+
+## Landing precision principles
+- The landing page is the institutional front door, not a dashboard. Avoid vanity counts or derived figures whose semantics are ambiguous.
+- The first screen should identify neumACt and orient the visitor to its actual research programme.
+- Research lines are more useful than generic process diagrams on the landing page.
+- Public current-activity surfaces must contain governed real data only; never render TBC/fake agenda placeholders.
+- The raised-overlay composition may be used as a signature device, but the surface must carry real orientation content rather than decorative copy.
+- Homepage section titles stand on their own; decorative kickers are omitted unless they encode real object metadata.
+- Placeholder hero media must be explicitly replaceable and must not drive factual claims about the institution.
+
+
+92. Landing current-work convergence: the homepage should show a minimal cross-section of governed activity rather than duplicate dedicated Publications or Innovation pages. One current public research output and one current clinical innovation project are sufficient.
+93. Homepage reduction rule: once a dedicated destination exists, the landing page should preview it rather than recreate its internal information architecture.
+
+
+## Landing L3 calibration
+- Homepage sections should become denser after the opening programme orientation; the landing is an institutional front door, not a second copy of dedicated content pages.
+- Never fabricate decorative media for governed records. If a current publication or project has no public media, use a deliberate text-led layout.
+- Institutional environment and contact surfaces should be factual and compact; they must not visually outrank the research programme.
+
+
+## Landing L3.1 — microcalibration
+- Final landing calibration is reduction-only: no additional sections or decorative UI.
+- Hero media remains a replaceable placeholder; layout must not depend on the placeholder artwork.
+- The research-programme overlay uses restrained radius/shadow and compact line density so it reads as editorial structure, not a card component.
+- Current Work is self-explanatory from its governed records; avoid explanatory meta-copy that repeats the visible composition.
+- Hover states may clarify interaction but must not create card-like movement or layout shift.
+- The runnable baseline is cumulative; historical phase notes are development history, not separate runtime choices.
+
+
+## 26. A primary destination must not compete with its own shortcut menu
+
+If a main navigation label is itself an important page, do not place an adjacent dropdown control that encourages visitors to bypass it. The Research programme is the scientific gateway to L01–L06, so **Research remains a direct link**. Research-line shortcuts live in the global Índice, where their relationship to the programme is explicit.
+
+## 27. Research-line pages are evidence pages, not dashboards
+
+A public research line should communicate scientific scope, coordination and current evidence. Use factual counts only when they are derived from current public records. Avoid charts, maturity graphics and metric cards when they merely visualise small counts or make the page resemble internal administration software.
+
+
+### Brand and research-line display
+- Use the coloured neumACt wordmark treatment only when the brand name is acting as a display identity on a light surface; body-copy mentions remain normal text and dark surfaces use the inverse logo for contrast.
+- Research-line numbers are implementation/order metadata, not primary public-facing labels. Prefer the actual scientific area name.
+- Do not add floating utility arrows or back-to-top controls merely as decoration; directional icons must communicate a real destination or external transition.
+- Institutional credibility should be sourceable and quiet: one verified affiliation/profile card is stronger than a logo wall.
+
+
+### Brand colour discipline
+The blue–teal–green neumACt colour treatment is reserved for the actual logo asset or an explicit brand-mark context. The word “neumACt” inside headings, prose, search copy, metadata, and institutional descriptions is normal text and inherits the surrounding typographic colour. On dark mastheads the official mark is shown as an inverse mark for contrast; the native-colour mark is used on a light logo plate in the institutional footer.
+
+### Institutional clusters
+Grouped facts should read as ledgers: aligned columns, hairline rules, restrained labels, and no card chrome unless the grouped object genuinely behaves as a card.
+
+
+## Brand mark discipline
+
+The blue → teal → green neumACt treatment belongs to the **actual logo mark only**. Ordinary written references to neumACt inherit the surrounding text colour. On dark institutional chrome, the native colour logo must sit on a restrained light holding field rather than being recoloured or treated as decorative text.
+
+## Responsive certification is a release requirement
+
+Every cumulative public baseline must be checked at representative workstation, tablet and phone widths. At minimum: 1920×1080, 1600×900, 1366×768, 1024×768, 834×1194, 430×932, 390×844, 375×812 and 360×800. A release fails certification if any core public page or the Index/Search system introduces horizontal overflow, clipped primary actions or accidental content overlap. Responsive changes should recompose hierarchy rather than merely shrink desktop geometry.

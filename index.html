@@ -15,8 +15,8 @@
   <link rel="canonical" href="https://neumact.org/"/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumACt R&I"/>
-  <meta property="og:title" content="neumACt R&I — Precision Respiratory Medicine"/>
-  <meta property="og:description" content="Clinical and translational respiratory research within the Área Sanitaria da Coruña e Cee: active studies, multidisciplinary research, clinical innovation and public research outputs. INIBIC · SERGAS."/>
+  <meta property="og:title" content="neumACt R&I — Clinical & Translational Respiratory Research"/>
+  <meta property="og:description" content="Clinical and translational respiratory research within the Área Sanitaria da Coruña e Cee, connecting respiratory care, biomedical research, technology and innovation. INIBIC · SERGAS."/>
   <meta property="og:image" content="https://neumact.org/assets/og-card.png"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
@@ -33,11 +33,10 @@
 {
   "@context": "https://schema.org",
   "@type": "MedicalOrganization",
-  "name": "neumACt R&I — Área Sanitaria da Coruña e Cee",
-  "alternateName": ["neumACt R&I", "neumAC Research & Innovation"],
+  "name": "neumACt R&I",
   "url": "https://neumact.org",
   "logo": "https://neumact.org/logo.svg",
-  "description": "Clinical research department specialising in respiratory medicine. Six research lines spanning transplantation, airway disease, interventional pneumology, critical care, thoracic surgery, and precision medicine. INIBIC-accredited. Regional reference centre for lung transplantation and pulmonary hypertension.",
+  "description": "Clinical and translational respiratory research within the Área Sanitaria da Coruña e Cee, connecting respiratory care, biomedical research, technology and innovation.",
   "parentOrganization": {
     "@type": "MedicalOrganization",
     "name": "Área Sanitaria da Coruña e Cee",
@@ -52,19 +51,9 @@
   },
   "memberOf": [
     {"@type": "Organization", "name": "INIBIC — Instituto de Investigación Biomédica de A Coruña"},
-    {"@type": "Organization", "name": "SERGAS — Servizo Galego de Saúde"},
-    {"@type": "Organization", "name": "European Respiratory Society"}
+    {"@type": "Organization", "name": "SERGAS — Servizo Galego de Saúde"}
   ],
-  "medicalSpecialty": "Pulmonary Medicine",
-  "availableService": [
-    {"@type": "MedicalTherapy", "name": "Lung Transplantation"},
-    {"@type": "MedicalTherapy", "name": "Interventional Bronchoscopy"},
-    {"@type": "MedicalTherapy", "name": "Clinical Trial Coordination"},
-    {"@type": "MedicalTherapy", "name": "Thoracic Surgery"}
-  ],
-  "sameAs": [
-    "https://www.inibic.es"
-  ]
+  "medicalSpecialty": "Pulmonary Medicine"
 }
 </script>
   <link rel="stylesheet" href="styles/components.css">
@@ -78,7 +67,7 @@
   <div class="hdr-main">
     <div class="hdr-inner">
       <a href="/" class="hdr-logo" aria-label="neumACt Research &amp; Innovation">
-        <img src="/logo.svg" alt="neumACt R&I" class="hdr-logo-img">
+        <span class="hdr-brand-plate"><img src="/logo.svg" alt="neumACt R&amp;I" class="hdr-logo-img"></span>
         <span class="hdr-brand-meta">
           <span class="hdr-brand-title"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
           <span class="hdr-brand-org">Área Sanitaria da Coruña e Cee · INIBIC · SERGAS</span>
@@ -87,35 +76,9 @@
 
       <nav class="hdr-nav" aria-label="Primary navigation">
         <a href="/" class="hdr-nav-link" data-nav="home" data-current="true" aria-current="page"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-        <div class="hdr-dd" data-nav="research">
-          <span class="hdr-dd-trigger">
-            <a href="/clinical/" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
-            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true" aria-controls="researchMegaMenu">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-          </span>
-
-          <div class="hdr-dd-panel" id="researchMegaMenu" aria-label="Research navigation">
-            <div class="hdr-mega-intro">
-              <p class="hdr-mega-kicker"><span lang="en">Research</span><span lang="es">Investigación</span></p>
-              <h2 class="hdr-mega-title"><span lang="en">Clinical &amp; translational respiratory research</span><span lang="es">Investigación clínica y traslacional en neumología</span></h2>
-              <p class="hdr-mega-copy"><span lang="en">Six specialist lines connecting clinical questions, trials and translational research across respiratory medicine.</span><span lang="es">Seis líneas especializadas que conectan preguntas clínicas, ensayos e investigación traslacional en medicina respiratoria.</span></p>
-              <a class="hdr-mega-portfolio" href="/clinical/">
-                <span lang="en">View all research</span><span lang="es">Ver toda la investigación</span>
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
-
-            <div class="hdr-mega-lines">
-              <div class="hdr-mega-head">
-                <p><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></p>
-              </div>
-              <div class="hdr-dd-panel-inner" id="hdrResearchLines"></div>
-            </div>
-          </div>
-        </div>
+        <a href="/clinical/" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
         <a href="/innovation/" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-        <a href="/news/" class="hdr-nav-link" data-nav="news"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+        <a href="/news/" class="hdr-nav-link" data-nav="news"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
         <a href="/team/" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
 
@@ -139,7 +102,7 @@
       <a href="/" class="current" aria-current="page"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-      <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+      <a href="/news/"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
       <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       <a href="#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
   </div>
@@ -153,134 +116,76 @@
 <!-- ═══════════════════ FINAL LANDING PAGE ═══════════════════ -->
 <main id="mainContent">
   <section class="home-hero" aria-labelledby="heroTitle">
+    <!-- Placeholder media: replace this asset in-place with approved institutional photography when available. -->
     <picture class="home-hero-media" aria-hidden="true">
       <source srcset="/assets/hero-lungs.webp" type="image/webp">
       <img src="/assets/hero-lungs.jpg" alt="" fetchpriority="high">
     </picture>
     <div class="home-hero-shade" aria-hidden="true"></div>
-
-    <div class="wrap home-hero-grid">
-      <div class="home-hero-copy reveal">
-        <p class="home-hero-kicker">
-          <span lang="en">Clinical &amp; translational research in respiratory medicine</span>
-          <span lang="es">Investigación clínica y traslacional en neumología</span>
-        </p>
-        <h1 class="home-hero-title" id="heroTitle">
-          <span lang="en">Research connected to respiratory care.</span>
-          <span lang="es">Investigación conectada a la práctica respiratoria.</span>
-        </h1>
-        <p class="home-hero-lead">
-          <span lang="en">A multidisciplinary environment bringing together clinical practice, biomedical research and technology to answer questions that emerge from respiratory care across the Área Sanitaria da Coruña e Cee.</span>
-          <span lang="es">Un entorno multidisciplinar que reúne práctica clínica, investigación biomédica y tecnología para responder preguntas que nacen de la atención respiratoria en el Área Sanitaria da Coruña e Cee.</span>
-        </p>
-        <div class="home-hero-links" aria-label="Primary homepage actions">
-          <a href="/clinical/"><span lang="en">Explore research</span><span lang="es">Explorar investigación</span><span aria-hidden="true">→</span></a>
-          <a href="/innovation/"><span lang="en">See innovation</span><span lang="es">Ver innovación</span><span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-
-      <aside class="home-hero-ledger reveal reveal-d1" aria-label="Research programme at a glance">
-        <div class="home-ledger-head"><span lang="en">Programme at a glance</span><span lang="es">El programa en cifras</span></div>
-        <div class="home-ledger-row">
-          <span class="home-ledger-label"><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></span>
-          <strong class="home-ledger-value" id="statLines">6</strong>
-        </div>
-        <div class="home-ledger-row">
-          <span class="home-ledger-label"><span lang="en">Active studies</span><span lang="es">Estudios activos</span></span>
-          <strong class="home-ledger-value" id="statTrials">8+</strong>
-        </div>
-        <div class="home-ledger-row">
-          <span class="home-ledger-label"><span lang="en">Clinician-investigators</span><span lang="es">Investigadores clínicos</span></span>
-          <strong class="home-ledger-value" id="statMembers">23</strong>
-        </div>
-        <div class="home-ledger-row home-ledger-row--milestone">
-          <span class="home-ledger-label"><span lang="en">Lung transplants</span><span lang="es">Trasplantes pulmonares</span><small><span lang="en">Milestone · May 2026</span><span lang="es">Hito · Mayo 2026</span></small></span>
-          <strong class="home-ledger-value">1,000</strong>
-        </div>
-      </aside>
+    <div class="wrap home-hero-content">
+      <h1 class="home-hero-title" id="heroTitle">
+        <span lang="en">Research and innovation in respiratory medicine.</span>
+        <span lang="es">Investigación e innovación en medicina respiratoria.</span>
+      </h1>
+      <p class="home-hero-lead">
+        <span lang="en">neumACt is the respiratory research and innovation programme of the Pulmonology Department within the Área Sanitaria da Coruña e Cee, in the INIBIC research environment.</span>
+        <span lang="es">neumACt es el programa de investigación e innovación respiratoria del Servicio de Neumología del Área Sanitaria da Coruña e Cee, en el entorno investigador de INIBIC.</span>
+      </p>
+      <nav class="home-hero-links" aria-label="Primary homepage actions">
+        <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+        <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+      </nav>
     </div>
   </section>
 
-  <section class="home-section home-identity" aria-labelledby="identityTitle">
-    <div class="wrap home-identity-grid">
-      <div class="home-identity-copy reveal">
-        <p class="home-eyebrow"><span lang="en">How we work</span><span lang="es">Cómo trabajamos</span></p>
-        <h2 class="home-section-title" id="identityTitle"><span lang="en">The clinical question is the starting point.</span><span lang="es">La pregunta clínica es el punto de partida.</span></h2>
-        <p class="home-identity-lead"><span lang="en">neumACt brings together specialist clinicians, nursing, biomedical researchers, technical profiles and scientists around problems that arise in real respiratory practice.</span><span lang="es">neumACt reúne especialistas clínicos, enfermería, investigadores biomédicos, perfiles tecnológicos y científicos alrededor de problemas que nacen de la práctica respiratoria real.</span></p>
-        <p class="home-identity-copytext"><span lang="en">The work spans lung transplantation and pulmonary vascular disease, airway disease, lung cancer, respiratory failure and sleep, thoracic surgery and precision medicine — connecting clinical and translational research with technology and innovation.</span><span lang="es">El trabajo abarca trasplante pulmonar y enfermedad vascular pulmonar, patología de la vía aérea, cáncer de pulmón, insuficiencia respiratoria y sueño, cirugía torácica y medicina de precisión — conectando investigación clínica y traslacional con tecnología e innovación.</span></p>
-        <a href="/clinical/" class="home-inline-link"><span lang="en">Explore our research</span><span lang="es">Explorar nuestra investigación</span><span aria-hidden="true">→</span></a>
+  <section class="home-programme" aria-labelledby="programmeTitle">
+    <div class="wrap home-programme-panel">
+      <div class="home-programme-intro reveal">
+        <h2 id="programmeTitle"><span lang="en">neumACt programme</span><span lang="es">Programa neumACt</span></h2>
+        <p><span lang="en">Six research lines structure the programme’s scientific activity across respiratory medicine, alongside clinical studies, publications and innovation projects.</span><span lang="es">Seis líneas de investigación estructuran la actividad científica del programa en medicina respiratoria, junto con estudios clínicos, publicaciones y proyectos de innovación.</span></p>
+        <p class="home-programme-team"><span lang="en">The programme includes respiratory clinicians, nursing, biomedical and laboratory research, engineering and data, with other clinical services participating when required by the research question.</span><span lang="es">El programa integra profesionales clínicos de neumología, enfermería, investigación biomédica y de laboratorio, ingeniería y datos, con la participación de otros servicios clínicos cuando la pregunta de investigación lo requiere.</span></p>
+        <div class="home-programme-links">
+          <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+          <a href="/team/"><span lang="en">Meet the team</span><span lang="es">Conocer el equipo</span></a>
+        </div>
       </div>
-      <div class="home-method reveal reveal-d1" aria-label="From clinical question to impact">
-        <div class="home-method-row"><span>01</span><div><strong><span lang="en">Observe</span><span lang="es">Observar</span></strong><p><span lang="en">A need in clinical practice</span><span lang="es">Una necesidad en la práctica clínica</span></p></div></div>
-        <div class="home-method-row"><span>02</span><div><strong><span lang="en">Investigate</span><span lang="es">Investigar</span></strong><p><span lang="en">Understand the problem and its context</span><span lang="es">Entender el problema y su contexto</span></p></div></div>
-        <div class="home-method-row"><span>03</span><div><strong><span lang="en">Design</span><span lang="es">Diseñar</span></strong><p><span lang="en">A study, protocol, technology or workflow</span><span lang="es">Un estudio, protocolo, tecnología o flujo de trabajo</span></p></div></div>
-        <div class="home-method-row"><span>04</span><div><strong><span lang="en">Evaluate</span><span lang="es">Evaluar</span></strong><p><span lang="en">Generate evidence in real conditions</span><span lang="es">Generar evidencia en condiciones reales</span></p></div></div>
-        <div class="home-method-row"><span>05</span><div><strong><span lang="en">Transfer</span><span lang="es">Transferir</span></strong><p><span lang="en">Return knowledge to care and research</span><span lang="es">Devolver conocimiento a la asistencia y la investigación</span></p></div></div>
+      <div class="home-programme-lines reveal reveal-d1" id="researchLinesGrid" aria-live="polite">
+        <div class="home-line-row home-line-row--fallback"><span class="home-line-copy"><span class="home-line-title"><span lang="en">Transplantation &amp; Pulmonary Hypertension</span><span lang="es">Trasplante e hipertensión pulmonar</span></span></span></div>
+        <div class="home-line-row home-line-row--fallback"><span class="home-line-copy"><span class="home-line-title"><span lang="en">Airway Diseases</span><span lang="es">Enfermedades de la vía aérea</span></span></span></div>
+        <div class="home-line-row home-line-row--fallback"><span class="home-line-copy"><span class="home-line-title"><span lang="en">Interventional Pneumology &amp; Lung Cancer</span><span lang="es">Neumología intervencionista y cáncer de pulmón</span></span></span></div>
+        <div class="home-line-row home-line-row--fallback"><span class="home-line-copy"><span class="home-line-title"><span lang="en">Respiratory Failure &amp; Sleep Medicine</span><span lang="es">Insuficiencia respiratoria y medicina del sueño</span></span></span></div>
+        <div class="home-line-row home-line-row--fallback"><span class="home-line-copy"><span class="home-line-title"><span lang="en">Innovation in Thoracic Surgery</span><span lang="es">Innovación en cirugía torácica</span></span></span></div>
+        <div class="home-line-row home-line-row--fallback"><span class="home-line-copy"><span class="home-line-title"><span lang="en">Precision Medicine &amp; Clinical Innovation</span><span lang="es">Medicina de precisión e innovación clínica</span></span></span></div>
       </div>
+    </div>
+    <div class="wrap home-affiliation-dock">
+      <aside class="home-affiliation-card reveal" aria-labelledby="inibicAffiliationTitle">
+        <span class="home-affiliation-card__marker" aria-hidden="true"></span>
+        <div class="home-affiliation-card__head">
+          <p class="home-affiliation-card__eyebrow"><span lang="en">Institutional research profile</span><span lang="es">Perfil institucional de investigación</span></p>
+          <span class="home-affiliation-card__status" aria-hidden="true">INIBIC</span>
+        </div>
+        <h3 id="inibicAffiliationTitle">INIBIC</h3>
+        <p class="home-affiliation-card__institution">Instituto de Investigación Biomédica de A Coruña</p>
+        <p><span lang="en">neumACt has a dedicated institutional profile as an INIBIC research group.</span><span lang="es">neumACt cuenta con una ficha institucional propia como grupo de investigación de INIBIC.</span></p>
+        <a class="home-affiliation-card__link" href="https://www.inibic.es/portfolio-items/neumact-medicina-respiratoria-traslacional-y-de-precision/" target="_blank" rel="noopener noreferrer">
+          <span lang="en">View institutional profile</span><span lang="es">Ver ficha institucional</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M7 5h4v4M11 9v3H4V5h3"/></svg>
+        </a>
+      </aside>
     </div>
   </section>
 
   <section class="home-section home-current" aria-labelledby="currentTitle">
     <div class="wrap">
-      <div class="home-current-heading reveal">
+      <header class="home-section-header home-section-header--current reveal">
         <div>
-          <p class="home-eyebrow"><span lang="en">Now at neumACt</span><span lang="es">Ahora en neumACt</span></p>
-          <h2 class="home-section-title" id="currentTitle"><span lang="en">What is happening now.</span><span lang="es">Lo que está ocurriendo ahora.</span></h2>
-          <p class="home-current-intro"><span lang="en">Selected public research outputs and scientific activity, published from the governed neumACt environment.</span><span lang="es">Resultados de investigación y actividad científica seleccionados para publicación desde el entorno gobernado de neumACt.</span></p>
+          <h2 class="home-section-title" id="currentTitle"><span lang="en">Current work</span><span lang="es">Trabajo actual</span></h2>
         </div>
-        <a href="/news/" class="home-inline-link home-inline-link--top"><span lang="en">All public activity</span><span lang="es">Toda la actividad pública</span><span aria-hidden="true">→</span></a>
-      </div>
-
-      <div class="home-pulse-grid">
-        <div id="storySection" class="home-pulse-live reveal" aria-live="polite">
-          <div id="storySkeleton" class="home-pulse-loading">
-            <div class="api-skeleton home-pulse-skeleton-feature"></div>
-            <div class="home-pulse-skeleton-list"><div class="api-skeleton"></div><div class="api-skeleton"></div><div class="api-skeleton"></div></div>
-          </div>
-        </div>
-
-        <!-- Future public-events surface. Static placeholders are intentional until a public event endpoint is governed from internal research system. -->
-        <aside class="home-agenda reveal reveal-d1" aria-labelledby="agendaTitle" data-future-source="public-events">
-          <div class="home-agenda-head">
-            <div>
-              <p class="home-agenda-kicker"><span lang="en">Agenda &amp; activity</span><span lang="es">Agenda y actividad</span></p>
-              <h3 id="agendaTitle"><span lang="en">What is coming next.</span><span lang="es">Lo próximo.</span></h3>
-            </div>
-            <span class="home-agenda-status"><span lang="en">Upcoming</span><span lang="es">Próximamente</span></span>
-          </div>
-          <div class="home-agenda-list">
-            <div class="home-agenda-item home-agenda-item--placeholder">
-              <div class="home-agenda-date"><strong>—</strong><small><span lang="en">TBC</span><span lang="es">Por confirmar</span></small></div>
-              <div><span class="home-agenda-type"><span lang="en">Research session</span><span lang="es">Sesión de investigación</span></span><p><span lang="en">Public research activity</span><span lang="es">Actividad pública de investigación</span></p></div>
-            </div>
-            <div class="home-agenda-item home-agenda-item--placeholder">
-              <div class="home-agenda-date"><strong>—</strong><small><span lang="en">TBC</span><span lang="es">Por confirmar</span></small></div>
-              <div><span class="home-agenda-type"><span lang="en">Scientific activity</span><span lang="es">Actividad científica</span></span><p><span lang="en">Scientific event or meeting</span><span lang="es">Jornada, seminario o encuentro científico</span></p></div>
-            </div>
-          </div>
-          <p class="home-agenda-note"><span lang="en">Public events will appear here once scheduled.</span><span lang="es">Las actividades públicas aparecerán aquí cuando estén programadas.</span></p>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <section class="home-section home-innovation" id="innovation-spotlight" aria-labelledby="innovationTitle">
-    <div class="wrap home-innovation-grid">
-      <div class="home-innovation-copy reveal">
-        <p class="home-eyebrow home-eyebrow--dark"><span lang="en">Clinical innovation</span><span lang="es">Innovación clínica</span></p>
-        <h2 class="home-section-title home-section-title--dark" id="innovationTitle"><span lang="en">Innovation starts beside the patient.</span><span lang="es">La innovación empieza al lado del paciente.</span></h2>
-        <p class="home-innovation-lead"><span lang="en">In respiratory medicine, innovation can mean measuring better, detecting earlier, visualising differently, improving a workflow or creating a technology that did not exist for a clinical need.</span><span lang="es">En neumología, innovar puede significar medir mejor, detectar antes, visualizar de otra manera, mejorar un flujo de trabajo o crear una tecnología que todavía no existe para una necesidad clínica.</span></p>
-        <p class="home-innovation-secondary"><span lang="en">That is why clinical practice, engineering, science and external collaborators meet in the same environment — so ideas can move from observation to prototype, validation and evidence.</span><span lang="es">Por eso práctica clínica, ingeniería, ciencia y colaboradores externos se encuentran en un mismo entorno: para que las ideas puedan avanzar desde la observación hasta el prototipo, la validación y la evidencia.</span></p>
-        <div class="home-innovation-path" aria-label="Innovation pathway"><span><span lang="en">Need</span><span lang="es">Necesidad</span></span><i>→</i><span><span lang="en">Design</span><span lang="es">Diseño</span></span><i>→</i><span><span lang="en">Validation</span><span lang="es">Validación</span></span></div>
-        <a href="/innovation/" class="home-inline-link home-inline-link--dark"><span lang="en">Explore innovation</span><span lang="es">Explorar innovación</span><span aria-hidden="true">→</span></a>
-      </div>
-
-      <div id="spotlightSection" class="home-spotlight reveal reveal-d1">
-        <div class="spotlight-card" id="spotlightSkeleton">
-          <div class="api-skeleton home-spotlight-skeleton-kicker"></div>
-          <div class="api-skeleton home-spotlight-skeleton-title"></div>
-          <div class="api-skeleton home-spotlight-skeleton-copy"></div>
-          <div class="api-skeleton home-spotlight-skeleton-copy home-spotlight-skeleton-copy--short"></div>
+      </header>
+      <div id="storySection" class="home-current-surface reveal" aria-live="polite">
+        <div id="storySkeleton" class="home-current-loading" aria-hidden="true">
+          <div class="api-skeleton"></div><div class="api-skeleton"></div>
         </div>
       </div>
     </div>
@@ -289,28 +194,13 @@
   <section class="home-section home-network" aria-labelledby="networkTitle">
     <div class="wrap home-network-grid">
       <div class="home-network-copy reveal">
-        <p class="home-eyebrow"><span lang="en">Connected research</span><span lang="es">Investigación conectada</span></p>
-        <h2 class="home-section-title" id="networkTitle"><span lang="en">Connected to transform practice.</span><span lang="es">Conectados para transformar la práctica.</span></h2>
-        <p class="home-network-lead"><span lang="en">neumACt grows from respiratory care within the Área Sanitaria da Coruña e Cee and the INIBIC research environment. From there, we work with organisations that can contribute knowledge, technology, data, methods or validation capacity.</span><span lang="es">neumACt nace de la práctica respiratoria dentro del Área Sanitaria da Coruña e Cee y del entorno investigador del INIBIC. Desde ahí colaboramos con organizaciones capaces de aportar conocimiento, tecnología, datos, métodos o capacidad de validación.</span></p>
-        <p class="home-network-purpose"><span lang="en">Every collaboration should translate into better evidence, better tools or better care for our patient cohorts and the public health service.</span><span lang="es">Cada colaboración debe traducirse en mejor evidencia, mejores herramientas o mejor atención para nuestras cohortes de pacientes y para el servicio público.</span></p>
+        <h2 class="home-section-title" id="networkTitle"><span lang="en">Institutional environment</span><span lang="es">Entorno institucional</span></h2>
+        <p><span lang="en">neumACt operates within the Área Sanitaria da Coruña e Cee and INIBIC, in the Galician public health system. External collaborators participate in individual studies and projects when relevant.</span><span lang="es">neumACt desarrolla su actividad en el Área Sanitaria da Coruña e Cee e INIBIC, dentro del sistema sanitario público de Galicia. Colaboradores externos participan en estudios y proyectos concretos cuando procede.</span></p>
       </div>
-      <div class="home-network-system reveal reveal-d1">
-        <div class="home-network-column">
-          <p class="home-network-label"><span lang="en">Our environment</span><span lang="es">Nuestro entorno</span></p>
-          <div class="home-network-row"><strong>Área Sanitaria da Coruña e Cee</strong><span><span lang="en">Clinical and public-care environment</span><span lang="es">Entorno clínico y asistencial público</span></span></div>
-          <a class="home-network-row" href="https://www.inibic.es" target="_blank" rel="noopener"><strong>INIBIC</strong><span><span lang="en">Biomedical research environment</span><span lang="es">Entorno de investigación biomédica</span></span><em>↗</em></a>
-          <div class="home-network-row"><strong>SERGAS</strong><span><span lang="en">Galician public health system</span><span lang="es">Sistema sanitario público de Galicia</span></span></div>
-        </div>
-        <div class="home-network-column home-network-column--partners">
-          <p class="home-network-label"><span lang="en">We collaborate with</span><span lang="es">Colaboramos con</span></p>
-          <div class="home-partner-types">
-            <span><span lang="en">Technology companies</span><span lang="es">Empresas tecnológicas</span></span>
-            <span><span lang="en">Pharmaceutical industry</span><span lang="es">Industria farmacéutica</span></span>
-            <span><span lang="en">Universities</span><span lang="es">Universidades</span></span>
-            <span><span lang="en">Research centres</span><span lang="es">Centros de investigación</span></span>
-            <span><span lang="en">Healthcare organisations</span><span lang="es">Organizaciones sanitarias</span></span>
-          </div>
-        </div>
+      <div class="home-institution-list reveal reveal-d1">
+        <div class="home-institution-row"><strong>Área Sanitaria da Coruña e Cee</strong><span><span lang="en">Clinical and public healthcare environment</span><span lang="es">Entorno clínico y asistencial público</span></span></div>
+        <a class="home-institution-row" href="https://www.inibic.es" target="_blank" rel="noopener"><strong>INIBIC</strong><span><span lang="en">Biomedical research environment</span><span lang="es">Entorno de investigación biomédica</span></span><em aria-hidden="true">↗</em></a>
+        <div class="home-institution-row"><strong>SERGAS</strong><span><span lang="en">Galician public health system</span><span lang="es">Sistema sanitario público de Galicia</span></span></div>
       </div>
     </div>
   </section>
@@ -318,14 +208,11 @@
   <section class="home-contact" id="contact" aria-labelledby="contactTitle">
     <div class="wrap home-contact-shell">
       <div class="home-contact-copy reveal">
-        <p class="home-eyebrow home-eyebrow--dark"><span lang="en">Collaborate</span><span lang="es">Colaborar</span></p>
-        <h2 class="home-contact-title" id="contactTitle"><span lang="en">A clinical question, a technology or an idea worth exploring?</span><span lang="es">¿Una pregunta clínica, una tecnología o una idea que merezca ser explorada?</span></h2>
-        <p><span lang="en">We welcome conversations around clinical research, academic collaboration, technology validation and responsible innovation.</span><span lang="es">Abrimos conversaciones alrededor de investigación clínica, colaboración académica, validación tecnológica e innovación responsable.</span></p>
-        <div class="home-contact-scope" aria-label="Collaboration areas"><span><span lang="en">Clinical research</span><span lang="es">Investigación clínica</span></span><span><span lang="en">Technology</span><span lang="es">Tecnología</span></span><span><span lang="en">Industry</span><span lang="es">Industria</span></span><span><span lang="en">Academia</span><span lang="es">Academia</span></span></div>
+        <h2 class="home-contact-title" id="contactTitle"><span lang="en">Research and collaboration enquiries</span><span lang="es">Consultas de investigación y colaboración</span></h2>
+        <p><span lang="en">Use this form for enquiries about clinical research, academic collaboration, technology evaluation or innovation projects.</span><span lang="es">Utilice este formulario para consultas sobre investigación clínica, colaboración académica, evaluación tecnológica o proyectos de innovación.</span></p>
       </div>
-
       <details class="home-contact-disclosure reveal reveal-d1">
-        <summary><span class="home-contact-open"><span lang="en">Start a conversation</span><span lang="es">Iniciar conversación</span> <b aria-hidden="true">+</b></span><span class="home-contact-close"><span lang="en">Close form</span><span lang="es">Cerrar formulario</span> <b aria-hidden="true">−</b></span></summary>
+        <summary><span class="home-contact-open"><span lang="en">Enquiry form</span><span lang="es">Formulario de consulta</span> <b aria-hidden="true">+</b></span><span class="home-contact-close"><span lang="en">Enquiry form</span><span lang="es">Formulario de consulta</span> <b aria-hidden="true">−</b></span></summary>
         <div class="home-contact-form">
           <form id="contactForm">
             <div class="home-form-grid">
@@ -342,7 +229,7 @@
                 </select>
               </label>
               <label class="home-field home-field--wide"><span><span lang="en">Message</span><span lang="es">Mensaje</span></span><textarea name="message" rows="4"></textarea></label>
-              <div class="home-field home-field--wide"><button class="home-submit" type="submit"><span lang="en">Send enquiry</span><span lang="es">Enviar consulta</span><span aria-hidden="true">→</span></button></div>
+              <div class="home-field home-field--wide"><button class="home-submit" type="submit"><span lang="en">Send enquiry</span><span lang="es">Enviar consulta</span></button></div>
             </div>
           </form>
           <div class="form-success" id="formSuccess"><span lang="en">Message received — we'll be in touch.</span><span lang="es">Mensaje recibido — nos pondremos en contacto.</span></div>
@@ -353,46 +240,42 @@
 </main>
 
 
-<button id="scrollTop" aria-label="Scroll to top">
-  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-</button>
 <script src="/scripts/api.js" defer></script>
 
 
 
-<footer class="site-footer site-footer--editorial">
-  <div class="footer-grid">
-    <div class="footer-col-brand">
-      <img src="/logo.svg" alt="neumACt R&I" class="footer-logo-img">
-      <p class="footer-tagline"><span lang="en">Clinical &amp; translational respiratory research<br>Área Sanitaria da Coruña e Cee</span><span lang="es">Investigación clínica y traslacional en neumología<br>Área Sanitaria da Coruña e Cee</span></p>
+<footer class="site-footer site-footer--institutional" id="siteFooter">
+  <div class="footer-shell">
+    <div class="footer-signature">
+      <a class="footer-brand-lockup" href="/" aria-label="neumACt">
+        <span class="footer-brand-plate"><img src="/logo.svg" alt="neumACt" class="footer-logo-img"></span>
+      </a>
+      <p class="footer-descriptor"><span lang="en">Respiratory research and innovation</span><span lang="es">Investigación e innovación en medicina respiratoria</span></p>
+      <p class="footer-institution">Área Sanitaria da Coruña e Cee · INIBIC · SERGAS</p>
     </div>
     <div class="footer-col-nav">
       <p class="footer-nav-label"><span lang="en">Explore</span><span lang="es">Explorar</span></p>
-      <nav><a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a><a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a><a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a><a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a></nav>
+      <nav aria-label="Footer"><a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a><a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a><a href="/news/"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a><a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a></nav>
     </div>
     <div class="footer-col-contact">
-      <p class="footer-nav-label"><span lang="en">Connect</span><span lang="es">Conectar</span></p>
-      <p class="footer-address"><strong>Área Sanitaria da Coruña e Cee</strong><br>A Coruña · Galicia<br><a class="footer-enquiry-link" href="#contact"><span lang="en">Start a conversation →</span><span lang="es">Iniciar conversación →</span></a></p>
+      <p class="footer-nav-label"><span lang="en">Institution</span><span lang="es">Institución</span></p>
+      <p class="footer-address"><strong>Área Sanitaria da Coruña e Cee</strong><span>A Coruña · Galicia</span><span>INIBIC · SERGAS</span></p>
+      <a class="footer-enquiry-link" href="/#contact"><span lang="en">Research &amp; collaboration enquiries</span><span lang="es">Consultas de investigación y colaboración</span></a>
     </div>
   </div>
   <div class="footer-bottom-bar">
-    <p class="footer-copy">© 2026 neumACt R&amp;I · Área Sanitaria da Coruña e Cee · INIBIC · SERGAS</p>
-    <p class="footer-closing"><span lang="en">Clinical questions. Research. Innovation.</span><span lang="es">Preguntas clínicas. Investigación. Innovación.</span></p>
+    <p class="footer-copy">© 2026 neumACt R&amp;I</p>
+    <nav class="footer-legal-nav" aria-label="Legal"><a href="/privacidad/"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a><a href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a><a href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a></nav>
   </div>
 </footer>
-<div class="footer-legal">
-  <a class="footer-legal-link" href="/privacidad/"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
-  <a class="footer-legal-link" href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
-  <a class="footer-legal-link" href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
-</div>
 <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie notice"
  >
   <p class="cookie-banner__copy">
     <span lang="en">This site uses essential cookies only. No tracking, no advertising.
-      <a class="cookie-banner__link" href="/privacidad/">Privacy policy →</a>
+      <a class="cookie-banner__link" href="/privacidad/">Privacy policy</a>
     </span>
     <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.
-      <a class="cookie-banner__link" href="/privacidad/">Política de privacidad →</a>
+      <a class="cookie-banner__link" href="/privacidad/">Política de privacidad</a>
     </span>
   </p>
   <button class="cookie-banner__button"

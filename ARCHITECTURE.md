@@ -182,3 +182,8 @@ Backend content can outlive public identity changes. The public rendering layer 
 ## Phase 5.8 research editorial media
 
 `/clinical/` now has a stable media contract under `assets/research/`. Research-line API data supplies the scientific content; the page maps line numbers to replaceable editorial media slots. The overview does not render study/project inventories inside each line row. Programme-wide leadership is static editorial content on the Research page, while line-level coordinator data remains API-derived.
+
+
+## Global masthead ownership — H1 Editorial Index
+
+The public masthead is a shared system. `styles/components.css` owns its visual grammar and `scripts/site.js` owns Index/Search state, responsive behaviour, focus management and navigation interactions. Page stylesheets must not fork `.global-index`, `.hdr-index-btn` or the canonical `.hdr*` system. The desktop primary navigation remains visible; `Index / Índice` opens the full programme map, while the Research chevron remains a narrow six-line fast path. On ≤880px layouts, the existing drawer markup is retained only as fallback and the hamburger opens the full-height editorial Index.

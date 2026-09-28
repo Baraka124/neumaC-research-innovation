@@ -33,7 +33,7 @@
   <div class="hdr-main">
     <div class="hdr-inner">
       <a href="/" class="hdr-logo" aria-label="neumACt Research &amp; Innovation">
-        <img src="/logo.svg" alt="neumACt R&I" class="hdr-logo-img">
+        <span class="hdr-brand-plate"><img src="/logo.svg" alt="neumACt R&amp;I" class="hdr-logo-img"></span>
         <span class="hdr-brand-meta">
           <span class="hdr-brand-title"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
           <span class="hdr-brand-org">Área Sanitaria da Coruña e Cee · INIBIC · SERGAS</span>
@@ -42,35 +42,9 @@
 
       <nav class="hdr-nav" aria-label="Primary navigation">
         <a href="/" class="hdr-nav-link" data-nav="home"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-        <div class="hdr-dd" data-nav="research">
-          <span class="hdr-dd-trigger">
-            <a href="/clinical/" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
-            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true" aria-controls="researchMegaMenu">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-          </span>
-
-          <div class="hdr-dd-panel" id="researchMegaMenu" aria-label="Research navigation">
-            <div class="hdr-mega-intro">
-              <p class="hdr-mega-kicker"><span lang="en">Research</span><span lang="es">Investigación</span></p>
-              <h2 class="hdr-mega-title"><span lang="en">Clinical &amp; translational respiratory research</span><span lang="es">Investigación clínica y traslacional en neumología</span></h2>
-              <p class="hdr-mega-copy"><span lang="en">Six specialist lines connecting clinical questions, trials and translational research across respiratory medicine.</span><span lang="es">Seis líneas especializadas que conectan preguntas clínicas, ensayos e investigación traslacional en medicina respiratoria.</span></p>
-              <a class="hdr-mega-portfolio" href="/clinical/">
-                <span lang="en">View all research</span><span lang="es">Ver toda la investigación</span>
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
-
-            <div class="hdr-mega-lines">
-              <div class="hdr-mega-head">
-                <p><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></p>
-              </div>
-              <div class="hdr-dd-panel-inner" id="hdrResearchLines"></div>
-            </div>
-          </div>
-        </div>
+        <a href="/clinical/" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
         <a href="/innovation/" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-        <a href="/news/" class="hdr-nav-link" data-nav="news"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+        <a href="/news/" class="hdr-nav-link" data-nav="news"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
         <a href="/team/" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
 
@@ -94,7 +68,7 @@
       <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-      <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+      <a href="/news/"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
       <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
   </div>
@@ -118,7 +92,7 @@
     <p>
       <a href="/" class="btn-text not-found__back"><span lang="en">← Back to home</span><span lang="es">← Volver al inicio</span></a>
       &nbsp;&nbsp;·&nbsp;&nbsp;
-      <a href="/news/" class="btn-text"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+      <a href="/news/" class="btn-text"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
       &nbsp;&nbsp;·&nbsp;&nbsp;
       <a href="/clinical/" class="btn-text"><span lang="en">Research</span><span lang="es">Investigación</span></a>
     </p>
@@ -198,50 +172,30 @@
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-col-brand">
-      <img src="/logo.svg" alt="neumACt R&I" class="footer-logo-img">
-      <p class="footer-tagline">
-        <span lang="en">Servicio de Neumología<br>Hospital Universitario A Coruña<br>Área Sanitaria de A Coruña y Cee</span>
-        <span lang="es">Servicio de Neumología<br>Hospital Universitario A Coruña<br>Área Sanitaria de A Coruña y Cee</span>
-      </p>
+<footer class="site-footer site-footer--institutional" id="siteFooter">
+  <div class="footer-shell">
+    <div class="footer-signature">
+      <a class="footer-brand-lockup" href="/" aria-label="neumACt">
+        <span class="footer-brand-plate"><img src="/logo.svg" alt="neumACt" class="footer-logo-img"></span>
+      </a>
+      <p class="footer-descriptor"><span lang="en">Respiratory research and innovation</span><span lang="es">Investigación e innovación en medicina respiratoria</span></p>
+      <p class="footer-institution">Área Sanitaria da Coruña e Cee · INIBIC · SERGAS</p>
     </div>
     <div class="footer-col-nav">
-      <p class="footer-nav-label"><span lang="en">Site</span><span lang="es">Sitio</span></p>
-      <nav>
-          <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-          <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
-          <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-          <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
-          <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-      </nav>
+      <p class="footer-nav-label"><span lang="en">Explore</span><span lang="es">Explorar</span></p>
+      <nav aria-label="Footer"><a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a><a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a><a href="/news/"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a><a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a></nav>
     </div>
     <div class="footer-col-contact">
-      <p class="footer-nav-label"><span lang="en">Contact</span><span lang="es">Contacto</span></p>
-      <address class="footer-address">
-        <strong>Servicio de Neumología · Área Sanitaria da Coruña e Cee</strong>
-        As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
-        <a class="footer-enquiry-link" href="/#contact">
-          <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>
-        </a>
-      </address>
+      <p class="footer-nav-label"><span lang="en">Institution</span><span lang="es">Institución</span></p>
+      <p class="footer-address"><strong>Área Sanitaria da Coruña e Cee</strong><span>A Coruña · Galicia</span><span>INIBIC · SERGAS</span></p>
+      <a class="footer-enquiry-link" href="/#contact"><span lang="en">Research &amp; collaboration enquiries</span><span lang="es">Consultas de investigación y colaboración</span></a>
     </div>
   </div>
   <div class="footer-bottom-bar">
-    <p class="footer-copy">© 2026 neumACt R&amp;I · INIBIC · SERGAS</p>
-    <div class="footer-certs">
-      <span>GCP · ICH E6</span>
-      <span>CE MDR 2017/745</span>
-      <span>AEMPS</span>
-    </div>
+    <p class="footer-copy">© 2026 neumACt R&amp;I</p>
+    <nav class="footer-legal-nav" aria-label="Legal"><a href="/privacidad/"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a><a href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a><a href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a></nav>
   </div>
 </footer>
-<div class="footer-legal">
-  <a class="footer-legal-link" href="/privacidad/"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
-  <a class="footer-legal-link" href="/accesibilidad/"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
-  <a class="footer-legal-link" href="/aviso-legal/"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
-</div>
 
 <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie notice"
  >

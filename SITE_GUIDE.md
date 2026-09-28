@@ -258,3 +258,8 @@ Before publishing or committing any change to the site, ask:
 ---
 
 *Last updated: June 2026 · neumACt R&I · Servicio de Neumología · Área Sanitaria da Coruña e Cee*
+
+
+## Global masthead ownership — H1 Editorial Index
+
+The public masthead is a shared system. `styles/components.css` owns its visual grammar and `scripts/site.js` owns Index/Search state, responsive behaviour, focus management and navigation interactions. Page stylesheets must not fork `.global-index`, `.hdr-index-btn` or the canonical `.hdr*` system. The desktop primary navigation remains visible; `Index / Índice` opens the full programme map, while the Research chevron remains a narrow six-line fast path. On ≤880px layouts, the existing drawer markup is retained only as fallback and the hamburger opens the full-height editorial Index.
