@@ -34,13 +34,15 @@ test('language toggle switches and persists', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('data-lang', 'es');
 });
 
-test('mobile drawer opens, traps focus, closes on Escape', async ({ page }) => {
+test('mobile masthead opens the editorial Index and closes on Escape', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await page.click('#mobToggle');
-  await expect(page.locator('#mobDrawer')).toHaveClass(/open/);
+  await expect(page.locator('#globalIndex')).toHaveClass(/is-open/);
+  await expect(page.locator('#mobToggle')).toHaveAttribute('aria-expanded', 'true');
   await page.keyboard.press('Escape');
-  await expect(page.locator('#mobDrawer')).not.toHaveClass(/open/);
+  await expect(page.locator('#globalIndex')).not.toHaveClass(/is-open/);
+  await expect(page.locator('#mobToggle')).toHaveAttribute('aria-expanded', 'false');
 });
 
 
@@ -60,22 +62,25 @@ test('research line detail reveals after API render', async ({ page }) => {
   await page.route('**/api/research-lines/website', route => route.fulfill({
     status: 200, contentType: 'application/json', body: JSON.stringify({ data: [] })
   }));
-  await page.route('**/api/clinical-trials/website?line=test-line', route => route.fulfill({
+  await page.route('**/api/clinical-trials/website*', route => route.fulfill({
     status: 200, contentType: 'application/json', body: JSON.stringify({ data: [
       { id:'t1', title:'Mock active trial', phase:'Phase III', status:'Reclutando', study_type:'Interventional', description:'Trial description' },
       { id:'t2', title:'Mock observational study', phase:'Phase IV', status:'Activo', study_type:'Observational', description:'Study description' }
     ] })
   }));
-  await page.route('**/api/innovation-projects/website?line=test-line', route => route.fulfill({
+  await page.route('**/api/innovation-projects/website*', route => route.fulfill({
     status: 200, contentType: 'application/json', body: JSON.stringify({ data: [
       { id:'i1', title:'Mock clinical innovation', category:'Salud Digital', current_stage:'pilot', description:'Innovation description' }
     ] })
   }));
-  await page.route('**/api/news/website?type=publication&line=test-line&limit=100', route => route.fulfill({
+  await page.route('**/api/news/website*', route => route.fulfill({
     status: 200, contentType: 'application/json', body: JSON.stringify({ data: [
       { id:'p1', title:'Mock publication 2025', journal_name:'Respiratory Research', published_at:'2025-04-01' },
       { id:'p2', title:'Mock publication 2026', journal_name:'CHEST', published_at:'2026-02-01' }
     ] })
+  }));
+  await page.route('**/api/team/website*', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ data: [] })
   }));
 
   await page.goto('/line/?id=test-line');
@@ -104,7 +109,10 @@ test('premium header keeps Research as a direct primary destination', async ({ p
   await expect(page.locator('#globalIndex')).toHaveClass(/is-open/);
   await page.keyboard.press('Escape');
   await page.click('#hdrSearchBtn');
-  await expect(page.locator('.cmdk-overlay')).toBeVisible();
+  await expect(page.locator('#globalIndex')).toHaveClass(/is-open/);
+  await expect(page.locator('#globalIndex')).toHaveClass(/is-search/);
+  await expect(page.locator('#globalIndexSearchView')).toBeVisible();
+  await expect(page.locator('#globalIndexSearchInput')).toBeVisible();
 });
 
 test('final landing page renders its live editorial surfaces', async ({ page }) => {
@@ -187,7 +195,7 @@ test('research page uses compact editorial portfolio instead of legacy dashboard
   await expect(page.locator('#researchLinesList .research-line-row')).toHaveCount(6, { timeout:6000 });
   await expect(page.locator('#researchLinesList .research-line__media img')).toHaveCount(6);
   await expect(page.locator('#researchLinesList .research-line__title')).toHaveCount(6);
-  await expect(page.locator('#researchLinesList .research-line__num')).toHaveCount(6);
+  await expect(page.locator('#researchLinesList .research-line__num')).toHaveCount(0);
   await expect(page.locator('#researchLinesList .research-line__coordinator')).toHaveCount(6);
   await expect(page.locator('#researchLinesList')).toHaveCSS('display', 'block');
   const rowPositions = await page.locator('#researchLinesList .research-line-row').evaluateAll(nodes => nodes.slice(0,2).map(n => ({ top:n.getBoundingClientRect().top, left:n.getBoundingClientRect().left, width:n.getBoundingClientRect().width })));
