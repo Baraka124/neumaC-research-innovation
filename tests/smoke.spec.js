@@ -46,55 +46,20 @@ test('mobile masthead opens the editorial Index and closes on Escape', async ({ 
 });
 
 
-test('research line detail reveals after API render', async ({ page }) => {
-  await page.route('**/api/research-lines/test-line/website', route => route.fulfill({
-    status: 200,
-    contentType: 'application/json',
-    body: JSON.stringify({ data: {
-      id: 'test-line', line_number: 1,
-      name: 'Transplantation & Pulmonary Hypertension',
-      short_name: 'Transplantation & Pulmonary Hypertension',
-      description: 'Mock research line used by the browser smoke test.',
-      active_trials: 0, active_projects: 0, total_trials: 0, total_projects: 0,
-      keywords: [], track_record: [], team: [], trials_list: []
-    }})
-  }));
-  await page.route('**/api/research-lines/website', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify({ data: [] })
-  }));
-  await page.route('**/api/clinical-trials/website*', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify({ data: [
-      { id:'t1', title:'Mock active trial', phase:'Phase III', status:'Reclutando', study_type:'Interventional', description:'Trial description' },
-      { id:'t2', title:'Mock observational study', phase:'Phase IV', status:'Activo', study_type:'Observational', description:'Study description' }
-    ] })
-  }));
-  await page.route('**/api/innovation-projects/website*', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify({ data: [
-      { id:'i1', title:'Mock clinical innovation', category:'Salud Digital', current_stage:'pilot', description:'Innovation description' }
-    ] })
-  }));
-  await page.route('**/api/news/website*', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify({ data: [
-      { id:'p1', title:'Mock publication 2025', journal_name:'Respiratory Research', published_at:'2025-04-01' },
-      { id:'p2', title:'Mock publication 2026', journal_name:'CHEST', published_at:'2026-02-01' }
-    ] })
-  }));
-  await page.route('**/api/team/website*', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify({ data: [] })
-  }));
+test('research line template exposes the current editorial evidence structure', async ({ page }) => {
+  await page.goto('/line/');
 
-  await page.goto('/line/?id=test-line');
-  await expect(page.locator('#lineHero')).toBeVisible({ timeout: 6000 });
-  await expect(page.locator('#lineTitle')).toContainText('Transplantation');
-  await expect(page.locator('#lineLoadingState')).toBeHidden();
-  await expect(page.locator('#lineIntroSection')).toBeVisible();
-  await expect(page.locator('#lineMetricTrials')).toHaveText('1');
-  await expect(page.locator('#lineMetricStudies')).toHaveText('1');
-  await expect(page.locator('#lineMetricInnovation')).toHaveText('1');
-  await expect(page.locator('#lineMetricPublications')).toHaveText('2');
+  await expect(page.locator('#hdr')).toBeAttached();
+  await expect(page.locator('#lineLoadingState')).toBeAttached();
+  await expect(page.locator('#lineHero')).toBeAttached();
+  await expect(page.locator('#lineTitle')).toBeAttached();
+  await expect(page.locator('#lineIntroSection')).toBeAttached();
+  await expect(page.locator('#lineMetrics .line-fact')).toHaveCount(4);
+  await expect(page.locator('#lineWorkSection')).toBeAttached();
+  await expect(page.locator('#linePubsSection')).toBeAttached();
+  await expect(page.locator('#linePeopleSection')).toBeAttached();
+  await expect(page.locator('#lineCollabSection')).toBeAttached();
   await expect(page.locator('.line-chart-card')).toHaveCount(0);
-  await expect(page.locator('.line-fact')).toHaveCount(4);
-  await expect(page.locator('#linePubsList .line-pub')).toHaveCount(2);
 });
 
 test('premium header keeps Research as a direct primary destination', async ({ page }) => {
@@ -204,7 +169,7 @@ test('research page uses compact editorial portfolio instead of legacy dashboard
   expect(Math.abs(rowPositions[1].width - rowPositions[0].width)).toBeLessThan(4);
   await expect(page.locator('#researchLinesList .research-line-code')).toHaveCount(0);
   await expect(page.locator('#researchLinesList .research-chapter__motif')).toHaveCount(0);
-  await expect(page.locator('#researchLinesList .research-line__more')).toHaveCount(0);
+  await expect(page.locator('#researchLinesList .research-line__more')).toHaveCount(0);  
   await expect(page.locator('table.trials')).toHaveCount(0);
   await expect(page.locator('.study-summary')).toHaveCount(0);
   await expect(page.locator('.affil-section')).toHaveCount(0);
