@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>  
 <html lang="en" data-lang="en">          
 <head>
@@ -30,6 +29,7 @@
   <link rel="stylesheet" href="../styles/foundation.css">
   <link rel="stylesheet" href="../styles/shared.css">
   <link rel="stylesheet" href="../styles/pages/line.css">
+  <link rel="stylesheet" href="../styles/pages/line-architecture.css">
 
   <!-- neumAC Design System — buttons, pills, team grid -->
 
@@ -126,6 +126,25 @@
     </div>
   </section>
 
+  <section class="line-overview line-section" id="lineOverviewSection" hidden>
+    <div class="line-section__inner line-overview__inner">
+      <div class="line-overview__main">
+        <h2 class="line-section-title"><span lang="en">About this research area</span><span lang="es">Sobre este ámbito de investigación</span></h2>
+        <div class="line-overview__narrative" id="lineOverviewNarrative"></div>
+      </div>
+      <aside class="line-overview__index" aria-label="Research area profile">
+        <div class="line-overview__block" id="lineCapabilitiesBlock" hidden>
+          <p class="line-overview__label"><span lang="en">Clinical &amp; scientific capabilities</span><span lang="es">Capacidades clínicas y científicas</span></p>
+          <div class="line-overview__list" id="lineCapabilitiesList"></div>
+        </div>
+        <div class="line-overview__block" id="lineTrackRecordBlock" hidden>
+          <p class="line-overview__label"><span lang="en">Selected track record</span><span lang="es">Trayectoria seleccionada</span></p>
+          <div class="line-overview__list" id="lineTrackRecordList"></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
   <section class="line-activity line-section" id="lineIntroSection">
     <div class="line-section__inner line-activity__inner">
       <article class="line-lead" id="lineCoordinatorCard" aria-label="Research line coordinator"></article>
@@ -173,11 +192,24 @@
 
   <section class="line-section line-team" id="linePeopleSection">
     <div class="line-section__inner">
-      <div class="line-section-head line-section-head--inline">
-        <h2 class="line-section-title"><span lang="en">People</span><span lang="es">Personas</span></h2>
-        <a href="/team/" class="line-subtle-link"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+      <div class="line-section-head line-section-head--inline line-contributors__head">
+        <div>
+          <h2 class="line-section-title"><span lang="en">People &amp; contributions</span><span lang="es">Personas y contribuciones</span></h2>
+          <p class="line-contributors__intro"><span lang="en">Public contributors linked through current studies, innovation projects or explicit research-line membership. A contributor may be active across more than one research area.</span><span lang="es">Contribuidores públicos vinculados mediante estudios actuales, proyectos de innovación o pertenencia explícita a la línea. Una persona puede participar en más de un ámbito de investigación.</span></p>
+        </div>
+        <a href="/team/" class="line-subtle-link"><span lang="en">Full team</span><span lang="es">Equipo completo</span></a>
       </div>
       <div class="line-team-grid" id="lineTeamChips"></div>
+    </div>
+  </section>
+
+  <section class="line-connections line-section" id="lineConnectionsSection" hidden>
+    <div class="line-section__inner">
+      <div class="line-connections__head">
+        <h2 class="line-section-title"><span lang="en">Across the programme</span><span lang="es">En el conjunto del programa</span></h2>
+        <p><span lang="en">Shared contributors and cross-line studies or innovation represented in current public records.</span><span lang="es">Contribuidores compartidos y estudios o innovación entre líneas representados en los registros públicos actuales.</span></p>
+      </div>
+      <div class="line-connections__list" id="lineConnectionsList"></div>
     </div>
   </section>
 
@@ -229,6 +261,7 @@
 </div>
 
 <script src="/scripts/api.js" defer></script>
+<script src="/scripts/pages/line.js" defer></script>
 <script src="/scripts/site.js" defer></script>
 
 </body>
