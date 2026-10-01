@@ -8,16 +8,12 @@
    ============================================================ */
 
 @media(min-width:1680px){
-  /* ---------- Shared masthead / institutional chrome ---------- */
-  html body .hdr-inner{
-    max-width:1640px;
-    padding-inline:1.6rem;
-    gap:1.3rem;
-  }
+  html body{padding-top:72px;}
+  html body .hdr,html body .hdr.scrolled,html body .hdr-inner{height:72px;}
+  html body .hdr-inner{max-width:1640px;padding-inline:1.6rem;gap:1.3rem;}
   html body .hdr-logo{gap:1.05rem;}
   html body .hdr-brand-plate{padding:.49rem .72rem .44rem;}
-  html body .hdr-logo-img,
-  html body .hdr.scrolled .hdr-logo-img{height:27px;max-width:122px;}
+  html body .hdr-logo-img,html body .hdr.scrolled .hdr-logo-img{height:27px;max-width:122px;}
   html body .hdr-brand-meta{padding-left:1.05rem;}
   html body .hdr-brand-title{font-size:.59rem;letter-spacing:.065em;}
   html body .hdr-brand-org{font-size:.48rem;}
@@ -26,219 +22,83 @@
   html body .hdr-search-btn{width:34px;height:34px;}
   html body .hdr-index-btn{min-height:38px;padding:.5rem .82rem;font-size:.7rem;}
   html body .hdr-contact-btn{min-height:38px;padding-inline:.9rem;font-size:.74rem;}
-
-  /* ---------- Shared canvas ---------- */
-  html body[data-page] .container,
-  html body[data-page] .wrap{
-    max-width:1500px;
-  }
+  html body[data-page] .container,html body[data-page] .wrap{max-width:1500px;}
   html body .footer-grid{max-width:1540px;}
-
-  /* ---------- Desktop Editorial Index ---------- */
-  html body .global-index{padding-inline:1.5rem;}
-  html body .global-index__surface{
-    width:min(1640px,100%);
-    max-height:min(520px,calc(100dvh - var(--hdr) - 18px));
-  }
-  html body .global-index__toolbar,
-  html body .global-index__index-view,
-  html body .global-index__search-view{
-    width:calc(100% - 4.6rem);
-  }
-  html body .global-index__index-view{
-    grid-template-columns:minmax(285px,.74fr) minmax(520px,1.35fr) minmax(260px,.68fr);
-    gap:3.25rem;
-  }
+  html body .global-index{top:72px;padding-inline:1.5rem;}
+  html body .global-index__surface{width:min(1640px,100%);max-height:min(520px,calc(100dvh - 90px));}
+  html body .global-index__toolbar,html body .global-index__index-view,html body .global-index__search-view{width:calc(100% - 4.6rem);}
+  html body .global-index__index-view{grid-template-columns:minmax(285px,.74fr) minmax(520px,1.35fr) minmax(260px,.68fr);gap:3.25rem;}
   html body .global-index__chapter-name{font-size:1.55rem;}
   html body .global-index__line strong{font-size:.75rem;}
-
-  /* ---------- Home ---------- */
-  html body[data-page="home"] .wrap{
-    width:min(calc(100% - 4rem),1560px);
-    max-width:1560px;
-  }
+  html body[data-page="home"] .wrap{width:min(calc(100% - 4rem),1560px);max-width:1560px;}
   html body[data-page="home"] .home-hero{min-height:515px;}
-  html body[data-page="home"] .home-hero-content{
-    padding-top:3.2rem;
-    padding-bottom:6.1rem;
-  }
-  html body[data-page="home"] .home-hero-title{
-    max-width:14.2ch;
-    font-size:clamp(4.5rem,4.35vw,5.35rem);
-  }
+  html body[data-page="home"] .home-hero-content{padding-top:3.2rem;padding-bottom:6.1rem;}
+  html body[data-page="home"] .home-hero-title{max-width:14.2ch;font-size:clamp(4.5rem,4.35vw,5.35rem);}
   html body[data-page="home"] .home-hero-lead{max-width:46rem;font-size:1.08rem;}
-  html body[data-page="home"] .home-programme-panel{
-    grid-template-columns:minmax(360px,.68fr) minmax(0,1.32fr);
-    gap:5rem;
-    padding:2.45rem 2.8rem;
-  }
+  html body[data-page="home"] .home-programme-panel{grid-template-columns:minmax(360px,.68fr) minmax(0,1.32fr);gap:5rem;padding:2.45rem 2.8rem;}
   html body[data-page="home"] .home-programme-intro{max-width:42rem;}
   html body[data-page="home"] .home-line-title{font-size:.94rem;}
   html body[data-page="home"] .home-affiliation-card{width:min(100%,430px);margin-right:2rem;}
-  html body[data-page="home"] .home-current-grid{
-    grid-template-columns:minmax(0,1.18fr) minmax(350px,.82fr);
-    gap:2.7rem;
-  }
+  html body[data-page="home"] .home-current-grid{grid-template-columns:minmax(0,1.18fr) minmax(350px,.82fr);gap:2.7rem;}
   html body[data-page="home"] .home-current-record__media{min-height:245px;}
   html body[data-page="home"] .home-current-record--text-only{min-height:245px;}
-  html body[data-page="home"] .home-network-grid{
-    grid-template-columns:minmax(0,.68fr) minmax(520px,1.32fr);
-    gap:5.8rem;
-  }
-
-  /* ---------- Research ---------- */
+  html body[data-page="home"] .home-network-grid{grid-template-columns:minmax(0,.68fr) minmax(520px,1.32fr);gap:5.8rem;}
   html body[data-page="clinical"] .research-hero{padding-bottom:9.2rem;}
   html body[data-page="clinical"] .research-hero__media{height:390px;}
-  html body[data-page="clinical"] .research-hero__sheet{
-    width:min(calc(100% - 5rem),1480px);
-    max-width:1480px;
-    grid-template-columns:minmax(0,1.08fr) minmax(420px,.72fr);
-    gap:5rem;
-    padding:2.15rem 2.8rem;
-  }
+  html body[data-page="clinical"] .research-hero__sheet{width:min(calc(100% - 5rem),1480px);max-width:1480px;grid-template-columns:minmax(0,1.08fr) minmax(420px,.72fr);gap:5rem;padding:2.15rem 2.8rem;}
   html body[data-page="clinical"] .research-hero h1{font-size:clamp(4.2rem,4.25vw,5.35rem);}
   html body[data-page="clinical"] .research-hero__lead{max-width:62rem;font-size:1.08rem;}
-  html body[data-page="clinical"] .research-lines__head{
-    grid-template-columns:minmax(0,.88fr) minmax(420px,.52fr);
-    gap:5rem;
-  }
-  html body[data-page="clinical"] .research-line-row{
-    grid-template-columns:200px minmax(0,1fr) minmax(215px,.38fr);
-    gap:1.7rem;
-    min-height:146px;
-    padding:.95rem 0;
-  }
+  html body[data-page="clinical"] .research-lines__head{grid-template-columns:minmax(0,.88fr) minmax(420px,.52fr);gap:5rem;}
+  html body[data-page="clinical"] .research-line-row{grid-template-columns:200px minmax(0,1fr) minmax(215px,.38fr);gap:1.7rem;min-height:146px;padding:.95rem 0;}
   html body[data-page="clinical"] .research-line__media{height:116px;}
   html body[data-page="clinical"] .research-line__title{font-size:clamp(1.65rem,1.55vw,2rem);}
   html body[data-page="clinical"] .research-line__summary{font-size:.82rem;max-width:82ch;}
-  html body[data-page="clinical"] .study-portfolio__intro{
-    grid-template-columns:minmax(0,.88fr) minmax(420px,.52fr);
-    gap:5rem;
-  }
-  html body[data-page="clinical"] .study-row{
-    grid-template-columns:135px minmax(0,1.6fr) minmax(170px,.52fr) minmax(190px,.52fr);
-    gap:1.45rem;
-  }
-
-  /* ---------- Innovation ---------- */
-  html body[data-page="innovation"] .innovation-hero__grid{
-    min-height:285px;
-    grid-template-columns:minmax(0,1.08fr) minmax(500px,.92fr);
-    gap:5rem;
-    padding-top:3rem;
-  }
+  html body[data-page="clinical"] .study-portfolio__intro{grid-template-columns:minmax(0,.88fr) minmax(420px,.52fr);gap:5rem;}
+  html body[data-page="clinical"] .study-row{grid-template-columns:135px minmax(0,1.6fr) minmax(170px,.52fr) minmax(190px,.52fr);gap:1.45rem;}
+  html body[data-page="innovation"] .innovation-hero__grid{min-height:285px;grid-template-columns:minmax(0,1.08fr) minmax(500px,.92fr);gap:5rem;padding-top:3rem;}
   html body[data-page="innovation"] .innovation-hero__copy{max-width:860px;}
-  html body[data-page="innovation"] .innovation-hero__media,
-  html body[data-page="innovation"] .innovation-hero__media img{min-height:265px;}
-  html body[data-page="innovation"] .innovation-section-intro{
-    grid-template-columns:minmax(0,.95fr) minmax(420px,.5fr);
-    gap:5rem;
-  }
+  html body[data-page="innovation"] .innovation-hero__media,html body[data-page="innovation"] .innovation-hero__media img{min-height:265px;}
+  html body[data-page="innovation"] .innovation-section-intro{grid-template-columns:minmax(0,.95fr) minmax(420px,.5fr);gap:5rem;}
   html body[data-page="innovation"] .innovation-question h3{font-size:1.58rem;}
-  html body[data-page="innovation"] .innovation-project-row{
-    grid-template-columns:minmax(0,1fr) 300px;
-    gap:2rem;
-  }
-
-  /* ---------- Publications ---------- */
-  html body[data-page="news"] .pub-shell{
-    width:min(1660px,calc(100% - 5rem));
-  }
-  html body[data-page="news"] .pub-hero__media,
-  html body[data-page="news"] .pub-hero__wash{height:195px;}
+  html body[data-page="innovation"] .innovation-project-row{grid-template-columns:minmax(0,1fr) 300px;gap:2rem;}
+  html body[data-page="news"] .pub-shell{width:min(1660px,calc(100% - 5rem));}
+  html body[data-page="news"] .pub-hero__media,html body[data-page="news"] .pub-hero__wash{height:195px;}
   html body[data-page="news"] .pub-hero__panel-wrap{margin-top:-3.45rem;}
-  html body[data-page="news"] .pub-hero__panel{
-    width:calc(100% - 2.25rem);
-    grid-template-columns:minmax(430px,.75fr) minmax(0,1.25fr);
-    gap:5.2rem;
-    padding:1.75rem 3.2rem;
-  }
-  html body[data-page="news"] .pub-feature-lead{
-    grid-template-columns:minmax(470px,1.05fr) minmax(0,.95fr);
-    gap:4.8rem;
-    min-height:290px;
-  }
+  html body[data-page="news"] .pub-hero__panel{width:calc(100% - 2.25rem);grid-template-columns:minmax(430px,.75fr) minmax(0,1.25fr);gap:5.2rem;padding:1.75rem 3.2rem;}
+  html body[data-page="news"] .pub-feature-lead{grid-template-columns:minmax(470px,1.05fr) minmax(0,.95fr);gap:4.8rem;min-height:290px;}
   html body[data-page="news"] .pub-feature-lead__media{height:290px;}
-  html body[data-page="news"] .pub-item--publication{
-    grid-template-columns:64px minmax(0,1fr) 245px 215px;
-    gap:1.5rem;
-  }
-
-  /* ---------- Team ---------- */
-  html body[data-page="team"] .team-hero__grid{
-    max-width:min(1640px,calc(100vw - 4rem));
-    grid-template-columns:minmax(0,.94fr) minmax(470px,.64fr);
-    gap:6rem;
-    padding-inline:2.8rem;
-  }
-  html body[data-page="team"] .team-section-head{
-    grid-template-columns:minmax(0,1fr) minmax(380px,.5fr);
-    gap:5rem;
-  }
-  html body[data-page="team"] .team-coordinator{
-    grid-template-columns:100px minmax(0,1fr);
-    gap:1.15rem;
-    padding:1.1rem;
-  }
+  html body[data-page="news"] .pub-item--publication{grid-template-columns:64px minmax(0,1fr) 245px 215px;gap:1.5rem;}
+  html body[data-page="team"] .team-hero__grid{max-width:min(1640px,calc(100vw - 4rem));grid-template-columns:minmax(0,.94fr) minmax(470px,.64fr);gap:6rem;padding-inline:2.8rem;}
+  html body[data-page="team"] .team-section-head{grid-template-columns:minmax(0,1fr) minmax(380px,.5fr);gap:5rem;}
+  html body[data-page="team"] .team-coordinator{grid-template-columns:100px minmax(0,1fr);gap:1.15rem;padding:1.1rem;}
   html body[data-page="team"] .team-coordinator__portrait{width:100px;}
-  html body[data-page="team"] .team-person__open{
-    grid-template-columns:96px minmax(0,1fr) auto;
-    gap:1.35rem;
-    padding:1.1rem 1rem 1.15rem;
-  }
+  html body[data-page="team"] .team-person__open{grid-template-columns:96px minmax(0,1fr) auto;gap:1.35rem;padding:1.1rem 1rem 1.15rem;}
   html body[data-page="team"] .team-person__portrait{width:96px;}
 }
 
 @media(min-width:1920px){
+  html body{padding-top:74px;}
+  html body .hdr,html body .hdr.scrolled,html body .hdr-inner{height:74px;}
   html body .hdr-inner{max-width:1880px;padding-inline:2rem;gap:1.45rem;}
-  html body .hdr-logo-img,
-  html body .hdr.scrolled .hdr-logo-img{height:28px;max-width:128px;}
+  html body .hdr-logo-img,html body .hdr.scrolled .hdr-logo-img{height:28px;max-width:128px;}
   html body .hdr-brand-title{font-size:.61rem;}
   html body .hdr-brand-org{font-size:.5rem;}
   html body .hdr-nav-link{font-size:.88rem;padding-inline:.72rem;}
-
-  html body[data-page] .container,
-  html body[data-page] .wrap{max-width:1660px;}
+  html body[data-page] .container,html body[data-page] .wrap{max-width:1660px;}
   html body .footer-grid{max-width:1700px;}
-
-  html body .global-index__surface{width:min(1800px,calc(100% - 2rem));}
-  html body .global-index__toolbar,
-  html body .global-index__index-view,
-  html body .global-index__search-view{width:calc(100% - 5rem);}
-
-  html body[data-page="home"] .wrap{
-    width:min(calc(100% - 5rem),1740px);
-    max-width:1740px;
-  }
+  html body .global-index{top:74px;}
+  html body .global-index__surface{width:min(1800px,calc(100% - 2rem));max-height:min(520px,calc(100dvh - 92px));}
+  html body .global-index__toolbar,html body .global-index__index-view,html body .global-index__search-view{width:calc(100% - 5rem);}
+  html body[data-page="home"] .wrap{width:min(calc(100% - 5rem),1740px);max-width:1740px;}
   html body[data-page="home"] .home-hero{min-height:535px;}
   html body[data-page="home"] .home-programme-panel{gap:5.5rem;padding:2.6rem 3rem;}
   html body[data-page="home"] .home-affiliation-card{width:min(100%,448px);margin-right:2.5rem;}
-
   html body[data-page="clinical"] .research-hero{padding-bottom:9.8rem;}
   html body[data-page="clinical"] .research-hero__media{height:410px;}
-  html body[data-page="clinical"] .research-hero__sheet{
-    width:min(calc(100% - 7rem),1580px);
-    max-width:1580px;
-    grid-template-columns:minmax(0,1.1fr) minmax(440px,.7fr);
-    gap:5.5rem;
-    padding:2.35rem 3rem;
-  }
-
-  html body[data-page="innovation"] .innovation-hero__grid{
-    grid-template-columns:minmax(0,1.12fr) minmax(540px,.88fr);
-  }
-
-  html body[data-page="news"] .pub-shell{
-    width:min(1760px,calc(100% - 6rem));
-  }
-  html body[data-page="news"] .pub-hero__media,
-  html body[data-page="news"] .pub-hero__wash{height:210px;}
-  html body[data-page="news"] .pub-feature-lead,
-  html body[data-page="news"] .pub-feature-lead__media{min-height:305px;height:305px;}
-
-  html body[data-page="team"] .team-hero__grid{
-    max-width:min(1760px,calc(100vw - 5rem));
-    gap:6.5rem;
-    padding-inline:3rem;
-  }
+  html body[data-page="clinical"] .research-hero__sheet{width:min(calc(100% - 7rem),1580px);max-width:1580px;grid-template-columns:minmax(0,1.1fr) minmax(440px,.7fr);gap:5.5rem;padding:2.35rem 3rem;}
+  html body[data-page="innovation"] .innovation-hero__grid{grid-template-columns:minmax(0,1.12fr) minmax(540px,.88fr);}
+  html body[data-page="news"] .pub-shell{width:min(1760px,calc(100% - 6rem));}
+  html body[data-page="news"] .pub-hero__media,html body[data-page="news"] .pub-hero__wash{height:210px;}
+  html body[data-page="news"] .pub-feature-lead,html body[data-page="news"] .pub-feature-lead__media{min-height:305px;height:305px;}
+  html body[data-page="team"] .team-hero__grid{max-width:min(1760px,calc(100vw - 5rem));gap:6.5rem;padding-inline:3rem;}
 }
