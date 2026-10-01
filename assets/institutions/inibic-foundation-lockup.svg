@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 180" role="img" aria-labelledby="title desc">
+  <title id="title">Fundación Galega de Investigación Biomédica INIBIC</title>
+  <desc id="desc">Institutional lockup with blue crest, divider and foundation name.</desc>
+  <rect width="760" height="180" fill="#ffffff"/>
+  <rect x="0" y="0" width="126" height="180" fill="#007bc4"/>
+  <rect x="151" y="0" width="5" height="180" fill="#007bc4"/>
+
+  <!-- Simplified vector reconstruction of the supplied institutional crest -->
+  <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M37 49c7-11 15-16 25-16s18 5 25 16"/>
+    <path d="M33 52h58M39 61h46"/>
+    <path d="M45 38l6-9 7 9 7-9 7 9 7-9 6 9"/>
+    <path d="M63 16v12M57 22h12"/>
+    <path d="M49 111h28M53 111c0 14 4 24 10 30 6-6 10-16 10-30"/>
+    <path d="M63 141v17M51 158h24"/>
+  </g>
+  <circle cx="63" cy="91" r="11" fill="#ffffff"/>
+  <g fill="#ffffff">
+    <path d="M16 84h8v-8h7v8h8v7h-8v8h-7v-8h-8z"/>
+    <path d="M87 84h8v-8h7v8h8v7h-8v8h-7v-8h-8z"/>
+    <path d="M18 121h8v-8h7v8h8v7h-8v8h-7v-8h-8z"/>
+    <path d="M85 121h8v-8h7v8h8v7h-8v8h-7v-8h-8z"/>
+    <path d="M27 63h7v-7h6v7h7v6h-7v7h-6v-7h-7z"/>
+    <path d="M80 63h7v-7h6v7h7v6h-7v7h-6v-7h-7z"/>
+  </g>
+
+  <g fill="#007bc4" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing=".4">
+    <text x="190" y="48" font-size="43">FUNDACIÓN GALEGA</text>
+    <text x="190" y="102" font-size="43">DE INVESTIGACIÓN</text>
+    <text x="190" y="156" font-size="43">BIOMÉDICA INIBIC</text>
+  </g>
+</svg>
