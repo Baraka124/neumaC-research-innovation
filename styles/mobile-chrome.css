@@ -1,0 +1,115 @@
+/* ============================================================
+   neumACt — M3 MOBILE GLOBAL CHROME
+   Shared tablet/mobile masthead + Editorial Index calibration.
+   The Index is the mobile navigation surface; the legacy drawer stays hidden.
+   ============================================================ */
+
+@media(max-width:880px){
+  /* Masthead: one compact institutional lockup, not a desktop toolbar. */
+  .hdr,
+  .hdr-main,
+  .hdr-inner,
+  .hdr.scrolled .hdr-inner{height:62px;min-height:62px;}
+  .hdr-inner,.hdr.scrolled .hdr-inner{padding-inline:.85rem;gap:.55rem;}
+  .hdr-logo{min-width:0;min-height:42px;gap:0;}
+  .hdr-brand-meta{display:none!important;}
+  .hdr-brand-plate,
+  .hdr.scrolled .hdr-brand-plate{padding:.34rem .48rem .31rem;border-radius:2px;}
+  .hdr-logo-img,.hdr.scrolled .hdr-logo-img{height:22px;max-width:100px;}
+
+  /* Language belongs to the Index footer on mobile; avoid duplicate controls. */
+  .hdr .lang-switch{display:none!important;}
+  .hdr-right{margin-left:auto;gap:.38rem;}
+  .hdr-search-btn{display:grid;width:38px;height:38px;border-radius:50%;}
+  .mob-toggle{width:38px;height:38px;flex:0 0 38px;border-color:rgba(255,255,255,.18);}
+  .mob-toggle[aria-expanded="true"]{background:rgba(255,255,255,.08);border-color:rgba(91,216,218,.48);}
+
+  /* The Editorial Index is the mobile navigation page. */
+  .global-index__surface{background:#fbfaf7;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;}
+  .global-index__mobile-head{height:62px;padding:0 .9rem;border-bottom-color:#d8e1e4;background:rgba(251,250,247,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+  .global-index__mobile-brand{display:inline-flex;align-items:center;min-height:40px;}
+  .global-index__mobile-brand img{height:24px;max-width:118px;}
+  .global-index__mobile-actions{gap:.3rem;}
+  .global-index__mobile-search,.global-index__close--mobile{width:40px;height:40px;}
+  .global-index__close--mobile{border-color:#d5dfe3;background:#fff;}
+
+  .global-index__index-view,
+  .global-index__search-view,
+  .global-index__footer{margin-inline:clamp(.85rem,3.5vw,1.25rem);}
+  .global-index__index-view{gap:1.25rem;padding:1rem 0 1.25rem;}
+
+  /* Primary chapters read first and occupy less vertical space. */
+  .global-index__chapters{border-top-color:#d4dfe3;}
+  .global-index__chapter{
+    min-height:54px!important;
+    padding:.3rem .15rem!important;
+    grid-template-columns:30px minmax(0,1fr)!important;
+    border-bottom-color:#dce4e7;
+    border-radius:0!important;
+  }
+  .global-index__chapter-no{font-size:.54rem;letter-spacing:.08em;}
+  .global-index__chapter-name{font-size:clamp(1.28rem,5.5vw,1.52rem)!important;line-height:1.02;}
+  .global-index__chapter.is-current{background:transparent!important;box-shadow:none!important;}
+  .global-index__chapter.is-current .global-index__chapter-name{color:#087883;}
+
+  /* Research lines stay important, but no longer create an endless column on tablet. */
+  .global-index__section-head{margin-bottom:.25rem;}
+  .global-index__section-head h2{font-size:.68rem;letter-spacing:.08em;}
+  .global-index__line-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:1rem;}
+  .global-index__line{min-height:48px;padding:.45rem 0;border-bottom:1px solid #e1e7e9;}
+  .global-index__line strong{font-size:.69rem;line-height:1.28;}
+
+  /* Utilities are tertiary; keep them useful without extending the Index excessively. */
+  .global-index__utilities{padding:.8rem 0 .2rem;border-top:1px solid #d8e2e5;}
+  .global-index__utility-label{margin-bottom:.45rem;}
+  .global-index__utility-link{min-height:42px;display:inline-flex;align-items:center;margin-right:1.1rem;}
+  .global-index__latest{display:none!important;}
+  .global-index__institutions{margin-top:.7rem;padding-top:.7rem;border-top:1px solid #e1e7e9;gap:.35rem .7rem;}
+
+  /* Footer is a deliberate end-cap and owns language switching on mobile. */
+  .global-index__footer{position:relative;padding:1rem 0 max(1rem,env(safe-area-inset-bottom));border-top:1px solid #d7e1e4;gap:.35rem .5rem;}
+  .global-index__footer-lang{margin-left:auto;display:flex;gap:.3rem;}
+  .global-index__footer-lang .lt-btn{min-width:42px;min-height:36px;padding:.35rem .6rem;}
+
+  .global-search__head{position:sticky;top:62px;z-index:3;padding-top:.85rem;background:#fbfaf7;}
+  .global-search__field{height:52px;border-radius:10px;}
+  .global-search__filters{padding-bottom:.25rem;scrollbar-width:none;}
+  .global-search__filters::-webkit-scrollbar{display:none;}
+}
+
+@media(max-width:560px){
+  .hdr,
+  .hdr-main,
+  .hdr-inner,
+  .hdr.scrolled .hdr-inner{height:58px;min-height:58px;}
+  .hdr-inner,.hdr.scrolled .hdr-inner{padding-inline:.7rem;}
+  .hdr-brand-plate,.hdr.scrolled .hdr-brand-plate{padding:.31rem .43rem .28rem;}
+  .hdr-logo-img,.hdr.scrolled .hdr-logo-img{height:21px;max-width:94px;}
+  .hdr-search-btn{display:none!important;}
+  .mob-toggle{width:38px;height:38px;}
+
+  .global-index__mobile-head{height:58px;padding-inline:.75rem;}
+  .global-index__mobile-brand img{height:22px;max-width:104px;}
+  .global-index__index-view,.global-index__search-view,.global-index__footer{margin-inline:.8rem;}
+  .global-index__index-view{gap:1.05rem;padding-top:.75rem;}
+  .global-index__chapter{min-height:51px!important;grid-template-columns:28px minmax(0,1fr)!important;}
+  .global-index__chapter-name{font-size:clamp(1.22rem,7vw,1.42rem)!important;}
+  .global-index__line-list{grid-template-columns:1fr;}
+  .global-index__line{min-height:45px;}
+  .global-index__utilities{padding-top:.65rem;}
+  .global-index__institutions{font-size:.56rem;}
+  .global-index__footer{align-items:center;}
+  .global-search__head{top:58px;}
+}
+
+@media(max-width:390px){
+  .hdr-inner,.hdr.scrolled .hdr-inner{padding-inline:.6rem;}
+  .hdr-brand-plate,.hdr.scrolled .hdr-brand-plate{padding:.29rem .39rem .26rem;}
+  .hdr-logo-img,.hdr.scrolled .hdr-logo-img{height:20px;max-width:90px;}
+  .global-index__index-view,.global-index__search-view,.global-index__footer{margin-inline:.68rem;}
+  .global-index__chapter-name{font-size:1.24rem!important;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .global-index__surface,.mob-toggle{transition:none!important;}
+}
