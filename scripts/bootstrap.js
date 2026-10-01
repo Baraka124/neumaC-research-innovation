@@ -27,9 +27,11 @@
   addStylesheet('editorialRhythmCss','/styles/editorial-rhythm.css');
   addStylesheet('editorialHierarchyCss','/styles/editorial-hierarchy.css');
   addStylesheet('editorialMediaCss','/styles/editorial-media.css');
+  addStylesheet('inibicAffiliationCss','/styles/inibic-affiliation.css');
   addStylesheet('workstationCss','/styles/workstation.css');
   addScript('mobileChromeJs','/scripts/mobile-chrome.js');
   addScript('accessibilityHardeningJs','/scripts/accessibility-hardening.js');
+  addScript('inibicAffiliationJs','/scripts/inibic-affiliation.js');
 
   try {
     var lang = localStorage.getItem('huac_lang') || localStorage.getItem('lang');

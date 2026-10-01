@@ -1,0 +1,7 @@
+/* M5.4 correction — exact official INIBIC Foundation artwork supplied by the user. */
+body[data-page="home"] .home-affiliation-card__head::before{
+  background-image:url('/assets/institutions/inibic-foundation-official.png');
+  background-repeat:no-repeat;
+  background-position:left center;
+  background-size:contain;
+}
