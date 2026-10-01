@@ -1,10 +1,11 @@
 /* ============================================================
-   neumACt — M3.2 HOSPITAL DESKTOP / WIDE WORKSTATION CALIBRATION
+   neumACt — M3.4 HOSPITAL DESKTOP / WIDE WORKSTATION CALIBRATION
    Target: large institutional desktops observed around 2048px viewport width.
 
    This layer expands composition, not reading measure. It deliberately keeps
    prose constrained while giving navigation, editorial grids, hero sheets,
    research indexes and institutional surfaces more of the available canvas.
+   M3.4 reduces the few surfaces that had become visually stretched.
    ============================================================ */
 
 @media(min-width:1680px){
@@ -45,9 +46,11 @@
   html body[data-page="home"] .home-network-grid{grid-template-columns:minmax(0,.68fr) minmax(520px,1.32fr);gap:5.8rem;}
   html body[data-page="clinical"] .research-hero{padding-bottom:9.2rem;}
   html body[data-page="clinical"] .research-hero__media{height:390px;}
-  html body[data-page="clinical"] .research-hero__sheet{width:min(calc(100% - 5rem),1480px);max-width:1480px;grid-template-columns:minmax(0,1.08fr) minmax(420px,.72fr);gap:5rem;padding:2.15rem 2.8rem;}
+  html body[data-page="clinical"] .research-hero__sheet{width:min(calc(100% - 6rem),1400px);max-width:1400px;grid-template-columns:minmax(0,1.16fr) minmax(350px,.58fr);gap:4rem;padding:2.05rem 2.45rem;}
   html body[data-page="clinical"] .research-hero h1{font-size:clamp(4.2rem,4.25vw,5.35rem);}
-  html body[data-page="clinical"] .research-hero__lead{max-width:62rem;font-size:1.08rem;}
+  html body[data-page="clinical"] .research-hero__lead{max-width:58rem;font-size:1.08rem;}
+  html body[data-page="clinical"] .research-leadership{grid-template-columns:88px minmax(0,1fr);gap:1rem;padding-left:1.65rem;}
+  html body[data-page="clinical"] .research-leadership__portrait{width:88px;height:108px;}
   html body[data-page="clinical"] .research-lines__head{grid-template-columns:minmax(0,.88fr) minmax(420px,.52fr);gap:5rem;}
   html body[data-page="clinical"] .research-line-row{grid-template-columns:200px minmax(0,1fr) minmax(215px,.38fr);gap:1.7rem;min-height:146px;padding:.95rem 0;}
   html body[data-page="clinical"] .research-line__media{height:116px;}
@@ -79,26 +82,28 @@
 @media(min-width:1920px){
   html body{padding-top:74px;}
   html body .hdr,html body .hdr.scrolled,html body .hdr-inner{height:74px;}
-  html body .hdr-inner{max-width:1880px;padding-inline:2rem;gap:1.45rem;}
+  html body .hdr-inner{max-width:1800px;padding-inline:2rem;gap:1.45rem;}
   html body .hdr-logo-img,html body .hdr.scrolled .hdr-logo-img{height:28px;max-width:128px;}
   html body .hdr-brand-title{font-size:.61rem;}
   html body .hdr-brand-org{font-size:.5rem;}
   html body .hdr-nav-link{font-size:.88rem;padding-inline:.72rem;}
-  html body[data-page] .container,html body[data-page] .wrap{max-width:1660px;}
-  html body .footer-grid{max-width:1700px;}
+  html body[data-page] .container,html body[data-page] .wrap{max-width:1600px;}
+  html body .footer-grid{max-width:1640px;}
   html body .global-index{top:74px;}
-  html body .global-index__surface{width:min(1800px,calc(100% - 2rem));max-height:min(520px,calc(100dvh - 92px));}
+  html body .global-index__surface{width:min(1720px,calc(100% - 2rem));max-height:min(520px,calc(100dvh - 92px));}
   html body .global-index__toolbar,html body .global-index__index-view,html body .global-index__search-view{width:calc(100% - 5rem);}
-  html body[data-page="home"] .wrap{width:min(calc(100% - 5rem),1740px);max-width:1740px;}
+  html body[data-page="home"] .wrap{width:min(calc(100% - 5rem),1640px);max-width:1640px;}
   html body[data-page="home"] .home-hero{min-height:535px;}
-  html body[data-page="home"] .home-programme-panel{gap:5.5rem;padding:2.6rem 3rem;}
-  html body[data-page="home"] .home-affiliation-card{width:min(100%,448px);margin-right:2.5rem;}
-  html body[data-page="clinical"] .research-hero{padding-bottom:9.8rem;}
-  html body[data-page="clinical"] .research-hero__media{height:410px;}
-  html body[data-page="clinical"] .research-hero__sheet{width:min(calc(100% - 7rem),1580px);max-width:1580px;grid-template-columns:minmax(0,1.1fr) minmax(440px,.7fr);gap:5.5rem;padding:2.35rem 3rem;}
-  html body[data-page="innovation"] .innovation-hero__grid{grid-template-columns:minmax(0,1.12fr) minmax(540px,.88fr);}
-  html body[data-page="news"] .pub-shell{width:min(1760px,calc(100% - 6rem));}
-  html body[data-page="news"] .pub-hero__media,html body[data-page="news"] .pub-hero__wash{height:210px;}
-  html body[data-page="news"] .pub-feature-lead,html body[data-page="news"] .pub-feature-lead__media{min-height:305px;height:305px;}
-  html body[data-page="team"] .team-hero__grid{max-width:min(1760px,calc(100vw - 5rem));gap:6.5rem;padding-inline:3rem;}
+  html body[data-page="home"] .home-programme-panel{gap:5.2rem;padding:2.55rem 2.9rem;}
+  html body[data-page="home"] .home-affiliation-card{width:min(100%,440px);margin-right:2.25rem;}
+  html body[data-page="clinical"] .research-hero{padding-bottom:9.5rem;}
+  html body[data-page="clinical"] .research-hero__media{height:400px;}
+  html body[data-page="clinical"] .research-hero__sheet{width:min(calc(100% - 8rem),1480px);max-width:1480px;grid-template-columns:minmax(0,1.18fr) minmax(370px,.56fr);gap:4.5rem;padding:2.2rem 2.65rem;}
+  html body[data-page="clinical"] .research-leadership{grid-template-columns:92px minmax(0,1fr);gap:1rem;padding-left:1.8rem;}
+  html body[data-page="clinical"] .research-leadership__portrait{width:92px;height:112px;}
+  html body[data-page="innovation"] .innovation-hero__grid{grid-template-columns:minmax(0,1.1fr) minmax(520px,.9fr);}
+  html body[data-page="news"] .pub-shell{width:min(1660px,calc(100% - 6rem));}
+  html body[data-page="news"] .pub-hero__media,html body[data-page="news"] .pub-hero__wash{height:205px;}
+  html body[data-page="news"] .pub-feature-lead,html body[data-page="news"] .pub-feature-lead__media{min-height:300px;height:300px;}
+  html body[data-page="team"] .team-hero__grid{max-width:min(1660px,calc(100vw - 5rem));gap:5.8rem;padding-inline:2.9rem;}
 }
