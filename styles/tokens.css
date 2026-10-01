@@ -101,3 +101,13 @@
   --lh-normal: 1.6;
   --lh-relaxed: 1.72;
 }
+
+/* M3.2 — hospital desktop / wide-workstation masthead scale.
+   Only the shared header token changes here so body offset, sticky anchors
+   and the Editorial Index all remain synchronised automatically. */
+@media(min-width:1680px){
+  :root{--hdr:72px;}
+}
+@media(min-width:1920px){
+  :root{--hdr:74px;}
+}
