@@ -1,0 +1,223 @@
+/* ============================================================
+   neumACt — M4.2 EDITORIAL HIERARCHY + INTERACTION POLISH
+
+   Purpose:
+   - keep records editorial, not card-like;
+   - align metadata, rules and action affordances;
+   - make hover/focus useful without visual noise;
+   - preserve page personality and existing information architecture.
+   ============================================================ */
+
+/* Shared metadata grammar */
+:where(
+  .research-meta,
+  .innovation-kicker,
+  .pub-object-label,
+  .team-kicker,
+  .home-current-kind,
+  .innovation-project__meta span,
+  .team-coordinator__line-no,
+  .pub-meta,
+  .study-toolbar__summary,
+  .research-line__coord-label
+){
+  letter-spacing:.085em;
+}
+
+/* Shared action grammar */
+:where(
+  .research-text-link,
+  .innovation-project__link,
+  .team-inline-link,
+  .home-current-action,
+  .pub-item__open,
+  .home-text-link
+){
+  text-underline-offset:.18em;
+  transition:color .16s ease,border-color .16s ease,transform .16s ease;
+}
+
+:where(
+  .research-text-link,
+  .innovation-project__link,
+  .team-inline-link,
+  .home-current-action,
+  .pub-item__open,
+  .home-text-link
+):focus-visible{
+  outline:2px solid rgba(0,129,138,.55);
+  outline-offset:4px;
+}
+
+/* ============================================================
+   RESEARCH — rows remain scientific records, never cards.
+   ============================================================ */
+body[data-page="clinical"] .research-line-row{
+  position:relative;
+  transition:background .16s ease,border-color .16s ease;
+}
+body[data-page="clinical"] .research-line-row:hover,
+body[data-page="clinical"] .research-line-row:focus-visible{
+  background:rgba(12,56,104,.018);
+}
+body[data-page="clinical"] .research-line-row:focus-visible{
+  box-shadow:inset 2px 0 0 #00818a;
+}
+body[data-page="clinical"] .research-line__title{
+  transition:color .16s ease;
+}
+body[data-page="clinical"] .research-line-row:hover .research-line__title,
+body[data-page="clinical"] .research-line-row:focus-visible .research-line__title{
+  color:#0b6671;
+}
+body[data-page="clinical"] .study-row{
+  transition:background .16s ease,color .16s ease;
+}
+body[data-page="clinical"] .study-row:hover,
+body[data-page="clinical"] .study-row:focus-visible{
+  background:rgba(12,56,104,.018);
+  box-shadow:inset 2px 0 0 rgba(0,129,138,.68);
+}
+
+/* ============================================================
+   INNOVATION — project list gains authored hierarchy, not cards.
+   ============================================================ */
+body[data-page="innovation"] .innovation-project-row{
+  position:relative;
+  transition:background .16s ease;
+}
+body[data-page="innovation"] .innovation-project-row:hover{
+  background:rgba(12,56,104,.016);
+}
+body[data-page="innovation"] .innovation-project__title{
+  transition:color .16s ease;
+}
+body[data-page="innovation"] .innovation-project-row:hover .innovation-project__title{
+  color:#0a6672;
+}
+body[data-page="innovation"] .innovation-project__link{
+  width:max-content;
+  border-bottom:1px solid rgba(0,130,145,.24);
+  padding-bottom:.15rem;
+}
+body[data-page="innovation"] .innovation-project__link:hover{
+  color:#0c3868;
+  border-bottom-color:currentColor;
+}
+
+/* ============================================================
+   PUBLICATIONS — dense scholarly rows stay calm and legible.
+   ============================================================ */
+body[data-page="news"] .pub-item{
+  transition:background .16s ease,box-shadow .16s ease;
+}
+body[data-page="news"] .pub-item:hover,
+body[data-page="news"] .pub-item:focus-visible{
+  background:rgba(12,56,104,.018);
+  box-shadow:inset 2px 0 0 rgba(0,129,138,.62);
+}
+body[data-page="news"] .pub-publication__title,
+body[data-page="news"] .pub-card__title,
+body[data-page="news"] .pub-update__title{
+  transition:color .16s ease;
+}
+body[data-page="news"] .pub-item:hover .pub-publication__title,
+body[data-page="news"] .pub-item:focus-visible .pub-publication__title,
+body[data-page="news"] .pub-item:hover .pub-card__title,
+body[data-page="news"] .pub-item:focus-visible .pub-card__title,
+body[data-page="news"] .pub-item:hover .pub-update__title,
+body[data-page="news"] .pub-item:focus-visible .pub-update__title{
+  color:#0b6671;
+}
+body[data-page="news"] .pub-filter{
+  transition:color .16s ease;
+}
+body[data-page="news"] .pub-filter:focus-visible,
+body[data-page="news"] .pub-line-filter:focus-visible{
+  outline:2px solid rgba(0,129,138,.46);
+  outline-offset:3px;
+}
+
+/* ============================================================
+   TEAM — remove residual dashboard/card behaviour from people rows.
+   ============================================================ */
+body[data-page="team"] .team-person__open{
+  border-radius:6px;
+  transition:background .16s ease,color .16s ease;
+}
+body[data-page="team"] .team-person__open:hover{
+  background:rgba(12,56,104,.018);
+  box-shadow:none;
+  transform:none;
+}
+body[data-page="team"] .team-person__open:hover .team-person__portrait{
+  transform:none;
+  box-shadow:none;
+  border-color:#d5e0e4;
+}
+body[data-page="team"] .team-person__open::after{
+  color:#7d99a6;
+}
+body[data-page="team"] .team-person__open:hover::after{
+  transform:translateX(2px);
+  color:#007f88;
+}
+body[data-page="team"] .team-coordinator{
+  background:transparent;
+}
+body[data-page="team"] .team-coordinator__portrait,
+body[data-page="team"] .team-person__portrait{
+  box-shadow:none;
+}
+body[data-page="team"] .team-person__open:focus-visible{
+  outline:2px solid rgba(0,129,138,.55);
+  outline-offset:3px;
+}
+
+/* ============================================================
+   HOME — current records use the same restrained interaction language.
+   ============================================================ */
+body[data-page="home"] .home-current-record{
+  transition:background .16s ease,border-color .16s ease;
+}
+body[data-page="home"] .home-current-record:hover,
+body[data-page="home"] .home-current-record:focus-visible{
+  outline:none;
+  background:rgba(12,56,104,.016);
+  box-shadow:inset 2px 0 0 rgba(0,129,138,.55);
+}
+body[data-page="home"] .home-current-record--innovation:hover,
+body[data-page="home"] .home-current-record--innovation:focus-visible{
+  background:#08233e;
+  box-shadow:inset 2px 0 0 rgba(131,221,221,.72);
+}
+body[data-page="home"] .home-institution-row{
+  transition:background .16s ease,color .16s ease;
+}
+body[data-page="home"] .home-institution-row:hover,
+body[data-page="home"] .home-institution-row:focus-visible{
+  background:rgba(12,56,104,.015);
+  outline:none;
+}
+
+@media(max-width:620px){
+  body[data-page="clinical"] .research-line-row,
+  body[data-page="innovation"] .innovation-project-row,
+  body[data-page="news"] .pub-item,
+  body[data-page="team"] .team-person__open,
+  body[data-page="home"] .home-current-record{
+    box-shadow:none!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  :where(
+    .research-line-row,.study-row,
+    .innovation-project-row,.innovation-project__link,
+    .pub-item,.pub-filter,.pub-line-filter,
+    .team-person__open,.team-person__portrait,
+    .home-current-record,.home-institution-row
+  ){
+    transition:none!important;
+  }
+}

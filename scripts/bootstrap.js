@@ -25,6 +25,7 @@
   addStylesheet('editorialSurfacesCss','/styles/editorial-surfaces.css');
   addStylesheet('mobileChromeCss','/styles/mobile-chrome.css');
   addStylesheet('editorialRhythmCss','/styles/editorial-rhythm.css');
+  addStylesheet('editorialHierarchyCss','/styles/editorial-hierarchy.css');
   addStylesheet('workstationCss','/styles/workstation.css');
   addScript('mobileChromeJs','/scripts/mobile-chrome.js');
 
