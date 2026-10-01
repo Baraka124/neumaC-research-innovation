@@ -24,6 +24,7 @@
 
   addStylesheet('editorialSurfacesCss','/styles/editorial-surfaces.css');
   addStylesheet('mobileChromeCss','/styles/mobile-chrome.css');
+  addStylesheet('workstationCss','/styles/workstation.css');
   addScript('mobileChromeJs','/scripts/mobile-chrome.js');
 
   try {
