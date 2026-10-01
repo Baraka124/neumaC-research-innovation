@@ -46,6 +46,7 @@
     }
   }
 
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
-  else init();
+  function scheduleInit(){setTimeout(init,0);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',scheduleInit,{once:true});
+  else scheduleInit();
 })();
