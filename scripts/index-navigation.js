@@ -10,6 +10,8 @@
 
   var MOBILE_DISCLOSURE=620;
   var DESKTOP_INDEX=880;
+  var READY_RETRIES=20;
+  var READY_DELAY=50;
 
   function bi(en,es){
     return '<span lang="en">'+en+'</span><span lang="es">'+es+'</span>';
@@ -67,7 +69,7 @@
     var section=document.querySelector('.global-index__lines');
     var head=section&&section.querySelector('.global-index__section-head');
     var list=document.getElementById('globalIndexLines');
-    if(!section||!head||!list)return;
+    if(!section||!head||!list)return false;
 
     var toggle=head.querySelector('.global-index__lines-toggle');
     if(!toggle){
@@ -102,32 +104,43 @@
       if(section.dataset.mobilePrepared!=='false')section.dataset.mobilePrepared='false';
       setLinesExpanded(true,false);
     }
+    return true;
   }
 
   function cleanMobileInstitutionDuplication(){
     var institutions=document.querySelector('.global-index__institutions');
-    if(institutions)institutions.setAttribute('aria-hidden','true');
+    if(!institutions)return;
+    if(window.innerWidth<=DESKTOP_INDEX)institutions.setAttribute('aria-hidden','true');
+    else institutions.removeAttribute('aria-hidden');
   }
 
   function reconcile(){
     removeHeaderContact();
     prepareMobileTrigger();
     placeDesktopIndex();
-    ensureLinesDisclosure();
+    var indexReady=ensureLinesDisclosure();
     cleanMobileInstitutionDuplication();
+    return indexReady;
+  }
+
+  function reconcileWhenReady(attempt){
+    if(reconcile())return;
+    if(attempt>=READY_RETRIES)return;
+    setTimeout(function(){reconcileWhenReady(attempt+1);},READY_DELAY);
   }
 
   function start(){
-    /* site.js also boots on DOMContentLoaded and builds the canonical Index.
-       Queue one task so this enhancement runs after that owner has finished. */
-    setTimeout(reconcile,0);
+    /* site.js owns the Index and can finish its DOMContentLoaded boot after
+       this enhancement has already seen the static masthead. Retry only until
+       the canonical Index exists, then stop permanently. */
+    reconcileWhenReady(0);
 
     var resizeTimer=null;
     window.addEventListener('resize',function(){
       clearTimeout(resizeTimer);
-      resizeTimer=setTimeout(reconcile,80);
+      resizeTimer=setTimeout(function(){reconcileWhenReady(0);},80);
     },{passive:true});
-    document.addEventListener('neumac:languagechange',reconcile);
+    document.addEventListener('neumac:languagechange',function(){reconcileWhenReady(0);});
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
