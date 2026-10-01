@@ -1,0 +1,270 @@
+/* ============================================================
+   neumACt — M4.1 EDITORIAL TYPOGRAPHY + RHYTHM
+
+   This layer does not make pages identical. It gives the public site one
+   typographic corridor and one vertical rhythm so Home, Research,
+   Innovation, Publications and Team feel authored by the same institution.
+
+   Page CSS still owns composition; workstation.css still owns >=1680px
+   geometry. This file calibrates the editorial layer between them.
+   ============================================================ */
+
+:where(
+  body[data-page="home"],
+  body[data-page="clinical"],
+  body[data-page="innovation"],
+  body[data-page="news"],
+  body[data-page="team"]
+){
+  --editorial-section-y:clamp(3.65rem,4.7vw,5rem);
+  --editorial-section-y-compact:clamp(2.9rem,3.8vw,3.9rem);
+  --editorial-heading:clamp(2.45rem,3.35vw,3.75rem);
+  --editorial-heading-mobile:clamp(2.12rem,10.2vw,2.9rem);
+  --editorial-intro-size:.9rem;
+  --editorial-intro-leading:1.64;
+  --editorial-measure:44rem;
+}
+
+/* ------------------------------------------------------------
+   Hero titles
+   Same visual authority, different page composition.
+   ------------------------------------------------------------ */
+html body[data-page="home"] .home-hero-title,
+html body[data-page="clinical"] .research-hero h1,
+html body[data-page="innovation"] .innovation-hero h1,
+html body[data-page="team"] .team-hero h1,
+html body[data-page="news"] .pub-hero__identity h1{
+  font-size:clamp(3.15rem,4.55vw,4.95rem);
+  line-height:.95;
+  letter-spacing:-.047em;
+  text-wrap:balance;
+}
+
+html body[data-page="home"] .home-hero-lead,
+html body[data-page="clinical"] .research-hero__lead,
+html body[data-page="innovation"] .innovation-hero__lead,
+html body[data-page="team"] .team-hero__lead,
+html body[data-page="news"] .pub-hero__context p{
+  font-size:clamp(.96rem,1vw,1.06rem);
+  line-height:1.62;
+  text-wrap:pretty;
+}
+
+/* ------------------------------------------------------------
+   Section-title corridor
+   ------------------------------------------------------------ */
+html body[data-page="home"] .home-section-title,
+html body[data-page="clinical"] .research-lines__head h2,
+html body[data-page="clinical"] .study-portfolio__intro h2,
+html body[data-page="clinical"] .research-context h2,
+html body[data-page="clinical"] .research-contact h2,
+html body[data-page="innovation"] .innovation-section-intro h2,
+html body[data-page="innovation"] .innovation-context h2,
+html body[data-page="innovation"] .innovation-contact h2,
+html body[data-page="news"] .pub-section-heading h2,
+html body[data-page="news"] .pub-index__head h2,
+html body[data-page="team"] .team-section-head h2,
+html body[data-page="team"] .team-network h2,
+html body[data-page="team"] .team-contact h2{
+  font-size:var(--editorial-heading);
+  line-height:.97;
+  letter-spacing:-.041em;
+  text-wrap:balance;
+}
+
+/* ------------------------------------------------------------
+   Introductory prose
+   Reading measure is deliberately restrained even as the canvas expands.
+   ------------------------------------------------------------ */
+html body[data-page="home"] .home-section-header>div>p,
+html body[data-page="home"] .home-network-copy>p,
+html body[data-page="clinical"] .research-lines__head p,
+html body[data-page="clinical"] .study-portfolio__intro>p,
+html body[data-page="clinical"] .research-context__copy>p,
+html body[data-page="innovation"] .innovation-section-intro>p,
+html body[data-page="innovation"] .innovation-context__copy>p,
+html body[data-page="team"] .team-section-head>p,
+html body[data-page="team"] .team-hero__context>p{
+  max-width:var(--editorial-measure);
+  font-size:var(--editorial-intro-size);
+  line-height:var(--editorial-intro-leading);
+  text-wrap:pretty;
+}
+
+/* ------------------------------------------------------------
+   Shared section pacing
+   Publications keeps its tighter opening because the hero panel already
+   creates a strong transition into the featured record.
+   ------------------------------------------------------------ */
+html body[data-page="home"] .home-section,
+html body[data-page="clinical"] .research-section,
+html body[data-page="innovation"] .innovation-start,
+html body[data-page="innovation"] .innovation-work,
+html body[data-page="team"] .team-leadership,
+html body[data-page="team"] .team-coordinators,
+html body[data-page="team"] .team-roster{
+  padding-top:var(--editorial-section-y);
+  padding-bottom:var(--editorial-section-y);
+}
+
+html body[data-page="clinical"] .research-lines-section,
+html body[data-page="clinical"] .research-context,
+html body[data-page="innovation"] .innovation-context,
+html body[data-page="team"] .team-network{
+  padding-top:var(--editorial-section-y-compact);
+  padding-bottom:var(--editorial-section-y-compact);
+}
+
+html body[data-page="home"] .home-section-header,
+html body[data-page="clinical"] .study-portfolio__intro,
+html body[data-page="innovation"] .innovation-section-intro,
+html body[data-page="team"] .team-section-head{
+  margin-bottom:clamp(1.65rem,2.15vw,2.2rem);
+}
+
+/* Publications: preserve scholarly density while matching the section-title
+   corridor and giving the two major blocks a cleaner pause. */
+html body[data-page="news"] .pub-feature{
+  padding-top:1.15rem;
+  padding-bottom:clamp(2.8rem,3.8vw,3.6rem);
+}
+html body[data-page="news"] .pub-index{
+  padding-top:clamp(2rem,2.8vw,2.8rem);
+  padding-bottom:clamp(4.5rem,6.5vw,6.8rem);
+}
+html body[data-page="news"] .pub-section-heading{
+  margin-bottom:1.2rem;
+}
+html body[data-page="news"] .pub-index__head{
+  margin-bottom:.8rem;
+}
+
+/* ------------------------------------------------------------
+   Secondary editorial hierarchy
+   ------------------------------------------------------------ */
+html body[data-page="home"] .home-programme-intro h2{
+  font-size:clamp(2.2rem,3vw,3.35rem);
+  line-height:.99;
+  letter-spacing:-.038em;
+}
+html body[data-page="home"] .home-current-record h3,
+html body[data-page="innovation"] .innovation-project__title,
+html body[data-page="news"] .pub-feature-lead__title,
+html body[data-page="team"] .team-lead__body h3{
+  text-wrap:balance;
+}
+
+html body[data-page="innovation"] .innovation-project__title{
+  font-size:clamp(1.5rem,1.8vw,1.9rem);
+  line-height:1.06;
+}
+html body[data-page="news"] .pub-feature-lead__title{
+  font-size:clamp(1.8rem,2.35vw,2.6rem);
+  line-height:1.06;
+}
+html body[data-page="team"] .team-lead__body h3{
+  font-size:clamp(1.9rem,2.7vw,2.65rem);
+  line-height:1.02;
+}
+
+/* ------------------------------------------------------------
+   Tablet
+   ------------------------------------------------------------ */
+@media(max-width:900px){
+  :where(
+    body[data-page="home"],
+    body[data-page="clinical"],
+    body[data-page="innovation"],
+    body[data-page="news"],
+    body[data-page="team"]
+  ){
+    --editorial-section-y:clamp(3.25rem,6vw,4rem);
+    --editorial-section-y-compact:clamp(2.65rem,5vw,3.4rem);
+    --editorial-heading:clamp(2.3rem,6.5vw,3.2rem);
+  }
+
+  html body[data-page="home"] .home-hero-title,
+  html body[data-page="clinical"] .research-hero h1,
+  html body[data-page="innovation"] .innovation-hero h1,
+  html body[data-page="team"] .team-hero h1,
+  html body[data-page="news"] .pub-hero__identity h1{
+    font-size:clamp(3rem,7vw,4.15rem);
+  }
+}
+
+/* ------------------------------------------------------------
+   Phone
+   Mobile should feel recomposed, not like a small workstation.
+   ------------------------------------------------------------ */
+@media(max-width:640px){
+  :where(
+    body[data-page="home"],
+    body[data-page="clinical"],
+    body[data-page="innovation"],
+    body[data-page="news"],
+    body[data-page="team"]
+  ){
+    --editorial-section-y:3rem;
+    --editorial-section-y-compact:2.65rem;
+    --editorial-heading:var(--editorial-heading-mobile);
+    --editorial-intro-size:.84rem;
+    --editorial-intro-leading:1.58;
+  }
+
+  html body[data-page="home"] .home-hero-title,
+  html body[data-page="clinical"] .research-hero h1,
+  html body[data-page="innovation"] .innovation-hero h1,
+  html body[data-page="team"] .team-hero h1,
+  html body[data-page="news"] .pub-hero__identity h1{
+    font-size:clamp(2.68rem,11.7vw,3.48rem);
+    line-height:.94;
+    letter-spacing:-.044em;
+  }
+
+  html body[data-page="home"] .home-hero-lead,
+  html body[data-page="clinical"] .research-hero__lead,
+  html body[data-page="innovation"] .innovation-hero__lead,
+  html body[data-page="team"] .team-hero__lead,
+  html body[data-page="news"] .pub-hero__context p{
+    font-size:.9rem;
+    line-height:1.56;
+  }
+
+  html body[data-page="home"] .home-section-header,
+  html body[data-page="clinical"] .study-portfolio__intro,
+  html body[data-page="innovation"] .innovation-section-intro,
+  html body[data-page="team"] .team-section-head{
+    margin-bottom:1.45rem;
+  }
+
+  html body[data-page="news"] .pub-feature{
+    padding-bottom:2.65rem;
+  }
+  html body[data-page="news"] .pub-index{
+    padding-top:2.1rem;
+    padding-bottom:4.25rem;
+  }
+
+  html body[data-page="innovation"] .innovation-project__title{
+    font-size:clamp(1.42rem,6.7vw,1.78rem);
+  }
+  html body[data-page="news"] .pub-feature-lead__title{
+    font-size:clamp(1.55rem,7vw,1.95rem);
+  }
+  html body[data-page="team"] .team-lead__body h3{
+    font-size:clamp(1.7rem,8vw,2.2rem);
+  }
+}
+
+@media(max-width:390px){
+  :where(
+    body[data-page="home"],
+    body[data-page="clinical"],
+    body[data-page="innovation"],
+    body[data-page="news"],
+    body[data-page="team"]
+  ){
+    --editorial-section-y:2.7rem;
+    --editorial-section-y-compact:2.45rem;
+  }
+}
