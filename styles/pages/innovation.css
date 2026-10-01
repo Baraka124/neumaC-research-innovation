@@ -6,24 +6,24 @@
    ============================================================ */
 
 body[data-page="innovation"]{background:#fbfaf7;color:var(--text-on-light);}
-body[data-page="innovation"] main{overflow:hidden;}
+body[data-page="innovation"] main{overflow-x:clip;}
 .innovation-kicker{margin:0 0 .8rem;font:500 .68rem/1.2 var(--ff-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--teal);}
 .innovation-kicker--dark{color:#79d6d6;}
 
 /* HERO — directly inherits Research destination-page proportions */
 .innovation-hero{background:#fbfaf7;border-bottom:1px solid #dfe5e7;}
 .innovation-hero__grid{min-height:250px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(420px,.95fr);gap:clamp(2rem,4vw,4.5rem);align-items:stretch;padding-top:clamp(2rem,3.5vw,3.4rem);padding-bottom:0;}
-.innovation-hero__copy{align-self:center;padding-bottom:clamp(2rem,3vw,3rem);max-width:780px;}
-.innovation-hero h1{margin:0;font-family:var(--ff-display);font-size:clamp(3.2rem,5.2vw,5.25rem);font-weight:700;line-height:.94;letter-spacing:-.05em;color:#092f58;}
+.innovation-hero__copy{align-self:center;padding-bottom:clamp(2rem,3vw,3rem);max-width:780px;min-width:0;}
+.innovation-hero h1{margin:0;font-family:var(--ff-display);font-size:clamp(3.2rem,5.2vw,5.25rem);font-weight:700;line-height:.94;letter-spacing:-.05em;color:#092f58;overflow-wrap:anywhere;text-wrap:balance;}
 .innovation-hero__lead{max-width:47rem;margin:1rem 0 0;font-size:clamp(1rem,1.25vw,1.14rem);line-height:1.55;color:#5d7088;}
 .innovation-hero__media{margin:0;min-height:235px;overflow:hidden;align-self:end;}
 .innovation-hero__media img{display:block;width:100%;height:100%;min-height:235px;object-fit:cover;object-position:58% 48%;}
 
 /* Shared lower-page intro grammar */
-.innovation-start,.innovation-work{padding:clamp(3.6rem,5vw,4.8rem) 0;background:#fff;}
+.innovation-start,.innovation-work{padding:clamp(3.6rem,5vw,4.8rem) 0;background:#fff;scroll-margin-top:calc(var(--hdr) + 1rem);}
 .innovation-work{border-top:1px solid #edf0f2;}
 .innovation-section-intro{display:grid;grid-template-columns:minmax(0,.9fr) minmax(340px,.55fr);gap:clamp(2.4rem,6vw,6rem);align-items:end;margin-bottom:clamp(1.9rem,3vw,2.8rem);}
-.innovation-section-intro h2,.innovation-context h2,.innovation-contact h2{margin:0;font-family:var(--ff-display);font-size:clamp(2.45rem,4vw,4.15rem);font-weight:700;line-height:.96;letter-spacing:-.043em;color:#0c3868;}
+.innovation-section-intro h2,.innovation-context h2,.innovation-contact h2{margin:0;font-family:var(--ff-display);font-size:clamp(2.45rem,4vw,4.15rem);font-weight:700;line-height:.96;letter-spacing:-.043em;color:#0c3868;text-wrap:balance;}
 .innovation-section-intro>p{margin:0;max-width:40rem;color:#66758a;line-height:1.68;font-size:.9rem;}
 
 /* Four clinical prompts — textual index, not icons or cards */
@@ -43,7 +43,7 @@ body[data-page="innovation"] main{overflow:hidden;}
 .innovation-project__meta{display:flex;flex-wrap:wrap;gap:.2rem .62rem;margin:0 0 .35rem;color:#00899c;}
 .innovation-project__meta span{font:600 .58rem/1.35 var(--ff-mono);letter-spacing:.045em;text-transform:uppercase;}
 .innovation-project__meta span+span::before{content:'·';margin-right:.62rem;color:#6ec0c9;}
-.innovation-project__title{margin:0;font-family:var(--ff-display);font-size:clamp(1.55rem,2vw,2rem);font-weight:700;line-height:1.03;letter-spacing:-.028em;color:#112f59;}
+.innovation-project__title{margin:0;font-family:var(--ff-display);font-size:clamp(1.55rem,2vw,2rem);font-weight:700;line-height:1.03;letter-spacing:-.028em;color:#112f59;overflow-wrap:anywhere;text-wrap:pretty;}
 .innovation-project__desc{margin:.32rem 0 0;max-width:76ch;color:#65788f;font-size:.8rem;line-height:1.48;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;}
 .innovation-project__side{border-left:1px solid #dfe5e8;padding:.25rem 0 .15rem 1.3rem;display:flex;flex-direction:column;gap:.75rem;min-width:0;}
 .innovation-project__fact{padding-bottom:.65rem;border-bottom:1px solid #e0e5e8;}
@@ -108,15 +108,18 @@ body[data-page="innovation"] main{overflow:hidden;}
   .innovation-question:nth-child(-n+2){border-bottom:1px solid #e0e5e8;}
 }
 @media(max-width:640px){
-  .innovation-hero h1{font-size:clamp(3rem,13vw,4.2rem);}
+  .innovation-hero__grid{gap:1.35rem;padding-top:1.7rem;}.innovation-hero__copy{padding-bottom:.1rem;}.innovation-hero h1{font-size:clamp(2.7rem,12vw,3.5rem);line-height:.94;letter-spacing:-.045em;}.innovation-hero__lead{max-width:100%;font-size:.92rem;line-height:1.55;}.innovation-hero__media{min-height:0;height:auto;max-height:none;aspect-ratio:16/10;}.innovation-hero__media img{min-height:0;height:100%;object-position:60% 50%;}
+  .innovation-start,.innovation-work{padding:3.1rem 0;}.innovation-section-intro{gap:.85rem;margin-bottom:1.5rem;}.innovation-section-intro h2,.innovation-context h2,.innovation-contact h2{font-size:clamp(2.2rem,10.7vw,3rem);line-height:.96;}.innovation-section-intro>p{font-size:.84rem;line-height:1.58;max-width:100%;}
   .innovation-question-list{grid-template-columns:1fr;}
   .innovation-question,.innovation-question+.innovation-question{padding:1rem 0;border-right:0;border-bottom:1px solid #e0e5e8;}
-  .innovation-question:last-child{border-bottom:0;}
-  .innovation-project-row{grid-template-columns:1fr;gap:.7rem;}
-  .innovation-project__side{border-left:0;border-top:1px solid #dfe5e8;padding:.7rem 0 0;}
+  .innovation-question:last-child{border-bottom:0;}.innovation-question h3{font-size:clamp(1.38rem,7vw,1.65rem);}.innovation-question p{font-size:.75rem;max-width:34ch;}
+  .innovation-project-row{grid-template-columns:1fr;gap:.7rem;padding:1.15rem 0;}.innovation-project__title{font-size:clamp(1.45rem,7.5vw,1.9rem);line-height:1.04;letter-spacing:-.025em;}.innovation-project__desc{font-size:.78rem;-webkit-line-clamp:4;}.innovation-project__side{border-left:0;border-top:1px solid #dfe5e8;padding:.7rem 0 0;gap:.65rem;}
   .innovation-context__system{grid-template-columns:1fr;}
   .innovation-form-grid{grid-template-columns:1fr;}
   .innovation-field--wide{grid-column:auto;}
-  .innovation-contact h2{font-size:clamp(2.45rem,11vw,3.55rem);}
+  .innovation-contact h2{font-size:clamp(2.35rem,10.5vw,3.2rem);}
+}
+@media(max-width:390px){
+  .innovation-hero h1{font-size:clamp(2.45rem,11.8vw,3.05rem);}.innovation-project__title{font-size:clamp(1.35rem,7vw,1.7rem);}.innovation-kicker{font-size:.61rem;letter-spacing:.13em;}
 }
 @media(prefers-reduced-motion:reduce){.api-skeleton--innovation-row{animation:none;}}
