@@ -8,6 +8,8 @@
    ============================================================ */
 
 @media(min-width:1680px){
+  html body{padding-top:72px;}
+  html body .hdr,html body .hdr.scrolled,html body .hdr-inner{height:72px;}
   html body .hdr-inner{max-width:1640px;padding-inline:1.6rem;gap:1.3rem;}
   html body .hdr-logo{gap:1.05rem;}
   html body .hdr-brand-plate{padding:.49rem .72rem .44rem;}
@@ -22,8 +24,8 @@
   html body .hdr-contact-btn{min-height:38px;padding-inline:.9rem;font-size:.74rem;}
   html body[data-page] .container,html body[data-page] .wrap{max-width:1500px;}
   html body .footer-grid{max-width:1540px;}
-  html body .global-index{padding-inline:1.5rem;}
-  html body .global-index__surface{width:min(1640px,100%);max-height:min(520px,calc(100dvh - var(--hdr) - 18px));}
+  html body .global-index{top:72px;padding-inline:1.5rem;}
+  html body .global-index__surface{width:min(1640px,100%);max-height:min(520px,calc(100dvh - 90px));}
   html body .global-index__toolbar,html body .global-index__index-view,html body .global-index__search-view{width:calc(100% - 4.6rem);}
   html body .global-index__index-view{grid-template-columns:minmax(285px,.74fr) minmax(520px,1.35fr) minmax(260px,.68fr);gap:3.25rem;}
   html body .global-index__chapter-name{font-size:1.55rem;}
@@ -75,6 +77,8 @@
 }
 
 @media(min-width:1920px){
+  html body{padding-top:74px;}
+  html body .hdr,html body .hdr.scrolled,html body .hdr-inner{height:74px;}
   html body .hdr-inner{max-width:1880px;padding-inline:2rem;gap:1.45rem;}
   html body .hdr-logo-img,html body .hdr.scrolled .hdr-logo-img{height:28px;max-width:128px;}
   html body .hdr-brand-title{font-size:.61rem;}
@@ -82,7 +86,8 @@
   html body .hdr-nav-link{font-size:.88rem;padding-inline:.72rem;}
   html body[data-page] .container,html body[data-page] .wrap{max-width:1660px;}
   html body .footer-grid{max-width:1700px;}
-  html body .global-index__surface{width:min(1800px,calc(100% - 2rem));}
+  html body .global-index{top:74px;}
+  html body .global-index__surface{width:min(1800px,calc(100% - 2rem));max-height:min(520px,calc(100dvh - 92px));}
   html body .global-index__toolbar,html body .global-index__index-view,html body .global-index__search-view{width:calc(100% - 5rem);}
   html body[data-page="home"] .wrap{width:min(calc(100% - 5rem),1740px);max-width:1740px;}
   html body[data-page="home"] .home-hero{min-height:535px;}
