@@ -97,5 +97,3 @@
   --lh-normal: 1.6;
   --lh-relaxed: 1.72;
 }
-@media(min-width:1680px){:root{--hdr:72px;}}
-@media(min-width:1920px){:root{--hdr:74px;}}
