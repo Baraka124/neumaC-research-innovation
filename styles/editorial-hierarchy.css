@@ -176,6 +176,8 @@ body[data-page="team"] .team-person__open:focus-visible{
 
 /* ============================================================
    HOME — current records use the same restrained interaction language.
+   M5.2 also restores a clear tonal hierarchy to the programme and
+   institutional-affiliation copy. Primary prose is no longer metadata-grey.
    ============================================================ */
 body[data-page="home"] .home-current-record{
   transition:background .16s ease,border-color .16s ease;
@@ -200,6 +202,53 @@ body[data-page="home"] .home-institution-row:focus-visible{
   outline:none;
 }
 
+/* Programme narrative: primary explanation, contextual explanation, metadata. */
+body[data-page="home"] .home-programme-intro>p:not(.home-programme-team){
+  color:#405a72;
+  font-size:.92rem;
+  line-height:1.68;
+}
+body[data-page="home"] .home-programme-intro .home-programme-team{
+  color:#617487;
+  font-size:.81rem;
+  line-height:1.62;
+  border-top-color:rgba(12,56,104,.13);
+}
+
+/* Institutional credibility card: use the existing FINIBIC asset as the
+   visible foundation lockup inside the card header, never as a new card. */
+body[data-page="home"] .home-affiliation-card__head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:end;
+  gap:.45rem 1rem;
+}
+body[data-page="home"] .home-affiliation-card__head::before{
+  content:"";
+  grid-column:1/-1;
+  display:block;
+  width:min(100%,270px);
+  height:72px;
+  margin:0 0 .75rem;
+  background:url('/assets/finibic.jpg') left center/contain no-repeat;
+}
+body[data-page="home"] .home-affiliation-card__eyebrow{
+  color:#5f7487;
+}
+body[data-page="home"] .home-affiliation-card__status{
+  color:#7d8c98;
+}
+body[data-page="home"] .home-affiliation-card__institution{
+  color:#607487!important;
+  font-size:.69rem!important;
+  line-height:1.48!important;
+}
+body[data-page="home"] .home-affiliation-card p:not(.home-affiliation-card__eyebrow):not(.home-affiliation-card__institution){
+  color:#465f76;
+  font-size:.79rem;
+  line-height:1.6;
+}
+
 @media(max-width:620px){
   body[data-page="clinical"] .research-line-row,
   body[data-page="innovation"] .innovation-project-row,
@@ -207,6 +256,17 @@ body[data-page="home"] .home-institution-row:focus-visible{
   body[data-page="team"] .team-person__open,
   body[data-page="home"] .home-current-record{
     box-shadow:none!important;
+  }
+  body[data-page="home"] .home-programme-intro>p:not(.home-programme-team){
+    font-size:.88rem;
+  }
+  body[data-page="home"] .home-programme-intro .home-programme-team{
+    font-size:.78rem;
+  }
+  body[data-page="home"] .home-affiliation-card__head::before{
+    width:min(100%,235px);
+    height:62px;
+    margin-bottom:.65rem;
   }
 }
 
