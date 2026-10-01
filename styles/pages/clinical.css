@@ -134,3 +134,42 @@ body[data-page="clinical"] main{overflow-x:clip;}
 }
 @media(prefers-reduced-motion:reduce){.research-line__media img,.study-filters__chevron{transition:none;}}
 @media print{.research-hero__media,.research-contact,#scrollTop{display:none!important}.research-hero{padding:0}.research-hero__sheet{position:static;transform:none;box-shadow:none;margin:0 auto}.study-row.is-collapsed{display:grid!important}}
+
+/* ============================================================
+   M6.3B — RESEARCH HERO LAPTOP CORRIDOR
+   Keep the scientific split-sheet composition, but bound it to the laptop
+   canvas so the leadership portrait remains connected to the narrative
+   instead of drifting toward the viewport edge.
+   ============================================================ */
+@media(min-width:1181px) and (max-width:1440px){
+  .research-hero{padding-bottom:clamp(3.2rem,4vw,3.8rem);}
+  .research-hero__sheet{
+    width:min(calc(100% - 4rem),1180px);
+    grid-template-columns:minmax(0,1.08fr) minmax(300px,.56fr);
+    gap:2.35rem;
+    padding:1.85rem 2rem;
+  }
+  .research-leadership{
+    grid-template-columns:84px minmax(0,1fr);
+    gap:.9rem;
+    padding-left:1.25rem;
+  }
+  .research-leadership__portrait{width:84px;height:102px;}
+}
+
+@media(min-width:881px) and (max-width:1180px){
+  .research-hero__sheet{
+    width:calc(100% - 2.5rem);
+    grid-template-columns:minmax(0,1fr) minmax(270px,.58fr);
+    gap:1.45rem;
+    padding:1.65rem 1.55rem;
+  }
+  .research-leadership{
+    grid-template-columns:76px minmax(0,1fr);
+    gap:.8rem;
+    padding-left:1rem;
+  }
+  .research-leadership__portrait{width:76px;height:94px;}
+  .research-leadership h2{font-size:clamp(1.45rem,2.2vw,1.75rem);}
+  .research-leadership__bio{font-size:.68rem;line-height:1.45;}
+}
