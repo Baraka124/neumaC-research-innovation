@@ -303,9 +303,9 @@ for media in [
     'assets/research/pi-pedro-marcos.jpg',
     'assets/research/research-hero-clinician-lungs.jpg',
     'assets/research/line-transplantation-pulmonary-hypertension.jpg',
-    'assets/research/line-airway-diseases.jpg',
+    'assets/research/line-heroes/airway-diseases.jpg',
     'assets/research/line-interventional-lung-cancer.jpg',
-    'assets/research/line-respiratory-failure-sleep.jpg',
+    'assets/research/line-heroes/respiratory-failure-sleep.jpg',
     'assets/research/line-thoracic-surgery.jpg',
     'assets/research/line-precision-medicine.jpg',
 ]:
