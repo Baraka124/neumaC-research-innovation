@@ -199,3 +199,60 @@ test('tablet portrait keeps the full research matrix and does not inherit phone 
   await expect(page.locator('#globalIndexLines')).toBeVisible();
   await expectNoHorizontalOverflow(page);
 });
+
+
+for (const width of [1024, 1366, 1440]) {
+  test(`laptop ${width}px keeps integrated Index navigation contained`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+
+    const index = page.locator('#hdrIndexBtn');
+    await expect(index).toBeVisible();
+    const parentClass = await index.evaluate(el => el.parentElement && el.parentElement.className);
+    expect(String(parentClass)).toContain('hdr-nav');
+
+    const geometry = await page.locator('.hdr-inner').evaluate(el => {
+      const r = el.getBoundingClientRect();
+      return { left: r.left, right: r.right, width: r.width, vw: window.innerWidth };
+    });
+    expect(geometry.left).toBeGreaterThanOrEqual(-1);
+    expect(geometry.right).toBeLessThanOrEqual(geometry.vw + 1);
+
+    await index.click();
+    await expect(page.locator('#globalIndex')).toHaveAttribute('aria-hidden', 'false');
+    const surface = await page.locator('.global-index__surface').evaluate(el => {
+      const r = el.getBoundingClientRect();
+      return { left:r.left, right:r.right, width:r.width, vw:window.innerWidth };
+    });
+    expect(surface.left).toBeGreaterThanOrEqual(-1);
+    expect(surface.right).toBeLessThanOrEqual(surface.vw + 1);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+for (const width of [1024, 1366, 1440]) {
+  test(`Research hero remains proportionally contained on laptop ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/clinical/');
+
+    const sheet = page.locator('.research-hero__sheet');
+    const portrait = page.locator('.research-leadership__portrait');
+    await expect(sheet).toBeVisible();
+    await expect(portrait).toBeVisible();
+
+    const geo = await sheet.evaluate(el => {
+      const r = el.getBoundingClientRect();
+      return { left:r.left, right:r.right, width:r.width, vw:window.innerWidth };
+    });
+    expect(geo.left).toBeGreaterThanOrEqual(8);
+    expect(geo.right).toBeLessThanOrEqual(geo.vw - 8);
+
+    const portraitGeo = await portrait.evaluate(el => {
+      const r = el.getBoundingClientRect();
+      return { left:r.left, right:r.right, top:r.top, bottom:r.bottom, vw:window.innerWidth };
+    });
+    expect(portraitGeo.left).toBeGreaterThanOrEqual(geo.left);
+    expect(portraitGeo.right).toBeLessThanOrEqual(geo.right);
+    await expectNoHorizontalOverflow(page);
+  });
+}
