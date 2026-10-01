@@ -1,5 +1,5 @@
 /* ============================================================
-   neumACt — FLOATING EDITORIAL SURFACE SYSTEM · M2.1
+   neumACt — FLOATING EDITORIAL SURFACE SYSTEM · M2.2
    Shared geometry for premium editorial surfaces.
 
    LEVEL A — FLOAT
@@ -15,6 +15,7 @@
    Principles:
    - premium through proportion, not decoration;
    - one visual grammar across pages;
+   - page personality comes from composition, not random styling;
    - mobile re-composes instead of squeezing desktop geometry;
    - no glassmorphism, ornamental gradients or card-everywhere treatment.
    ============================================================ */
@@ -52,24 +53,61 @@
   box-shadow:none;
 }
 
-/* LEVEL A — current major editorial floats. The body qualifiers make this
-   shared layer authoritative even though legacy page CSS still contains the
-   original local shadow/radius values during the M2 migration. */
-body[data-page="clinical"] .research-hero__sheet,
-body[data-page="news"] .pub-hero__panel{
+/* ============================================================
+   LEVEL A · RESEARCH
+   Personality: structured scientific split-sheet.
+   The sheet stays centred and disciplined; leadership remains a true second
+   editorial column rather than a profile card floating inside another card.
+   ============================================================ */
+body[data-page="clinical"] .research-hero__sheet{
+  width:min(calc(100% - clamp(2rem,5vw,5rem)),1280px);
+  max-width:1280px;
   background:var(--editorial-surface-bg);
-  border-color:var(--editorial-surface-border);
+  border:1px solid var(--editorial-surface-border);
   border-radius:var(--editorial-float-radius);
   box-shadow:var(--editorial-float-shadow);
 }
+body[data-page="clinical"] .research-leadership{
+  border-left-color:rgba(12,56,104,.13);
+}
 
-/* LEVEL B — Team already has an accepted raised editorial introduction. */
+/* ============================================================
+   LEVEL A · PUBLICATIONS
+   Personality: broad editorial folio.
+   It shares material language with Research but sits slightly off-axis on
+   wide screens, avoiding the feeling of a cloned institutional card.
+   ============================================================ */
+body[data-page="news"] .pub-hero__panel{
+  width:calc(100% - clamp(0rem,3vw,3rem));
+  margin-left:0;
+  margin-right:auto;
+  background:var(--editorial-surface-bg);
+  border:1px solid var(--editorial-surface-border);
+  border-radius:calc(var(--editorial-float-radius) - 2px);
+  box-shadow:var(--editorial-float-shadow);
+}
+body[data-page="news"] .pub-hero__context{
+  border-left-color:rgba(12,56,104,.16);
+}
+
+/* ============================================================
+   LEVEL B · TEAM
+   Personality: quiet raised editorial sheet.
+   Team is human and expansive, so its introduction uses less overlap,
+   lower elevation and a wider relationship to the image above.
+   ============================================================ */
+body[data-page="team"] .team-hero{
+  margin-top:clamp(-2.8rem,-2.8vw,-1.9rem);
+}
 body[data-page="team"] .team-hero__grid{
-  border-color:var(--editorial-surface-border-soft);
+  max-width:min(1520px,calc(100vw - clamp(2rem,4vw,4.5rem)));
+  background:#fbfaf7;
+  border:1px solid var(--editorial-surface-border-soft);
   border-radius:var(--editorial-raised-radius) var(--editorial-raised-radius) 0 0;
   box-shadow:var(--editorial-raised-shadow);
 }
 
+/* Float typography must never inherit a narrow card behaviour. */
 body[data-page="clinical"] .research-hero__sheet h1,
 body[data-page="news"] .pub-hero__panel h1,
 body[data-page="team"] .team-hero__grid h1{
@@ -81,12 +119,25 @@ body[data-page="team"] .team-hero__grid p{
   text-wrap:pretty;
 }
 
-@media(max-width:880px){
+@media(max-width:900px){
   :root{
     --editorial-float-radius:12px;
     --editorial-raised-radius:8px;
     --editorial-float-shadow:0 16px 40px rgba(7,38,65,.085),0 3px 12px rgba(7,38,65,.03);
     --editorial-raised-shadow:0 8px 22px rgba(7,38,65,.05);
+  }
+
+  body[data-page="clinical"] .research-hero__sheet{
+    width:min(calc(100% - 1.5rem),1280px);
+  }
+  body[data-page="news"] .pub-hero__panel{
+    width:100%;
+  }
+  body[data-page="team"] .team-hero{
+    margin-top:-1.5rem;
+  }
+  body[data-page="team"] .team-hero__grid{
+    max-width:calc(100vw - 1.5rem);
   }
 }
 
@@ -97,12 +148,39 @@ body[data-page="team"] .team-hero__grid p{
     --editorial-float-shadow:0 14px 34px rgba(7,38,65,.08),0 2px 8px rgba(7,38,65,.025);
   }
 
-  body[data-page="clinical"] .research-hero__sheet,
-  body[data-page="news"] .pub-hero__panel{
+  /* Research keeps the small image-to-sheet overlap established in M1. */
+  body[data-page="clinical"] .research-hero__sheet{
+    width:auto;
+    max-width:none;
+    margin-left:.75rem;
+    margin-right:.75rem;
     border-radius:var(--editorial-float-radius);
   }
+
+  /* Publications returns to full editorial width on narrow screens. */
+  body[data-page="news"] .pub-hero__panel{
+    width:100%;
+    border-radius:var(--editorial-float-radius);
+  }
+
+  /* Team remains raised, not floating: modest overlap and quieter depth. */
+  body[data-page="team"] .team-hero{
+    margin-top:-.75rem;
+  }
   body[data-page="team"] .team-hero__grid{
+    max-width:calc(100vw - 1.5rem);
     border-radius:var(--editorial-raised-radius) var(--editorial-raised-radius) 0 0;
+    box-shadow:var(--editorial-raised-shadow);
+  }
+}
+
+@media(max-width:390px){
+  body[data-page="clinical"] .research-hero__sheet{
+    margin-left:.6rem;
+    margin-right:.6rem;
+  }
+  body[data-page="team"] .team-hero__grid{
+    max-width:calc(100vw - 1rem);
   }
 }
 
