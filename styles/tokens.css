@@ -89,6 +89,11 @@
   --editorial-float-shadow-mobile:0 10px 26px rgba(7,38,65,.07),0 2px 7px rgba(7,38,65,.022);
   --editorial-raised-shadow:0 8px 24px rgba(7,38,65,.048),0 2px 7px rgba(7,38,65,.022);
   --editorial-raised-shadow-compact:0 6px 18px rgba(7,38,65,.042);
+  --editorial-rule:rgba(12,56,104,.10);
+  --editorial-rule-strong:rgba(12,56,104,.16);
+  --editorial-media-edge:rgba(12,56,104,.09);
+  --editorial-media-bg:#e8eef0;
+  --editorial-dark-rule:rgba(255,255,255,.10);
   --fs-display-xl: clamp(2.75rem, 5.2vw, 4.25rem);
   --fs-display-lg: clamp(2.25rem, 4vw, 3.25rem);
   --fs-display-md: clamp(1.75rem, 3vw, 2.5rem);

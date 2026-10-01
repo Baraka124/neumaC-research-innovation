@@ -1,0 +1,119 @@
+/* ============================================================
+   neumACt — M4.3 EDITORIAL MEDIA + SECTION TRANSITIONS
+   Purpose: make existing imagery and section boundaries feel deliberate
+   across the public site without changing content, crop intent, or IA.
+   Loaded after M4.1/M4.2 and before workstation geometry.
+   ============================================================ */
+
+/* Shared media discipline: preserve crop, add only a quiet institutional edge. */
+body[data-page="home"] .home-current-record__media,
+body[data-page="clinical"] .research-line__media,
+body[data-page="innovation"] .innovation-hero__media,
+body[data-page="news"] .pub-feature-lead__media,
+body[data-page="team"] .team-lead__portrait,
+body[data-page="team"] .team-coordinator__portrait,
+body[data-page="team"] .team-person__portrait{
+  background:var(--editorial-media-bg);
+  box-shadow:inset 0 0 0 1px var(--editorial-media-edge);
+}
+
+/* Full-bleed / hero media remain visually open, but transitions into content are explicit. */
+body[data-page="home"] .home-hero,
+body[data-page="clinical"] .research-hero__media,
+body[data-page="innovation"] .innovation-hero,
+body[data-page="news"] .pub-hero__media,
+body[data-page="team"] .team-visual-hero{
+  border-bottom-color:var(--editorial-rule-strong);
+}
+
+/* Keep hover imagery extremely restrained. The site should read as editorial, not promotional. */
+body[data-page="home"] .home-current-record__media img,
+body[data-page="clinical"] .research-line__media img,
+body[data-page="news"] .pub-feature-lead__media img,
+body[data-page="team"] .team-person__portrait img{
+  transition:transform .28s var(--ease-clinical),filter .28s var(--ease-clinical);
+}
+body[data-page="home"] .home-current-record:hover .home-current-record__media img,
+body[data-page="clinical"] .research-line-row:hover .research-line__media img,
+body[data-page="clinical"] .research-line-row:focus-visible .research-line__media img,
+body[data-page="news"] .pub-feature-lead:hover .pub-feature-lead__media img,
+body[data-page="news"] .pub-feature-lead:focus-visible .pub-feature-lead__media img,
+body[data-page="team"] .team-person__open:hover .team-person__portrait img,
+body[data-page="team"] .team-person__open:focus-visible .team-person__portrait img{
+  transform:scale(1.008);
+}
+
+/* Major light-section boundaries share one hierarchy. */
+body[data-page="home"] .home-current,
+body[data-page="home"] .home-network,
+body[data-page="clinical"] .research-lines-section,
+body[data-page="clinical"] .study-portfolio,
+body[data-page="clinical"] .research-context,
+body[data-page="innovation"] .innovation-start,
+body[data-page="innovation"] .innovation-work,
+body[data-page="innovation"] .innovation-context,
+body[data-page="news"] .pub-feature,
+body[data-page="news"] .pub-index,
+body[data-page="team"] .team-leadership,
+body[data-page="team"] .team-coordinators,
+body[data-page="team"] .team-roster,
+body[data-page="team"] .team-network{
+  border-top-color:var(--editorial-rule);
+}
+
+/* Internal section rules use a slightly stronger editorial divider. */
+body[data-page="home"] .home-section-header,
+body[data-page="home"] .home-institution-list,
+body[data-page="clinical"] .research-lines__head,
+body[data-page="clinical"] .study-toolbar,
+body[data-page="innovation"] .innovation-question-list,
+body[data-page="innovation"] .innovation-projects,
+body[data-page="news"] .pub-section-heading--rule,
+body[data-page="news"] .pub-filter-row,
+body[data-page="team"] .team-section-head,
+body[data-page="team"] .team-coordinator-grid{
+  border-color:var(--editorial-rule-strong);
+}
+
+/* Dark closes share one quiet top boundary so transitions feel intentional. */
+body[data-page="home"] .home-contact,
+body[data-page="clinical"] .research-contact,
+body[data-page="innovation"] .innovation-contact,
+body[data-page="team"] .team-contact{
+  border-top:1px solid var(--editorial-dark-rule);
+  box-shadow:inset 0 1px 0 rgba(0,179,179,.10);
+}
+
+/* Publications remains light throughout, so use a restrained closing rule instead. */
+body[data-page="news"] .pub-index{
+  border-bottom:1px solid rgba(12,56,104,.07);
+}
+
+/* Portraits and editorial media never acquire card-like lift. */
+body[data-page="team"] .team-person__portrait,
+body[data-page="team"] .team-coordinator__portrait,
+body[data-page="team"] .team-lead__portrait,
+body[data-page="clinical"] .research-line__media,
+body[data-page="news"] .pub-feature-lead__media{
+  border-radius:0;
+}
+
+/* Small-screen media should remain crisp and calm, with no zoom choreography. */
+@media(max-width:880px){
+  body[data-page="home"] .home-current-record__media img,
+  body[data-page="clinical"] .research-line__media img,
+  body[data-page="news"] .pub-feature-lead__media img,
+  body[data-page="team"] .team-person__portrait img{
+    transform:none!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body[data-page="home"] .home-current-record__media img,
+  body[data-page="clinical"] .research-line__media img,
+  body[data-page="news"] .pub-feature-lead__media img,
+  body[data-page="team"] .team-person__portrait img{
+    transition:none!important;
+    transform:none!important;
+  }
+}
