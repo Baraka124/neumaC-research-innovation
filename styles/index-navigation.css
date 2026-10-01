@@ -323,3 +323,49 @@
   .global-index__search-view{animation:none!important;}
   .global-index__surface{transition:none!important;}
 }
+
+
+/* ============================================================
+   M6.3B — LAPTOP PROPORTIONAL CORRIDOR
+   881–1440px is a composition in its own right: keep Index integrated
+   with navigation, but do not let either the trigger or the folio inherit
+   workstation breadth.
+   ============================================================ */
+@media(min-width:881px) and (max-width:1440px){
+  .hdr-nav .hdr-index-btn--nav{
+    margin-left:.38rem;
+    padding-left:.72rem;
+  }
+  .hdr-nav .hdr-index-btn--nav::before{left:0;}
+  .hdr-nav .hdr-index-btn--nav::after{left:.72rem;}
+
+  .global-index{
+    padding-inline:clamp(.7rem,1.45vw,1.35rem);
+  }
+  .global-index__surface{
+    width:100%;
+    max-width:1380px;
+    margin-inline:auto;
+  }
+  .global-index__toolbar,
+  .global-index__index-view,
+  .global-index__search-view,
+  .global-index__footer{
+    width:min(1280px,calc(100% - clamp(2rem,5vw,4rem)));
+  }
+}
+
+@media(min-width:881px) and (max-width:1180px){
+  .hdr-nav .hdr-index-btn--nav{
+    margin-left:.2rem;
+    padding-left:.58rem;
+    font-size:.68rem;
+  }
+  .hdr-nav .hdr-index-btn--nav::after{left:.58rem;}
+  .global-index__toolbar,
+  .global-index__index-view,
+  .global-index__search-view,
+  .global-index__footer{
+    width:calc(100% - 2rem);
+  }
+}
