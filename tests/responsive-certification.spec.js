@@ -166,3 +166,36 @@ for (const width of [1440, 2048]) {
     await expectNoHorizontalOverflow(page);
   });
 }
+
+
+test('phone Index transitions into Search and back without leaving the shared editorial sheet', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  await page.locator('#mobToggle').click();
+  await expect(page.locator('#globalIndex')).toHaveAttribute('aria-hidden', 'false');
+  await expect(page.locator('.global-index__utilities .global-index__utility-link')).toHaveCount(2);
+
+  await page.locator('[data-open-index-search]').click();
+  await expect(page.locator('#globalIndex')).toHaveClass(/is-search/);
+  await expect(page.locator('#globalIndexIndexView')).toBeHidden();
+  await expect(page.locator('#globalIndexSearchView')).toBeVisible();
+  await expect(page.locator('#globalIndexSearchInput')).toBeFocused();
+
+  await page.locator('#globalIndexSearchBack').click();
+  await expect(page.locator('#globalIndex')).not.toHaveClass(/is-search/);
+  await expect(page.locator('#globalIndexIndexView')).toBeVisible();
+  await expect(page.locator('#globalIndexSearchView')).toBeHidden();
+  await expectNoHorizontalOverflow(page);
+});
+
+test('tablet portrait keeps the full research matrix and does not inherit phone disclosure', async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await page.goto('/clinical/');
+
+  await page.locator('#mobToggle').click();
+  await expect(page.locator('.global-index__lines-toggle')).toBeHidden();
+  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-expanded/);
+  await expect(page.locator('#globalIndexLines')).toBeVisible();
+  await expectNoHorizontalOverflow(page);
+});
