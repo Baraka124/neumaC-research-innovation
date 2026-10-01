@@ -84,3 +84,33 @@ test('1440px desktop keeps the standard pre-workstation geometry', async ({ page
 
   await expectNoHorizontalOverflow(page);
 });
+
+for (const width of [1024, 1280, 1440, 1680, 1920, 2048]) {
+  test(`Research leadership remains fully inside viewport at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1680 ? 1080 : 900 });
+    await page.goto('/clinical/');
+
+    await expect(page.locator('.research-hero__sheet')).toBeVisible();
+    await expect(page.locator('.research-leadership')).toBeVisible();
+    await expect(page.locator('.research-leadership__portrait img')).toBeVisible();
+
+    const geometry = await page.evaluate(() => {
+      const sheet = document.querySelector('.research-hero__sheet').getBoundingClientRect();
+      const leadership = document.querySelector('.research-leadership').getBoundingClientRect();
+      return {
+        viewport: window.innerWidth,
+        sheetLeft: sheet.left,
+        sheetRight: sheet.right,
+        leadershipLeft: leadership.left,
+        leadershipRight: leadership.right,
+      };
+    });
+
+    expect(geometry.sheetLeft).toBeGreaterThanOrEqual(-1);
+    expect(geometry.sheetRight).toBeLessThanOrEqual(geometry.viewport + 1);
+    expect(geometry.leadershipLeft).toBeGreaterThanOrEqual(geometry.sheetLeft - 1);
+    expect(geometry.leadershipRight).toBeLessThanOrEqual(geometry.sheetRight + 1);
+    expect(geometry.leadershipRight).toBeLessThanOrEqual(geometry.viewport + 1);
+    await expectNoHorizontalOverflow(page);
+  });
+}
