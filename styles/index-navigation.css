@@ -168,3 +168,158 @@
 @media(prefers-reduced-motion:reduce){
   .global-index__surface,.global-index__line-list,.hdr-nav .hdr-index-btn--nav::after{transition:none!important;}
 }
+
+
+/* ============================================================
+   M6.3A — PHONE INDEX CHOREOGRAPHY
+   Editorial-sheet refinement only. The canonical runtime remains the
+   sole owner of Index/Search state and all tablet/desktop geometry stays
+   untouched.
+   ============================================================ */
+@media(max-width:620px){
+  /* A publication-like sheet: direct, quiet movement rather than card zoom. */
+  .global-index__surface{
+    transform:translateY(6px)!important;
+    transform-origin:top center;
+    transition:opacity .18s var(--ease-clinical),transform .22s var(--ease-clinical)!important;
+  }
+  .global-index.is-open .global-index__surface{transform:translateY(0)!important;}
+
+  /* Keep identity available while the editorial sheet itself scrolls. */
+  .global-index__mobile-head{
+    position:sticky;
+    top:0;
+    z-index:6;
+    background:rgba(251,250,247,.94)!important;
+    backdrop-filter:blur(18px) saturate(112%);
+    -webkit-backdrop-filter:blur(18px) saturate(112%);
+    border-bottom:1px solid rgba(12,56,104,.09);
+    box-shadow:0 8px 24px rgba(7,36,61,.035)!important;
+  }
+  .global-index__close--mobile{
+    background:rgba(255,255,255,.62)!important;
+    border-color:rgba(92,122,139,.22)!important;
+    box-shadow:inset 0 1px rgba(255,255,255,.72);
+  }
+
+  /* Primary destinations stay editorial without impersonating page headings. */
+  .global-index__index-view{
+    gap:.72rem!important;
+    padding-top:.58rem!important;
+    padding-bottom:.72rem!important;
+  }
+  .global-index__chapters{margin-bottom:.18rem!important;}
+  .global-index__chapter{
+    min-height:49px!important;
+    padding:.22rem 0!important;
+  }
+
+  /* Research programme reads as one governed disclosure boundary. */
+  .global-index__lines{
+    padding-top:.08rem!important;
+    border-top:1px solid #d4dfe3!important;
+  }
+  .global-index__section-head{
+    min-height:48px!important;
+    border-bottom:1px solid rgba(216,226,229,.72);
+  }
+  .global-index__lines-toggle{
+    min-height:34px!important;
+    padding:0!important;
+  }
+  .global-index__lines-toggle-mark{
+    width:22px!important;
+    height:22px!important;
+  }
+  .global-index__lines.is-lines-collapsed .global-index__line-list{visibility:hidden;}
+  .global-index__lines.is-lines-expanded .global-index__line-list{visibility:visible;}
+  .global-index__lines-all{padding:.62rem 0 .08rem!important;}
+
+  /* Search + Contact are utilities, not another chapter of navigation. */
+  .global-index__utilities{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:.9rem;
+    margin-top:.28rem!important;
+    padding:.16rem 0 0!important;
+    border-top:1px solid #d6e0e3!important;
+  }
+  .global-index__utility-label{display:none!important;}
+  .global-index__utility-link{
+    width:100%!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:.64rem 0!important;
+    border-bottom:0!important;
+    justify-content:flex-start!important;
+    font-size:.72rem!important;
+  }
+  .global-index__utility-link + .global-index__utility-link{
+    padding-left:.9rem!important;
+    border-left:1px solid #dce4e7!important;
+  }
+
+  /* One compact institutional end-cap; language remains directly reachable. */
+  .global-index__footer{
+    min-height:48px!important;
+    margin-top:.2rem!important;
+    padding:.7rem 0 max(.72rem,env(safe-area-inset-bottom))!important;
+  }
+
+  /* Search is another page of the same editorial sheet, not a new modal. */
+  .global-index__search-view{
+    min-height:calc(100dvh - 58px)!important;
+    padding-top:.62rem!important;
+  }
+  .global-search__head{
+    top:58px!important;
+    margin-bottom:.78rem!important;
+    padding:.42rem 0 .68rem!important;
+    background:rgba(251,250,247,.96)!important;
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+  }
+  .global-search__head>p{
+    font-size:clamp(1.28rem,6vw,1.48rem)!important;
+  }
+  .global-search__field{
+    height:50px!important;
+    border-radius:9px!important;
+    box-shadow:0 7px 20px rgba(6,35,61,.035)!important;
+  }
+  .global-search__field input{font-size:1rem!important;}
+  .global-search__filters{
+    flex-wrap:nowrap!important;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    margin:.62rem 0 .45rem!important;
+    gap:.12rem .72rem!important;
+  }
+  .global-search__filters button{white-space:nowrap;}
+  .global-search__results{grid-template-columns:1fr!important;}
+
+  .global-index.is-search .global-index__search-view{
+    animation:m63EditorialIn .2s var(--ease-clinical) both;
+  }
+  .global-index:not(.is-search) .global-index__index-view{
+    animation:m63EditorialIn .2s var(--ease-clinical) both;
+  }
+}
+
+@keyframes m63EditorialIn{
+  from{opacity:0;transform:translateY(5px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:390px){
+  .global-index__index-view{gap:.62rem!important;padding-top:.48rem!important;}
+  .global-index__chapter{min-height:47px!important;}
+  .global-index__utilities{column-gap:.72rem;}
+  .global-index__utility-link + .global-index__utility-link{padding-left:.72rem!important;}
+}
+
+@media(max-width:620px) and (prefers-reduced-motion:reduce){
+  .global-index__index-view,
+  .global-index__search-view{animation:none!important;}
+  .global-index__surface{transition:none!important;}
+}
