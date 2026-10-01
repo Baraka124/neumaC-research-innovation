@@ -12,6 +12,8 @@ jobs:
         with: { node-version: 20 }
       - name: HTML/CSS integrity + contrast checks
         run: python3 scripts/integrity_check.py
+      - name: Canonical and social metadata checks
+        run: python3 scripts/metadata_check.py
       - name: JS syntax
         run: |
           find scripts -name '*.js' -print0 | xargs -0 -n1 node --check
