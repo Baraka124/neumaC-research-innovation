@@ -76,9 +76,6 @@
   --shadow-md: 0 4px 8px rgba(12,56,104,.05), 0 12px 28px rgba(12,56,104,.08);
   --shadow-lg: 0 8px 16px rgba(12,56,104,.06), 0 24px 56px rgba(12,56,104,.10);
   --ring: 0 0 0 3px rgba(0,179,179,.32);
-
-  /* M2 — Floating Editorial System. Shared geometry belongs here so page
-     compositions consume one canonical material language. */
   --editorial-surface-bg:#fff;
   --editorial-surface-border:rgba(12,56,104,.095);
   --editorial-surface-border-soft:rgba(12,56,104,.068);
@@ -92,7 +89,6 @@
   --editorial-float-shadow-mobile:0 10px 26px rgba(7,38,65,.07),0 2px 7px rgba(7,38,65,.022);
   --editorial-raised-shadow:0 8px 24px rgba(7,38,65,.048),0 2px 7px rgba(7,38,65,.022);
   --editorial-raised-shadow-compact:0 6px 18px rgba(7,38,65,.042);
-
   --fs-display-xl: clamp(2.75rem, 5.2vw, 4.25rem);
   --fs-display-lg: clamp(2.25rem, 4vw, 3.25rem);
   --fs-display-md: clamp(1.75rem, 3vw, 2.5rem);
@@ -101,3 +97,5 @@
   --lh-normal: 1.6;
   --lh-relaxed: 1.72;
 }
+@media(min-width:1680px){:root{--hdr:72px;}}
+@media(min-width:1920px){:root{--hdr:74px;}}
