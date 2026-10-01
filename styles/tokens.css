@@ -80,21 +80,18 @@
   /* M2 — Floating Editorial System. Shared geometry belongs here so page
      compositions consume one canonical material language. */
   --editorial-surface-bg:#fff;
-  --editorial-surface-border:rgba(12,56,104,.11);
-  --editorial-surface-border-soft:rgba(12,56,104,.075);
+  --editorial-surface-border:rgba(12,56,104,.095);
+  --editorial-surface-border-soft:rgba(12,56,104,.068);
   --editorial-float-radius:14px;
   --editorial-float-radius-tablet:12px;
   --editorial-float-radius-mobile:10px;
   --editorial-raised-radius:10px;
   --editorial-raised-radius-compact:8px;
-  --editorial-float-shadow:0 22px 60px rgba(7,38,65,.095),0 5px 18px rgba(7,38,65,.035);
-  --editorial-float-shadow-tablet:0 16px 40px rgba(7,38,65,.085),0 3px 12px rgba(7,38,65,.03);
-  --editorial-float-shadow-mobile:0 14px 34px rgba(7,38,65,.08),0 2px 8px rgba(7,38,65,.025);
-  --editorial-raised-shadow:0 10px 28px rgba(7,38,65,.055),0 2px 8px rgba(7,38,65,.025);
-  --editorial-raised-shadow-compact:0 8px 22px rgba(7,38,65,.05);
-  --editorial-overlap-desktop:clamp(2.8rem,4vw,4rem);
-  --editorial-overlap-tablet:2.25rem;
-  --editorial-overlap-mobile:1.25rem;
+  --editorial-float-shadow:0 18px 48px rgba(7,38,65,.085),0 4px 14px rgba(7,38,65,.03);
+  --editorial-float-shadow-tablet:0 14px 34px rgba(7,38,65,.075),0 3px 10px rgba(7,38,65,.026);
+  --editorial-float-shadow-mobile:0 10px 26px rgba(7,38,65,.07),0 2px 7px rgba(7,38,65,.022);
+  --editorial-raised-shadow:0 8px 24px rgba(7,38,65,.048),0 2px 7px rgba(7,38,65,.022);
+  --editorial-raised-shadow-compact:0 6px 18px rgba(7,38,65,.042);
 
   --fs-display-xl: clamp(2.75rem, 5.2vw, 4.25rem);
   --fs-display-lg: clamp(2.25rem, 4vw, 3.25rem);
