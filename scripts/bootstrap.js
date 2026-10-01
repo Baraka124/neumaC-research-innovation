@@ -1,7 +1,6 @@
 /* neumAC R&I — pre-render bootstrap
- * Tiny synchronous head script: restores persisted language before first paint,
- * restores the dismissed homepage announcement state, and registers the shared
- * floating editorial surface layer as a progressive visual enhancement.
+ * Tiny synchronous head script: restores persisted language before first paint
+ * and registers shared visual/runtime enhancement layers.
  */
 (function(){
   window.NEUMAC_CONFIG = Object.freeze({
@@ -9,13 +8,23 @@
     siteBase: 'https://neumact.org'
   });
 
-  if (!document.getElementById('editorialSurfacesCss')) {
-    var surfaceCss = document.createElement('link');
-    surfaceCss.id = 'editorialSurfacesCss';
-    surfaceCss.rel = 'stylesheet';
-    surfaceCss.href = '/styles/editorial-surfaces.css';
-    document.head.appendChild(surfaceCss);
+  function addStylesheet(id,href){
+    if(document.getElementById(id))return;
+    var link=document.createElement('link');
+    link.id=id;link.rel='stylesheet';link.href=href;
+    document.head.appendChild(link);
   }
+
+  function addScript(id,src){
+    if(document.getElementById(id))return;
+    var script=document.createElement('script');
+    script.id=id;script.src=src;script.async=false;
+    document.head.appendChild(script);
+  }
+
+  addStylesheet('editorialSurfacesCss','/styles/editorial-surfaces.css');
+  addStylesheet('mobileChromeCss','/styles/mobile-chrome.css');
+  addScript('mobileChromeJs','/scripts/mobile-chrome.js');
 
   try {
     var lang = localStorage.getItem('huac_lang') || localStorage.getItem('lang');
