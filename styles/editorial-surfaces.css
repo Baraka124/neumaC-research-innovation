@@ -32,8 +32,6 @@
   --editorial-overlap-mobile:1.25rem;
 }
 
-/* Generic contracts for future reuse. Existing accepted page components are
-   aliased below so M2 can converge without unnecessary markup churn. */
 .editorial-surface{
   position:relative;
   isolation:isolate;
@@ -54,27 +52,32 @@
   box-shadow:none;
 }
 
-/* LEVEL A · current major editorial floats */
-:where(.research-hero__sheet,.pub-hero__panel){
+/* LEVEL A — current major editorial floats. The body qualifiers make this
+   shared layer authoritative even though legacy page CSS still contains the
+   original local shadow/radius values during the M2 migration. */
+body[data-page="clinical"] .research-hero__sheet,
+body[data-page="news"] .pub-hero__panel{
   background:var(--editorial-surface-bg);
   border-color:var(--editorial-surface-border);
   border-radius:var(--editorial-float-radius);
   box-shadow:var(--editorial-float-shadow);
 }
 
-/* LEVEL B · Team already uses a large raised editorial sheet. It remains
-   quieter than the hero floats and will be fully calibrated in M2.2. */
-.team-hero__grid{
+/* LEVEL B — Team already has an accepted raised editorial introduction. */
+body[data-page="team"] .team-hero__grid{
   border-color:var(--editorial-surface-border-soft);
   border-radius:var(--editorial-raised-radius) var(--editorial-raised-radius) 0 0;
   box-shadow:var(--editorial-raised-shadow);
 }
 
-/* Float typography must never inherit a narrow card behaviour. */
-:where(.research-hero__sheet,.pub-hero__panel,.team-hero__grid) h1{
+body[data-page="clinical"] .research-hero__sheet h1,
+body[data-page="news"] .pub-hero__panel h1,
+body[data-page="team"] .team-hero__grid h1{
   text-wrap:balance;
 }
-:where(.research-hero__sheet,.pub-hero__panel,.team-hero__grid) p{
+body[data-page="clinical"] .research-hero__sheet p,
+body[data-page="news"] .pub-hero__panel p,
+body[data-page="team"] .team-hero__grid p{
   text-wrap:pretty;
 }
 
@@ -94,18 +97,20 @@
     --editorial-float-shadow:0 14px 34px rgba(7,38,65,.08),0 2px 8px rgba(7,38,65,.025);
   }
 
-  /* Mobile keeps a perceptible but restrained raised-sheet identity. */
-  :where(.research-hero__sheet,.pub-hero__panel){
+  body[data-page="clinical"] .research-hero__sheet,
+  body[data-page="news"] .pub-hero__panel{
     border-radius:var(--editorial-float-radius);
   }
-  .team-hero__grid{
+  body[data-page="team"] .team-hero__grid{
     border-radius:var(--editorial-raised-radius) var(--editorial-raised-radius) 0 0;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
   .editorial-surface,
-  :where(.research-hero__sheet,.pub-hero__panel,.team-hero__grid){
+  body[data-page="clinical"] .research-hero__sheet,
+  body[data-page="news"] .pub-hero__panel,
+  body[data-page="team"] .team-hero__grid{
     transition:none!important;
   }
 }
