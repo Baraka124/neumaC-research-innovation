@@ -28,10 +28,12 @@
   addStylesheet('editorialHierarchyCss','/styles/editorial-hierarchy.css');
   addStylesheet('editorialMediaCss','/styles/editorial-media.css');
   addStylesheet('inibicAffiliationCss','/styles/inibic-affiliation.css');
+  addStylesheet('indexNavigationCss','/styles/index-navigation.css');
   addStylesheet('workstationCss','/styles/workstation.css');
   addScript('mobileChromeJs','/scripts/mobile-chrome.js');
   addScript('accessibilityHardeningJs','/scripts/accessibility-hardening.js');
   addScript('inibicAffiliationJs','/scripts/inibic-affiliation.js');
+  addScript('indexNavigationJs','/scripts/index-navigation.js');
 
   try {
     var lang = localStorage.getItem('huac_lang') || localStorage.getItem('lang');
