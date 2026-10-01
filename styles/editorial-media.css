@@ -5,14 +5,6 @@
    Loaded after M4.1/M4.2 and before workstation geometry.
    ============================================================ */
 
-:root{
-  --editorial-rule:rgba(12,56,104,.10);
-  --editorial-rule-strong:rgba(12,56,104,.16);
-  --editorial-media-edge:rgba(12,56,104,.09);
-  --editorial-media-bg:#e8eef0;
-  --editorial-dark-rule:rgba(255,255,255,.10);
-}
-
 /* Shared media discipline: preserve crop, add only a quiet institutional edge. */
 body[data-page="home"] .home-current-record__media,
 body[data-page="clinical"] .research-line__media,
