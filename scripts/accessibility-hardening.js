@@ -14,6 +14,12 @@
       banner.removeAttribute('aria-modal');
     }
 
+    /* Deferred controls must have an accessible name before API data arrives. */
+    var studiesExpand=document.getElementById('studiesExpandBtn');
+    if(studiesExpand&&!studiesExpand.getAttribute('aria-label')&&!studiesExpand.getAttribute('aria-labelledby')){
+      studiesExpand.setAttribute('aria-label','Show all studies / Mostrar todos los estudios');
+    }
+
     document.querySelectorAll('a[target="_blank"]').forEach(function(link){
       var rel=(link.getAttribute('rel')||'').split(/\s+/).filter(Boolean);
       if(rel.indexOf('noopener')===-1)rel.push('noopener');
