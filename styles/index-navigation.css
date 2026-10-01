@@ -1,0 +1,243 @@
+/* ============================================================
+   neumACt — M6.1 DEVICE-AWARE INDEX / NAVIGATION
+   Preserve one editorial Index identity while deliberately changing its
+   composition for phone, laptop and workstation contexts.
+   ============================================================ */
+
+/* Header: Contact is no longer a first-order masthead action. */
+.hdr .hdr-contact-btn{display:none!important;}
+
+/* Desktop/laptop: Index belongs with primary navigation, not the utility edge. */
+@media(min-width:881px){
+  .hdr-nav .hdr-index-btn--nav{
+    margin-left:.7rem;
+    padding-left:1rem;
+    position:relative;
+    min-height:34px;
+    border-color:transparent;
+    background:transparent;
+    color:rgba(255,255,255,.82);
+    border-radius:0;
+  }
+  .hdr-nav .hdr-index-btn--nav::before{
+    content:"";
+    position:absolute;
+    left:.1rem;
+    top:50%;
+    width:1px;
+    height:18px;
+    transform:translateY(-50%);
+    background:rgba(255,255,255,.18);
+  }
+  .hdr-nav .hdr-index-btn--nav:hover,
+  .hdr-nav .hdr-index-btn--nav:focus-visible,
+  .hdr-nav .hdr-index-btn--nav[aria-expanded="true"]{
+    background:transparent;
+    color:#74d6d7;
+    border-color:transparent;
+  }
+  .hdr-nav .hdr-index-btn--nav::after{
+    content:"";
+    position:absolute;
+    left:1rem;
+    right:0;
+    bottom:0;
+    height:1px;
+    background:#49c7ca;
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .2s var(--ease-clinical);
+  }
+  .hdr-nav .hdr-index-btn--nav:hover::after,
+  .hdr-nav .hdr-index-btn--nav:focus-visible::after,
+  .hdr-nav .hdr-index-btn--nav[aria-expanded="true"]::after{transform:scaleX(1);}
+}
+
+/* Mobile trigger: explicit editorial action instead of anonymous hamburger. */
+@media(max-width:880px){
+  .mob-toggle{
+    width:auto!important;
+    min-width:78px;
+    height:38px;
+    padding:0 .72rem!important;
+    gap:.48rem;
+    display:inline-flex!important;
+    align-items:center;
+    justify-content:center;
+    border-radius:999px!important;
+    border:1px solid rgba(255,255,255,.18)!important;
+    background:rgba(255,255,255,.035)!important;
+    color:#fff;
+  }
+  .mob-toggle .mob-index-glyph{
+    display:grid;
+    gap:3px;
+    width:15px;
+  }
+  .mob-toggle .mob-index-glyph i{
+    display:block;
+    width:15px;
+    height:1px;
+    background:currentColor;
+    opacity:.9;
+  }
+  .mob-toggle .mob-index-label{
+    display:inline-flex;
+    align-items:center;
+    font-family:var(--ff-body);
+    font-size:.69rem;
+    font-weight:650;
+    letter-spacing:.015em;
+  }
+  .mob-toggle>span:not(.mob-index-glyph):not(.mob-index-label){display:none!important;}
+  .mob-toggle[aria-expanded="true"]{
+    background:rgba(73,199,202,.10)!important;
+    border-color:rgba(91,216,218,.48)!important;
+    color:#dffafa;
+  }
+
+  /* Editorial sheet opening: quieter and more authored than a generic drawer. */
+  .global-index{background:rgba(4,20,36,.14);}
+  .global-index__surface{
+    background:rgba(251,250,247,.985)!important;
+    transform:translateY(10px) scale(.995);
+    transform-origin:top center;
+    transition:transform .24s var(--ease-clinical),opacity .2s ease;
+  }
+  .global-index.is-open .global-index__surface{transform:none;}
+  .global-index__mobile-head{
+    box-shadow:0 1px 0 rgba(12,56,104,.05);
+  }
+  .global-index__index-view{
+    display:block!important;
+    padding-top:.85rem!important;
+  }
+
+  /* Main destinations: premium, but not page-heading scale. */
+  .global-index__chapters{margin-bottom:.9rem;}
+  .global-index__chapter{
+    min-height:58px!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    padding:.45rem 0!important;
+  }
+  .global-index__chapter-no{display:none!important;}
+  .global-index__chapter-name{
+    font-size:clamp(1.42rem,5vw,1.72rem)!important;
+    line-height:1.02!important;
+    letter-spacing:-.025em!important;
+  }
+
+  /* Research lines become a disclosure on phone/small tablet. */
+  .global-index__lines{
+    border-top:1px solid #d8e2e5;
+    padding-top:.15rem;
+  }
+  .global-index__section-head{
+    min-height:54px;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    gap:.75rem;
+    margin-bottom:0!important;
+  }
+  .global-index__section-head h2{margin:0!important;}
+  .global-index__lines-head-link{display:none!important;}
+  .global-index__lines-toggle{
+    display:none;
+    min-height:38px;
+    align-items:center;
+    gap:.5rem;
+    border:0;
+    background:transparent;
+    color:#0a6b73;
+    font-family:var(--ff-body);
+    font-size:.68rem;
+    font-weight:650;
+    cursor:pointer;
+  }
+  .global-index__lines-toggle-mark{
+    display:grid;
+    place-items:center;
+    width:24px;
+    height:24px;
+    border:1px solid #ccdadd;
+    border-radius:50%;
+    font-size:.95rem;
+    line-height:1;
+  }
+  .global-index__lines-all{
+    display:none;
+    padding:.75rem 0 .15rem;
+    color:#0a6b73;
+    font-size:.7rem;
+    font-weight:650;
+    text-decoration:none;
+  }
+
+  /* Utilities become a compact end-cap rather than a long third chapter. */
+  .global-index__utilities{
+    margin-top:.9rem;
+    padding:.9rem 0 .35rem!important;
+  }
+  .global-index__utility-label{font-size:.6rem!important;}
+  .global-index__utility-link{
+    min-height:38px!important;
+    margin-right:.75rem!important;
+    font-size:.76rem!important;
+  }
+  .global-index__institutions{display:none!important;}
+  .global-index__footer{
+    margin-top:.55rem!important;
+    padding-top:.8rem!important;
+    font-size:.55rem!important;
+    letter-spacing:.08em;
+  }
+}
+
+@media(max-width:620px){
+  .global-index__lines-toggle{display:inline-flex;}
+  .global-index__line-list{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    overflow:hidden;
+    transition:max-height .24s var(--ease-clinical),opacity .18s ease;
+  }
+  .global-index__lines.is-lines-collapsed .global-index__line-list{
+    max-height:0;
+    opacity:0;
+    pointer-events:none;
+  }
+  .global-index__lines.is-lines-expanded .global-index__line-list{
+    max-height:420px;
+    opacity:1;
+  }
+  .global-index__lines.is-lines-expanded .global-index__lines-all{display:block;}
+  .global-index__line{
+    min-height:43px!important;
+    padding:.58rem 0!important;
+  }
+  .global-index__line strong{
+    font-size:.74rem!important;
+    line-height:1.3!important;
+  }
+  .global-index__chapter-name{
+    font-size:clamp(1.34rem,7vw,1.58rem)!important;
+  }
+  .global-index__index-view,
+  .global-index__search-view,
+  .global-index__footer{margin-inline:.9rem!important;}
+  .global-index__footer{gap:.25rem .45rem!important;}
+}
+
+@media(max-width:390px){
+  .mob-toggle{min-width:72px;padding-inline:.62rem!important;gap:.4rem;}
+  .mob-toggle .mob-index-label{font-size:.65rem;}
+  .global-index__chapter{min-height:54px!important;}
+  .global-index__chapter-name{font-size:1.34rem!important;}
+  .global-index__section-head{min-height:50px;}
+  .global-index__line strong{font-size:.71rem!important;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .global-index__surface,.global-index__line-list,.hdr-nav .hdr-index-btn--nav::after{transition:none!important;}
+}
