@@ -53,6 +53,7 @@ for (const viewport of BREAKPOINTS) {
         await expect(page.locator('#editorialRhythmCss')).toBeAttached();
         await expect(page.locator('#editorialHierarchyCss')).toBeAttached();
         await expect(page.locator('#editorialMediaCss')).toBeAttached();
+        await expect(page.locator('#indexNavigationCss')).toBeAttached();
         await expect(page.locator('#workstationCss')).toBeAttached();
 
         const surface = page.locator(item.selector);
@@ -98,3 +99,70 @@ test('standard desktop remains below workstation activation threshold', async ({
   expect(Math.abs(geometry.header - 68)).toBeLessThanOrEqual(1);
   expect(Math.abs(geometry.bodyPaddingTop - 68)).toBeLessThanOrEqual(1);
 });
+
+test('phone masthead exposes an explicit Index trigger and removes header Contact', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/clinical/');
+
+  await expect(page.locator('.hdr .hdr-contact-btn')).toHaveCount(0);
+  const trigger = page.locator('#mobToggle');
+  await expect(trigger).toBeVisible();
+  await expect(trigger.locator('.mob-index-label')).toContainText(/Index|Índice/);
+  await expect(page.locator('#indexNavigationJs')).toBeAttached();
+  await expectNoHorizontalOverflow(page);
+});
+
+test('phone Index opens as a compact editorial sheet with collapsed research lines', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/clinical/');
+
+  await page.locator('#mobToggle').click();
+  await expect(page.locator('#globalIndex')).toHaveAttribute('aria-hidden', 'false');
+  await expect(page.locator('.global-index__chapter')).toHaveCount(4);
+
+  const disclosure = page.locator('.global-index__lines-toggle');
+  await expect(disclosure).toBeVisible();
+  await expect(disclosure).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-collapsed/);
+  await expect(page.locator('.global-index__institutions')).toBeHidden();
+  await expectNoHorizontalOverflow(page);
+
+  await disclosure.click();
+  await expect(disclosure).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-expanded/);
+});
+
+test('large phone keeps progressive research-line disclosure', async ({ page }) => {
+  await page.setViewportSize({ width: 620, height: 900 });
+  await page.goto('/');
+  await page.locator('#mobToggle').click();
+
+  await expect(page.locator('.global-index__lines-toggle')).toBeVisible();
+  await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded', 'false');
+  await expectNoHorizontalOverflow(page);
+});
+
+test('small laptop keeps Contact out of masthead while Index remains reachable', async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.goto('/');
+
+  await expect(page.locator('.hdr .hdr-contact-btn')).toHaveCount(0);
+  await expect(page.locator('#hdrIndexBtn')).toBeVisible();
+  await expectNoHorizontalOverflow(page);
+});
+
+for (const width of [1440, 2048]) {
+  test(`desktop ${width}px places Index with primary navigation and keeps full research matrix`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : 900 });
+    await page.goto('/clinical/');
+
+    const indexParent = await page.locator('#hdrIndexBtn').evaluate(el => el.parentElement && el.parentElement.className);
+    expect(String(indexParent)).toContain('hdr-nav');
+    await expect(page.locator('.hdr .hdr-contact-btn')).toHaveCount(0);
+
+    await page.locator('#hdrIndexBtn').click();
+    await expect(page.locator('.global-index__lines-toggle')).toBeHidden();
+    await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-expanded/);
+    await expectNoHorizontalOverflow(page);
+  });
+}
