@@ -8,11 +8,13 @@ body[data-page="clinical"] main{overflow-x:clip;}
 .research-meta{margin:0 0 .45rem;font:500 .6rem/1.25 var(--ff-mono);letter-spacing:.12em;text-transform:uppercase;color:#168391;}
 .research-text-link{display:inline-flex;align-items:center;color:#086f79;font-size:.78rem;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(8,111,121,.24);padding-bottom:.18rem;}
 
-/* Hero: image is an editorial placeholder; the sheet contains the identity. */
-.research-hero{position:relative;background:#e8eef1;padding-bottom:clamp(7.2rem,10vw,9rem);border-bottom:1px solid #dfe5e7;}
+/* Hero: image is an editorial placeholder; the sheet contains the identity.
+   Geometry uses normal flow + negative overlap so reveal transforms can never
+   push the sheet off-centre after animation. */
+.research-hero{position:relative;background:#e8eef1;padding-bottom:clamp(2.8rem,4.5vw,4rem);border-bottom:1px solid #dfe5e7;}
 .research-hero__media{margin:0;height:clamp(250px,29vw,360px);overflow:hidden;background:#dce7ec;}
 .research-hero__media img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 48%;}
-.research-hero__sheet{position:absolute;left:50%;bottom:0;transform:translate(-50%,50%);z-index:2;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(380px,.72fr);gap:clamp(2.5rem,5vw,5rem);align-items:center;background:#fff;border:1px solid rgba(12,56,104,.09);padding:clamp(1.65rem,2.6vw,2.35rem) clamp(1.6rem,3vw,3rem);box-shadow:0 14px 34px rgba(5,35,64,.08);}
+.research-hero__sheet{position:relative;z-index:2;width:min(calc(100% - clamp(2.25rem,5vw,5rem)),1280px);max-width:1280px;margin:clamp(-4.6rem,-4.3vw,-3.4rem) auto 0;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(340px,.62fr);gap:clamp(2.2rem,4vw,4rem);align-items:center;background:#fff;border:1px solid rgba(12,56,104,.09);padding:clamp(1.65rem,2.6vw,2.35rem) clamp(1.6rem,3vw,3rem);box-shadow:0 14px 34px rgba(5,35,64,.08);}
 .research-hero__copy{min-width:0;}
 .research-hero h1{margin:0;font-family:var(--ff-display);font-size:clamp(3.1rem,5vw,5.1rem);font-weight:700;line-height:.94;letter-spacing:-.052em;color:#0b3159;}
 .research-hero__lead{max-width:58rem;margin:.85rem 0 0;font-size:clamp(.98rem,1.12vw,1.08rem);line-height:1.6;color:#5f7185;}
@@ -112,13 +114,13 @@ body[data-page="clinical"] main{overflow-x:clip;}
 .api-skeleton--row{height:92px;margin:.4rem 0;background:linear-gradient(90deg,#eef1f3 25%,#f8f9fa 50%,#eef1f3 75%);background-size:200% 100%;animation:researchShimmer 1.35s infinite;}@keyframes researchShimmer{to{background-position:-200% 0;}}
 
 @media(max-width:1100px){
-  .research-hero__sheet{grid-template-columns:minmax(0,1fr) minmax(320px,.72fr);gap:2.2rem;}
+  .research-hero__sheet{grid-template-columns:minmax(0,1fr) minmax(300px,.66fr);gap:1.8rem;}
   .research-line-row{grid-template-columns:150px minmax(0,1fr) 190px;gap:1.15rem;}
   .study-portfolio__intro,.research-context__grid,.research-contact__grid{grid-template-columns:1fr;gap:2rem;}
   .study-row{grid-template-columns:110px minmax(0,1.45fr) minmax(140px,.62fr);}.study-row__sponsor{display:none;}
 }
 @media(max-width:880px){
-  .research-hero{padding-bottom:15rem;}.research-hero__media{height:250px;}.research-hero__sheet{grid-template-columns:1fr;gap:1.5rem;transform:translate(-50%,56%);}.research-leadership{padding-left:0;padding-top:1.35rem;border-left:0;border-top:1px solid #dce3e7;grid-template-columns:80px minmax(0,1fr);}.research-leadership__portrait{width:80px;height:96px;}
+  .research-hero{padding-bottom:2.8rem;}.research-hero__media{height:250px;}.research-hero__sheet{grid-template-columns:1fr;gap:1.5rem;margin-top:-2.5rem;}.research-leadership{padding-left:0;padding-top:1.35rem;border-left:0;border-top:1px solid #dce3e7;grid-template-columns:80px minmax(0,1fr);}.research-leadership__portrait{width:80px;height:96px;}
   .research-lines__head{grid-template-columns:1fr;gap:.7rem;}.research-line-row{grid-template-columns:132px minmax(0,1fr);grid-template-areas:"media content" "media side";gap:.55rem 1rem;}.research-line__media{grid-area:media;height:112px}.research-line__content{grid-area:content}.research-line__side{grid-area:side;border-left:0;border-top:1px solid #edf0f2;padding:.45rem 0 0;}.research-line__coord-label{display:inline;margin:0 .45rem 0 0;}
   .study-toolbar{align-items:flex-start;flex-direction:column;gap:.6rem}.study-filters{width:100%}.study-filters__grid{position:static;margin-top:.7rem;width:100%;grid-template-columns:1fr 1fr;box-shadow:none;}
 }
@@ -131,4 +133,4 @@ body[data-page="clinical"] main{overflow-x:clip;}
   .research-hero__sheet{margin-top:-1.15rem;margin-inline:.6rem;padding:1.1rem 1rem;}.research-leadership{grid-template-columns:64px minmax(0,1fr);}.research-leadership__portrait{width:64px;height:80px;}.research-leadership__bio{display:none;}
 }
 @media(prefers-reduced-motion:reduce){.research-line__media img,.study-filters__chevron{transition:none;}}
-@media print{.research-hero__media,.research-contact,#scrollTop{display:none!important}.research-hero{padding:0}.research-hero__sheet{position:static;transform:none;box-shadow:none}.study-row.is-collapsed{display:grid!important}}
+@media print{.research-hero__media,.research-contact,#scrollTop{display:none!important}.research-hero{padding:0}.research-hero__sheet{position:static;transform:none;box-shadow:none;margin:0 auto}.study-row.is-collapsed{display:grid!important}}
