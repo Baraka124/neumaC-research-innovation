@@ -215,38 +215,106 @@ body[data-page="home"] .home-programme-intro .home-programme-team{
   border-top-color:rgba(12,56,104,.13);
 }
 
-/* Institutional credibility card: use the existing FINIBIC asset as the
-   visible foundation lockup inside the card header, never as a new card. */
+/* ============================================================
+   M5.4 — INIBIC AFFILIATION FOLIO
+   The existing affiliation surface remains a single secondary institutional
+   moment. It is docked to the programme panel rather than behaving like an
+   independent floating card. Depth comes from overlap, rule and proportion.
+   ============================================================ */
+body[data-page="home"] .home-affiliation-dock{
+  align-items:flex-start;
+}
+body[data-page="home"] .home-affiliation-card{
+  width:min(100%,430px);
+  margin-top:-1.35rem;
+  margin-right:clamp(.35rem,2.2vw,2.2rem);
+  padding:1.35rem 1.5rem 1.25rem;
+  border:1px solid rgba(12,56,104,.12);
+  border-top:0;
+  border-radius:0 0 8px 8px;
+  box-shadow:0 12px 30px rgba(6,35,61,.055),0 2px 7px rgba(6,35,61,.018);
+  background:linear-gradient(180deg,#fff 0%,#fff 82%,#fbfcfc 100%);
+}
+body[data-page="home"] .home-affiliation-card__marker{
+  left:1.5rem;
+  top:0;
+  width:52px;
+  height:2px;
+  background:#008c92;
+}
 body[data-page="home"] .home-affiliation-card__head{
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
   align-items:end;
-  gap:.45rem 1rem;
+  gap:.42rem 1rem;
 }
 body[data-page="home"] .home-affiliation-card__head::before{
   content:"";
   grid-column:1/-1;
   display:block;
-  width:min(100%,270px);
-  height:72px;
-  margin:0 0 .75rem;
-  background:url('/assets/finibic.jpg') left center/contain no-repeat;
+  width:min(100%,335px);
+  aspect-ratio:760/180;
+  margin:0 0 1rem;
+  background:url('/assets/institutions/inibic-foundation-lockup.svg') left center/contain no-repeat;
 }
 body[data-page="home"] .home-affiliation-card__eyebrow{
-  color:#5f7487;
+  margin:0;
+  color:#536c80;
+  font-size:.55rem;
+  line-height:1.25;
+  letter-spacing:.105em;
 }
 body[data-page="home"] .home-affiliation-card__status{
-  color:#7d8c98;
+  color:#657b8c;
+  font-size:.52rem;
+  letter-spacing:.1em;
+}
+body[data-page="home"] .home-affiliation-card h3{
+  margin:.58rem 0 0;
+  font-size:clamp(1.75rem,2vw,2.05rem);
+  line-height:.98;
+  letter-spacing:-.038em;
+  color:#0b3866;
 }
 body[data-page="home"] .home-affiliation-card__institution{
-  color:#607487!important;
-  font-size:.69rem!important;
+  max-width:32rem;
+  margin:.38rem 0 0!important;
+  color:#4e6579!important;
+  font-size:.72rem!important;
   line-height:1.48!important;
 }
 body[data-page="home"] .home-affiliation-card p:not(.home-affiliation-card__eyebrow):not(.home-affiliation-card__institution){
-  color:#465f76;
-  font-size:.79rem;
-  line-height:1.6;
+  max-width:31rem;
+  margin:.9rem 0 0;
+  color:#3f5970;
+  font-size:.8rem;
+  line-height:1.62;
+}
+body[data-page="home"] .home-affiliation-card__link{
+  margin-top:1rem;
+  padding-top:.82rem;
+  border-top-color:rgba(12,56,104,.13);
+  color:#066870;
+  font-size:.73rem;
+  font-weight:650;
+}
+body[data-page="home"] .home-affiliation-card__link:hover{
+  color:#0b3866;
+}
+
+/* Standard laptop: keep the folio compact enough that it never stretches. */
+@media(min-width:881px) and (max-width:1440px){
+  body[data-page="home"] .home-affiliation-card{
+    width:min(100%,400px);
+    margin-right:clamp(.25rem,1.5vw,1rem);
+    padding:1.25rem 1.35rem 1.18rem;
+  }
+  body[data-page="home"] .home-affiliation-card__head::before{
+    width:min(100%,300px);
+  }
+  body[data-page="home"] .home-affiliation-card h3{
+    font-size:1.78rem;
+  }
 }
 
 @media(max-width:620px){
@@ -263,10 +331,36 @@ body[data-page="home"] .home-affiliation-card p:not(.home-affiliation-card__eyeb
   body[data-page="home"] .home-programme-intro .home-programme-team{
     font-size:.78rem;
   }
+  body[data-page="home"] .home-affiliation-dock{
+    display:block;
+  }
+  body[data-page="home"] .home-affiliation-card{
+    width:auto;
+    margin:-.65rem .75rem 0;
+    padding:1.1rem 1.05rem 1rem;
+    border-radius:0 0 7px 7px;
+    box-shadow:0 8px 20px rgba(6,35,61,.045);
+  }
+  body[data-page="home"] .home-affiliation-card__marker{
+    left:1.05rem;
+    width:42px;
+  }
   body[data-page="home"] .home-affiliation-card__head::before{
-    width:min(100%,235px);
-    height:62px;
-    margin-bottom:.65rem;
+    width:min(100%,245px);
+    margin-bottom:.78rem;
+  }
+  body[data-page="home"] .home-affiliation-card h3{
+    font-size:1.5rem;
+  }
+  body[data-page="home"] .home-affiliation-card__institution{
+    font-size:.68rem!important;
+  }
+  body[data-page="home"] .home-affiliation-card p:not(.home-affiliation-card__eyebrow):not(.home-affiliation-card__institution){
+    font-size:.76rem;
+    line-height:1.56;
+  }
+  body[data-page="home"] .home-affiliation-card__link{
+    font-size:.7rem;
   }
 }
 
