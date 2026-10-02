@@ -411,3 +411,9 @@ body[data-page="home"] .home-line-title{
       linear-gradient(180deg,rgba(3,22,40,.08),rgba(3,22,40,.46));
   }
 }
+
+
+/* H2 A–E correction: keep Home media inside the isolated hero stacking context. */
+.home-hero-media{z-index:0!important}
+.home-hero-shade{z-index:1!important}
+.home-hero-content{position:relative;z-index:2!important}
