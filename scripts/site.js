@@ -985,6 +985,7 @@
   }
 
   function bootEnhancements(){
+    initNavPill();
     initDrawerFocusTrap();
     initLangRovingTabindex();
     initLangToast();
