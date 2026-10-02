@@ -266,7 +266,7 @@
   function renderLeadership(){
     const host=$('teamLeadership'); if(!host)return;
     const pi=state.people.find(p=>p.id===PI_ID)||state.people.find(p=>p.is_chief_of_department)||state.people.find(p=>p.can_be_pi)||state.people[0];
-    if(!pi){host.innerHTML=`<div class="state-panel"><span class="state-panel__label">${bi('Public information','Información pública')}</span><h3 class="state-panel__title">${bi('Scientific leadership is not currently available.','La dirección científica no está disponible en este momento.')}</h3></div>`;return;}
+    if(!pi){host.innerHTML=`<div class="team-empty state-panel"><span class="state-panel__label">${bi('Public information','Información pública')}</span><h3 class="state-panel__title">${bi('Scientific leadership is not currently available.','La dirección científica no está disponible en este momento.')}</h3></div>`;return;}
     const line=lineForCoordinator(pi);
     host.innerHTML=`<article class="team-lead">
       ${portrait(pi,'team-lead__portrait',false)}
@@ -323,7 +323,7 @@
       });
     state.rosterPeople=people;
 
-    if(!people.length){host.innerHTML=`<div class="state-panel"><span class="state-panel__label">${bi('Team directory','Directorio del equipo')}</span><h3 class="state-panel__title">${bi('No additional public profiles are available yet.','Todavía no hay perfiles públicos adicionales disponibles.')}</h3></div>`;return;}
+    if(!people.length){host.innerHTML=`<div class="team-roster__empty state-panel"><span class="state-panel__label">${bi('Team directory','Directorio del equipo')}</span><h3 class="state-panel__title">${bi('No additional public profiles are available yet.','Todavía no hay perfiles públicos adicionales disponibles.')}</h3></div>`;return;}
     host.innerHTML=people.map(p=>{
       const role=rolePair(p);
       const spec=specialtyPair(p.specialization);
@@ -585,7 +585,7 @@
       else if(state.activePersonId){const active=state.people.find(p=>p.id===state.activePersonId);if(active)renderProfile(active);}
     }catch(err){
       console.error('Team load failed:',err);
-      targets.forEach(host=>host.innerHTML=`<div class="state-panel state-panel--error"><span class="state-panel__label">${bi('Temporary issue','Incidencia temporal')}</span><h3 class="state-panel__title">${bi('Public team profiles are temporarily unavailable.','Los perfiles públicos del equipo no están disponibles temporalmente.')}</h3><p class="state-panel__copy">${bi('Please try again shortly.','Inténtelo de nuevo en unos instantes.')}</p></div>`);
+      targets.forEach(host=>host.innerHTML=`<div class="team-empty state-panel state-panel--error"><span class="state-panel__label">${bi('Temporary issue','Incidencia temporal')}</span><h3 class="state-panel__title">${bi('Public team profiles are temporarily unavailable.','Los perfiles públicos del equipo no están disponibles temporalmente.')}</h3><p class="state-panel__copy">${bi('Please try again shortly.','Inténtelo de nuevo en unos instantes.')}</p></div>`);
     }
   }
 
