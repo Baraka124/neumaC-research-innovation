@@ -812,6 +812,44 @@ test('Team roster and public profile architecture remain intact after intro reco
 });
 
 
+
+test('R1.2 leadership structure remains separate from current activity', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/line/');
+
+  await expect(page.locator('#lineLeadershipSection')).toBeAttached();
+  await expect(page.locator('#lineIntroSection')).toBeAttached();
+  await expect(page.locator('#lineCoordinatorCard')).toBeAttached();
+  await expect(page.locator('#lineLeadershipSignals')).toBeAttached();
+
+  const order = await page.evaluate(() => {
+    const leadership = document.querySelector('#lineLeadershipSection');
+    const activity = document.querySelector('#lineIntroSection');
+    return Boolean(leadership && activity && (leadership.compareDocumentPosition(activity) & Node.DOCUMENT_POSITION_FOLLOWING));
+  });
+  expect(order).toBe(true);
+});
+
+for (const width of [390, 768, 1440, 2048]) {
+  test(`R1.2 leadership preview stays contained at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1440 ? 900 : 1024) });
+    await page.goto('/line/');
+
+    const section = page.locator('#lineLeadershipSection');
+    await expect(section).toBeAttached();
+    const grid = page.locator('.line-leadership__grid');
+    await expect(grid).toBeAttached();
+
+    const geo = await grid.evaluate(el => {
+      const r = el.getBoundingClientRect();
+      return { left:r.left, right:r.right, width:r.width, viewport:window.innerWidth };
+    });
+    expect(geo.left).toBeGreaterThanOrEqual(-1);
+    expect(geo.right).toBeLessThanOrEqual(geo.viewport + 1);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
 for (const width of [390, 620, 768, 1024]) {
   test(`Innovation clinical process remains ordered and contained at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width <= 390 ? 844 : 900 });
