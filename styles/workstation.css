@@ -158,8 +158,10 @@
 }
 
 @media(min-width:1920px){
+  /* Preserve the established workstation folio breadth; restraint belongs
+     to Search interaction measure, not to the outer editorial surface. */
   html body .global-index__surface{
-    width:min(1580px,calc(100% - 3rem));
+    width:min(1640px,calc(100% - 3rem));
   }
   html body .global-index__index-view{
     grid-template-columns:minmax(280px,.72fr) minmax(500px,1.28fr) minmax(250px,.64fr);
