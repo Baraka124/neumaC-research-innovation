@@ -123,3 +123,122 @@ body[data-page="innovation"] main{overflow-x:clip;}
   .innovation-hero h1{font-size:clamp(2.45rem,11.8vw,3.05rem);}.innovation-project__title{font-size:clamp(1.35rem,7vw,1.7rem);}.innovation-kicker{font-size:.61rem;letter-spacing:.13em;}
 }
 @media(prefers-reduced-motion:reduce){.api-skeleton--innovation-row{animation:none;}}
+
+/* ============================================================
+   FLOATING EDITORIAL — PHASE 3 / INNOVATION
+   Clinical Process Spine
+   Keep the page flat; connect the existing Measure → Decide → Work → Connect
+   prompts with a restrained editorial progression rather than cards or UI.
+   ============================================================ */
+body[data-page="innovation"] .innovation-question-list{
+  position:relative;
+}
+
+body[data-page="innovation"] .innovation-question{
+  position:relative;
+}
+
+body[data-page="innovation"] .innovation-question::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:1.42rem;
+  height:1px;
+  background:#c7d5da;
+  pointer-events:none;
+}
+
+body[data-page="innovation"] .innovation-question>span{
+  position:relative;
+  z-index:1;
+  display:inline-flex;
+  align-items:center;
+  min-width:2rem;
+  margin-bottom:.62rem;
+  padding-right:.46rem;
+  background:#fff;
+  color:#007c83;
+}
+
+body[data-page="innovation"] .innovation-question>span::after{
+  content:"";
+  width:4px;
+  height:4px;
+  margin-left:.38rem;
+  border-radius:50%;
+  background:#64aeb1;
+  box-shadow:0 0 0 2px #fff;
+}
+
+body[data-page="innovation"] .innovation-question:last-child::before{
+  right:42%;
+}
+
+@media(max-width:860px) and (min-width:641px){
+  body[data-page="innovation"] .innovation-question:nth-child(2n)::before{
+    right:28%;
+  }
+}
+
+@media(max-width:640px){
+  body[data-page="innovation"] .innovation-question-list{
+    padding-left:1.45rem;
+  }
+
+  body[data-page="innovation"] .innovation-question-list::before{
+    content:"";
+    position:absolute;
+    left:.28rem;
+    top:1.15rem;
+    bottom:1.15rem;
+    width:1px;
+    background:#c7d5da;
+    pointer-events:none;
+  }
+
+  body[data-page="innovation"] .innovation-question,
+  body[data-page="innovation"] .innovation-question+.innovation-question{
+    position:relative;
+    padding-left:.1rem;
+  }
+
+  body[data-page="innovation"] .innovation-question::before{
+    display:none;
+  }
+
+  body[data-page="innovation"] .innovation-question>span{
+    position:relative;
+    margin-bottom:.5rem;
+    padding-right:.35rem;
+  }
+
+  body[data-page="innovation"] .innovation-question>span::before{
+    content:"";
+    position:absolute;
+    left:-1.34rem;
+    top:50%;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#5aa8ad;
+    box-shadow:0 0 0 3px #fff;
+    transform:translateY(-50%);
+  }
+
+  body[data-page="innovation"] .innovation-question>span::after{
+    display:none;
+  }
+}
+
+@media(max-width:390px){
+  body[data-page="innovation"] .innovation-question-list{
+    padding-left:1.3rem;
+  }
+  body[data-page="innovation"] .innovation-question-list::before{
+    left:.23rem;
+  }
+  body[data-page="innovation"] .innovation-question>span::before{
+    left:-1.22rem;
+  }
+}
