@@ -358,8 +358,21 @@ test('Publications mobile folio stays in normal flow without absolute positionin
 
 test('Publications feed remains flat after folio recomposition', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
+  await page.addInitScript(() => {
+    window._newsAllPosts = [{
+      id: 'regression-publication-1',
+      post_type: 'publication',
+      title: 'Regression fixture publication',
+      authors_text: 'neumACt',
+      journal_name: 'Fixture Journal',
+      published_at: '2026-01-15T00:00:00Z',
+      doi: '10.0000/neumact.fixture',
+      research_line: { id: 'fixture-line', line_number: 1, name: 'Transplantation' }
+    }];
+  });
   await page.goto('/news/');
 
+  await expect(page.locator('.pub-item').first()).toBeVisible();
   const itemClasses = await page.locator('.pub-item').evaluateAll(items =>
     items.map(el => el.className)
   );
