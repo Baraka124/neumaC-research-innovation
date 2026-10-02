@@ -387,6 +387,17 @@
     const lines=personLines(person.id);
     const links=scholarLinks(person);
     const facts=professionalFacts(person);
+    const evidence=professionalEvidence(person);
+    const leadership=leadershipEvidence(person);
+    const footprint=researchFootprint(person);
+    const expertise=evidenceList(evidence.expertise);
+    const current=evidenceList(evidence.current);
+    const scientific=evidenceList(evidence.scientific);
+    const networks=evidenceList(evidence.networks);
+    const leadershipList=evidenceList(leadership);
+    const moduleCount=[facts.length,bio,expertise,current,lines.length,scientific,networks,links.length,footprint,leadershipList].filter(Boolean).length;
+    content.classList.toggle('is-sparse',moduleCount<=3);
+    content.classList.toggle('is-rich',moduleCount>=7);
 
     content.innerHTML=`
       <div class="team-profile__identity">
@@ -398,21 +409,46 @@
         </div>
       </div>
       ${facts.length?`<section class="team-profile__section">
-        <p class="team-profile__section-label">${bi('Professional context','Contexto profesional')}</p>
+        <p class="team-profile__section-label">${bi('Professional identity','Identidad profesional')}</p>
         <dl class="team-profile__facts">${facts.map(f=>`<div class="team-profile__fact"><dt>${bi(f.label[0],f.label[1])}</dt><dd>${bi(f.value[0],f.value[1])}</dd></div>`).join('')}</dl>
       </section>`:''}
       ${bio?`<section class="team-profile__section">
-        <p class="team-profile__section-label">${bi('Profile','Perfil')}</p>
+        <p class="team-profile__section-label">${bi('Professional profile','Perfil profesional')}</p>
         <p class="team-profile__bio">${bi(bio[0],bio[1])}</p>
+      </section>`:''}
+      ${expertise?`<section class="team-profile__section">
+        <p class="team-profile__section-label">${bi('Clinical / professional expertise','Experiencia clínica / profesional')}</p>
+        ${expertise}
+      </section>`:''}
+      ${current?`<section class="team-profile__section">
+        <p class="team-profile__section-label">${bi('Current contribution','Contribución actual')}</p>
+        ${current}
       </section>`:''}
       ${lines.length?`<section class="team-profile__section">
         <p class="team-profile__section-label">${bi('Research relationships','Relaciones de investigación')}</p>
-        <p class="team-profile__section-note">${bi('Current research relationships shown on the public site.','Relaciones actuales de investigación mostradas en el sitio público.')}</p>
+        <p class="team-profile__section-note">${bi('Current public research-line relationships.','Relaciones públicas actuales con líneas de investigación.')}</p>
         <div class="team-profile__lines">${lines.map(line=>{const label=lineNamePair(line);return `<a href="/line/?id=${encodeURIComponent(line.id)}"><span>${bi(label[0],label[1])}</span></a>`;}).join('')}</div>
       </section>`:''}
+      ${scientific?`<section class="team-profile__section">
+        <p class="team-profile__section-label">${bi('Research & innovation contribution','Contribución a investigación e innovación')}</p>
+        ${scientific}
+      </section>`:''}
+      ${networks?`<section class="team-profile__section">
+        <p class="team-profile__section-label">${bi('Professional networks','Redes profesionales')}</p>
+        ${networks}
+      </section>`:''}
       ${links.length?`<section class="team-profile__section">
-        <p class="team-profile__section-label">${bi('Scholarly profiles','Perfiles académicos')}</p>
+        <p class="team-profile__section-label">${bi('Scientific identity','Identidad científica')}</p>
         <div class="team-profile__links">${links.map(link=>`<a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(link.label)} <span aria-hidden="true">↗</span></a>`).join('')}</div>
+      </section>`:''}
+      ${footprint?`<section class="team-profile__section">
+        <p class="team-profile__section-label">${bi('Research footprint','Huella investigadora')}</p>
+        ${footprint}
+      </section>`:''}
+      ${leadershipList?`<section class="team-profile__section team-profile__section--leadership">
+        <p class="team-profile__section-label">${bi('Leadership responsibilities','Responsabilidades de liderazgo')}</p>
+        <p class="team-profile__section-note">${bi('Leadership is an additional responsibility within the same professional profile.','El liderazgo es una responsabilidad adicional dentro del mismo perfil profesional.')}</p>
+        ${leadershipList}
       </section>`:''}
       ${profileNavigation(person)}
     `;
