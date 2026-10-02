@@ -417,3 +417,29 @@ body[data-page="home"] .home-line-title{
 .home-hero-media{z-index:0!important}
 .home-hero-shade{z-index:1!important}
 .home-hero-content{position:relative;z-index:2!important}
+
+
+/* H2 A–E visibility contract: Home clinical media is always a painted layer on screen. */
+@media screen{
+  .home-hero .home-hero-media{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+    position:absolute!important;
+    top:0!important;
+    right:0!important;
+    bottom:0!important;
+  }
+  .home-hero .home-hero-media img{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+    width:100%!important;
+    height:100%!important;
+  }
+  .home-hero .home-hero-shade{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+  }
+}
