@@ -414,3 +414,98 @@ body[data-page="team"] .team-hero__context>p{
     object-position:50% 50%;
   }
 }
+
+
+/* ============================================================
+   P1 — UNIVERSAL PROFESSIONAL IDENTITY
+   Same institutional dignity; different professional evidence.
+   ============================================================ */
+.team-profile__identity-kicker{
+  margin:0 0 .38rem;
+  font:500 .56rem/1.25 var(--ff-mono);
+  letter-spacing:.105em;
+  text-transform:uppercase;
+  color:#007f88;
+}
+.team-profile__evidence-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  border-top:1px solid #dce4e7;
+}
+.team-profile__evidence-item{
+  display:grid;
+  gap:.16rem;
+  padding:.72rem 0;
+  border-bottom:1px solid #e4e9eb;
+  color:#173f63;
+  font-size:.77rem;
+  line-height:1.48;
+}
+.team-profile__evidence-item:last-child{border-bottom:0}
+.team-profile__evidence-item small{
+  color:#81909d;
+  font:500 .58rem/1.4 var(--ff-mono);
+  letter-spacing:.035em;
+}
+.team-profile__metrics{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  border-top:1px solid #dce4e7;
+  border-bottom:1px solid #dce4e7;
+}
+.team-profile__metrics>div{
+  padding:.9rem .8rem;
+  border-right:1px solid #e0e6e8;
+}
+.team-profile__metrics>div:first-child{padding-left:0}
+.team-profile__metrics>div:last-child{border-right:0}
+.team-profile__metrics strong{
+  display:block;
+  font-family:var(--ff-display);
+  font-size:1.65rem;
+  line-height:.95;
+  color:#0c3868;
+}
+.team-profile__metrics span{
+  display:block;
+  margin-top:.25rem;
+  color:#718196;
+  font-size:.63rem;
+  line-height:1.35;
+}
+.team-profile__metric-source{
+  margin:.6rem 0 0;
+  color:#8a96a3;
+  font-size:.58rem;
+  line-height:1.45;
+}
+.team-profile__section--leadership{
+  background:linear-gradient(90deg,rgba(0,127,136,.035),transparent 42%);
+}
+.team-profile__section--leadership .team-profile__section-label{color:#0c6172}
+.team-profile__section--leadership .team-profile__evidence-list{border-top-color:#cfdfe1}
+.team-profile__section--leadership .team-profile__evidence-item{color:#294b69}
+.team-profile-sheet__content.is-sparse .team-profile__identity{padding-bottom:1.35rem}
+.team-profile-sheet__content.is-rich .team-profile__section{padding-block:1.35rem}
+.team-profile-launch{
+  appearance:none;
+  -webkit-appearance:none;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-family:inherit;
+  margin-left:.85rem;
+}
+.team-profile-launch:focus-visible{outline:2px solid #00899c;outline-offset:3px}
+@media(max-width:640px){
+  .team-profile__metrics{grid-template-columns:1fr}
+  .team-profile__metrics>div,
+  .team-profile__metrics>div:first-child{
+    padding:.72rem 0;
+    border-right:0;
+    border-bottom:1px solid #e0e6e8;
+  }
+  .team-profile__metrics>div:last-child{border-bottom:0}
+  .team-profile-launch{margin-left:0;margin-top:.45rem}
+}
