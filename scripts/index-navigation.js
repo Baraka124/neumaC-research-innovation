@@ -143,6 +143,10 @@
     document.addEventListener('neumac:languagechange',function(){reconcileWhenReady(0);});
   }
 
+  document.addEventListener('neumac:indexready',function(){
+    reconcileWhenReady(0);
+  });
+
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
   else start();
 })();
