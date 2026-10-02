@@ -26,14 +26,14 @@
     var body=card.querySelector('p:not(.home-affiliation-card__eyebrow):not(.home-affiliation-card__institution)');
     setLangText(
       body,
-      'neumACt carries out its research activity within the INIBIC environment, connecting respiratory medicine with biomedical and translational research.',
-      'neumACt desarrolla su actividad investigadora en el entorno de INIBIC, conectando la medicina respiratoria con la investigación biomédica y traslacional.'
+      'neumACt carries out its research activity within this biomedical and translational environment, connecting respiratory medicine with research, technology and clinical innovation.',
+      'neumACt desarrolla su actividad investigadora en este entorno biomédico y traslacional, conectando la medicina respiratoria con investigación, tecnología e innovación clínica.'
     );
 
     setLangText(
       card.querySelector('.home-affiliation-card__link'),
-      'View profile at INIBIC',
-      'Ver perfil en INIBIC'
+      'View institutional profile',
+      'Ver perfil institucional'
     );
   }
 
