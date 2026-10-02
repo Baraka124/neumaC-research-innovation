@@ -356,6 +356,58 @@ test('Publications mobile folio stays in normal flow without absolute positionin
   expect(geometry.right).toBeLessThanOrEqual(geometry.viewport + 1);
 });
 
+test('Publications empty Selection collapses reserved feature height', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/news/');
+  await page.evaluate(() => {
+    window._newsAllPosts = [];
+    window.onNewsLoaded();
+  });
+
+  const stage = page.locator('.pub-feature__stage');
+  const empty = stage.locator('.pub-empty');
+  await expect(empty).toBeVisible();
+  await expect(stage).toHaveClass(/is-empty/);
+
+  const geometry = await page.evaluate(() => {
+    const stage = document.querySelector('.pub-feature__stage').getBoundingClientRect();
+    const index = document.querySelector('.pub-index').getBoundingClientRect();
+    return {
+      stageHeight:stage.height,
+      stageBottom:stage.bottom,
+      indexTop:index.top
+    };
+  });
+
+  expect(geometry.stageHeight).toBeLessThan(120);
+  expect(geometry.indexTop - geometry.stageBottom).toBeLessThan(90);
+  await expectNoHorizontalOverflow(page);
+});
+
+test('Publications populated Selection preserves authored feature stage', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.addInitScript(() => {
+    window._newsAllPosts = [{
+      id: 'regression-feature-1',
+      post_type: 'publication',
+      title: 'Regression featured publication',
+      authors_text: 'neumACt',
+      journal_name: 'Fixture Journal',
+      published_at: '2026-01-15T00:00:00Z',
+      is_featured: true
+    }];
+  });
+  await page.goto('/news/');
+
+  const stage = page.locator('.pub-feature__stage');
+  await expect(page.locator('.pub-feature-lead')).toBeVisible();
+  await expect(stage).not.toHaveClass(/is-empty/);
+
+  const height = await stage.evaluate(el => el.getBoundingClientRect().height);
+  expect(height).toBeGreaterThanOrEqual(260);
+  await expectNoHorizontalOverflow(page);
+});
+
 test('Publications feed remains flat after folio recomposition', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.addInitScript(() => {
