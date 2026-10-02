@@ -353,3 +353,12 @@
   html body .hdr--scientific .hdr-nav-link{font-size:.9rem;padding-inline:.88rem}
   html body .hdr-context__inner{width:min(1840px,calc(100% - 4.5rem))}
 }
+
+
+/* H2 authoritative workstation offset supersedes pre-H2 72/74px rules. */
+@media(min-width:1680px){
+  html body.has-scientific-masthead{padding-top:106px}
+  html body .hdr--scientific + .global-index{top:106px!important}
+  html body .hdr--scientific.scrolled + .global-index{top:92px!important}
+  html body .hdr--scientific.hdr--context-compact + .global-index{top:64px!important}
+}
