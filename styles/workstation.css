@@ -278,3 +278,37 @@
     height:104px;
   }
 }
+
+
+/* ============================================================
+   FLOATING EDITORIAL — PHASE 3 / HOME WORKSTATION
+   Let the programme index breathe without scaling prose or panel height.
+   ============================================================ */
+@media(min-width:1680px){
+  html body[data-page="home"]{
+    --home-threshold-pad:2.45rem;
+  }
+  html body[data-page="home"] .home-programme-panel{
+    grid-template-columns:minmax(360px,.64fr) minmax(0,1.36fr);
+    gap:4.9rem;
+    padding:2.35rem 2.7rem;
+  }
+  html body[data-page="home"] .home-programme-intro{
+    max-width:39rem;
+  }
+  html body[data-page="home"] .home-line-title{
+    max-width:36ch;
+    font-size:.93rem;
+  }
+}
+
+@media(min-width:1920px){
+  html body[data-page="home"] .home-programme-panel{
+    grid-template-columns:minmax(370px,.64fr) minmax(0,1.36fr);
+    gap:5.1rem;
+    padding:2.45rem 2.8rem;
+  }
+  html body[data-page="home"] .home-programme-intro{
+    max-width:40rem;
+  }
+}
