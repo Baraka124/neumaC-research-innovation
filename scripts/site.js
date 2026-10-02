@@ -116,6 +116,75 @@
     if(p==='news')return 'articles';
     return p;
   }
+  function h2PageContext(){
+    var hdr=document.getElementById('hdr');
+    var page=(hdr&&hdr.dataset.page)||document.body.dataset.page||'home';
+    var map={
+      home:{section:['neumACt','neumACt'],detail:['Research & Innovation','Investigación e Innovación']},
+      clinical:{section:['Research','Investigación'],detail:['Research programme','Programa de investigación']},
+      innovation:{section:['Innovation','Innovación'],detail:['Clinical innovation','Innovación clínica']},
+      news:{section:['Publications','Publicaciones'],detail:['Scientific output','Producción científica']},
+      team:{section:['Team','Equipo'],detail:['Multidisciplinary team','Equipo multidisciplinar']},
+      line:{section:['Research','Investigación'],detail:['Research line','Línea de investigación']}
+    };
+    var ctx=map[page]||map.home;
+    if(page==='line'){
+      var title=document.getElementById('lineTitle');
+      if(title){
+        var en=title.querySelector('[lang="en"]');
+        var es=title.querySelector('[lang="es"]');
+        var raw=String(title.textContent||'').trim();
+        ctx={section:['Research','Investigación'],detail:[String(en&&en.textContent||raw||'Research line').trim(),String(es&&es.textContent||raw||'Línea de investigación').trim()]};
+      }
+    }
+    return ctx;
+  }
+
+  function h2SyncContextRail(){
+    var rail=document.getElementById('hdrContextRail');if(!rail)return;
+    var ctx=h2PageContext();
+    var section=rail.querySelector('.hdr-context__section');
+    var detail=rail.querySelector('.hdr-context__detail');
+    if(section)section.innerHTML=ixBi(ctx.section[0],ctx.section[1]);
+    if(detail)detail.innerHTML=ixBi(ctx.detail[0],ctx.detail[1]);
+  }
+
+  function h2BuildMasthead(){
+    var hdr=document.getElementById('hdr');if(!hdr)return;
+    hdr.classList.add('hdr--scientific');
+
+    var nav=hdr.querySelector('.hdr-nav');
+    if(nav&&!nav.querySelector('.hdr-nav-signature')){
+      var signature=document.createElement('span');
+      signature.className='hdr-nav-signature';
+      signature.setAttribute('aria-hidden','true');
+      nav.appendChild(signature);
+    }
+
+    var search=hdr.querySelector('#hdrSearchBtn');
+    if(search&&!search.querySelector('.hdr-search-label')){
+      var label=document.createElement('span');
+      label.className='hdr-search-label';
+      label.innerHTML=ixBi('Search','Buscar');
+      search.appendChild(label);
+    }
+
+    if(!document.getElementById('hdrContextRail')){
+      var rail=document.createElement('div');
+      rail.className='hdr-context';rail.id='hdrContextRail';
+      rail.setAttribute('aria-label','Page context / Contexto de página');
+      rail.innerHTML='<div class="hdr-context__inner"><span class="hdr-context__section"></span><span class="hdr-context__mark" aria-hidden="true"></span><span class="hdr-context__detail"></span><span class="hdr-context__rule" aria-hidden="true"></span><span class="hdr-context__statement">'+ixBi('Science for better respiratory health','Ciencia para una mejor salud respiratoria')+'</span></div>';
+      hdr.appendChild(rail);
+    }
+    h2SyncContextRail();
+
+    var lineTitle=document.getElementById('lineTitle');
+    if(lineTitle&&window.MutationObserver){
+      new MutationObserver(h2SyncContextRail).observe(lineTitle,{childList:true,subtree:true,characterData:true});
+    }
+    document.addEventListener('neumac:languagechange',h2SyncContextRail);
+  }
+
   function ixBuild(){
     if(indexState.panel)return;
     var hdr=document.getElementById('hdr'); if(!hdr)return;
@@ -125,7 +194,7 @@
       var indexBtn=document.createElement('button');
       indexBtn.type='button'; indexBtn.className='hdr-index-btn'; indexBtn.id='hdrIndexBtn';
       indexBtn.setAttribute('aria-haspopup','dialog'); indexBtn.setAttribute('aria-controls','globalIndex'); indexBtn.setAttribute('aria-expanded','false');
-      indexBtn.innerHTML=ixBi('Index','Índice');
+      indexBtn.innerHTML='<span class="hdr-index-glyph" aria-hidden="true"><i></i><i></i><i></i></span><span class="hdr-index-label">'+ixBi('Index','Índice')+'</span>';
       var contact=right.querySelector('.hdr-contact-btn');
       if(contact)right.insertBefore(indexBtn,contact); else right.appendChild(indexBtn);
     }
@@ -349,6 +418,7 @@
   }
 
   function initEditorialIndex(){
+    h2BuildMasthead();
     ixBuild();
     if(!indexState.panel)return;
     var mob=document.getElementById('mobToggle');
@@ -464,6 +534,7 @@
         var path=location.pathname.replace(/\/+$/,'')||'/';
         if(path==='/'||path==='/team') hdr.classList.toggle('light',y>60);
         hdr.classList.toggle('scrolled',y>40);
+        hdr.classList.toggle('hdr--context-compact',y>120);
         hdr.classList.remove('hdr-hidden');
 }
 
