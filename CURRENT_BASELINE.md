@@ -110,3 +110,20 @@ Completed evidence-based refinements:
 Research and Innovation required no Phase 4 production changes after visual review.
 
 Phases 1–4 are now closed as the stable Floating Editorial baseline. Future design work should begin as a new milestone rather than continuing Phase 4 by default.
+
+
+## Research Line Scientific Identity — R1 initiated
+
+The next milestone is **Research Line Scientific Identity (R1)**.
+
+R1.1 is architecture-only and is governed by:
+`RESEARCH_LINE_R1_PHASE1_INFORMATION_ARCHITECTURE.md`
+
+R1 extends the current research-line system additively. It does not reopen the completed Floating Editorial baseline by default.
+
+The milestone direction is:
+- scientific identity before decoration;
+- governed coordinator/professional evidence from neumDesk/Grounded;
+- progressive sparse/rich profile states;
+- derived public activity from existing studies/projects/publications;
+- explicit provenance, visibility and person approval for manually curated professional facts.
