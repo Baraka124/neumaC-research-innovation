@@ -233,3 +233,48 @@
     padding:2rem var(--pub-folio-pad) 1.95rem;
   }
 }
+
+
+/* ============================================================
+   FLOATING EDITORIAL — PHASE 3 / RESEARCH WORKSTATION
+   Preserve the scientific margin while the canvas expands.
+   ============================================================ */
+@media(min-width:1680px){
+  html body[data-page="clinical"] .research-hero__sheet{
+    grid-template-columns:minmax(0,1.42fr) minmax(320px,.50fr);
+    gap:3.6rem;
+    padding:2.05rem 2.5rem;
+  }
+  html body[data-page="clinical"] .research-leadership{
+    grid-template-columns:84px minmax(0,1fr);
+    gap:.95rem;
+    padding-left:1.5rem;
+  }
+  html body[data-page="clinical"] .research-leadership__portrait{
+    width:84px;
+    height:102px;
+  }
+  html body[data-page="clinical"] .research-leadership h2{
+    font-size:clamp(1.55rem,1.35vw,1.9rem);
+  }
+  html body[data-page="clinical"] .research-leadership__bio{
+    max-width:32ch;
+  }
+}
+
+@media(min-width:1920px){
+  html body[data-page="clinical"] .research-hero__sheet{
+    grid-template-columns:minmax(0,1.46fr) minmax(330px,.50fr);
+    gap:3.9rem;
+    padding:2.1rem 2.6rem;
+  }
+  html body[data-page="clinical"] .research-leadership{
+    grid-template-columns:86px minmax(0,1fr);
+    gap:.95rem;
+    padding-left:1.55rem;
+  }
+  html body[data-page="clinical"] .research-leadership__portrait{
+    width:86px;
+    height:104px;
+  }
+}

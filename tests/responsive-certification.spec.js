@@ -384,3 +384,83 @@ test('Publications feed remains flat after folio recomposition', async ({ page }
   await expect(page.locator('.pub-index')).toBeVisible();
   await expectNoHorizontalOverflow(page);
 });
+
+
+for (const width of [881, 1024, 1366, 1440, 1680, 2048]) {
+  test(`Research scientific leadership remains a secondary margin at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
+    await page.goto('/clinical/');
+
+    const sheet = page.locator('.research-hero__sheet');
+    const leadership = page.locator('.research-leadership');
+    const portrait = page.locator('.research-leadership__portrait');
+
+    await expect(sheet).toBeVisible();
+    await expect(leadership).toBeVisible();
+    await expect(portrait).toBeVisible();
+
+    const geometry = await page.evaluate(() => {
+      const sheet = document.querySelector('.research-hero__sheet').getBoundingClientRect();
+      const leadership = document.querySelector('.research-leadership').getBoundingClientRect();
+      const portrait = document.querySelector('.research-leadership__portrait').getBoundingClientRect();
+      return {
+        sheet:{left:sheet.left,right:sheet.right,width:sheet.width},
+        leadership:{left:leadership.left,right:leadership.right,width:leadership.width},
+        portrait:{left:portrait.left,right:portrait.right,top:portrait.top,bottom:portrait.bottom},
+        viewport:window.innerWidth
+      };
+    });
+
+    expect(geometry.leadership.width / geometry.sheet.width).toBeLessThan(0.42);
+    expect(geometry.leadership.left).toBeGreaterThanOrEqual(geometry.sheet.left);
+    expect(geometry.leadership.right).toBeLessThanOrEqual(geometry.sheet.right + 1);
+    expect(geometry.portrait.left).toBeGreaterThanOrEqual(geometry.sheet.left);
+    expect(geometry.portrait.right).toBeLessThanOrEqual(geometry.sheet.right + 1);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+for (const width of [390, 620, 768]) {
+  test(`Research leadership remains stacked below programme copy at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width <= 390 ? 844 : 1024 });
+    await page.goto('/clinical/');
+
+    const geometry = await page.evaluate(() => {
+      const copy = document.querySelector('.research-hero__copy').getBoundingClientRect();
+      const leadership = document.querySelector('.research-leadership').getBoundingClientRect();
+      const sheet = document.querySelector('.research-hero__sheet').getBoundingClientRect();
+      return {
+        copyBottom:copy.bottom,
+        leadershipTop:leadership.top,
+        sheetLeft:sheet.left,
+        sheetRight:sheet.right,
+        leadershipLeft:leadership.left,
+        leadershipRight:leadership.right,
+        viewport:window.innerWidth
+      };
+    });
+
+    expect(geometry.leadershipTop).toBeGreaterThanOrEqual(geometry.copyBottom - 1);
+    expect(geometry.leadershipLeft).toBeGreaterThanOrEqual(geometry.sheetLeft - 1);
+    expect(geometry.leadershipRight).toBeLessThanOrEqual(geometry.sheetRight + 1);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+test('Research six-line heading retains the scientific handoff rule on desktop', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/clinical/');
+
+  const rule = await page.locator('.research-lines__head').evaluate(el => {
+    const s = getComputedStyle(el, '::before');
+    return {
+      content:s.content,
+      width:parseFloat(s.width),
+      height:parseFloat(s.height)
+    };
+  });
+
+  expect(rule.content).not.toBe('none');
+  expect(rule.width).toBeLessThanOrEqual(2);
+  expect(rule.height).toBeGreaterThan(10);
+});

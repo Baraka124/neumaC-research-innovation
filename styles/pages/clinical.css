@@ -173,3 +173,145 @@ body[data-page="clinical"] main{overflow-x:clip;}
   .research-leadership h2{font-size:clamp(1.45rem,2.2vw,1.75rem);}
   .research-leadership__bio{font-size:.68rem;line-height:1.45;}
 }
+
+
+/* ============================================================
+   FLOATING EDITORIAL — PHASE 3 / RESEARCH
+   Scientific Margin
+   Preserve the M6 normal-flow split-sheet while making scientific
+   leadership read as academic marginalia rather than a second card column.
+   ============================================================ */
+body[data-page="clinical"] .research-hero__sheet{
+  align-items:start;
+  border-color:rgba(12,56,104,.11);
+  border-radius:3px 3px 0 0;
+  box-shadow:0 12px 28px rgba(5,35,64,.055),0 2px 7px rgba(5,35,64,.025);
+}
+
+body[data-page="clinical"] .research-hero__copy{
+  align-self:start;
+}
+
+body[data-page="clinical"] .research-leadership{
+  position:relative;
+  align-self:start;
+  border-left:0;
+}
+
+body[data-page="clinical"] .research-leadership::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:.15rem;
+  width:1px;
+  height:min(74%,8.6rem);
+  background:#b9cbd2;
+}
+
+body[data-page="clinical"] .research-leadership__portrait{
+  border:1px solid rgba(12,56,104,.08);
+}
+
+body[data-page="clinical"] .research-meta{
+  margin-bottom:.42rem;
+}
+
+body[data-page="clinical"] .research-leadership__bio{
+  max-width:34ch;
+}
+
+body[data-page="clinical"] .research-lines-section{
+  position:relative;
+  padding-top:clamp(3rem,4.6vw,4.5rem);
+}
+
+body[data-page="clinical"] .research-lines__head{
+  position:relative;
+}
+
+body[data-page="clinical"] .research-lines__head::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:calc(-1 * clamp(2rem,3vw,2.8rem));
+  width:1px;
+  height:clamp(1.3rem,2.2vw,2.05rem);
+  background:#8daab5;
+}
+
+@media(min-width:1181px) and (max-width:1440px){
+  body[data-page="clinical"] .research-hero__sheet{
+    grid-template-columns:minmax(0,1.34fr) minmax(285px,.50fr);
+    gap:2.25rem;
+  }
+  body[data-page="clinical"] .research-leadership{
+    grid-template-columns:82px minmax(0,1fr);
+    gap:.9rem;
+    padding-left:1.35rem;
+  }
+  body[data-page="clinical"] .research-leadership__portrait{
+    width:82px;
+    height:100px;
+  }
+}
+
+@media(min-width:881px) and (max-width:1180px){
+  body[data-page="clinical"] .research-hero__sheet{
+    grid-template-columns:minmax(0,1fr) minmax(260px,.48fr);
+    gap:1.35rem;
+  }
+  body[data-page="clinical"] .research-leadership{
+    grid-template-columns:74px minmax(0,1fr);
+    gap:.78rem;
+    padding-left:1rem;
+  }
+  body[data-page="clinical"] .research-leadership__portrait{
+    width:74px;
+    height:92px;
+  }
+  body[data-page="clinical"] .research-leadership h2{
+    font-size:clamp(1.36rem,2vw,1.65rem);
+  }
+  body[data-page="clinical"] .research-leadership__bio{
+    max-width:31ch;
+  }
+}
+
+@media(max-width:880px){
+  body[data-page="clinical"] .research-hero__sheet{
+    align-items:start;
+    border-radius:3px 3px 0 0;
+  }
+  body[data-page="clinical"] .research-leadership{
+    border-top:1px solid #d5e0e4;
+  }
+  body[data-page="clinical"] .research-leadership::before{
+    display:none;
+  }
+  body[data-page="clinical"] .research-lines__head::before{
+    height:1.15rem;
+    top:-1.55rem;
+  }
+}
+
+@media(max-width:620px){
+  body[data-page="clinical"] .research-hero__sheet{
+    box-shadow:0 8px 20px rgba(5,35,64,.05);
+  }
+  body[data-page="clinical"] .research-leadership{
+    padding-top:.95rem;
+  }
+  body[data-page="clinical"] .research-lines-section{
+    padding-top:2.6rem;
+  }
+  body[data-page="clinical"] .research-lines__head::before{
+    top:-1.35rem;
+    height:.9rem;
+  }
+}
+
+@media(max-width:390px){
+  body[data-page="clinical"] .research-lines__head::before{
+    display:none;
+  }
+}
