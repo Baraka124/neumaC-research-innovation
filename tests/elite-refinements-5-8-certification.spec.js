@@ -101,8 +101,8 @@ test('Refinement 08 — Publications empty state uses institutional state langua
 });
 
 test('Refinement 08 — Research Line API failure uses explicit error state',async({page})=>{
-  await page.route('**/api/research-lines/missing/website',async route=>route.fulfill({status:500,json:{error:'fixture'}}));
   await page.route('**/api/**',async route=>route.fulfill({json:{data:[]}}));
+  await page.route('**/api/research-lines/missing/website',async route=>route.fulfill({status:500,json:{error:'fixture'}}));
   await page.setViewportSize({width:1440,height:900});
   await page.goto('/line/?id=missing');
   const host=page.locator('#lineLoadError');
