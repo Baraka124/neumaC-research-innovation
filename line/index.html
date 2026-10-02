@@ -104,11 +104,11 @@
       <p class="line-loading-copy"><span lang="en">Loading research line…</span><span lang="es">Cargando línea de investigación…</span></p>
     </div>
     <div class="line-state line-state--hidden" id="lineNotFound">
-      <p class="line-state__message"><span lang="en">This research line could not be found.</span><span lang="es">No se encontró esta línea de investigación.</span></p>
+      <div class="state-panel"><span class="state-panel__label"><span lang="en">Research line</span><span lang="es">Línea de investigación</span></span><h2 class="state-panel__title"><span lang="en">This research line could not be found.</span><span lang="es">No se encontró esta línea de investigación.</span></h2></div>
       <a href="/clinical/" class="btn-primary"><span lang="en">Research programme</span><span lang="es">Programa de investigación</span></a>
     </div>
     <div class="line-state line-state--hidden" id="lineLoadError">
-      <p class="line-state__message"><span lang="en">This line couldn't be loaded right now. Please try again.</span><span lang="es">No se pudo cargar esta línea ahora mismo. Inténtelo de nuevo.</span></p>
+      <div class="state-panel state-panel--error"><span class="state-panel__label"><span lang="en">Temporary issue</span><span lang="es">Incidencia temporal</span></span><h2 class="state-panel__title"><span lang="en">This line couldn't be loaded right now.</span><span lang="es">No se pudo cargar esta línea ahora mismo.</span></h2><p class="state-panel__copy"><span lang="en">Please try again shortly.</span><span lang="es">Inténtelo de nuevo en unos instantes.</span></p></div>
       <a href="/clinical/" class="btn-primary"><span lang="en">Research programme</span><span lang="es">Programa de investigación</span></a>
     </div>
   </section>
@@ -121,7 +121,7 @@
         <p class="line-hero__summary" id="lineHeroSummary"></p>
         <div class="line-topics" id="lineKeywords"></div>
       </div>
-      <figure class="line-hero__media sci-media sci-media--hero"><img id="lineHeroImage" src="" alt="" decoding="async" fetchpriority="high"></figure>
+      <figure class="line-hero__media sci-media sci-media--hero"><img id="lineHeroImage" class="media-photo media-photo--editorial" src="" alt="" decoding="async" fetchpriority="high"></figure>
     </div>
   </section>
 
@@ -286,7 +286,7 @@
   <div class="line-trajectory-backdrop" id="lineTrajectoryBackdrop" aria-hidden="true"></div>
   <aside class="line-trajectory-sheet" id="lineTrajectorySheet" role="dialog" aria-modal="true" aria-labelledby="lineTrajectoryName" tabindex="-1">
     <div class="line-trajectory-sheet__chrome">
-      <button class="line-trajectory-sheet__close" id="lineTrajectoryClose" type="button" aria-label="Close scientific trajectory / Cerrar trayectoria científica">
+      <button class="line-trajectory-sheet__close icon-button" id="lineTrajectoryClose" type="button" aria-label="Close scientific trajectory / Cerrar trayectoria científica">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>

@@ -103,7 +103,7 @@
     var en=ixReadLocalized(p,key,'en');var es=ixReadLocalized(p,key,'es');
     if(!en)en=es||'';if(!es)es=en||'';return [en,es];
   }
-  function ixSearchSvg(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>';}
+  function ixSearchSvg(){return '<svg class="icon-ui" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>';}
   function ixApi(path){
     if(!window.fetch)return Promise.reject(new Error('fetch unavailable'));
     var base=(window.NEUMAC_CONFIG&&window.NEUMAC_CONFIG.apiBase)||'';
@@ -365,7 +365,7 @@
   function ixLineLabel(l){var pair=ixLinePair(l);return pair[root.dataset.lang==='es'?1:0]||pair[0]||'';}
   function ixRenderLines(){
     var host=document.getElementById('globalIndexLines');if(!host)return;
-    if(!indexState.lines.length){host.innerHTML='<div class="global-index__loading">'+ixBi('Research lines are temporarily unavailable.','Las líneas de investigación no están disponibles temporalmente.')+'</div>';return;}
+    if(!indexState.lines.length){host.innerHTML='<div class="global-index__loading state-panel state-panel--error"><span class="state-panel__label">'+ixBi('Temporary issue','Incidencia temporal')+'</span><h3 class="state-panel__title">'+ixBi('Research lines are temporarily unavailable.','Las líneas de investigación no están disponibles temporalmente.')+'</h3></div>';return;}
     host.innerHTML=indexState.lines.map(function(l){return '<a class="global-index__line" href="/line/?id='+encodeURIComponent(l.id)+'"><strong>'+ixEsc(ixLineLabel(l))+'</strong></a>';}).join('');
   }
   function ixRenderLatest(){
@@ -976,7 +976,7 @@
         ? hits.map(function(it, i){
             return '<a class="cmdk-item" role="option" data-sel="'+(i===0?1:0)+'" href="'+it.href+'"><span class="ck-k">'+it.k+'</span><span class="ck-t">'+it.t+'</span></a>';
           }).join('')
-        : '<div class="cmdk-empty">No matches — try a page name or L-number.</div>';
+        : '<div class="cmdk-empty state-panel"><span class="state-panel__label">No results</span><p class="state-panel__copy">Try a page name or research line.</p></div>';
     };
     renderList('');
     input.focus();

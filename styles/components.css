@@ -2575,3 +2575,224 @@ body[data-page="team"] .team-contact{
   .sci-process .sci-process__step-title{font-size:clamp(1.35rem,7vw,1.7rem)}
   .sci-process .sci-process__step-copy{max-width:36ch}
 }
+
+
+/* ============================================================
+   ELITE REFINEMENT 05 — PHOTOGRAPHY GOVERNANCE
+   Documentary, editorial and placeholder imagery have explicit roles.
+   ============================================================ */
+.media-photo{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:var(--photo-position,50% 50%);
+  filter:none;
+}
+.media-photo--documentary{
+  background:var(--photo-documentary-bg);
+}
+.media-photo--editorial{
+  background:var(--editorial-media-bg);
+}
+.media-photo--illustrative{
+  background:var(--editorial-media-bg);
+  filter:none;
+}
+.media-photo--placeholder{
+  background:var(--photo-placeholder-bg);
+  filter:saturate(.72) contrast(.96);
+  opacity:.88;
+}
+.media-photo-frame{
+  overflow:hidden;
+  background:var(--photo-documentary-bg);
+  border:1px solid var(--photo-edge);
+}
+.media-photo-frame[data-media-kind="placeholder"]{
+  background:var(--photo-placeholder-bg);
+}
+.media-photo-frame[data-media-kind="placeholder"]::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border:1px solid rgba(12,56,104,.045);
+}
+@media(prefers-reduced-motion:no-preference){
+  .media-photo-frame img{transition:transform var(--motion-slow) var(--ease-clinical)}
+  a.media-photo-frame:hover img,
+  button.media-photo-frame:hover img{transform:scale(1.012)}
+}
+
+/* ============================================================
+   ELITE REFINEMENT 06 — ICONOGRAPHY SYSTEM
+   One line-icon grammar: optical size, stroke and alignment.
+   ============================================================ */
+.icon,
+.icon-ui{
+  width:var(--icon-size-md);
+  height:var(--icon-size-md);
+  flex:0 0 auto;
+  display:inline-block;
+  vertical-align:-.15em;
+  color:currentColor;
+}
+.icon svg,
+svg.icon,
+.icon-ui svg,
+svg.icon-ui{
+  width:100%;
+  height:100%;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:var(--icon-stroke);
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.icon--xs{width:var(--icon-size-xs);height:var(--icon-size-xs)}
+.icon--sm{width:var(--icon-size-sm);height:var(--icon-size-sm)}
+.icon--md{width:var(--icon-size-md);height:var(--icon-size-md)}
+.icon--lg{width:var(--icon-size-lg);height:var(--icon-size-lg)}
+.icon-button{
+  display:inline-grid;
+  place-items:center;
+  min-width:40px;
+  min-height:40px;
+  border:1px solid rgba(12,56,104,.13);
+  background:transparent;
+  color:#31586d;
+}
+.icon-button:hover{border-color:rgba(8,127,135,.34);color:var(--sci-accent)}
+
+/* ============================================================
+   ELITE REFINEMENT 07 — MICROINTERACTION / MOTION DISCIPLINE
+   Quiet, short, purposeful; reduced-motion is a first-class state.
+   ============================================================ */
+:where(
+  a,button,[role="button"],
+  .home-line-row,.research-line-row,.innovation-project,
+  .pub-item,.line-work-item,.line-pub,.team-person
+){
+  transition-duration:var(--motion-fast);
+  transition-timing-function:var(--ease-clinical);
+}
+:where(
+  .hdr,.global-index__surface,.global-search__surface,
+  .line-trajectory-sheet,.team-profile-sheet,.pub-reader
+){
+  transition-duration:var(--motion-base);
+  transition-timing-function:var(--ease-clinical);
+}
+:where(
+  .home-text-link,.research-text-link,.line-subtle-link,
+  .pub-section-link,.hero-text-link
+):hover{
+  text-underline-offset:.23em;
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+}
+
+/* ============================================================
+   ELITE REFINEMENT 08 — LOADING / EMPTY / ERROR STATES
+   One institutional state language, adaptable to light/dark surfaces.
+   ============================================================ */
+.state-panel,
+.pub-empty,
+.team-empty,
+.team-roster__empty,
+.table-empty-state,
+.content-empty-state,
+.feed-empty,
+.global-index__loading,
+.cmdk-empty,
+.line-state__message{
+  position:relative;
+  margin:0;
+  padding:1rem 0;
+  color:#66798b;
+  font-size:var(--type-body-sm);
+  line-height:1.6;
+}
+.state-panel{
+  padding:1.15rem 1.25rem;
+  border-top:1px solid var(--state-border);
+  border-bottom:1px solid var(--state-border);
+  background:var(--state-bg);
+}
+.state-panel__label{
+  display:block;
+  margin-bottom:.28rem;
+  color:#788998;
+  font:600 var(--type-label)/1.25 var(--ff-mono);
+  letter-spacing:var(--track-label);
+  text-transform:uppercase;
+}
+.state-panel__title{
+  margin:0;
+  color:var(--navy);
+  font:650 clamp(1.15rem,1.4vw,1.4rem)/1.12 var(--ff-display);
+}
+.state-panel__copy{
+  margin:.35rem 0 0;
+  max-width:62ch;
+  color:#687b8c;
+  font-size:var(--type-body-sm);
+  line-height:1.58;
+}
+.state-panel--error{
+  border-color:rgba(159,61,61,.2);
+  background:var(--state-error-bg);
+}
+.state-panel--error .state-panel__label{color:var(--state-error)}
+.state-panel--success{
+  border-color:rgba(32,113,79,.2);
+  background:var(--state-success-bg);
+}
+.state-panel--success .state-panel__label{color:var(--state-success)}
+.state-panel--dark{
+  background:rgba(255,255,255,.035);
+  border-color:rgba(255,255,255,.12);
+}
+.state-panel--dark .state-panel__label{color:#75d7d7}
+.state-panel--dark .state-panel__title{color:#fff}
+.state-panel--dark .state-panel__copy{color:rgba(255,255,255,.68)}
+
+.api-skeleton,
+.api-skeleton-dark,
+.pub-skeleton,
+.line-loader__copy span,
+.line-loader__media,
+.line-loader__profile,
+.line-loader__evidence span{
+  animation-duration:1.8s!important;
+  animation-timing-function:var(--ease-clinical)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .api-skeleton,.api-skeleton-dark,.pub-skeleton,
+  .line-loader__copy span,.line-loader__media,.line-loader__profile,.line-loader__evidence span{
+    animation:none!important;
+  }
+}
+
+/* Canonical line-icon treatment on shared public controls. */
+.hdr-search-btn svg,
+.global-index__search-trigger svg,
+.global-search__icon svg,
+.team-profile-sheet__close svg,
+.line-trajectory-sheet__close svg,
+.pub-reader__close svg{
+  width:var(--icon-size-md);
+  height:var(--icon-size-md);
+  fill:none;
+  stroke:currentColor;
+  stroke-width:var(--icon-stroke);
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
