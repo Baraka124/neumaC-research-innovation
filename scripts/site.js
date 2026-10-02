@@ -151,8 +151,16 @@
 
   function h2BuildMasthead(){
     var hdr=document.getElementById('hdr');if(!hdr)return;
+    var hdrInner=hdr.querySelector('.hdr-inner');
+    hdr.style.transition='none';
+    if(hdrInner)hdrInner.style.transition='none';
     hdr.classList.add('hdr--scientific');
     document.body.classList.add('has-scientific-masthead');
+    void hdr.offsetHeight;
+    requestAnimationFrame(function(){
+      hdr.style.transition='';
+      if(hdrInner)hdrInner.style.transition='';
+    });
 
     var nav=hdr.querySelector('.hdr-nav');
     if(nav&&!nav.querySelector('.hdr-nav-signature')){
