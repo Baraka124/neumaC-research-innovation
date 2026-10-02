@@ -226,3 +226,13 @@ Canonical baseline:
 `ELITE_REFINEMENTS_01_04_BASELINE.md`
 
 The site now has canonical semantic typography roles, shared section rhythm, a governed scientific media primitive and a reusable scientific figure/process language. These systems are certified across principal public pages and 390px / 1440px / 2048px reference widths.
+
+
+## Elite Institutional Refinements — 05–08 complete
+
+Refinements 05–08 are implemented and certified.
+
+Canonical baseline:
+`ELITE_REFINEMENTS_05_08_BASELINE.md`
+
+The public system now has governed photography roles, canonical shared iconography, restrained institutional motion and a unified loading / empty / error-state language. These refinements preserve the protected 01–04 design grammar and existing page architecture.
