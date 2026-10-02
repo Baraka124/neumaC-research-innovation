@@ -1657,6 +1657,79 @@ async function loadLineDetail() {
     return ['Clinical study','Estudio clínico'];
   };
   const bilingual = (en, es) => `<span lang="en">${escHtml(en)}</span><span lang="es">${escHtml(es)}</span>`;
+  let trajectoryTrigger = null;
+  let trajectoryCloseTimer = null;
+
+  const evidenceText = value => {
+    if (!value) return ['', ''];
+    if (typeof value === 'object') return [String(value.en || value.es || ''), String(value.es || value.en || '')];
+    const raw = String(value);
+    return [raw, raw];
+  };
+
+  const renderTrajectorySection = (labelEn, labelEs, items) => {
+    const list = (items || []).filter(Boolean);
+    if (!list.length) return '';
+    return `<section class="line-trajectory__section">
+      <h3 class="line-trajectory__section-label">${bilingual(labelEn,labelEs)}</h3>
+      <ul class="line-trajectory__list">${list.map(item => {
+        const raw = item.description || item.title || item;
+        const [en,es] = evidenceText(raw);
+        return `<li>${bilingual(en || es,es || en)}</li>`;
+      }).join('')}</ul>
+    </section>`;
+  };
+
+  const closeTrajectory = () => {
+    const overlay = document.getElementById('lineTrajectoryOverlay');
+    if (!overlay || overlay.hidden) return;
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden','true');
+    document.body.classList.remove('line-trajectory-open');
+    const restore = trajectoryTrigger;
+    if (trajectoryCloseTimer) window.clearTimeout(trajectoryCloseTimer);
+    trajectoryCloseTimer = window.setTimeout(() => {
+      overlay.hidden = true;
+      trajectoryCloseTimer = null;
+      if (restore && document.contains(restore)) restore.focus({preventScroll:true});
+    }, 240);
+  };
+
+  const openTrajectory = (trigger) => {
+    const overlay = document.getElementById('lineTrajectoryOverlay');
+    const sheet = document.getElementById('lineTrajectorySheet');
+    if (!overlay || !sheet) return;
+    trajectoryTrigger = trigger || document.activeElement;
+    if (trajectoryCloseTimer) { window.clearTimeout(trajectoryCloseTimer); trajectoryCloseTimer = null; }
+    overlay.hidden = false;
+    overlay.setAttribute('aria-hidden','false');
+    document.body.classList.add('line-trajectory-open');
+    requestAnimationFrame(() => {
+      overlay.classList.add('is-open');
+      sheet.focus({preventScroll:true});
+    });
+  };
+
+  const initTrajectorySheet = () => {
+    document.getElementById('lineTrajectoryButton')?.addEventListener('click',event => openTrajectory(event.currentTarget));
+    document.getElementById('lineTrajectoryClose')?.addEventListener('click',closeTrajectory);
+    document.getElementById('lineTrajectoryBackdrop')?.addEventListener('click',closeTrajectory);
+    document.addEventListener('keydown',event => {
+      const overlay = document.getElementById('lineTrajectoryOverlay');
+      if (!overlay || overlay.hidden) return;
+      if (event.key === 'Escape') { event.preventDefault(); closeTrajectory(); return; }
+      if (event.key !== 'Tab') return;
+      const focusable = [...overlay.querySelectorAll('button:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])')]
+        .filter(el => !el.hidden && el.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      const sheet = document.getElementById('lineTrajectorySheet');
+      if (document.activeElement === sheet) { event.preventDefault(); (event.shiftKey ? last : first).focus(); }
+      else if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
+  };
+  initTrajectorySheet();
 
   if (!lineId) {
     hideLineEl(loadingEl);
@@ -1816,11 +1889,48 @@ async function loadLineDetail() {
         signalsHost.classList.toggle('is-single',signalItems.length === 1);
       }
 
-      const hasTrajectory = Boolean(
-        approved.length ||
-        (Array.isArray(leadershipData.scholarly_identity) && leadershipData.scholarly_identity.length) ||
-        leadershipData.research_footprint
-      );
+      const scholarlyIdentity = Array.isArray(leadershipData.scholarly_identity) ? leadershipData.scholarly_identity
+        : (Array.isArray(c.scholarly_identity) ? c.scholarly_identity : []);
+      const footprint = leadershipData.research_footprint || c.research_footprint || null;
+      const hasTrajectory = Boolean(approved.length || scholarlyIdentity.length || footprint);
+
+      if (hasTrajectory) {
+        const content = document.getElementById('lineTrajectoryContent');
+        const leadershipItems = approved.filter(item => ['scientific_leadership','clinical_leadership','guideline','consensus','programme_milestone'].includes(String(item?.type || '').toLowerCase()));
+        const recognitionItems = approved.filter(item => ['recognition','award'].includes(String(item?.type || '').toLowerCase()));
+        const networkItems = approved.filter(item => ['society_role','network_role','registry_role'].includes(String(item?.type || '').toLowerCase()));
+        const linkItems = scholarlyIdentity.filter(item => item && item.url && (!item.visibility || item.visibility === 'approved_public'));
+        const footprintMetrics = footprint ? [
+          footprint.publications != null ? ['publications','publicaciones',footprint.publications] : null,
+          footprint.citations != null ? ['citations','citas',footprint.citations] : null,
+          footprint.h_index != null ? ['h-index','índice h',footprint.h_index] : null
+        ].filter(Boolean) : [];
+
+        if (content) {
+          content.innerHTML = `<div class="line-trajectory__identity">
+            <div class="line-trajectory__portrait">${photo
+              ? `<img src="${escHtml(photo)}" alt="${escHtml(c.full_name)}">`
+              : `<div class="line-trajectory__portrait-fallback">${escHtml(initials)}</div>`}</div>
+            <div>
+              <p class="line-trajectory__kicker">${bilingual('Line coordination','Coordinación de la línea')}</p>
+              <h2 class="line-trajectory__name" id="lineTrajectoryName">${escHtml(displayName)}</h2>
+              <p class="line-trajectory__subtitle">${bilingual('Scientific trajectory','Trayectoria científica')}${c.specialization ? ` · ${escHtml(c.specialization)}` : ''}</p>
+            </div>
+          </div>
+          ${renderTrajectorySection('Scientific leadership & contribution','Liderazgo y contribución científica',leadershipItems)}
+          ${renderTrajectorySection('Recognition','Reconocimiento',recognitionItems)}
+          ${renderTrajectorySection('Networks & societies','Redes y sociedades',networkItems)}
+          ${linkItems.length ? `<section class="line-trajectory__section">
+            <h3 class="line-trajectory__section-label">${bilingual('Scientific identity','Identidad científica')}</h3>
+            <div class="line-trajectory__links">${linkItems.map(link => `<a href="${escHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escHtml(link.label || link.type || 'Profile')} <span aria-hidden="true">↗</span></a>`).join('')}</div>
+          </section>` : ''}
+          ${footprintMetrics.length ? `<section class="line-trajectory__section">
+            <h3 class="line-trajectory__section-label">${bilingual('Research footprint','Huella investigadora')}</h3>
+            <div class="line-trajectory__footprint">${footprintMetrics.map(metric => `<div class="line-trajectory__metric"><strong>${escHtml(metric[2])}</strong><span>${bilingual(metric[0],metric[1])}</span></div>`).join('')}</div>
+            ${footprint.source || footprint.verified_at ? `<p class="line-trajectory__source">${escHtml([footprint.source, footprint.verified_at].filter(Boolean).join(' · '))}</p>` : ''}
+          </section>` : ''}`;
+        }
+      }
       if (trajectoryButton) trajectoryButton.hidden = !hasTrajectory;
       showLineEl(leadershipSection);
     }
