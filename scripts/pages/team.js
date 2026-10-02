@@ -272,6 +272,7 @@
         <p class="team-lead__position">${bi('Head of Respiratory Medicine · Área Sanitaria da Coruña e Cee','Jefe de Servicio de Neumología · Área Sanitaria da Coruña e Cee')}</p>
         <p class="team-lead__bio">${bi('His work includes precision respiratory medicine, rare respiratory diseases, clinical research and innovation applied to care.','Su actividad incluye medicina respiratoria de precisión, enfermedades respiratorias raras, investigación clínica e innovación aplicada a la asistencia.')}</p>
         ${line?.id?`<a class="team-inline-link" href="/line/?id=${encodeURIComponent(line.id)}">${bi('View coordinated research line','Ver línea de investigación coordinada')} <span aria-hidden="true">→</span></a>`:''}
+        <button type="button" class="team-inline-link team-profile-launch" data-profile-id="${esc(pi.id)}">${bi('Professional profile','Perfil profesional')} <span aria-hidden="true">→</span></button>
       </div>
     </article>`;
   }
@@ -292,6 +293,7 @@
           <p class="team-coordinator__role">${spec?bi(spec[0],spec[1]):bi(role[0],role[1])}</p>
           <p class="team-coordinator__line-name">${bi(lineName[0],lineName[1])}</p>
           ${line.id?`<a class="team-inline-link" href="/line/?id=${encodeURIComponent(line.id)}">${bi('View research line','Ver línea de investigación')}</a>`:''}
+          <button type="button" class="team-inline-link team-profile-launch" data-profile-id="${esc(p.id)}">${bi('Professional profile','Perfil profesional')} <span aria-hidden="true">→</span></button>
         </div>
       </article>`;
     }).join('');
@@ -403,6 +405,7 @@
       <div class="team-profile__identity">
         ${profilePortrait(person)}
         <div class="team-profile__identity-copy">
+          <p class="team-profile__identity-kicker">${bi('Professional profile','Perfil profesional')}</p>
           <h2 id="teamProfileName">${esc(nameOf(person))}</h2>
           <p class="team-profile__role">${spec?bi(spec[0],spec[1]):bi(role[0],role[1])}</p>
           ${affiliation?`<p class="team-profile__affiliation">${bi(affiliation[0],affiliation[1])}</p>`:''}
@@ -502,11 +505,12 @@
   }
 
   function initProfileSheet(){
-    const roster=$('teamRoster');
-    roster?.addEventListener('click',event=>{
-      const trigger=event.target.closest('[data-profile-id]');
-      if(trigger)openProfile(trigger.dataset.profileId,trigger);
-    });
+    for(const host of [$('teamRoster'),$('teamLeadership'),$('teamCoordinators')]){
+      host?.addEventListener('click',event=>{
+        const trigger=event.target.closest('[data-profile-id]');
+        if(trigger)openProfile(trigger.dataset.profileId,trigger);
+      });
+    }
     $('teamProfileContent')?.addEventListener('click',event=>{
       const nav=event.target.closest('[data-profile-nav]');
       if(!nav)return;
