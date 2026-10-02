@@ -831,6 +831,78 @@ test('R1.2 leadership structure remains separate from current activity', async (
 });
 
 
+
+test('R1.3 renders structured capability groups when approved grouped data exists', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/test-capabilities/website')) {
+      return route.fulfill({ json:{ data:{
+        id:'test-capabilities', name:'Airway Diseases', short_name:'Airway Diseases', line_number:2,
+        description:'Research line fixture', deep_content:'Fixture scientific scope.',
+        capabilities:['Legacy capability'],
+        capability_groups:[
+          {type:'clinical_domains',visibility:'approved_public',items:[
+            {label_en:'Severe asthma',label_es:'Asma grave',visibility:'approved_public'},
+            {label_en:'COPD',label_es:'EPOC',visibility:'approved_public'}
+          ]},
+          {type:'research_capabilities',visibility:'approved_public',items:[
+            {label_en:'Real-world evidence',label_es:'Evidencia en vida real',visibility:'approved_public'}
+          ]},
+          {type:'digital_innovation_capabilities',visibility:'private',items:[
+            {label_en:'Hidden capability',label_es:'Capacidad oculta'}
+          ]}
+        ],
+        coordinator:{id:'person-1',full_name:'Fixture Coordinator',specialization:'Pneumology',public_bio:'Fixture bio.'}
+      }}});
+    }
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/research-lines/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/team/website')) return route.fulfill({ json:{ data:[] }});
+    return route.fulfill({ json:{ data:[] }});
+  });
+
+  await page.goto('/line/?id=test-capabilities');
+  const host = page.locator('#lineCapabilitiesList');
+  await expect(host).toHaveClass(/is-grouped/);
+  await expect(host.locator('.line-capability-group')).toHaveCount(2);
+  await expect(host).toContainText('Clinical domains');
+  await expect(host).toContainText('Real-world evidence');
+  await expect(host).not.toContainText('Legacy capability');
+  await expect(host).not.toContainText('Hidden capability');
+  await expectNoHorizontalOverflow(page);
+});
+
+test('R1.3 preserves legacy flat capabilities when grouped data is absent', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/test-legacy-capabilities/website')) {
+      return route.fulfill({ json:{ data:{
+        id:'test-legacy-capabilities', name:'Airway Diseases', short_name:'Airway Diseases', line_number:2,
+        description:'Research line fixture', deep_content:'Fixture scientific scope.',
+        capabilities:['Severe asthma','Bronchiectasis'],
+        coordinator:{id:'person-1',full_name:'Fixture Coordinator',specialization:'Pneumology',public_bio:'Fixture bio.'}
+      }}});
+    }
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/research-lines/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/team/website')) return route.fulfill({ json:{ data:[] }});
+    return route.fulfill({ json:{ data:[] }});
+  });
+
+  await page.goto('/line/?id=test-legacy-capabilities');
+  const host = page.locator('#lineCapabilitiesList');
+  await expect(host).not.toHaveClass(/is-grouped/);
+  await expect(host.locator('.line-overview__item')).toHaveCount(2);
+  await expect(host).toContainText('Severe asthma');
+  await expectNoHorizontalOverflow(page);
+});
+
 test('R1.2 trajectory drawer stays hidden for a sparse coordinator', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.route('**/api/**', async route => {
