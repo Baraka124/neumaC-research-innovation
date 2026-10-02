@@ -2226,3 +2226,352 @@ body.has-compact-masthead .global-index--h2{
 .line-hero__media::before{
   content:none!important;
 }
+
+
+/* ============================================================
+   REFINEMENT 01 — GLOBAL TYPOGRAPHY NORMALIZATION
+   Semantic type roles; page identity remains in layout/composition.
+   ============================================================ */
+:where(
+  .home-hero-title,
+  .research-hero h1,
+  .innovation-hero h1,
+  .pub-hero__identity h1,
+  .team-hero h1
+){
+  font-family:var(--ff-display);
+  font-size:var(--type-hero);
+  font-weight:700;
+  line-height:.94;
+  letter-spacing:var(--track-hero);
+  text-wrap:balance;
+}
+.line-hero__title{
+  font-size:var(--type-hero-line);
+  line-height:.94;
+  letter-spacing:-.047em;
+}
+
+:where(
+  .home-section-title,
+  .research-lines__head h2,
+  .study-portfolio__intro h2,
+  .research-context h2,
+  .research-contact h2,
+  .innovation-section-intro h2,
+  .innovation-context h2,
+  .innovation-contact h2,
+  .pub-section-heading h2,
+  .pub-index__head h2,
+  .team-section-head h2,
+  .team-network h2,
+  .team-contact h2
+){
+  font-family:var(--ff-display);
+  font-size:var(--type-section);
+  font-weight:700;
+  line-height:var(--leading-display);
+  letter-spacing:var(--track-display);
+  text-wrap:balance;
+}
+
+:where(
+  .innovation-kicker,
+  .team-kicker,
+  .line-hero__meta,
+  .line-lead__kicker,
+  .line-work-group__label,
+  .line-work-item__meta,
+  .line-pipeline-intro__eyebrow,
+  .line-current__kicker,
+  .home-affiliation-card__eyebrow,
+  .research-contact__entry-label,
+  .research-contact__form-kicker,
+  .innovation-contact__entry-label,
+  .innovation-contact__form-kicker,
+  .team-profile-sheet__eyebrow,
+  .team-profile__identity-kicker
+){
+  font-family:var(--ff-mono);
+  font-size:var(--type-label);
+  font-weight:600;
+  line-height:1.28;
+  letter-spacing:var(--track-label);
+  text-transform:uppercase;
+}
+
+:where(
+  .home-hero-lead,
+  .research-hero__lead,
+  .innovation-hero__lead,
+  .team-hero__lead,
+  .line-hero__summary
+){
+  font-size:var(--type-lead);
+  line-height:1.62;
+}
+
+:where(
+  .research-lines__head p,
+  .study-portfolio__intro>p,
+  .innovation-section-intro>p,
+  .team-section-head>p,
+  .line-pipeline-intro__copy
+){
+  font-size:var(--type-body);
+  line-height:var(--leading-body);
+}
+
+/* ============================================================
+   REFINEMENT 02 — GLOBAL SECTION RHYTHM
+   Major sections share a deliberate vertical cadence.
+   ============================================================ */
+:where(
+  .home-section,
+  .research-section,
+  .innovation-start,
+  .innovation-work,
+  .team-leadership,
+  .team-roster
+){
+  padding-block:var(--space-section);
+}
+
+:where(
+  .research-context,
+  .research-contact,
+  .innovation-context,
+  .innovation-contact,
+  .team-network,
+  .team-contact
+){
+  padding-block:var(--space-section-compact);
+}
+
+:where(
+  .home-section-header,
+  .research-lines__head,
+  .study-portfolio__intro,
+  .innovation-section-intro,
+  .team-section-head,
+  .pub-section-heading,
+  .pub-index__head
+){
+  margin-bottom:var(--space-section-head);
+}
+
+/* Avoid stacking two independent section gaps when a header already owns rhythm. */
+:where(.pub-section-heading,.pub-index__head){margin-bottom:clamp(1rem,1.8vw,1.6rem)}
+
+/* ============================================================
+   REFINEMENT 03 — GOVERNED MEDIA–INTERFACE SYSTEM
+   Media is clean, authored and caption-ready; no decorative overlays.
+   ============================================================ */
+.sci-media{
+  position:relative;
+  isolation:isolate;
+  overflow:clip;
+  background:var(--editorial-media-bg,#e8eef0);
+  border:1px solid var(--editorial-media-edge,rgba(12,56,104,.09));
+}
+.sci-media>img,
+.sci-media>picture>img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:none;
+}
+.sci-media--hero{border-inline:0}
+.sci-media--portrait{background:#e7edef}
+.sci-media__caption,
+.sci-figure__caption{
+  margin:0;
+  padding:.72rem 0 0;
+  border-top:1px solid var(--sci-rule);
+  color:var(--sci-muted);
+  font-size:var(--type-meta);
+  line-height:1.55;
+  max-width:var(--measure-caption);
+}
+.sci-media__meta{
+  display:block;
+  margin-bottom:.24rem;
+  color:var(--sci-accent);
+  font:600 var(--type-label)/1.25 var(--ff-mono);
+  letter-spacing:var(--track-label);
+  text-transform:uppercase;
+}
+
+/* ============================================================
+   REFINEMENT 04 — SCIENTIFIC FIGURE / DIAGRAM LANGUAGE
+   Flat scientific notation: rules, nodes, labels and captions.
+   ============================================================ */
+.sci-figure{
+  position:relative;
+  margin:0;
+  color:var(--sci-ink);
+}
+.sci-figure__header{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(240px,.55fr);
+  gap:var(--space-grid-gap);
+  align-items:end;
+  margin-bottom:1rem;
+  padding-bottom:.75rem;
+  border-bottom:1px solid var(--sci-rule);
+}
+.sci-figure__kicker{
+  color:var(--sci-accent);
+  font:600 var(--type-label)/1.25 var(--ff-mono);
+  letter-spacing:var(--track-label);
+  text-transform:uppercase;
+}
+.sci-figure__title{
+  margin:.35rem 0 0;
+  font:650 var(--type-subhead)/var(--leading-title) var(--ff-display);
+  letter-spacing:-.03em;
+}
+.sci-figure__note{
+  margin:0;
+  max-width:52ch;
+  color:var(--sci-muted);
+  font-size:var(--type-body-sm);
+  line-height:1.6;
+}
+
+.sci-process{
+  --process-line:#c6d7db;
+  position:relative;
+}
+.sci-process__step{position:relative;min-width:0}
+.sci-process__step-index{
+  position:relative;
+  z-index:2;
+  display:inline-flex;
+  align-items:center;
+  gap:.38rem;
+  color:var(--sci-accent);
+  font:600 var(--type-label)/1 var(--ff-mono);
+  letter-spacing:.09em;
+}
+.sci-process__step-index::after{
+  content:"";
+  width:var(--sci-node);
+  height:var(--sci-node);
+  border-radius:50%;
+  background:#5faeb2;
+  box-shadow:0 0 0 3px var(--sci-surface);
+}
+.sci-process__step-title{
+  margin:.5rem 0 0;
+  color:var(--sci-ink);
+  font:700 var(--type-subhead)/1.05 var(--ff-display);
+  letter-spacing:-.026em;
+}
+.sci-process__step-copy{
+  margin:.5rem 0 0;
+  max-width:30ch;
+  color:var(--sci-muted);
+  font-size:var(--type-body-sm);
+  line-height:1.55;
+}
+.sci-process>.sci-figure__caption{
+  grid-column:1/-1;
+  margin-top:.8rem;
+  padding-top:.75rem;
+}
+@media(max-width:860px){
+  .sci-figure__header{grid-template-columns:1fr;gap:.7rem}
+}
+@media(max-width:640px){
+  .sci-process__step-title{font-size:clamp(1.35rem,7vw,1.7rem)}
+  .sci-process__step-copy{max-width:36ch}
+}
+
+
+/* Refinement 01–02 authority layer.
+   Page-scoped specificity is intentional: semantic roles own type/rhythm,
+   while page styles continue to own grid, color, imagery and composition. */
+body[data-page="home"] .home-hero-title,
+body[data-page="clinical"] .research-hero h1,
+body[data-page="innovation"] .innovation-hero h1,
+body[data-page="news"] .pub-hero__identity h1,
+body[data-page="team"] .team-hero h1{
+  font-family:var(--ff-display);
+  font-size:var(--type-hero);
+  font-weight:700;
+  line-height:.94;
+  letter-spacing:var(--track-hero);
+  text-wrap:balance;
+}
+
+body[data-page="home"] .home-section-title,
+body[data-page="clinical"] .research-lines__head h2,
+body[data-page="clinical"] .study-portfolio__intro h2,
+body[data-page="clinical"] .research-context h2,
+body[data-page="clinical"] .research-contact h2,
+body[data-page="innovation"] .innovation-section-intro h2,
+body[data-page="innovation"] .innovation-context h2,
+body[data-page="innovation"] .innovation-contact h2,
+body[data-page="news"] .pub-section-heading h2,
+body[data-page="news"] .pub-index__head h2,
+body[data-page="team"] .team-section-head h2,
+body[data-page="team"] .team-network h2,
+body[data-page="team"] .team-contact h2{
+  font-family:var(--ff-display);
+  font-size:var(--type-section);
+  font-weight:700;
+  line-height:var(--leading-display);
+  letter-spacing:var(--track-display);
+  text-wrap:balance;
+}
+
+body[data-page="home"] .home-section,
+body[data-page="clinical"] .research-section,
+body[data-page="innovation"] .innovation-start,
+body[data-page="innovation"] .innovation-work,
+body[data-page="team"] .team-leadership,
+body[data-page="team"] .team-roster{
+  padding-block:var(--space-section);
+}
+body[data-page="clinical"] .research-context,
+body[data-page="clinical"] .research-contact,
+body[data-page="innovation"] .innovation-context,
+body[data-page="innovation"] .innovation-contact,
+body[data-page="team"] .team-network,
+body[data-page="team"] .team-contact{
+  padding-block:var(--space-section-compact);
+}
+
+/* Shared scientific figure semantics override legacy page-local text sizing,
+   not the existing process geometry. */
+.sci-process .sci-process__step-index{
+  color:var(--sci-accent);
+  font:600 var(--type-label)/1 var(--ff-mono);
+  letter-spacing:.09em;
+}
+.sci-process .sci-process__step-index::after{
+  width:var(--sci-node);
+  height:var(--sci-node);
+  background:#5faeb2;
+  box-shadow:0 0 0 3px var(--sci-surface);
+}
+.sci-process .sci-process__step-title{
+  font-family:var(--ff-display);
+  font-size:var(--type-subhead);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:-.026em;
+  color:var(--sci-ink);
+}
+.sci-process .sci-process__step-copy{
+  max-width:30ch;
+  color:var(--sci-muted);
+  font-size:var(--type-body-sm);
+  line-height:1.55;
+}
+@media(max-width:640px){
+  .sci-process .sci-process__step-title{font-size:clamp(1.35rem,7vw,1.7rem)}
+  .sci-process .sci-process__step-copy{max-width:36ch}
+}

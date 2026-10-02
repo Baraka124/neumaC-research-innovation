@@ -101,4 +101,51 @@
   --lh-snug: 1.28;
   --lh-normal: 1.6;
   --lh-relaxed: 1.72;
+
+  /* ============================================================
+     ELITE INSTITUTIONAL REFINEMENT 01–04
+     Canonical editorial typography, rhythm, media and figure tokens.
+     ============================================================ */
+  /* Typography roles */
+  --type-label:clamp(.58rem,.10vw + .55rem,.64rem);
+  --type-meta:clamp(.68rem,.10vw + .65rem,.74rem);
+  --type-body-sm:clamp(.78rem,.12vw + .75rem,.84rem);
+  --type-body:clamp(.88rem,.16vw + .84rem,.97rem);
+  --type-lead:clamp(.98rem,.26vw + .92rem,1.12rem);
+  --type-subhead:clamp(1.45rem,1.85vw,2rem);
+  --type-section:clamp(2.4rem,3.65vw,3.9rem);
+  --type-hero:clamp(3.1rem,4.85vw,5.15rem);
+  --type-hero-line:clamp(2.7rem,4.55vw,4.7rem);
+  --type-reading:clamp(.91rem,.14vw + .88rem,.98rem);
+
+  --track-display:-.044em;
+  --track-hero:-.05em;
+  --track-label:.12em;
+
+  --leading-display:.96;
+  --leading-title:1.04;
+  --leading-body:1.65;
+  --leading-reading:1.74;
+
+  --measure-reading:68ch;
+  --measure-lead:58ch;
+  --measure-caption:72ch;
+
+  /* Vertical rhythm */
+  --space-section:clamp(3.6rem,5vw,5.2rem);
+  --space-section-compact:clamp(2.8rem,4vw,4rem);
+  --space-section-tight:clamp(2.2rem,3.1vw,3rem);
+  --space-section-head:clamp(1.75rem,2.55vw,2.6rem);
+  --space-content-gap:clamp(1.15rem,2vw,2rem);
+  --space-grid-gap:clamp(1.25rem,2.6vw,2.75rem);
+
+  /* Scientific media / figure language */
+  --sci-rule:#d4e0e4;
+  --sci-rule-soft:#e3eaec;
+  --sci-ink:#143b5f;
+  --sci-muted:#6d7f8f;
+  --sci-accent:#087f87;
+  --sci-surface:#fbfaf7;
+  --sci-caption-bg:#f3f6f6;
+  --sci-node:5px;
 }
