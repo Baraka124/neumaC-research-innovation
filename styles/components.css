@@ -2055,3 +2055,28 @@ body[data-page="news"] .pub-hero__media::after{
 @media(prefers-reduced-motion:reduce){
   .hdr-nav-signature,.hdr-search-label,.hdr-context{transition:none!important}
 }
+
+
+/* H2 interaction geometry — Index/Search follows the full masthead state. */
+.hdr--scientific + .global-index{top:calc(var(--h2-main) + var(--h2-rail))}
+.hdr--scientific.scrolled + .global-index{top:calc(64px + var(--h2-rail))}
+.hdr--scientific.hdr--context-compact + .global-index{top:64px}
+.hdr--scientific + .global-index .global-index__surface{
+  max-height:calc(100dvh - var(--h2-main) - var(--h2-rail));
+}
+.hdr--scientific.scrolled + .global-index .global-index__surface{
+  max-height:calc(100dvh - 64px - var(--h2-rail));
+}
+.hdr--scientific.hdr--context-compact + .global-index .global-index__surface{
+  max-height:calc(100dvh - 64px);
+}
+
+/* Keyboard focus is part of the masthead composition, not an afterthought. */
+.hdr--scientific .hdr-nav-link:focus-visible,
+.hdr--scientific .hdr-index-btn:focus-visible,
+.hdr--scientific .hdr-search-btn:focus-visible,
+.hdr--scientific .lang-opt:focus-visible{
+  outline:1px solid rgba(115,225,228,.88);
+  outline-offset:3px;
+  border-radius:2px;
+}
