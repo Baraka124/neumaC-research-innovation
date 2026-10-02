@@ -358,10 +358,11 @@ test('Publications mobile folio stays in normal flow without absolute positionin
 
 test('Publications empty Selection collapses reserved feature height', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
-  await page.addInitScript(() => {
-    window._newsAllPosts = [];
-  });
   await page.goto('/news/');
+  await page.evaluate(() => {
+    window._newsAllPosts = [];
+    window.onNewsLoaded();
+  });
 
   const stage = page.locator('.pub-feature__stage');
   const empty = stage.locator('.pub-empty');
