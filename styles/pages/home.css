@@ -359,3 +359,55 @@ body[data-page="home"] .home-line-title{
     margin-top:-1.5rem;
   }
 }
+
+
+/* ============================================================
+   H2 REFINEMENT D/E — HOME CT MEDIA RESTORATION
+   Clinical CT workstation image, integrated by crop and tonal transition only.
+   ============================================================ */
+.home-hero{
+  min-height:clamp(520px,58svh,650px);
+  overflow:hidden;
+}
+.home-hero-media{
+  inset:0 0 0 auto;
+  width:min(58vw,1040px);
+  z-index:-3;
+  background:#082b4d;
+}
+.home-hero-media img{
+  object-fit:cover;
+  object-position:54% 50%;
+  transform:none;
+  filter:none;
+}
+.home-hero-shade{
+  z-index:-2;
+  background:
+    linear-gradient(90deg,#062746 0%,#062746 34%,rgba(6,39,70,.94) 45%,rgba(6,39,70,.64) 57%,rgba(6,39,70,.16) 76%,rgba(6,39,70,.03) 100%),
+    linear-gradient(180deg,rgba(3,25,46,.05),rgba(3,25,46,.22));
+}
+.home-hero-content{position:relative;z-index:1}
+@media(min-width:1680px){
+  .home-hero-media{width:min(56vw,1160px)}
+  .home-hero-media img{object-position:52% 50%}
+}
+@media(max-width:880px){
+  .home-hero{min-height:560px}
+  .home-hero-media{inset:0;width:100%;opacity:.82}
+  .home-hero-media img{object-position:57% 50%}
+  .home-hero-shade{
+    background:
+      linear-gradient(90deg,rgba(4,27,49,.97) 0%,rgba(4,27,49,.91) 54%,rgba(4,27,49,.56) 100%),
+      linear-gradient(180deg,rgba(3,22,40,.08),rgba(3,22,40,.44));
+  }
+}
+@media(max-width:560px){
+  .home-hero{min-height:540px}
+  .home-hero-media img{object-position:62% 50%}
+  .home-hero-shade{
+    background:
+      linear-gradient(90deg,rgba(4,27,49,.985) 0%,rgba(4,27,49,.94) 64%,rgba(4,27,49,.66) 100%),
+      linear-gradient(180deg,rgba(3,22,40,.08),rgba(3,22,40,.46));
+  }
+}
