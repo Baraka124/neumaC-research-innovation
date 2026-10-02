@@ -825,3 +825,35 @@ for (const viewport of [
     }
   });
 }
+
+
+for (const width of [320, 390, 620]) {
+  test(`mobile Index trigger keeps glyph and label optically separated at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width <= 390 ? 844 : 900 });
+    await page.goto('/');
+
+    const trigger = page.locator('#mobToggle');
+    await expect(trigger).toBeVisible();
+
+    const geometry = await trigger.evaluate(el => {
+      const glyph = el.querySelector('.mob-index-glyph').getBoundingClientRect();
+      const label = el.querySelector('.mob-index-label').getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
+      const labelStyle = getComputedStyle(el.querySelector('.mob-index-label'));
+      return {
+        trigger:{left:rect.left,right:rect.right,width:rect.width,height:rect.height},
+        glyph:{left:glyph.left,right:glyph.right,width:glyph.width,height:glyph.height},
+        label:{left:label.left,right:label.right,width:label.width,height:label.height},
+        labelWhiteSpace:labelStyle.whiteSpace,
+        viewport:window.innerWidth
+      };
+    });
+
+    expect(geometry.label.left - geometry.glyph.right).toBeGreaterThanOrEqual(5);
+    expect(geometry.label.width).toBeGreaterThan(25);
+    expect(geometry.labelWhiteSpace).toBe('nowrap');
+    expect(geometry.trigger.left).toBeGreaterThanOrEqual(-1);
+    expect(geometry.trigger.right).toBeLessThanOrEqual(geometry.viewport + 1);
+    await expectNoHorizontalOverflow(page);
+  });
+}
