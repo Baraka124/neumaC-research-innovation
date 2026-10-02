@@ -152,6 +152,7 @@
   function h2BuildMasthead(){
     var hdr=document.getElementById('hdr');if(!hdr)return;
     hdr.classList.add('hdr--scientific');
+    document.body.classList.add('has-scientific-masthead');
 
     var nav=hdr.querySelector('.hdr-nav');
     if(nav&&!nav.querySelector('.hdr-nav-signature')){
