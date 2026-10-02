@@ -18,3 +18,149 @@ body[data-page="home"] .home-affiliation-card__status{
     margin-bottom:.72rem;
   }
 }
+
+
+/* ============================================================
+   FLOATING EDITORIAL — PHASE 3 / INIBIC
+   Architectural Glass Plaque
+   One-off institutional material treatment: translucent, edge-led,
+   near-shadowless, and deliberately distinct from generic glassmorphism.
+   ============================================================ */
+body[data-page="home"] .home-affiliation-dock{
+  align-items:flex-start;
+}
+
+body[data-page="home"] .home-affiliation-card{
+  isolation:isolate;
+  overflow:hidden;
+  width:min(100%,420px);
+  margin-top:-1.35rem;
+  margin-right:clamp(.55rem,2.2vw,2.15rem);
+  padding:1.2rem 1.3rem 1.16rem;
+  background:rgba(246,250,250,.62);
+  border:1px solid rgba(94,127,143,.28);
+  border-top-color:rgba(255,255,255,.82);
+  border-left-color:rgba(255,255,255,.58);
+  border-radius:4px;
+  box-shadow:0 4px 14px rgba(8,38,59,.035);
+  -webkit-backdrop-filter:blur(10px) saturate(108%);
+  backdrop-filter:blur(10px) saturate(108%);
+}
+
+body[data-page="home"] .home-affiliation-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.34),rgba(255,255,255,.04) 36%,rgba(90,146,155,.035) 100%);
+}
+
+body[data-page="home"] .home-affiliation-card::after{
+  content:"";
+  position:absolute;
+  left:1px;
+  right:1px;
+  top:1px;
+  height:1px;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,255,255,.88),rgba(255,255,255,.28) 72%,rgba(255,255,255,0));
+}
+
+body[data-page="home"] .home-affiliation-card__marker{
+  display:none;
+}
+
+body[data-page="home"] .home-affiliation-card__head{
+  display:block;
+}
+
+body[data-page="home"] .home-affiliation-card__head::before{
+  width:118px;
+  margin-bottom:.72rem;
+}
+
+body[data-page="home"] .home-affiliation-card__eyebrow{
+  color:#536c80;
+}
+
+body[data-page="home"] .home-affiliation-card h3{
+  margin-top:.46rem;
+  color:#0b3866;
+}
+
+body[data-page="home"] .home-affiliation-card__institution{
+  color:#4e6579!important;
+}
+
+body[data-page="home"] .home-affiliation-card p:not(.home-affiliation-card__eyebrow):not(.home-affiliation-card__institution){
+  color:#3f5970;
+}
+
+body[data-page="home"] .home-affiliation-card__link{
+  color:#066870;
+  border-top-color:rgba(66,105,119,.18);
+}
+
+body[data-page="home"] .home-affiliation-card__link:hover{
+  color:#075b62;
+}
+
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  body[data-page="home"] .home-affiliation-card{
+    background:rgba(247,250,249,.94);
+  }
+}
+
+@media(min-width:1680px){
+  body[data-page="home"] .home-affiliation-card{
+    width:min(100%,426px);
+    margin-top:-1.45rem;
+    margin-right:2.15rem;
+    padding:1.22rem 1.34rem 1.2rem;
+  }
+}
+
+@media(min-width:1920px){
+  body[data-page="home"] .home-affiliation-card{
+    width:min(100%,430px);
+    margin-right:2.35rem;
+  }
+}
+
+@media(max-width:900px){
+  body[data-page="home"] .home-affiliation-card{
+    width:min(100%,500px);
+    margin-top:-.72rem;
+    margin-right:0;
+  }
+}
+
+@media(max-width:640px){
+  body[data-page="home"] .home-affiliation-dock{
+    display:block;
+  }
+  body[data-page="home"] .home-affiliation-card{
+    width:100%;
+    margin:-.38rem 0 0;
+    padding:1.08rem 1.06rem 1.02rem;
+    border-radius:3px;
+    background:rgba(247,250,249,.86);
+    box-shadow:0 3px 10px rgba(8,38,59,.025);
+    -webkit-backdrop-filter:blur(5px) saturate(104%);
+    backdrop-filter:blur(5px) saturate(104%);
+  }
+  body[data-page="home"] .home-affiliation-card__head::before{
+    width:100px;
+    margin-bottom:.62rem;
+  }
+}
+
+@media(prefers-reduced-transparency:reduce){
+  body[data-page="home"] .home-affiliation-card{
+    background:rgba(247,250,249,.98);
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+  }
+}

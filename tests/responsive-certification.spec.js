@@ -554,3 +554,105 @@ test('Home affiliation remains below programme threshold before plaque phase', a
 
   expect(relationship.affiliationTop).toBeGreaterThan(relationship.panelBottom - 24);
 });
+
+
+for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
+  test(`INIBIC plaque remains contained and secondary at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
+    await page.goto('/');
+
+    const plaque = page.locator('.home-affiliation-card');
+    const programme = page.locator('.home-programme-panel');
+    const lines = page.locator('.home-programme-lines');
+
+    await expect(plaque).toBeVisible();
+    await expectContainedInViewport(plaque, width);
+
+    const geo = await page.evaluate(() => {
+      const plaque = document.querySelector('.home-affiliation-card').getBoundingClientRect();
+      const programme = document.querySelector('.home-programme-panel').getBoundingClientRect();
+      const lines = document.querySelector('.home-programme-lines').getBoundingClientRect();
+      const style = getComputedStyle(document.querySelector('.home-affiliation-card'));
+      return {
+        plaque:{left:plaque.left,right:plaque.right,top:plaque.top,bottom:plaque.bottom,width:plaque.width},
+        programme:{left:programme.left,right:programme.right,bottom:programme.bottom},
+        lines:{left:lines.left,right:lines.right,top:lines.top,bottom:lines.bottom},
+        position:style.position,
+        bg:style.backgroundColor,
+        radius:parseFloat(style.borderTopLeftRadius),
+        shadow:style.boxShadow,
+        viewport:window.innerWidth
+      };
+    });
+
+    expect(geo.plaque.left).toBeGreaterThanOrEqual(-1);
+    expect(geo.plaque.right).toBeLessThanOrEqual(geo.viewport + 1);
+    expect(geo.plaque.top).toBeGreaterThan(geo.lines.top);
+    expect(geo.plaque.bottom).toBeGreaterThan(geo.lines.bottom);
+    expect(geo.radius).toBeLessThanOrEqual(6);
+
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+test('INIBIC plaque preserves the official embedded mark', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/');
+
+  const mark = await page.locator('.home-affiliation-card__head').evaluate(el => {
+    const s = getComputedStyle(el, '::before');
+    return {
+      backgroundImage:s.backgroundImage,
+      width:parseFloat(s.width),
+      display:s.display
+    };
+  });
+
+  expect(mark.backgroundImage).toContain('data:image/png;base64');
+  expect(mark.width).toBeGreaterThan(90);
+});
+
+test('INIBIC plaque flattens into normal flow on phone', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.goto('/');
+
+  const relationship = await page.evaluate(() => {
+    const dock = document.querySelector('.home-affiliation-dock').getBoundingClientRect();
+    const plaque = document.querySelector('.home-affiliation-card').getBoundingClientRect();
+    const programme = document.querySelector('.home-programme-panel').getBoundingClientRect();
+    return {
+      dockLeft:dock.left,
+      dockRight:dock.right,
+      plaqueLeft:plaque.left,
+      plaqueRight:plaque.right,
+      plaqueTop:plaque.top,
+      programmeBottom:programme.bottom,
+      viewport:window.innerWidth
+    };
+  });
+
+  expect(relationship.plaqueLeft).toBeGreaterThanOrEqual(relationship.dockLeft - 1);
+  expect(relationship.plaqueRight).toBeLessThanOrEqual(relationship.dockRight + 1);
+  expect(relationship.plaqueTop).toBeGreaterThan(relationship.programmeBottom - 20);
+  expect(relationship.plaqueRight).toBeLessThanOrEqual(relationship.viewport + 1);
+});
+
+test('INIBIC plaque remains readable without backdrop-filter support', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/');
+
+  const data = await page.locator('.home-affiliation-card').evaluate(el => {
+    const s = getComputedStyle(el);
+    const p = getComputedStyle(el.querySelector('p:not(.home-affiliation-card__eyebrow):not(.home-affiliation-card__institution)'));
+    const link = getComputedStyle(el.querySelector('.home-affiliation-card__link'));
+    return {
+      background:s.backgroundColor,
+      bodyColor:p.color,
+      linkColor:link.color
+    };
+  });
+
+  expect(data.background).not.toBe('rgba(0, 0, 0, 0)');
+  expect(data.bodyColor).not.toBe('rgba(0, 0, 0, 0)');
+  expect(data.linkColor).not.toBe('rgba(0, 0, 0, 0)');
+});
