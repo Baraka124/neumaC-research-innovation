@@ -330,6 +330,55 @@
     }).join('');
   }
 
+  const networkTypeLabels = {
+    registry:['Registry','Registro'],
+    scientific_society:['Scientific society','Sociedad científica'],
+    consortium:['Consortium','Consorcio'],
+    multicentre_network:['Multicentre network','Red multicéntrica'],
+    academic_collaboration:['Academic collaboration','Colaboración académica'],
+    partner_hospital:['Partner hospital','Hospital colaborador'],
+    guideline_group:['Guideline / consensus group','Grupo de guía / consenso'],
+    funded_collaboration:['Funded collaboration','Colaboración financiada']
+  };
+
+  function renderScientificNetworks(line){
+    const section = $('lineNetworksSection');
+    const host = $('lineNetworksList');
+    if (!section || !host) return;
+
+    const raw = safeArray(line?.scientific_relationships || line?.external_relationships || line?.network_relationships);
+    const items = raw
+      .filter(item => item && (!item.visibility || item.visibility === 'approved_public'))
+      .sort((a,b) => Number(a?.display_priority ?? 50) - Number(b?.display_priority ?? 50))
+      .slice(0,8);
+
+    if (!items.length) {
+      section.hidden = true;
+      host.innerHTML = '';
+      return;
+    }
+
+    host.innerHTML = items.map(item => {
+      const type = String(item.type || '').trim().toLowerCase();
+      const typeLabel = networkTypeLabels[type] || ['Scientific relationship','Relación científica'];
+      const namePair = textPair(item.name || item.title || item.organisation || '');
+      const descPair = textPair(item.description || '');
+      const period = [item.period, item.year].find(Boolean) || '';
+      const content = `<span class="line-network-row__type">${bi(typeLabel[0],typeLabel[1])}</span>
+        <span class="line-network-row__main">
+          <strong>${bi(namePair[0] || namePair[1],namePair[1] || namePair[0])}</strong>
+          ${descPair[0] || descPair[1] ? `<span>${bi(descPair[0] || descPair[1],descPair[1] || descPair[0])}</span>` : ''}
+        </span>
+        ${period ? `<span class="line-network-row__period">${esc(period)}</span>` : ''}`;
+
+      if (item.url) {
+        return `<a class="line-network-row" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${content}<span class="line-network-row__arrow" aria-hidden="true">↗</span></a>`;
+      }
+      return `<div class="line-network-row">${content}</div>`;
+    }).join('');
+    section.hidden = false;
+  }
+
   function addConnection(map, line, kind, value){
     if (!line?.id || !value) return;
     if (!map.has(line.id)) {
@@ -489,6 +538,7 @@
       if (title && pair[0]) title.innerHTML = bi(pair[0],pair[1]);
 
       renderOverview(line);
+      renderScientificNetworks(line);
 
       const teamIndex = new Map(team.filter(Boolean).map(person => [person.id, person]));
       const baseContributors = (line.team || [])

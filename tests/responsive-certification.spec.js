@@ -833,6 +833,66 @@ test('R1.2 leadership structure remains separate from current activity', async (
 
 
 
+
+test('R1.5 renders only approved external scientific relationships', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/test-networks/website')) {
+      return route.fulfill({ json:{ data:{
+        id:'test-networks', name:'Airway Diseases', short_name:'Airway Diseases', line_number:2,
+        description:'Research line fixture',
+        scientific_relationships:[
+          {type:'registry',name:{en:'European Airway Registry',es:'Registro Europeo de Vía Aérea'},description:{en:'Multicentre clinical registry.',es:'Registro clínico multicéntrico.'},visibility:'approved_public',url:'https://example.org/registry',display_priority:10},
+          {type:'scientific_society',name:'SEPAR working group',visibility:'approved_public',display_priority:20},
+          {type:'consortium',name:'Private consortium',visibility:'private',display_priority:1}
+        ],
+        coordinator:{id:'person-1',full_name:'Fixture Coordinator',specialization:'Pneumology',public_bio:'Fixture bio.'}
+      }}});
+    }
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/research-lines/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/team/website')) return route.fulfill({ json:{ data:[] }});
+    return route.fulfill({ json:{ data:[] }});
+  });
+
+  await page.goto('/line/?id=test-networks');
+  const section = page.locator('#lineNetworksSection');
+  await expect(section).toBeVisible();
+  await expect(section.locator('.line-network-row')).toHaveCount(2);
+  await expect(section).toContainText('European Airway Registry');
+  await expect(section).toContainText('SEPAR working group');
+  await expect(section).not.toContainText('Private consortium');
+  await expectNoHorizontalOverflow(page);
+});
+
+test('R1.5 hides the external scientific relationships section when no approved data exists', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/test-no-networks/website')) {
+      return route.fulfill({ json:{ data:{
+        id:'test-no-networks', name:'Airway Diseases', short_name:'Airway Diseases', line_number:2,
+        description:'Research line fixture',
+        scientific_relationships:[{type:'registry',name:'Private only',visibility:'private'}],
+        coordinator:{id:'person-1',full_name:'Fixture Coordinator',specialization:'Pneumology',public_bio:'Fixture bio.'}
+      }}});
+    }
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/research-lines/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/team/website')) return route.fulfill({ json:{ data:[] }});
+    return route.fulfill({ json:{ data:[] }});
+  });
+
+  await page.goto('/line/?id=test-no-networks');
+  await expect(page.locator('#lineNetworksSection')).toBeHidden();
+  await expectNoHorizontalOverflow(page);
+});
+
 test('R1.4 activity metrics link to the corresponding public evidence', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.route('**/api/**', async route => {
