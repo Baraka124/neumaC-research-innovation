@@ -29,6 +29,8 @@
 
 /* One deliberate editorial selection. */
 .pub-feature__stage{min-height:270px;}
+.pub-feature__stage.is-empty{min-height:0;}
+.pub-feature__stage.is-empty .pub-empty{padding:1rem 0 1.35rem;}
 .pub-feature-lead{display:grid;grid-template-columns:minmax(420px,1.02fr) minmax(0,.98fr);gap:clamp(2.2rem,4vw,4.5rem);align-items:center;min-height:270px;padding:.35rem 0 1.1rem;border-bottom:1px solid #d1dde1;background:transparent;}
 .pub-feature-lead__media{position:relative;height:270px;overflow:hidden;background:linear-gradient(145deg,#0c3868,#0d6472);border-radius:4px;}
 .pub-feature-lead__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 72%,rgba(4,35,61,.24));pointer-events:none;}
