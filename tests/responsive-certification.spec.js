@@ -256,3 +256,33 @@ for (const width of [1024, 1366, 1440]) {
     await expectNoHorizontalOverflow(page);
   });
 }
+
+
+for (const width of [1680, 2048]) {
+  test(`workstation ${width}px keeps Search interaction measure restrained`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : 1050 });
+    await page.goto('/');
+
+    await page.locator('#hdrIndexBtn').click();
+    await page.locator('#globalIndexSearchOpen').click();
+
+    await expect(page.locator('#globalIndex')).toHaveClass(/is-search/);
+    const field = await page.locator('.global-search__field').evaluate(el => {
+      const r = el.getBoundingClientRect();
+      return { width:r.width, left:r.left, right:r.right, vw:window.innerWidth };
+    });
+    expect(field.width).toBeLessThanOrEqual(982);
+    expect(field.left).toBeGreaterThanOrEqual(0);
+    expect(field.right).toBeLessThanOrEqual(field.vw);
+
+    const surface = await page.locator('.global-index__surface').evaluate(el => {
+      const r = el.getBoundingClientRect();
+      return { width:r.width, left:r.left, right:r.right, vw:window.innerWidth };
+    });
+    expect(surface.left).toBeGreaterThanOrEqual(0);
+    expect(surface.right).toBeLessThanOrEqual(surface.vw);
+    expect(surface.width).toBeGreaterThan(field.width);
+
+    await expectNoHorizontalOverflow(page);
+  });
+}
