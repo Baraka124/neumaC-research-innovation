@@ -2595,6 +2595,10 @@ body[data-page="team"] .team-contact{
 .media-photo--editorial{
   background:var(--editorial-media-bg);
 }
+.media-photo--illustrative{
+  background:var(--editorial-media-bg);
+  filter:none;
+}
 .media-photo--placeholder{
   background:var(--photo-placeholder-bg);
   filter:saturate(.72) contrast(.96);
@@ -2775,4 +2779,20 @@ svg.icon-ui{
   .line-loader__copy span,.line-loader__media,.line-loader__profile,.line-loader__evidence span{
     animation:none!important;
   }
+}
+
+/* Canonical line-icon treatment on shared public controls. */
+.hdr-search-btn svg,
+.global-index__search-trigger svg,
+.global-search__icon svg,
+.team-profile-sheet__close svg,
+.line-trajectory-sheet__close svg,
+.pub-reader__close svg{
+  width:var(--icon-size-md);
+  height:var(--icon-size-md);
+  fill:none;
+  stroke:currentColor;
+  stroke-width:var(--icon-stroke);
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
