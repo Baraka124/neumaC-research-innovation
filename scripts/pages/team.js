@@ -228,13 +228,13 @@
     const src=photoUrl(person),ini=initials(nameOf(person));
     const pid=esc(person?.id||'');
     const documentary=hasDocumentaryPhoto(person);
-    if(src)return `<span class="team-person__portrait has-photo${documentary?'':' is-placeholder'}" data-person-id="${pid}" aria-hidden="true"><img src="${esc(src)}" alt="" loading="lazy" decoding="async" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.classList.add('team-person__portrait--initials');this.parentElement.innerHTML='<span>${esc(ini)}</span>'"></span>`;
+    if(src)return `<span class="team-person__portrait media-photo-frame has-photo${documentary?'':' is-placeholder'}" data-media-kind="${documentary?'documentary':'placeholder'}" data-person-id="${pid}" aria-hidden="true"><img class="media-photo ${documentary?'media-photo--documentary':'media-photo--placeholder'}" src="${esc(src)}" alt="" loading="lazy" decoding="async" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.classList.add('team-person__portrait--initials');this.parentElement.innerHTML='<span>${esc(ini)}</span>'"></span>`;
     return `<span class="team-person__portrait team-person__portrait--initials" data-person-id="${pid}" aria-hidden="true"><span>${esc(ini)}</span></span>`;
   }
   function profilePortrait(person){
     const src=photoUrl(person),ini=initials(nameOf(person));
     const documentary=hasDocumentaryPhoto(person);
-    if(src)return `<figure class="team-profile__portrait has-photo${documentary?'':' is-placeholder'}" data-person-id="${esc(person?.id||'')}"${documentary?'':` aria-hidden="true"`}><img src="${esc(src)}" alt="${documentary?esc(nameOf(person)):''}" decoding="async" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.classList.add('team-profile__portrait--initials');this.parentElement.innerHTML='<span>${esc(ini)}</span>'"></figure>`;
+    if(src)return `<figure class="team-profile__portrait media-photo-frame has-photo${documentary?'':' is-placeholder'}" data-media-kind="${documentary?'documentary':'placeholder'}" data-person-id="${esc(person?.id||'')}"${documentary?'':` aria-hidden="true"`}><img class="media-photo ${documentary?'media-photo--documentary':'media-photo--placeholder'}" src="${esc(src)}" alt="${documentary?esc(nameOf(person)):''}" decoding="async" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.classList.add('team-profile__portrait--initials');this.parentElement.innerHTML='<span>${esc(ini)}</span>'"></figure>`;
     return `<div class="team-profile__portrait team-profile__portrait--initials" aria-hidden="true"><span>${esc(ini)}</span></div>`;
   }
 
@@ -259,14 +259,14 @@
   function portrait(p,cls,lazy=true){
     const src=photoUrl(p),ini=initials(nameOf(p));
     const pid=esc(p?.id||'');
-    if(src)return `<figure class="${cls} has-photo" data-person-id="${pid}"><img src="${esc(src)}" alt="${esc(nameOf(p))}" ${lazy?'loading="lazy"':'loading="eager"'} decoding="async" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.classList.add('${cls}--initials');this.parentElement.innerHTML='${esc(ini)}'"></figure>`;
+    if(src)return `<figure class="${cls} media-photo-frame has-photo" data-media-kind="documentary" data-person-id="${pid}"><img class="media-photo media-photo--documentary" src="${esc(src)}" alt="${esc(nameOf(p))}" ${lazy?'loading="lazy"':'loading="eager"'} decoding="async" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.classList.add('${cls}--initials');this.parentElement.innerHTML='${esc(ini)}'"></figure>`;
     return `<div class="${cls} ${cls}--initials" data-person-id="${pid}" aria-hidden="true"><span>${esc(ini)}</span></div>`;
   }
 
   function renderLeadership(){
     const host=$('teamLeadership'); if(!host)return;
     const pi=state.people.find(p=>p.id===PI_ID)||state.people.find(p=>p.is_chief_of_department)||state.people.find(p=>p.can_be_pi)||state.people[0];
-    if(!pi){host.innerHTML=`<p class="team-empty">${bi('Scientific leadership is not currently available.','La dirección científica no está disponible en este momento.')}</p>`;return;}
+    if(!pi){host.innerHTML=`<div class="state-panel"><span class="state-panel__label">${bi('Public information','Información pública')}</span><h3 class="state-panel__title">${bi('Scientific leadership is not currently available.','La dirección científica no está disponible en este momento.')}</h3></div>`;return;}
     const line=lineForCoordinator(pi);
     host.innerHTML=`<article class="team-lead">
       ${portrait(pi,'team-lead__portrait',false)}
@@ -284,7 +284,7 @@
   function renderCoordinators(){
     const host=$('teamCoordinators'); if(!host)return;
     const coords=state.people.filter(p=>p.coordinates_line).sort((a,b)=>(a.coordinates_line?.line_number||99)-(b.coordinates_line?.line_number||99));
-    if(!coords.length){host.innerHTML=`<p class="team-empty">${bi('Research-line coordinators are not currently available.','La coordinación de las líneas no está disponible en este momento.')}</p>`;return;}
+    if(!coords.length){host.innerHTML=`<div class="state-panel"><span class="state-panel__label">${bi('Public information','Información pública')}</span><h3 class="state-panel__title">${bi('Research-line coordinators are not currently available.','La coordinación de las líneas no está disponible en este momento.')}</h3></div>`;return;}
     host.innerHTML=coords.map(p=>{
       const line=lineForCoordinator(p)||{};
       const role=rolePair(p);
@@ -323,7 +323,7 @@
       });
     state.rosterPeople=people;
 
-    if(!people.length){host.innerHTML=`<p class="team-roster__empty">${bi('Additional public team profiles are not currently available.','No hay otros perfiles públicos del equipo disponibles en este momento.')}</p>`;return;}
+    if(!people.length){host.innerHTML=`<div class="state-panel"><span class="state-panel__label">${bi('Team directory','Directorio del equipo')}</span><h3 class="state-panel__title">${bi('No additional public profiles are available yet.','Todavía no hay perfiles públicos adicionales disponibles.')}</h3></div>`;return;}
     host.innerHTML=people.map(p=>{
       const role=rolePair(p);
       const spec=specialtyPair(p.specialization);
@@ -585,7 +585,7 @@
       else if(state.activePersonId){const active=state.people.find(p=>p.id===state.activePersonId);if(active)renderProfile(active);}
     }catch(err){
       console.error('Team load failed:',err);
-      targets.forEach(host=>host.innerHTML=`<p class="team-empty">${bi('Public team profiles are temporarily unavailable.','Los perfiles públicos del equipo no están disponibles temporalmente.')}</p>`);
+      targets.forEach(host=>host.innerHTML=`<div class="state-panel state-panel--error"><span class="state-panel__label">${bi('Temporary issue','Incidencia temporal')}</span><h3 class="state-panel__title">${bi('Public team profiles are temporarily unavailable.','Los perfiles públicos del equipo no están disponibles temporalmente.')}</h3><p class="state-panel__copy">${bi('Please try again shortly.','Inténtelo de nuevo en unos instantes.')}</p></div>`);
     }
   }
 
