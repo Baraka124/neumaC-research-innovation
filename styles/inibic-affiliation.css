@@ -172,7 +172,8 @@ body[data-page="home"] .home-affiliation-card__link:hover{
    editorial arrow. Preserve the exact official embedded INIBIC mark.
    ============================================================ */
 body[data-page="home"] .home-affiliation-card{
-  background:
+  background-color:rgba(250,252,254,.72);
+  background-image:
     linear-gradient(135deg,rgba(255,255,255,.64) 0%,rgba(250,252,254,.34) 48%,rgba(243,247,250,.20) 100%);
   border:1px solid rgba(123,145,162,.22);
   border-top-color:rgba(255,255,255,.88);
