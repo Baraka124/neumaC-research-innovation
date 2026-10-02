@@ -652,22 +652,33 @@
   function initNavPill(){
     var nav = document.querySelector('.hdr-nav');
     var pill = nav && nav.querySelector('.hdr-nav-pill');
-    if (!nav || !pill) return;
+    var signature = nav && nav.querySelector('.hdr-nav-signature');
+    if (!nav || (!pill && !signature)) return;
 
     function moveTo(el){
       if (!el) return;
       var navRect = nav.getBoundingClientRect();
       var r = el.getBoundingClientRect();
-      // pill is a 1px base at left:0; translateX to the item and
-      // scaleX up to its width — pure transform, no layout.
       var x = r.left - navRect.left;
-      pill.style.transform = 'translateY(-50%) translateX(' + x + 'px) scaleX(' + r.width + ')';
-      pill.style.opacity = '1';
+      if(pill){
+        pill.style.transform = 'translateY(-50%) translateX(' + x + 'px) scaleX(' + r.width + ')';
+        pill.style.opacity = '1';
+      }
+      if(signature){
+        var sigWidth=Math.max(24,Math.min(42,r.width*.38));
+        var sigX=x+(r.width-sigWidth)/2;
+        signature.style.width=sigWidth+'px';
+        signature.style.transform='translateX('+sigX+'px)';
+        signature.style.opacity='1';
+      }
     }
     function reset(){
-      var current = nav.querySelector('.hdr-nav-link[data-current="true"]')
-;
-      if (current) moveTo(current); else pill.style.opacity = '0';
+      var current = nav.querySelector('.hdr-nav-link[data-current="true"]');
+      if (current) moveTo(current);
+      else {
+        if(pill)pill.style.opacity='0';
+        if(signature)signature.style.opacity='0';
+      }
     }
 
     nav.querySelectorAll('.hdr-nav-link').forEach(function(link){
