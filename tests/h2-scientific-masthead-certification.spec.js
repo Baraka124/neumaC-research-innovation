@@ -170,3 +170,33 @@ test('H2.8 research-line context rail follows the loaded line title',async({page
   await expect(page.locator('#lineTitle')).toContainText('Airway Diseases');
   await expect(page.locator('.hdr-context__detail')).toContainText('Airway Diseases');
 });
+
+
+for (const viewport of [
+  {name:'phone',width:390,height:844},
+  {name:'laptop',width:1440,height:900},
+  {name:'workstation',width:2048,height:1152}
+]) {
+  test(`H2.8 research-line masthead and hero integrate at ${viewport.name}`,async({page})=>{
+    await stubApi(page);
+    await page.setViewportSize({width:viewport.width,height:viewport.height});
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.goto('/line/?id=h2-airway');
+
+    await expect(page.locator('#hdr')).toBeVisible();
+    await expect(page.locator('#lineHero')).toBeVisible();
+    await expect(page.locator('.line-hero__media')).toBeVisible();
+
+    await page.evaluate(()=>{
+      const cookie=document.getElementById('cookieBanner');
+      if(cookie)cookie.style.display='none';
+    });
+
+    await expectNoOverflow(page);
+    await page.screenshot({
+      path:path.join(OUTPUT,`h2-top-integration-line-${viewport.name}-${viewport.width}.png`),
+      fullPage:false,
+      animations:'disabled'
+    });
+  });
+}
