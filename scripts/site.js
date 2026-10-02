@@ -362,6 +362,9 @@
       close:function(){ixClose(true);},
       isOpen:function(){return indexState.open;}
     };
+    /* Canonical readiness signal for bounded enhancement layers.
+       Avoids making secondary scripts guess when the Index DOM exists. */
+    document.dispatchEvent(new CustomEvent('neumac:indexready'));
   }
 
   function openGlobalSearch(){
