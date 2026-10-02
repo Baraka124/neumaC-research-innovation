@@ -127,3 +127,41 @@ The milestone direction is:
 - progressive sparse/rich profile states;
 - derived public activity from existing studies/projects/publications;
 - explicit provenance, visibility and person approval for manually curated professional facts.
+
+
+## Research Line Scientific Identity — R1.8 complete
+
+R1.1–R1.8 are implemented and visually certified.
+
+Canonical closeout baseline:
+`RESEARCH_LINE_R1_PHASE8_CLOSEOUT_BASELINE.md`
+
+The research-line system now includes scientific identity, structured capabilities, scientific leadership, evidence-linked portfolio activity, research pipeline framing, contribution-led people, external scientific relationships and workstation-specific recomposition.
+
+Certified reference widths: 390px, 1440px and 2048px.
+
+
+## Professional Identity System — P1.1–P1.8 complete
+
+P1.1–P1.8 are implemented, stress-tested and visually certified.
+
+Canonical baseline:
+`PROFESSIONAL_IDENTITY_P1_BASELINE.md`
+
+The governing invariant is:
+
+> **Same institutional dignity, different professional evidence.**
+
+Every public team member belongs to one professional-profile population. Leadership and research-line coordination are additive responsibility modules inside the same profile system, not privileged profile templates.
+
+Certified multidisciplinary states include:
+- ordinary respiratory clinician;
+- research-line coordinator;
+- department leader;
+- research nurse;
+- biomedical engineer;
+- sparse resident.
+
+Certified reference widths: 390px, 1440px and 2048px.
+
+Future Team-profile work should preserve equal sheet geometry and identity hierarchy across professions and leadership states unless a later evidence-based milestone explicitly replaces this contract.
