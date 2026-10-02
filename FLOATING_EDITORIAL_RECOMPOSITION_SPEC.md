@@ -4,6 +4,8 @@
 
 Specification only. **Do not implement as part of M4.3.**
 
+This future phase is subordinate to the canonical responsive rules in `RESPONSIVE_EDITORIAL_COMPOSITION_CONTRACT.md`.
+
 This document defines a future, standalone refinement phase for neumACt’s floating editorial surfaces. Its purpose is to make the floating moments feel authored, page-specific and structurally necessary rather than simply placing white boxes over imagery.
 
 The objective is **not** to make more of the site float. The objective is to make the few existing floating moments substantially better while preserving the large majority of the site as flat institutional editorial flow.
@@ -449,3 +451,32 @@ The visual hierarchy should be:
 **hero → floating card → floating card → floating card → footer**.
 
 Floating is an exception used to create hierarchy. Flat editorial flow remains the default architecture of the neumACt public site.
+
+
+## Relationship to M6.4 responsive contract
+
+This specification governs the **visual ambition** of the future floating phase. `RESPONSIVE_EDITORIAL_COMPOSITION_CONTRACT.md` governs the **responsive safety and compositional boundaries**.
+
+The floating phase may refine:
+- overlap depth;
+- surface edge treatment;
+- asymmetry;
+- media/float relationship;
+- Publications folio composition;
+- Home institutional threshold;
+- Team sheet subtlety;
+- INIBIC plaque treatment.
+
+It must preserve:
+- mobile ≠ compressed desktop;
+- laptop ≠ mini workstation;
+- 881–1440px anti-stretch calibration;
+- mobile typography ceilings;
+- workstation Search interaction restraint;
+- Contact remaining out of the primary masthead;
+- canonical Index/Search state ownership;
+- Research normal-flow overlap and Pedro containment;
+- semantic reading order;
+- existing responsive regression guards.
+
+If a proposed floating treatment cannot satisfy those conditions, the floating treatment must change—not the protected responsive contract.
