@@ -2166,3 +2166,21 @@ body.has-compact-masthead .global-index--h2{
 @media(max-width:880px){
   .global-index--h2{top:0!important}
 }
+
+
+/* H2 final Index geometry — explicit responsive constants.
+   The Index is not a descendant of the header, so it does not consume
+   header-scoped custom properties. */
+@media(min-width:881px) and (max-width:1679px){
+  .global-index.global-index--h2{top:103px!important}
+  body.has-scrolled-masthead .global-index.global-index--h2{top:91px!important}
+  body.has-compact-masthead .global-index.global-index--h2{top:64px!important}
+}
+@media(min-width:1680px){
+  .global-index.global-index--h2{top:106px!important}
+  body.has-scrolled-masthead .global-index.global-index--h2{top:92px!important}
+  body.has-compact-masthead .global-index.global-index--h2{top:64px!important}
+}
+@media(max-width:880px){
+  .global-index.global-index--h2{top:0!important}
+}
