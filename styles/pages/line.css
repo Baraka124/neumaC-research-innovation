@@ -164,3 +164,47 @@ a.line-fact:focus-visible{outline:2px solid #00899c;outline-offset:3px}
   color:#8995a4;
 }
 #lineTrialsSection,#lineProjectsSection,#linePubsSection{scroll-margin-top:calc(var(--hdr-h,68px) + 1.25rem)}
+
+
+/* ============================================================
+   R1.6 — RESEARCH PIPELINE / EVIDENCE NARRATIVE
+   Connect active investigation and published evidence without false causality.
+   ============================================================ */
+.line-pipeline-intro{
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(280px,.58fr);
+  gap:clamp(2rem,4.5vw,4.5rem);
+  align-items:end;
+  padding-bottom:1.15rem;
+  margin-bottom:1.6rem;
+  border-bottom:1px solid rgba(12,56,104,.14);
+}
+.line-pipeline-intro__eyebrow,
+.line-current__kicker{
+  margin:0 0 .45rem;
+  font:500 .56rem/1.35 var(--ff-mono);
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:#087883;
+}
+.line-pipeline-intro .line-section-title{
+  max-width:17ch;
+  font-size:clamp(2rem,3vw,3rem);
+}
+.line-pipeline-intro__copy{
+  margin:0;
+  max-width:58ch;
+  font-size:.72rem;
+  line-height:1.58;
+  color:#748397;
+}
+.line-current__head>div{min-width:0}
+.line-current__head h3.line-section-title{margin:0}
+@media(max-width:900px){
+  .line-pipeline-intro{grid-template-columns:1fr;gap:.8rem}
+  .line-pipeline-intro .line-section-title{max-width:none}
+}
+@media(max-width:640px){
+  .line-pipeline-intro{margin-bottom:1.2rem}
+  .line-pipeline-intro__copy{font-size:.69rem}
+}
