@@ -96,6 +96,8 @@ for(const vp of [
     const img=page.locator('.home-hero-media img');
     await expect(img).toBeVisible();
     await expect(img).toHaveAttribute('src','/assets/research/research-hero-clinician-lungs.jpg');
+    const renderedSource=await img.evaluate(el=>el.currentSrc);
+    expect(renderedSource).toContain('/assets/research/research-hero-clinician-lungs.jpg');
     const natural=await img.evaluate(el=>({w:el.naturalWidth,h:el.naturalHeight}));
     expect(natural.w).toBeGreaterThan(900);
     expect(natural.h).toBeGreaterThan(300);
