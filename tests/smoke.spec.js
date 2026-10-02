@@ -3,11 +3,27 @@
 // Run: npx playwright test  (CI serves the repo statically first)
 const { test, expect } = require('@playwright/test');
 
+async function stubKnownPublicApi(page) {
+  const body = JSON.stringify({ data: [] });
+  const fulfill = route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body
+  });
+
+  await page.route('**/api/research-lines/website', fulfill);
+  await page.route('**/api/team/website', fulfill);
+  await page.route('**/api/news/website*', fulfill);
+  await page.route('**/api/innovation-projects/website', fulfill);
+  await page.route('**/api/clinical-trials/website*', fulfill);
+}
+
 const PAGES = ['/', '/team/', '/clinical/', '/innovation/', '/news/',
                '/privacidad/', '/accesibilidad/', '/aviso-legal/'];
 
 for (const path of PAGES) {
   test(`${path} loads clean and visible`, async ({ page }) => {
+    await stubKnownPublicApi(page);
     const errors = [];
     page.on('pageerror', e => errors.push(String(e)));
     page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
