@@ -25,3 +25,11 @@ jobs:
         with: { node-version: 20 }
       - run: npm i -D @playwright/test http-server && npx playwright install --with-deps chromium
       - run: npx playwright test
+      - name: Upload Phase 4 visual certification captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase4-visual-certification
+          path: phase4-visual-artifacts/
+          if-no-files-found: ignore
+          retention-days: 7
