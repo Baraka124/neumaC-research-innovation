@@ -6,7 +6,7 @@
 
 This document defines the information architecture, publishing contract and regression boundaries for the next neumACt milestone: turning each research-line page from a well-designed activity page into a governed **scientific dossier**.
 
-R1.1 deliberately does not redesign `/line/`. It defines what the page must communicate, what neumDesk/Grounded should own, what can be derived automatically, and how rich and sparse profiles must both remain intentional.
+R1.1 deliberately does not redesign `/line/`. It defines what the page must communicate, what the internal editorial system should own, what can be derived automatically, and how rich and sparse profiles must both remain intentional.
 
 ---
 
@@ -79,7 +79,7 @@ That is acceptable as a temporary editorial override, but it is not suitable for
 - scholarly identifiers;
 - visibility/approval changes.
 
-**R1 direction:** migrate these concepts into governed public-profile data owned by neumDesk/Grounded.
+**R1 direction:** migrate these concepts into governed public-profile data owned by the internal editorial system.
 
 ### 3.2 Capabilities are currently structurally flat
 
@@ -350,13 +350,13 @@ Recommended provenance metadata:
 - person approval state;
 - optional review/expiry date.
 
-This allows neumDesk/Grounded to manage public professional facts without hard-coding them into the website.
+This allows the internal editorial system to manage public professional facts without hard-coding them into the website.
 
 ---
 
-## 7. Grounded / neumDesk ownership model
+## 7. the internal editorial system ownership model
 
-### neumDesk owns
+### the internal editorial system owns
 - authoring;
 - evidence entry;
 - source/provenance;
@@ -366,7 +366,7 @@ This allows neumDesk/Grounded to manage public professional facts without hard-c
 - bilingual editorial copy;
 - public/private state.
 
-### Grounded may assist with
+### the internal editorial assistant may assist with
 - identifying missing profile information;
 - proposing structured evidence from approved internal/public sources;
 - flagging stale items;
@@ -374,7 +374,7 @@ This allows neumDesk/Grounded to manage public professional facts without hard-c
 - suggesting public summaries;
 - previewing what a line/profile would publish.
 
-Grounded must **not** publish automatically.
+the internal editorial assistant must **not** publish automatically.
 
 ### Public website owns
 - rendering;
@@ -558,7 +558,7 @@ R1.2 scope:
 - design the scientific leadership profile system in detail;
 - define exact sparse/rich module behavior;
 - define coordinator preview vs full profile;
-- define the fields that must be added to neumDesk/Grounded;
+- define the fields that must be added to the internal editorial system;
 - decide whether the full profile is an in-page sheet, routed profile page, or responsive hybrid;
 - create implementation/regression plan before production work.
 
@@ -578,6 +578,6 @@ to:
 
 The public site remains the presentation layer.
 
-neumDesk/Grounded becomes the governed editorial intelligence layer.
+the internal editorial system becomes the governed editorial intelligence layer.
 
 That separation is the foundation for every later R1 phase.
