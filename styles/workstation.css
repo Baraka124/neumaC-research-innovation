@@ -362,3 +362,16 @@
   html body .hdr--scientific.scrolled + .global-index{top:92px!important}
   html body .hdr--scientific.hdr--context-compact + .global-index{top:64px!important}
 }
+
+
+/* H2 full workstation masthead owns total height, not only its variables. */
+@media(min-width:1680px){
+  html body .hdr.hdr--scientific{height:106px}
+  html body .hdr.hdr--scientific .hdr-main,
+  html body .hdr.hdr--scientific .hdr-inner{height:78px}
+  html body .hdr.hdr--scientific.scrolled{height:92px}
+  html body .hdr.hdr--scientific.scrolled .hdr-main,
+  html body .hdr.hdr--scientific.scrolled .hdr-inner{height:64px}
+  html body .hdr.hdr--scientific.hdr--context-compact,
+  html body .hdr.hdr--scientific.scrolled.hdr--context-compact{height:64px}
+}
