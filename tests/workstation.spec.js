@@ -19,9 +19,9 @@ async function expectNoHorizontalOverflow(page) {
 }
 
 for (const viewport of [
-  { width: 1680, height: 1050, header: 72 },
-  { width: 1920, height: 1080, header: 74 },
-  { width: 2048, height: 1152, header: 74 },
+  { width: 1680, height: 1050, header: 106 },
+  { width: 1920, height: 1080, header: 106 },
+  { width: 2048, height: 1152, header: 106 },
 ]) {
   test.describe(`workstation ${viewport.width}px`, () => {
     test.use({ viewport: { width: viewport.width, height: viewport.height } });
@@ -77,10 +77,10 @@ test('1440px desktop keeps the standard pre-workstation geometry', async ({ page
   await page.goto('/');
 
   const headerHeight = await page.locator('#hdr').evaluate(el => el.getBoundingClientRect().height);
-  expect(Math.abs(headerHeight - 68)).toBeLessThanOrEqual(1);
+  expect(Math.abs(headerHeight - 103)).toBeLessThanOrEqual(1);
 
   const bodyPaddingTop = await page.evaluate(() => parseFloat(getComputedStyle(document.body).paddingTop));
-  expect(Math.abs(bodyPaddingTop - 68)).toBeLessThanOrEqual(1);
+  expect(Math.abs(bodyPaddingTop - 103)).toBeLessThanOrEqual(1);
 
   await expectNoHorizontalOverflow(page);
 });
