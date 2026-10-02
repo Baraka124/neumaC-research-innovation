@@ -360,7 +360,13 @@ test('Publications feed remains flat after folio recomposition', async ({ page }
   await page.setViewportSize({ width:1440, height:900 });
   await page.goto('/news/');
 
-  await expect(page.locator('.pub-item')).not.toHaveClass(/card|raised|floating/);
+  const itemClasses = await page.locator('.pub-item').evaluateAll(items =>
+    items.map(el => el.className)
+  );
+  expect(itemClasses.length).toBeGreaterThan(0);
+  for (const className of itemClasses) {
+    expect(className).not.toMatch(/card|raised|floating/);
+  }
   await expect(page.locator('.pub-feature')).toBeVisible();
   await expect(page.locator('.pub-index')).toBeVisible();
   await expectNoHorizontalOverflow(page);
