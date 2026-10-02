@@ -2126,3 +2126,26 @@ body[data-page="news"] .pub-hero__media::after{
   .team-visual-hero__media::after,
   .line-hero__media::after{width:96px;right:14px;top:14px;opacity:.48}
 }
+
+
+/* H2 authoritative masthead geometry. */
+body.has-scientific-masthead{
+  padding-top:calc(var(--h2-main,76px) + var(--h2-rail,27px));
+}
+.hdr--scientific + .global-index{
+  position:fixed!important;
+  left:0!important;right:0!important;bottom:0!important;
+  top:calc(var(--h2-main) + var(--h2-rail))!important;
+}
+.hdr--scientific.scrolled + .global-index{
+  top:calc(64px + var(--h2-rail))!important;
+}
+.hdr--scientific.hdr--context-compact + .global-index{
+  top:64px!important;
+}
+@media(max-width:880px){
+  body.has-scientific-masthead{
+    padding-top:calc(var(--h2-main,62px) + var(--h2-rail,22px));
+  }
+  .hdr--scientific + .global-index{top:0!important}
+}
