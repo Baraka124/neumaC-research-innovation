@@ -312,3 +312,32 @@
     max-width:40rem;
   }
 }
+
+
+/* ============================================================
+   FLOATING EDITORIAL — PHASE 3 / TEAM WORKSTATION
+   Let the image breathe; keep the quiet editorial sheet bounded.
+   ============================================================ */
+@media(min-width:1680px){
+  html body[data-page="team"] .team-hero__grid{
+    max-width:min(1500px,calc(100vw - 6rem));
+    grid-template-columns:minmax(0,1fr) minmax(360px,.50fr);
+    gap:4.6rem;
+    padding-inline:2.35rem;
+  }
+  html body[data-page="team"] .team-hero__copy{
+    max-width:720px;
+  }
+  html body[data-page="team"] .team-hero__context{
+    max-width:33rem;
+  }
+}
+
+@media(min-width:1920px){
+  html body[data-page="team"] .team-hero__grid{
+    max-width:min(1520px,calc(100vw - 7rem));
+    grid-template-columns:minmax(0,1fr) minmax(370px,.49fr);
+    gap:4.8rem;
+    padding-inline:2.45rem;
+  }
+}

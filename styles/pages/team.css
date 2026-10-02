@@ -280,3 +280,101 @@ body.team-profile-open{overflow:hidden;}
 
 /* Phase 7.12.1 — final hierarchy cleanup */
 .team-profile-sheet__chrome{justify-content:flex-end;}
+
+
+/* ============================================================
+   FLOATING EDITORIAL — PHASE 3 / TEAM
+   Quiet Open Sheet
+   Keep photography as the emotional lead; make the introduction lighter,
+   flatter and more editorial than Research/Publications.
+   ============================================================ */
+body[data-page="team"] .team-hero{
+  margin-top:clamp(-2.4rem,-2.6vw,-1.5rem);
+  padding-bottom:clamp(.8rem,1.2vw,1.1rem);
+}
+
+body[data-page="team"] .team-hero__grid{
+  max-width:min(1520px,calc(100vw - 3rem));
+  grid-template-columns:minmax(0,.98fr) minmax(360px,.54fr);
+  gap:clamp(2.6rem,5.2vw,5rem);
+  align-items:start;
+  padding-top:clamp(2rem,2.7vw,2.7rem);
+  padding-bottom:clamp(1.85rem,2.5vw,2.4rem);
+  padding-inline:clamp(1.4rem,2.1vw,2.35rem);
+  background:#fcfbf8;
+  border:1px solid rgba(12,56,104,.105);
+  border-bottom-color:rgba(12,56,104,.035);
+  border-radius:4px 4px 0 0;
+  box-shadow:0 9px 24px rgba(7,38,65,.045),0 2px 6px rgba(7,38,65,.02);
+}
+
+body[data-page="team"] .team-hero__grid::after{
+  left:clamp(1.4rem,2.1vw,2.35rem);
+  right:auto;
+  width:clamp(72px,9%,120px);
+  background:#9bb4bd;
+}
+
+body[data-page="team"] .team-hero__copy{
+  max-width:700px;
+}
+
+body[data-page="team"] .team-hero__context{
+  align-self:start;
+  max-width:34rem;
+  padding-top:.9rem;
+  border-top-color:rgba(12,56,104,.13);
+}
+
+body[data-page="team"] .team-hero__context>p{
+  font-size:.86rem;
+  line-height:1.7;
+}
+
+@media(min-width:1180px) and (max-width:1599px){
+  body[data-page="team"] .team-hero__grid{
+    max-width:min(1420px,calc(100vw - 3.5rem));
+    grid-template-columns:minmax(0,1fr) minmax(340px,.50fr);
+  }
+}
+
+@media(max-width:900px){
+  body[data-page="team"] .team-hero{
+    margin-top:-1.15rem;
+  }
+  body[data-page="team"] .team-hero__grid{
+    max-width:calc(100vw - 1.4rem);
+    padding:1.55rem 1.15rem 1.6rem;
+    border-radius:3px 3px 0 0;
+    box-shadow:0 6px 16px rgba(7,38,65,.035);
+  }
+}
+
+@media(max-width:860px){
+  body[data-page="team"] .team-hero__grid{
+    grid-template-columns:1fr;
+    gap:1.15rem;
+  }
+  body[data-page="team"] .team-hero__context{
+    max-width:48rem;
+  }
+}
+
+@media(max-width:640px){
+  body[data-page="team"] .team-hero{
+    margin-top:-.55rem;
+  }
+  body[data-page="team"] .team-hero__grid{
+    max-width:calc(100vw - .75rem);
+    padding:1.15rem .95rem 1.25rem;
+    border-radius:2px 2px 0 0;
+    box-shadow:0 4px 12px rgba(7,38,65,.028);
+  }
+  body[data-page="team"] .team-hero__grid::after{
+    left:.95rem;
+    width:52px;
+  }
+  body[data-page="team"] .team-hero__context{
+    padding-top:.72rem;
+  }
+}
