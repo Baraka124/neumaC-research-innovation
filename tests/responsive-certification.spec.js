@@ -835,6 +835,51 @@ test('R1.2 leadership structure remains separate from current activity', async (
 
 
 
+
+test('R1.7 contributor rows expose the public contribution basis', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/test-contributors/website')) {
+      return route.fulfill({ json:{ data:{
+        id:'test-contributors', name:'Airway Diseases', short_name:'Airway Diseases', line_number:2,
+        description:'Research line fixture',
+        coordinator:{id:'coord',full_name:'Coordinator',specialization:'Pneumology',public_bio:'Fixture bio.'},
+        team:[
+          {id:'person-study',full_name:'Study Contributor',specialization:'Pneumology'},
+          {id:'person-member',full_name:'Membership Contributor',specialization:'Biomedical Engineering',role_on_line:'Digital innovation contributor'}
+        ]
+      }}});
+    }
+    if (url.includes('/api/research-lines/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/team/website')) return route.fulfill({ json:{ data:[
+      {id:'person-study',full_name:'Study Contributor',specialization:'Pneumology',is_public:true},
+      {id:'person-member',full_name:'Membership Contributor',specialization:'Biomedical Engineering',is_public:true}
+    ]}});
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{ data:[
+      {id:'study-1',title:'Airway observational study',study_type:'observational',status:'active',co_investigators:['person-study']}
+    ]}});
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{ data:[] }});
+    return route.fulfill({ json:{ data:[] }});
+  });
+
+  await page.goto('/line/?id=test-contributors');
+  const rows = page.locator('.line-contributor');
+  await expect(rows).toHaveCount(2);
+  await expect(rows.nth(0).locator('.line-contributor__evidence-label')).toContainText(/Public contribution evidence|Evidencia pública de contribución/);
+  await expect(rows.nth(0)).toContainText('Airway observational study');
+  await expect(rows.nth(1)).toContainText(/Explicit public role on this research line|Rol público explícito/);
+  await expectNoHorizontalOverflow(page);
+});
+
+test('R1.7 contributor section identifies itself as a contribution view rather than a staff directory', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.goto('/line/');
+  await expect(page.locator('.line-contributors__intro')).toContainText(/contribution view, not a staff directory|vista de contribuciones, no un directorio de personal/);
+  await expectNoHorizontalOverflow(page);
+});
+
 test('R1.6 presents studies and publications under one non-causal pipeline narrative', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.goto('/line/');
