@@ -128,7 +128,7 @@ test('H2.8 desktop Index and Search align to the scientific masthead',async({pag
   });
   expect(Math.abs(geometry.headerBottom-geometry.panelTop),JSON.stringify(geometry)).toBeLessThanOrEqual(2);
 
-  await page.locator('[data-index-close]').first().click();
+  await page.locator('.global-index__toolbar [data-index-close]').click();
   await page.locator('#hdrSearchBtn').click();
   await expect(index).toHaveClass(/is-search/);
   await expect(page.locator('#globalIndexSearchInput')).toBeFocused();
