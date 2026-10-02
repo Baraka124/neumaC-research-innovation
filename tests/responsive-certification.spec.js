@@ -749,6 +749,39 @@ for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
   });
 }
 
+
+for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
+  test(`Team hero illustration stays visually restrained at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
+    await page.goto('/team/');
+
+    const media = page.locator('.team-visual-hero__media');
+    await expect(media).toBeVisible();
+
+    const data = await media.evaluate(el => {
+      const r = el.getBoundingClientRect();
+      const img = el.querySelector('img');
+      const s = img ? getComputedStyle(img) : null;
+      return {
+        height:r.height,
+        viewport:window.innerWidth,
+        objectPosition:s ? s.objectPosition : ''
+      };
+    });
+
+    expect(data.height).toBeGreaterThanOrEqual(width <= 640 ? 180 : 220);
+    if (width <= 640) {
+      expect(data.height).toBeLessThanOrEqual(225);
+    } else if (width <= 900) {
+      expect(data.height).toBeLessThanOrEqual(300);
+    } else {
+      expect(data.height).toBeLessThanOrEqual(400);
+    }
+    expect(data.objectPosition).toMatch(/50%/);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
 for (const width of [390, 620, 768]) {
   test(`Team intro remains stacked at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width <= 390 ? 844 : 1024 });
