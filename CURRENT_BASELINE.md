@@ -123,7 +123,7 @@ R1 extends the current research-line system additively. It does not reopen the c
 
 The milestone direction is:
 - scientific identity before decoration;
-- governed coordinator/professional evidence from neumDesk/Grounded;
+- governed coordinator/professional evidence from the internal editorial system;
 - progressive sparse/rich profile states;
 - derived public activity from existing studies/projects/publications;
 - explicit provenance, visibility and person approval for manually curated professional facts.
