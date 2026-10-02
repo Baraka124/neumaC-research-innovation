@@ -1,3 +1,4 @@
+// Phase 4 visual certification harness — screenshot evidence only; no production assertions changed.
 const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
