@@ -751,7 +751,7 @@ for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
 
 
 for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
-  test(`Team hero illustration stays visually restrained at ${width}px`, async ({ page }) => {
+  test(`Team hero preserves the authored full-scene aspect at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
     await page.goto('/team/');
 
@@ -763,21 +763,16 @@ for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
       const img = el.querySelector('img');
       const s = img ? getComputedStyle(img) : null;
       return {
-        height:r.height,
-        viewport:window.innerWidth,
+        ratio:r.width / r.height,
+        objectFit:s ? s.objectFit : '',
         objectPosition:s ? s.objectPosition : ''
       };
     });
 
-    expect(data.height).toBeGreaterThanOrEqual(width <= 640 ? 180 : 220);
-    if (width <= 640) {
-      expect(data.height).toBeLessThanOrEqual(225);
-    } else if (width <= 900) {
-      expect(data.height).toBeLessThanOrEqual(300);
-    } else {
-      expect(data.height).toBeLessThanOrEqual(400);
-    }
-    expect(data.objectPosition).toMatch(/50%/);
+    const expectedRatio = width <= 640 ? (16 / 9) : (width <= 900 ? (1400 / 651) : 3);
+    expect(Math.abs(data.ratio - expectedRatio)).toBeLessThan(0.04);
+    expect(data.objectFit).toBe('cover');
+    expect(data.objectPosition).toMatch(/50% 50%/);
     await expectNoHorizontalOverflow(page);
   });
 }
