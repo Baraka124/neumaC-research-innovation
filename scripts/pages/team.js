@@ -145,8 +145,10 @@
     const raw=values.flatMap(value=>Array.isArray(value)?value:(value?[value]:[]));
     return raw.filter(item=>item&&(
       typeof item!=='object' ||
-      !item.visibility ||
-      item.visibility==='approved_public'
+      (
+        (!item.visibility || item.visibility==='approved_public') &&
+        (!item.person_approval || item.person_approval==='approved')
+      )
     ));
   }
 
@@ -210,6 +212,8 @@
   function researchFootprint(person){
     const fp=person?.research_footprint;
     if(!fp||typeof fp!=='object')return '';
+    if(fp.visibility&&fp.visibility!=='approved_public')return '';
+    if(fp.person_approval&&fp.person_approval!=='approved')return '';
     const metrics=[
       fp.publications!=null?['Publications','Publicaciones',fp.publications]:null,
       fp.citations!=null?['Citations','Citas',fp.citations]:null,
