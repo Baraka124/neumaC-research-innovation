@@ -464,3 +464,93 @@ test('Research six-line heading retains the scientific handoff rule on desktop',
   expect(rule.width).toBeLessThanOrEqual(2);
   expect(rule.height).toBeGreaterThan(10);
 });
+
+
+for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
+  test(`Home editorial threshold remains contained at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
+    await page.goto('/');
+
+    const panel = page.locator('.home-programme-panel');
+    const intro = page.locator('.home-programme-intro');
+    const lines = page.locator('.home-programme-lines');
+
+    await expect(panel).toBeVisible();
+    await expect(intro).toBeVisible();
+    await expect(lines).toBeVisible();
+    await expectContainedInViewport(panel, width);
+
+    const geo = await panel.evaluate(el => {
+      const r = el.getBoundingClientRect();
+      const s = getComputedStyle(el);
+      return {
+        left:r.left,
+        right:r.right,
+        width:r.width,
+        position:s.position,
+        transform:s.transform,
+        cols:s.gridTemplateColumns,
+        viewport:window.innerWidth
+      };
+    });
+
+    expect(geo.position).toBe('relative');
+    expect(geo.transform).toBe('none');
+    expect(geo.left).toBeGreaterThanOrEqual(-1);
+    expect(geo.right).toBeLessThanOrEqual(geo.viewport + 1);
+
+    if (width <= 1100) {
+      const relationship = await page.evaluate(() => {
+        const intro = document.querySelector('.home-programme-intro').getBoundingClientRect();
+        const lines = document.querySelector('.home-programme-lines').getBoundingClientRect();
+        return { introBottom:intro.bottom, linesTop:lines.top };
+      });
+      expect(relationship.linesTop).toBeGreaterThanOrEqual(relationship.introBottom - 1);
+    } else {
+      const relationship = await page.evaluate(() => {
+        const intro = document.querySelector('.home-programme-intro').getBoundingClientRect();
+        const lines = document.querySelector('.home-programme-lines').getBoundingClientRect();
+        return {
+          introLeft:intro.left,
+          introRight:intro.right,
+          linesLeft:lines.left,
+          linesRight:lines.right
+        };
+      });
+      expect(relationship.linesLeft).toBeGreaterThan(relationship.introLeft);
+      expect(relationship.linesLeft).toBeGreaterThanOrEqual(relationship.introRight - 40);
+    }
+
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+test('Home phone research-line index stays single-column and complete', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.goto('/');
+
+  const grid = page.locator('.home-programme-lines');
+  await expect(grid).toBeVisible();
+
+  const data = await grid.evaluate(el => ({
+    cols:getComputedStyle(el).gridTemplateColumns,
+    rowCount:el.querySelectorAll('.home-line-row').length
+  }));
+
+  expect(data.rowCount).toBeGreaterThanOrEqual(6);
+  expect(data.cols.trim().split(/\s+/).length).toBe(1);
+  await expectNoHorizontalOverflow(page);
+});
+
+test('Home affiliation remains below programme threshold before plaque phase', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/');
+
+  const relationship = await page.evaluate(() => {
+    const panel = document.querySelector('.home-programme-panel').getBoundingClientRect();
+    const affiliation = document.querySelector('.home-affiliation-card').getBoundingClientRect();
+    return { panelBottom:panel.bottom, affiliationTop:affiliation.top };
+  });
+
+  expect(relationship.affiliationTop).toBeGreaterThan(relationship.panelBottom - 24);
+});
