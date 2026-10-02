@@ -365,7 +365,7 @@
   function ixLineLabel(l){var pair=ixLinePair(l);return pair[root.dataset.lang==='es'?1:0]||pair[0]||'';}
   function ixRenderLines(){
     var host=document.getElementById('globalIndexLines');if(!host)return;
-    if(!indexState.lines.length){host.innerHTML='<div class="state-panel state-panel--error"><span class="state-panel__label">'+ixBi('Temporary issue','Incidencia temporal')+'</span><h3 class="state-panel__title">'+ixBi('Research lines are temporarily unavailable.','Las líneas de investigación no están disponibles temporalmente.')+'</h3></div>';return;}
+    if(!indexState.lines.length){host.innerHTML='<div class="global-index__loading state-panel state-panel--error"><span class="state-panel__label">'+ixBi('Temporary issue','Incidencia temporal')+'</span><h3 class="state-panel__title">'+ixBi('Research lines are temporarily unavailable.','Las líneas de investigación no están disponibles temporalmente.')+'</h3></div>';return;}
     host.innerHTML=indexState.lines.map(function(l){return '<a class="global-index__line" href="/line/?id='+encodeURIComponent(l.id)+'"><strong>'+ixEsc(ixLineLabel(l))+'</strong></a>';}).join('');
   }
   function ixRenderLatest(){
@@ -976,7 +976,7 @@
         ? hits.map(function(it, i){
             return '<a class="cmdk-item" role="option" data-sel="'+(i===0?1:0)+'" href="'+it.href+'"><span class="ck-k">'+it.k+'</span><span class="ck-t">'+it.t+'</span></a>';
           }).join('')
-        : '<div class="state-panel"><span class="state-panel__label">No results</span><p class="state-panel__copy">Try a page name or research line.</p></div>';
+        : '<div class="cmdk-empty state-panel"><span class="state-panel__label">No results</span><p class="state-panel__copy">Try a page name or research line.</p></div>';
     };
     renderList('');
     input.focus();
