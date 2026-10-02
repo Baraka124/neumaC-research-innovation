@@ -656,3 +656,77 @@ test('INIBIC plaque remains readable without backdrop-filter support', async ({ 
   expect(data.bodyColor).not.toBe('rgba(0, 0, 0, 0)');
   expect(data.linkColor).not.toBe('rgba(0, 0, 0, 0)');
 });
+
+
+for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
+  test(`Team quiet sheet remains contained and image-led at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
+    await page.goto('/team/');
+
+    const image = page.locator('.team-visual-hero');
+    const sheet = page.locator('.team-hero__grid');
+
+    await expect(image).toBeVisible();
+    await expect(sheet).toBeVisible();
+    await expectContainedInViewport(sheet, width);
+
+    const geometry = await page.evaluate(() => {
+      const image = document.querySelector('.team-visual-hero').getBoundingClientRect();
+      const sheet = document.querySelector('.team-hero__grid').getBoundingClientRect();
+      const style = getComputedStyle(document.querySelector('.team-hero__grid'));
+      return {
+        image:{top:image.top,bottom:image.bottom,height:image.height},
+        sheet:{top:sheet.top,bottom:sheet.bottom,left:sheet.left,right:sheet.right,width:sheet.width},
+        transform:style.transform,
+        position:style.position,
+        viewport:window.innerWidth
+      };
+    });
+
+    expect(geometry.sheet.top).toBeLessThan(geometry.image.bottom + 24);
+    expect(geometry.image.height).toBeGreaterThan(100);
+    expect(geometry.transform).toBe('none');
+    expect(geometry.sheet.left).toBeGreaterThanOrEqual(-1);
+    expect(geometry.sheet.right).toBeLessThanOrEqual(geometry.viewport + 1);
+
+    if (width >= 1680) {
+      expect(geometry.sheet.width).toBeLessThanOrEqual(1522);
+    }
+
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+for (const width of [390, 620, 768]) {
+  test(`Team intro remains stacked at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width <= 390 ? 844 : 1024 });
+    await page.goto('/team/');
+
+    const relationship = await page.evaluate(() => {
+      const copy = document.querySelector('.team-hero__copy').getBoundingClientRect();
+      const context = document.querySelector('.team-hero__context').getBoundingClientRect();
+      return {
+        copyBottom:copy.bottom,
+        contextTop:context.top,
+        copyLeft:copy.left,
+        contextLeft:context.left
+      };
+    });
+
+    expect(relationship.contextTop).toBeGreaterThanOrEqual(relationship.copyBottom - 1);
+    expect(Math.abs(relationship.contextLeft - relationship.copyLeft)).toBeLessThanOrEqual(2);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+test('Team roster and public profile architecture remain intact after intro recomposition', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/team/');
+
+  await expect(page.locator('#teamRoster')).toBeAttached();
+  await expect(page.locator('#teamLeadership')).toBeAttached();
+  await expect(page.locator('#teamCoordinators')).toBeAttached();
+  await expect(page.locator('#teamProfileOverlay')).toBeAttached();
+  await expect(page.locator('#teamProfileSheet')).toBeAttached();
+  await expectNoHorizontalOverflow(page);
+});
