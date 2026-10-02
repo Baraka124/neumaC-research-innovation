@@ -108,11 +108,25 @@ test('H2.8 desktop Index and Search align to the scientific masthead',async({pag
   await expect(index).toHaveAttribute('aria-hidden','false');
 
   const geometry=await page.evaluate(()=>{
-    const h=document.getElementById('hdr').getBoundingClientRect();
-    const p=document.getElementById('globalIndex').getBoundingClientRect();
-    return {headerBottom:h.bottom,panelTop:p.top};
+    const header=document.getElementById('hdr');
+    const panel=document.getElementById('globalIndex');
+    const h=header.getBoundingClientRect();
+    const p=panel.getBoundingClientRect();
+    const ps=getComputedStyle(panel);
+    return {
+      headerTop:h.top,
+      headerHeight:h.height,
+      headerBottom:h.bottom,
+      panelTop:p.top,
+      panelBottom:p.bottom,
+      panelPosition:ps.position,
+      panelCssTop:ps.top,
+      panelCssBottom:ps.bottom,
+      bodyPaddingTop:getComputedStyle(document.body).paddingTop,
+      scrollY:window.scrollY
+    };
   });
-  expect(Math.abs(geometry.headerBottom-geometry.panelTop)).toBeLessThanOrEqual(2);
+  expect(Math.abs(geometry.headerBottom-geometry.panelTop),JSON.stringify(geometry)).toBeLessThanOrEqual(2);
 
   await page.locator('[data-index-close]').first().click();
   await page.locator('#hdrSearchBtn').click();
