@@ -208,3 +208,51 @@ a.line-fact:focus-visible{outline:2px solid #00899c;outline-offset:3px}
   .line-pipeline-intro{margin-bottom:1.2rem}
   .line-pipeline-intro__copy{font-size:.69rem}
 }
+
+
+/* ============================================================
+   R1.8 — WORKSTATION RECOMPOSITION
+   Workstation is a distinct composition, not a scaled laptop.
+   Scoped to the research-line page only.
+   ============================================================ */
+@media(min-width:1700px){
+  .line-page .line-section__inner,
+  .line-page .line-hero__inner,
+  .line-page .line-loader,
+  .line-page .line-collab__inner{
+    max-width:1680px;
+  }
+
+  .line-page .line-hero__inner{
+    grid-template-columns:minmax(0,.49fr) minmax(0,.51fr);
+  }
+
+  .line-page .line-hero__copy{
+    padding-left:clamp(4.25rem,5vw,6rem);
+    padding-right:clamp(4rem,4.5vw,5.5rem);
+  }
+
+  .line-page .line-hero__title{
+    font-size:clamp(4.3rem,4.15vw,5.3rem);
+    max-width:13ch;
+  }
+
+  .line-page .line-hero__summary{
+    max-width:64ch;
+  }
+
+  .line-page .line-leadership__grid{
+    grid-template-columns:minmax(390px,.78fr) minmax(0,1.22fr);
+    gap:clamp(4rem,5vw,6.5rem);
+  }
+
+  .line-page .line-current__grid{
+    grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+    gap:clamp(4rem,5vw,6.5rem);
+  }
+
+  .line-page .line-contributor{
+    grid-template-columns:82px minmax(0,1fr) minmax(300px,.32fr);
+    gap:clamp(1.5rem,2.6vw,3rem);
+  }
+}
