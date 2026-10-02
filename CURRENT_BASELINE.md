@@ -165,3 +165,27 @@ Certified multidisciplinary states include:
 Certified reference widths: 390px, 1440px and 2048px.
 
 Future Team-profile work should preserve equal sheet geometry and identity hierarchy across professions and leadership states unless a later evidence-based milestone explicitly replaces this contract.
+
+
+## P1 Professional Identity System — P1.1–P1.8 complete
+
+P1.1–P1.8 are implemented and certified.
+
+Canonical baseline:
+`PROFESSIONAL_IDENTITY_P1_BASELINE.md`
+
+The governing rule is:
+
+> **Same institutional dignity, different professional evidence.**
+
+Every public team member now belongs to one universal professional-profile population. Physicians, residents, nurses, engineers, scientists, coordinators and department leadership use the same profile surface, navigation model and identity hierarchy.
+
+Leadership is additive: coordinator or department-leadership responsibilities appear as optional evidence inside the same professional profile rather than through a privileged parallel template.
+
+The system supports sparse and rich professional states, approved clinical/professional expertise, current contribution, research and innovation contribution, scientific identity, networks and provenance-aware research-footprint data.
+
+P1.7 multidisciplinary stress coverage includes an ordinary clinician, research-line coordinator, department leader, research nurse, biomedical engineer and sparse resident.
+
+P1.8 visual certification covers 390px, 1440px and 2048px and protects equal profile geometry and identity hierarchy across ordinary clinician and leadership states.
+
+Future Team work must preserve this equality invariant unless replaced by an explicitly stronger certified professional-identity model.
