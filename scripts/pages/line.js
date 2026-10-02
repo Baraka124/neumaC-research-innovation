@@ -306,13 +306,24 @@
           <p class="line-contribution-source__title">${esc(source.title)}</p>
         </div>`).join('');
 
+      const membershipEvidence = !sourceRows ? `
+        <div class="line-contribution-source line-contribution-source--membership">
+          <p class="line-contribution-source__meta">${bi('Research-line relationship','Relación con la línea de investigación')}</p>
+          <p class="line-contribution-source__title">${person.role_on_line
+            ? bi('Explicit public role on this research line','Rol público explícito en esta línea de investigación')
+            : bi('Explicit public research-line membership','Pertenencia pública explícita a la línea de investigación')}</p>
+        </div>` : '';
+
       return `<article class="line-contributor">
         ${portraitMarkup(person)}
         <div class="line-contributor__main">
           <h3 class="line-contributor__name"><a href="${profileUrl}">${esc(name)}</a></h3>
           <p class="line-contributor__role">${person.specialization ? esc(person.specialization) : bi(role[0],role[1])}</p>
           ${person.role_on_line ? `<p class="line-contributor__explicit-role">${esc(person.role_on_line)}</p>` : ''}
-          ${sourceRows ? `<div class="line-contributor__sources">${sourceRows}</div>` : ''}
+          <div class="line-contributor__evidence">
+            <p class="line-contributor__evidence-label">${bi('Public contribution evidence','Evidencia pública de contribución')}</p>
+            <div class="line-contributor__sources">${sourceRows || membershipEvidence}</div>
+          </div>
           ${sources.length > 3 ? `<p class="line-contributor__more">${bi(`${sources.length-3} additional public contribution${sources.length-3===1?'':'s'}`,`${sources.length-3} contribución${sources.length-3===1?' adicional':'es adicionales'}`)}</p>` : ''}
         </div>
         <aside class="line-contributor__side">
