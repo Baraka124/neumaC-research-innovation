@@ -341,3 +341,15 @@
     padding-inline:2.45rem;
   }
 }
+
+
+/* H2.6 — workstation scientific masthead composition */
+@media(min-width:1680px){
+  html body .hdr--scientific{--h2-main:78px;--h2-rail:28px}
+  html body .hdr--scientific .hdr-inner{max-width:1840px;padding-inline:2.25rem;grid-template-columns:minmax(430px,1fr) auto minmax(430px,1fr)}
+  html body .hdr--scientific .hdr-logo-img{height:35px;max-width:136px}
+  html body .hdr--scientific .hdr-brand-title{font-size:.63rem}
+  html body .hdr--scientific .hdr-brand-org{font-size:.5rem}
+  html body .hdr--scientific .hdr-nav-link{font-size:.9rem;padding-inline:.88rem}
+  html body .hdr-context__inner{width:min(1840px,calc(100% - 4.5rem))}
+}
