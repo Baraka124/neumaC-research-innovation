@@ -101,14 +101,11 @@
   --lh-snug: 1.28;
   --lh-normal: 1.6;
   --lh-relaxed: 1.72;
-}
 
-
-/* ============================================================
-   ELITE INSTITUTIONAL REFINEMENT 01–04
-   Canonical editorial typography, rhythm, media and figure tokens.
-   ============================================================ */
-:root{
+  /* ============================================================
+     ELITE INSTITUTIONAL REFINEMENT 01–04
+     Canonical editorial typography, rhythm, media and figure tokens.
+     ============================================================ */
   /* Typography roles */
   --type-label:clamp(.58rem,.10vw + .55rem,.64rem);
   --type-meta:clamp(.68rem,.10vw + .65rem,.74rem);
