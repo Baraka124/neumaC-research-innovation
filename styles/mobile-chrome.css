@@ -113,3 +113,48 @@
 @media(prefers-reduced-motion:reduce){
   .global-index__surface,.mob-toggle{transition:none!important;}
 }
+
+
+/* ============================================================
+   PHASE 4 — MOBILE MASTHEAD FINISH
+   Small optical refinements only; preserve M6 mobile architecture.
+   ============================================================ */
+@media(max-width:880px){
+  .hdr,
+  .hdr-main{
+    box-shadow:inset 0 -1px 0 rgba(125,202,207,.10);
+  }
+
+  .hdr-inner,
+  .hdr.scrolled .hdr-inner{
+    padding-inline:clamp(.88rem,3.6vw,1.05rem);
+    gap:.7rem;
+  }
+
+  .hdr-brand-plate,
+  .hdr.scrolled .hdr-brand-plate{
+    border-radius:3px;
+    box-shadow:0 0 0 1px rgba(255,255,255,.045);
+  }
+
+  .hdr-brand-plate::after{
+    height:1px;
+    opacity:.94;
+  }
+
+  .hdr-right{
+    align-items:center;
+    gap:.46rem;
+  }
+
+  .global-index__mobile-head{
+    box-shadow:0 1px 0 rgba(12,56,104,.07);
+  }
+}
+
+@media(max-width:390px){
+  .hdr-inner,
+  .hdr.scrolled .hdr-inner{
+    padding-inline:.82rem;
+  }
+}
