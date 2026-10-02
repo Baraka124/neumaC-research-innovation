@@ -1944,10 +1944,26 @@ async function loadLineDetail() {
       publications: allPublications.length
     };
     const metricMap = [
-      ['lineMetricTrials',metrics.trials],['lineMetricStudies',metrics.studies],
-      ['lineMetricInnovation',metrics.innovation],['lineMetricPublications',metrics.publications]
+      ['lineMetricTrials','lineMetricTrialsLink',metrics.trials,'#lineTrialsSection'],
+      ['lineMetricStudies','lineMetricStudiesLink',metrics.studies,'#lineTrialsSection'],
+      ['lineMetricInnovation','lineMetricInnovationLink',metrics.innovation,'#lineProjectsSection'],
+      ['lineMetricPublications','lineMetricPublicationsLink',metrics.publications,'#linePubsSection']
     ];
-    metricMap.forEach(([id,val]) => { const el=document.getElementById(id); if(el) el.textContent=String(val); });
+    metricMap.forEach(([valueId,linkId,val,target]) => {
+      const valueEl = document.getElementById(valueId);
+      const linkEl = document.getElementById(linkId);
+      if (valueEl) valueEl.textContent = String(val);
+      if (!linkEl) return;
+      if (Number(val) > 0) {
+        linkEl.setAttribute('href',target);
+        linkEl.removeAttribute('aria-disabled');
+        linkEl.classList.remove('is-empty');
+      } else {
+        linkEl.removeAttribute('href');
+        linkEl.setAttribute('aria-disabled','true');
+        linkEl.classList.add('is-empty');
+      }
+    });
     showLineEl(introSection);
 
     // Current clinical work remains evidence, not a dashboard dump. Clinical

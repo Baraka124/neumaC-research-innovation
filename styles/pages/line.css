@@ -128,3 +128,39 @@ body.line-trajectory-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
   .line-trajectory-backdrop,.line-trajectory-sheet{transition:none}
 }
+
+
+/* ============================================================
+   R1.4 — PORTFOLIO INTELLIGENCE
+   Activity metrics navigate to evidence; zero states remain informational.
+   ============================================================ */
+.line-fact{
+  position:relative;
+  text-decoration:none;
+  color:inherit;
+  transition:background-color .16s ease,color .16s ease;
+}
+a.line-fact:not(.is-empty){cursor:pointer}
+a.line-fact:not(.is-empty):hover,
+a.line-fact:not(.is-empty):focus-visible{background:rgba(8,120,131,.035)}
+a.line-fact:focus-visible{outline:2px solid #00899c;outline-offset:3px}
+.line-fact small{
+  display:flex;
+  align-items:center;
+  gap:.3rem;
+  margin-top:.6rem;
+  font:500 .52rem/1.25 var(--ff-mono);
+  letter-spacing:.045em;
+  text-transform:uppercase;
+  color:#087883;
+  opacity:.78;
+}
+.line-fact.is-empty small{visibility:hidden}
+.line-fact.is-empty{cursor:default}
+.line-evidence__provenance{
+  margin:.65rem 0 0;
+  font-size:.59rem;
+  line-height:1.45;
+  color:#8995a4;
+}
+#lineTrialsSection,#lineProjectsSection,#linePubsSection{scroll-margin-top:calc(var(--hdr-h,68px) + 1.25rem)}

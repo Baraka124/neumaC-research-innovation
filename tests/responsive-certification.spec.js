@@ -832,6 +832,76 @@ test('R1.2 leadership structure remains separate from current activity', async (
 
 
 
+
+test('R1.4 activity metrics link to the corresponding public evidence', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/test-portfolio/website')) {
+      return route.fulfill({ json:{ data:{
+        id:'test-portfolio', name:'Airway Diseases', short_name:'Airway Diseases', line_number:2,
+        description:'Research line fixture',
+        coordinator:{id:'person-1',full_name:'Fixture Coordinator',specialization:'Pneumology',public_bio:'Fixture bio.'}
+      }}});
+    }
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{ data:[
+      {id:'trial-1',title:'Interventional fixture',study_type:'interventional',status:'active'},
+      {id:'study-1',title:'Observational fixture',study_type:'observational',status:'active'}
+    ]}});
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{ data:[
+      {id:'project-1',title:'Innovation fixture',current_stage:'pilot'}
+    ]}});
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{ data:[
+      {id:'pub-1',title:'Publication fixture',published_at:'2026-01-01'}
+    ]}});
+    if (url.includes('/api/research-lines/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/team/website')) return route.fulfill({ json:{ data:[] }});
+    return route.fulfill({ json:{ data:[] }});
+  });
+
+  await page.goto('/line/?id=test-portfolio');
+  await expect(page.locator('#lineMetricTrials')).toHaveText('1');
+  await expect(page.locator('#lineMetricStudies')).toHaveText('1');
+  await expect(page.locator('#lineMetricInnovation')).toHaveText('1');
+  await expect(page.locator('#lineMetricPublications')).toHaveText('1');
+
+  await expect(page.locator('#lineMetricTrialsLink')).toHaveAttribute('href','#lineTrialsSection');
+  await expect(page.locator('#lineMetricStudiesLink')).toHaveAttribute('href','#lineTrialsSection');
+  await expect(page.locator('#lineMetricInnovationLink')).toHaveAttribute('href','#lineProjectsSection');
+  await expect(page.locator('#lineMetricPublicationsLink')).toHaveAttribute('href','#linePubsSection');
+  await expect(page.locator('.line-evidence__provenance')).toBeVisible();
+  await expectNoHorizontalOverflow(page);
+});
+
+test('R1.4 zero-count metrics remain non-interactive', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/test-empty-portfolio/website')) {
+      return route.fulfill({ json:{ data:{
+        id:'test-empty-portfolio', name:'Airway Diseases', short_name:'Airway Diseases', line_number:2,
+        description:'Research line fixture',
+        coordinator:{id:'person-1',full_name:'Fixture Coordinator',specialization:'Pneumology',public_bio:'Fixture bio.'}
+      }}});
+    }
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/research-lines/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/team/website')) return route.fulfill({ json:{ data:[] }});
+    return route.fulfill({ json:{ data:[] }});
+  });
+
+  await page.goto('/line/?id=test-empty-portfolio');
+  for (const id of ['lineMetricTrialsLink','lineMetricStudiesLink','lineMetricInnovationLink','lineMetricPublicationsLink']) {
+    const metric = page.locator('#'+id);
+    await expect(metric).toHaveAttribute('aria-disabled','true');
+    await expect(metric).not.toHaveAttribute('href',/.+/);
+    await expect(metric).toHaveClass(/is-empty/);
+  }
+  await expectNoHorizontalOverflow(page);
+});
+
 test('R1.3 renders structured capability groups when approved grouped data exists', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.route('**/api/**', async route => {
