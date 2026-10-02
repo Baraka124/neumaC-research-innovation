@@ -2488,3 +2488,90 @@ body.has-compact-masthead .global-index--h2{
   .sci-process__step-title{font-size:clamp(1.35rem,7vw,1.7rem)}
   .sci-process__step-copy{max-width:36ch}
 }
+
+
+/* Refinement 01–02 authority layer.
+   Page-scoped specificity is intentional: semantic roles own type/rhythm,
+   while page styles continue to own grid, color, imagery and composition. */
+body[data-page="home"] .home-hero-title,
+body[data-page="clinical"] .research-hero h1,
+body[data-page="innovation"] .innovation-hero h1,
+body[data-page="news"] .pub-hero__identity h1,
+body[data-page="team"] .team-hero h1{
+  font-family:var(--ff-display);
+  font-size:var(--type-hero);
+  font-weight:700;
+  line-height:.94;
+  letter-spacing:var(--track-hero);
+  text-wrap:balance;
+}
+
+body[data-page="home"] .home-section-title,
+body[data-page="clinical"] .research-lines__head h2,
+body[data-page="clinical"] .study-portfolio__intro h2,
+body[data-page="clinical"] .research-context h2,
+body[data-page="clinical"] .research-contact h2,
+body[data-page="innovation"] .innovation-section-intro h2,
+body[data-page="innovation"] .innovation-context h2,
+body[data-page="innovation"] .innovation-contact h2,
+body[data-page="news"] .pub-section-heading h2,
+body[data-page="news"] .pub-index__head h2,
+body[data-page="team"] .team-section-head h2,
+body[data-page="team"] .team-network h2,
+body[data-page="team"] .team-contact h2{
+  font-family:var(--ff-display);
+  font-size:var(--type-section);
+  font-weight:700;
+  line-height:var(--leading-display);
+  letter-spacing:var(--track-display);
+  text-wrap:balance;
+}
+
+body[data-page="home"] .home-section,
+body[data-page="clinical"] .research-section,
+body[data-page="innovation"] .innovation-start,
+body[data-page="innovation"] .innovation-work,
+body[data-page="team"] .team-leadership,
+body[data-page="team"] .team-roster{
+  padding-block:var(--space-section);
+}
+body[data-page="clinical"] .research-context,
+body[data-page="clinical"] .research-contact,
+body[data-page="innovation"] .innovation-context,
+body[data-page="innovation"] .innovation-contact,
+body[data-page="team"] .team-network,
+body[data-page="team"] .team-contact{
+  padding-block:var(--space-section-compact);
+}
+
+/* Shared scientific figure semantics override legacy page-local text sizing,
+   not the existing process geometry. */
+.sci-process .sci-process__step-index{
+  color:var(--sci-accent);
+  font:600 var(--type-label)/1 var(--ff-mono);
+  letter-spacing:.09em;
+}
+.sci-process .sci-process__step-index::after{
+  width:var(--sci-node);
+  height:var(--sci-node);
+  background:#5faeb2;
+  box-shadow:0 0 0 3px var(--sci-surface);
+}
+.sci-process .sci-process__step-title{
+  font-family:var(--ff-display);
+  font-size:var(--type-subhead);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:-.026em;
+  color:var(--sci-ink);
+}
+.sci-process .sci-process__step-copy{
+  max-width:30ch;
+  color:var(--sci-muted);
+  font-size:var(--type-body-sm);
+  line-height:1.55;
+}
+@media(max-width:640px){
+  .sci-process .sci-process__step-title{font-size:clamp(1.35rem,7vw,1.7rem)}
+  .sci-process .sci-process__step-copy{max-width:36ch}
+}
