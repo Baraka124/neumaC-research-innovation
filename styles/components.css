@@ -2184,3 +2184,45 @@ body.has-compact-masthead .global-index--h2{
 @media(max-width:880px){
   .global-index.global-index--h2{top:0!important}
 }
+
+
+/* ============================================================
+   H2 REFINEMENT A–E — canonical corrections
+   ============================================================ */
+
+/* A/B — true vector wordmark and protected institutional lockup space. */
+.hdr--scientific .hdr-logo-img,
+.hdr-logo-img,
+.footer-logo-img{
+  filter:none!important;
+}
+@media(min-width:1181px){
+  .hdr--scientific .hdr-logo{
+    flex:0 0 clamp(470px,31vw,585px);
+    min-width:0;
+  }
+  .hdr--scientific .hdr-nav{
+    flex:1 1 auto;
+    transform:translateX(clamp(10px,1.2vw,22px));
+  }
+  .hdr--scientific .hdr-right{margin-left:auto}
+}
+@media(min-width:1680px){
+  .hdr--scientific .hdr-logo{flex-basis:clamp(520px,30vw,620px)}
+  .hdr--scientific .hdr-nav{transform:translateX(28px)}
+}
+
+/* E — remove the generic H2 hero decoration that dirtied photography.
+   Native page compositions own integration from here. */
+.home-hero-media::after,
+.research-hero__media::after,
+.innovation-hero__media::after,
+.pub-hero__media::after,
+.team-visual-hero__media::after,
+.line-hero__media::after,
+.research-hero__media::before,
+.innovation-hero__media::before,
+.pub-hero__media::before,
+.line-hero__media::before{
+  content:none!important;
+}

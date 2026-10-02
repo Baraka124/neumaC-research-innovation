@@ -226,7 +226,7 @@
           <button type="button" class="global-index__close global-index__close--mobile" data-index-close aria-label="Close / Cerrar"><span aria-hidden="true">×</span></button>\
         </div>\
         <div class="global-index__toolbar">\
-          <p class="global-index__title" id="globalIndexTitle">'+ixBi('Index','Índice')+'</p>\
+          <div class="global-index__title-block"><span class="global-index__eyebrow">'+ixBi('Scientific index','Índice científico')+'</span><p class="global-index__title" id="globalIndexTitle">'+ixBi('Index','Índice')+'</p></div>\
           <div class="global-index__toolbar-actions">\
             <button type="button" class="global-index__search-trigger" id="globalIndexSearchOpen">'+ixSearchSvg()+'<span>'+ixBi('Search neumACt…','Buscar en neumACt…')+'</span></button>\
             <button type="button" class="global-index__close" data-index-close aria-label="Close / Cerrar"><span aria-hidden="true">×</span></button>\
