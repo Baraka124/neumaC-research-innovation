@@ -148,4 +148,28 @@
   --sci-surface:#fbfaf7;
   --sci-caption-bg:#f3f6f6;
   --sci-node:5px;
+
+  /* Elite refinements 05–08 — photography, icons, motion and states */
+  --photo-documentary-bg:#e7edef;
+  --photo-placeholder-bg:#edf2f3;
+  --photo-edge:rgba(12,56,104,.10);
+
+  --icon-size-xs:12px;
+  --icon-size-sm:14px;
+  --icon-size-md:18px;
+  --icon-size-lg:22px;
+  --icon-stroke:1.7;
+
+  --motion-instant:120ms;
+  --motion-fast:160ms;
+  --motion-base:220ms;
+  --motion-slow:320ms;
+  --motion-distance:6px;
+
+  --state-border:rgba(12,56,104,.14);
+  --state-bg:#f7f9f9;
+  --state-error:#9f3d3d;
+  --state-error-bg:#fbf3f2;
+  --state-success:#20714f;
+  --state-success-bg:#f0f8f4;
 }
