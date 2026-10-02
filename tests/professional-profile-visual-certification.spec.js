@@ -139,6 +139,15 @@ for(const viewport of VIEWPORTS){
       expect(geometry.right).toBeLessThanOrEqual(geometry.viewport+1);
       expect(geometry.width).toBeGreaterThan(0);
 
+      // P1.8 captures certify the professional profile itself, not
+      // persistent cookie/site chrome that may overlap the viewport.
+      await page.evaluate(() => {
+        const cookie=document.getElementById('cookieBanner');
+        const header=document.getElementById('hdr');
+        if(cookie)cookie.style.display='none';
+        if(header && window.innerWidth < 700)header.style.display='none';
+      });
+
       await sheet.screenshot({
         path:path.join(OUTPUT,`p1-profile-${viewport.name}-${viewport.width}-${kind}.png`),
         animations:'disabled'
