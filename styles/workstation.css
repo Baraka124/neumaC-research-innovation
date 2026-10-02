@@ -169,3 +169,67 @@
   }
   html body .global-index__chapter-name{font-size:1.5rem;}
 }
+
+
+/* ============================================================
+   FLOATING EDITORIAL — PHASE 3 / PUBLICATIONS WORKSTATION
+   Preserve folio authorship while the canvas expands.
+   ============================================================ */
+@media(min-width:1680px){
+  html body[data-page="news"]{
+    --pub-folio-pad:2.8rem;
+  }
+  html body[data-page="news"] .pub-shell{
+    width:min(1660px,calc(100% - 5rem));
+  }
+  html body[data-page="news"] .pub-hero__media,
+  html body[data-page="news"] .pub-hero__wash{
+    height:210px;
+  }
+  html body[data-page="news"] .pub-hero__panel-wrap{
+    margin-top:-3.65rem;
+  }
+  html body[data-page="news"] .pub-hero__panel{
+    width:min(90%,1480px);
+    margin-right:auto;
+    grid-template-columns:minmax(390px,.68fr) minmax(0,1fr);
+    gap:4.4rem;
+    padding:1.95rem var(--pub-folio-pad) 1.9rem;
+  }
+  html body[data-page="news"] .pub-hero__identity h1{
+    max-width:8.5ch;
+    font-size:5rem;
+  }
+  html body[data-page="news"] .pub-hero__context{
+    padding-left:2.55rem;
+  }
+  html body[data-page="news"] .pub-hero__context p{
+    max-width:50rem;
+    font-size:.96rem;
+  }
+  html body[data-page="news"] .pub-feature .pub-section-heading{
+    padding-left:var(--pub-folio-pad);
+  }
+}
+
+@media(min-width:1920px){
+  html body[data-page="news"]{
+    --pub-folio-pad:2.9rem;
+  }
+  html body[data-page="news"] .pub-shell{
+    width:min(1660px,calc(100% - 6rem));
+  }
+  html body[data-page="news"] .pub-hero__media,
+  html body[data-page="news"] .pub-hero__wash{
+    height:220px;
+  }
+  html body[data-page="news"] .pub-hero__panel-wrap{
+    margin-top:-3.8rem;
+  }
+  html body[data-page="news"] .pub-hero__panel{
+    width:min(89%,1480px);
+    grid-template-columns:minmax(400px,.68fr) minmax(0,1fr);
+    gap:4.6rem;
+    padding:2rem var(--pub-folio-pad) 1.95rem;
+  }
+}

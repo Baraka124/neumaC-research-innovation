@@ -25,8 +25,18 @@ for (const path of PAGES) {
   test(`${path} loads clean and visible`, async ({ page }) => {
     await stubKnownPublicApi(page);
     const errors = [];
+    const local404s = [];
     page.on('pageerror', e => errors.push(String(e)));
     page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+    page.on('response', response => {
+      if (response.status() !== 404) return;
+      try {
+        const u = new URL(response.url());
+        if (u.hostname === '127.0.0.1' || u.hostname === 'localhost') {
+          local404s.push(u.pathname + u.search);
+        }
+      } catch (_) {}
+    });
     await page.goto(path);
     await expect(page.locator('#hdr')).toBeAttached();
     // blank-page guard: at least one .reveal must become visible
@@ -37,7 +47,8 @@ for (const path of PAGES) {
     // API-driven pages log fetch failures in a static test server —
     // ignore network errors, fail on genuine script errors only.
     const scriptErrors = errors.filter(e =>
-      !/Failed to fetch|NetworkError|ERR_|429|fetch/i.test(e));
+      !/Failed to fetch|NetworkError|ERR_|429|fetch|Failed to load resource: the server responded with a status of 404 \(Not Found\)/i.test(e));
+    expect(local404s, local404s.length ? 'Local 404s:\n' + local404s.join('\n') : '').toHaveLength(0);
     expect(scriptErrors, scriptErrors.join('\n')).toHaveLength(0);
   });
 }
