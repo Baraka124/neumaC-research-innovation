@@ -105,9 +105,32 @@ async function captureSection(page, viewport, name, selector) {
   await expect(section).toBeVisible();
   await section.scrollIntoViewIfNeeded();
   await page.waitForTimeout(100);
+
+  // Certification captures judge page composition, not persistent chrome.
+  // Hide fixed masthead/cookie UI only for the screenshot itself so mobile
+  // evidence is not visually cut by overlays after scroll.
+  await page.evaluate(() => {
+    const header = document.getElementById('hdr');
+    const cookie = document.getElementById('cookieBanner');
+    if (header) header.dataset.r18CaptureDisplay = header.style.display || '';
+    if (cookie) cookie.dataset.r18CaptureDisplay = cookie.style.display || '';
+    if (header) header.style.display = 'none';
+    if (cookie) cookie.style.display = 'none';
+  });
+
   await section.screenshot({
     path: path.join(OUTPUT, `r1-line-${viewport.name}-${viewport.width}-${name}.png`),
     animations:'disabled'
+  });
+
+  await page.evaluate(() => {
+    const restore = el => {
+      if (!el) return;
+      el.style.display = el.dataset.r18CaptureDisplay || '';
+      delete el.dataset.r18CaptureDisplay;
+    };
+    restore(document.getElementById('hdr'));
+    restore(document.getElementById('cookieBanner'));
   });
 }
 
@@ -134,6 +157,21 @@ for (const viewport of VIEWPORTS) {
       return present.every((el,i)=>i===0 || (present[i-1].compareDocumentPosition(el)&Node.DOCUMENT_POSITION_FOLLOWING));
     });
     expect(ordered).toBe(true);
+
+    if (viewport.width >= 1700) {
+      const workstationGeometry = await page.evaluate(() => {
+        const section = document.querySelector('.line-section__inner');
+        const hero = document.querySelector('.line-hero__inner');
+        return {
+          viewport: window.innerWidth,
+          sectionWidth: section?.getBoundingClientRect().width || 0,
+          heroWidth: hero?.getBoundingClientRect().width || 0
+        };
+      });
+      expect(workstationGeometry.sectionWidth).toBeGreaterThan(1500);
+      expect(workstationGeometry.heroWidth).toBeGreaterThan(1500);
+      expect(workstationGeometry.sectionWidth).toBeLessThanOrEqual(1682);
+    }
 
     const overflow = await page.evaluate(() => ({
       viewport:window.innerWidth,
