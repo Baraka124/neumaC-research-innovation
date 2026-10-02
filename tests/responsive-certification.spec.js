@@ -834,6 +834,39 @@ test('R1.2 leadership structure remains separate from current activity', async (
 
 
 
+
+test('R1.6 presents studies and publications under one non-causal pipeline narrative', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/line/');
+
+  await expect(page.locator('#linePipelineTitle')).toBeAttached();
+  await expect(page.locator('.line-pipeline-intro__copy')).toContainText(/not presented as one-to-one outputs|no se presentan como resultados directos/);
+
+  const order = await page.evaluate(() => {
+    const intro = document.querySelector('.line-pipeline-intro');
+    const grid = document.querySelector('.line-current__grid');
+    return Boolean(intro && grid && (intro.compareDocumentPosition(grid) & Node.DOCUMENT_POSITION_FOLLOWING));
+  });
+  expect(order).toBe(true);
+  await expectNoHorizontalOverflow(page);
+});
+
+for (const width of [390, 768, 1440, 2048]) {
+  test(`R1.6 pipeline framing stays contained at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1440 ? 900 : 1024) });
+    await page.goto('/line/');
+    const intro = page.locator('.line-pipeline-intro');
+    await expect(intro).toBeAttached();
+    const geo = await intro.evaluate(el => {
+      const r=el.getBoundingClientRect();
+      return {left:r.left,right:r.right,viewport:window.innerWidth};
+    });
+    expect(geo.left).toBeGreaterThanOrEqual(-1);
+    expect(geo.right).toBeLessThanOrEqual(geo.viewport+1);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
 test('R1.5 renders only approved external scientific relationships', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.route('**/api/**', async route => {
