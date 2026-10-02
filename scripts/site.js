@@ -202,7 +202,7 @@
 
     var active=ixPageKey();
     var wrap=document.createElement('div');
-    wrap.className='global-index'; wrap.id='globalIndex'; wrap.hidden=true; wrap.setAttribute('aria-hidden','true');
+    wrap.className='global-index global-index--h2'; wrap.id='globalIndex'; wrap.hidden=true; wrap.setAttribute('aria-hidden','true');
     wrap.innerHTML='\
       <div class="global-index__backdrop" id="globalIndexBackdrop" aria-hidden="true"></div>\
       <section class="global-index__surface" id="globalIndexSurface" role="dialog" aria-modal="true" aria-labelledby="globalIndexTitle" tabindex="-1">\
@@ -536,6 +536,8 @@
         if(path==='/'||path==='/team') hdr.classList.toggle('light',y>60);
         hdr.classList.toggle('scrolled',y>40);
         hdr.classList.toggle('hdr--context-compact',y>120);
+        document.body.classList.toggle('has-scrolled-masthead',y>40);
+        document.body.classList.toggle('has-compact-masthead',y>120);
         hdr.classList.remove('hdr-hidden');
 }
 
