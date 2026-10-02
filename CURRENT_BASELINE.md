@@ -127,3 +127,17 @@ The milestone direction is:
 - progressive sparse/rich profile states;
 - derived public activity from existing studies/projects/publications;
 - explicit provenance, visibility and person approval for manually curated professional facts.
+
+
+## Research Line Scientific Identity — R1.8 complete
+
+R1.1–R1.8 are now implemented and visually certified.
+
+Canonical closeout baseline:
+`RESEARCH_LINE_R1_PHASE8_CLOSEOUT_BASELINE.md`
+
+The current research-line system includes scientific identity, structured capabilities, scientific leadership, evidence-linked portfolio activity, research pipeline framing, contribution-led people, external scientific relationships and workstation-specific recomposition.
+
+The certified responsive reference widths are 390px, 1440px and 2048px. The 1440px laptop composition remains intentionally unchanged by R1.8; workstation pages above 1700px use a controlled 1680px research-line canvas.
+
+Future work should proceed to R1.9 cross-line stress testing rather than further R1.8 visual tuning by default.
