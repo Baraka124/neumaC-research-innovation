@@ -184,6 +184,10 @@ for (const viewport of [
     await page.goto('/line/?id=h2-airway');
 
     await expect(page.locator('#hdr')).toBeVisible();
+    if(viewport.width<=880){
+      await expect(page.locator('#mobToggle .mob-index-label')).toBeVisible();
+      await expect(page.locator('#mobToggle .mob-index-label')).toContainText(/Index|Índice/);
+    }
     await expect(page.locator('#lineHero')).toBeVisible();
     await expect(page.locator('.line-hero__media')).toBeVisible();
 
