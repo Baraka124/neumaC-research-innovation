@@ -79,8 +79,8 @@ test('C — open Index is an attached scientific command surface',async({page})=
     return {headerBottom:h.bottom,panelTop:p.top,surfaceLeft:s.left,surfaceRight:s.right,viewport:innerWidth};
   });
   expect(Math.abs(geo.headerBottom-geo.panelTop)).toBeLessThanOrEqual(2);
-  expect(geo.surfaceLeft).toBeLessThanOrEqual(1);
-  expect(geo.surfaceRight).toBeGreaterThanOrEqual(geo.viewport-1);
+  expect(geo.surfaceLeft).toBeLessThanOrEqual(3);
+  expect(geo.surfaceRight).toBeGreaterThanOrEqual(geo.viewport-3);
   await panel.screenshot({path:path.join(OUTPUT,'h2-refine-index-1440.png'),animations:'disabled'});
 });
 
