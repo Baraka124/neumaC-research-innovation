@@ -369,3 +369,99 @@
     width:calc(100% - 2rem);
   }
 }
+
+
+/* ============================================================
+   PHASE 4 — MOBILE MASTHEAD / INDEX POLISH
+   Resolve generic span inheritance and make the Index capsule read as
+   one calm institutional action rather than stacked icon + label UI.
+   ============================================================ */
+@media(max-width:880px){
+  .mob-toggle{
+    min-width:86px;
+    height:40px;
+    padding:0 .76rem 0 .68rem!important;
+    gap:.56rem;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    border-color:rgba(181,222,226,.24)!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018))!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.055);
+  }
+
+  /* components.css has a generic .mob-toggle span rule for the legacy
+     hamburger. Reset it explicitly for the editorial Index trigger. */
+  .mob-toggle .mob-index-glyph,
+  .mob-toggle .mob-index-label{
+    width:auto!important;
+    background:transparent!important;
+  }
+
+  .mob-toggle .mob-index-glyph{
+    display:flex!important;
+    flex:0 0 16px;
+    width:16px!important;
+    height:11px;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:2.5px;
+  }
+
+  .mob-toggle .mob-index-glyph i{
+    display:block;
+    height:1px;
+    border-radius:999px;
+    background:currentColor;
+    opacity:.92;
+  }
+  .mob-toggle .mob-index-glyph i:nth-child(1){width:16px;}
+  .mob-toggle .mob-index-glyph i:nth-child(2){width:12px;}
+  .mob-toggle .mob-index-glyph i:nth-child(3){width:8px;}
+
+  .mob-toggle .mob-index-label{
+    display:block!important;
+    flex:0 0 auto;
+    min-width:max-content;
+    white-space:nowrap;
+    font-size:.71rem;
+    font-weight:650;
+    line-height:1;
+    letter-spacing:.012em;
+    transform:translateY(.2px);
+  }
+
+  .mob-toggle:hover,
+  .mob-toggle:focus-visible{
+    border-color:rgba(136,221,224,.44)!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025))!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.075);
+  }
+
+  .mob-toggle[aria-expanded="true"]{
+    border-color:rgba(91,216,218,.52)!important;
+    background:linear-gradient(180deg,rgba(73,199,202,.13),rgba(73,199,202,.07))!important;
+    box-shadow:inset 0 1px 0 rgba(217,255,255,.08);
+  }
+
+  .global-index__mobile-actions{gap:.4rem;}
+  .global-index__mobile-search,
+  .global-index__close--mobile{
+    width:39px;
+    height:39px;
+    border-radius:999px;
+    border-color:#d2dde1;
+    background:rgba(255,255,255,.82);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.95);
+  }
+}
+
+@media(max-width:390px){
+  .mob-toggle{
+    min-width:82px;
+    height:40px;
+    padding-inline:.64rem .68rem!important;
+    gap:.48rem;
+  }
+  .mob-toggle .mob-index-label{font-size:.69rem;}
+}
