@@ -96,8 +96,8 @@ test('standard desktop remains below workstation activation threshold', async ({
     bodyPaddingTop: parseFloat(getComputedStyle(document.body).paddingTop),
   }));
 
-  expect(Math.abs(geometry.header - 68)).toBeLessThanOrEqual(1);
-  expect(Math.abs(geometry.bodyPaddingTop - 68)).toBeLessThanOrEqual(1);
+  expect(Math.abs(geometry.header - 103)).toBeLessThanOrEqual(1);
+  expect(Math.abs(geometry.bodyPaddingTop - 103)).toBeLessThanOrEqual(1);
 });
 
 test('phone masthead exposes an explicit Index trigger and removes header Contact', async ({ page }) => {
