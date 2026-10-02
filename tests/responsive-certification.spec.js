@@ -830,6 +830,76 @@ test('R1.2 leadership structure remains separate from current activity', async (
   expect(order).toBe(true);
 });
 
+
+test('R1.2 trajectory drawer stays hidden for a sparse coordinator', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/test-line/website')) {
+      return route.fulfill({ json:{ data:{
+        id:'test-line', name:'Airway Diseases', short_name:'Airway Diseases', line_number:2,
+        description:'Research line fixture', keywords:['Asthma'],
+        coordinator:{ id:'person-1', full_name:'Fixture Coordinator', specialization:'Pneumology', public_bio:'Fixture bio.' }
+      }}});
+    }
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{ data:[] }});
+    return route.fulfill({ json:{ data:[] }});
+  });
+  await page.goto('/line/?id=test-line');
+  await expect(page.locator('#lineLeadershipSection')).toBeVisible();
+  await expect(page.locator('#lineTrajectoryButton')).toBeHidden();
+  await expect(page.locator('#lineTrajectoryOverlay')).toBeHidden();
+});
+
+test('R1.2 trajectory drawer opens only with approved evidence and returns focus', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/test-line/website')) {
+      return route.fulfill({ json:{ data:{
+        id:'test-line', name:'Airway Diseases', short_name:'Airway Diseases', line_number:2,
+        description:'Research line fixture', keywords:['Asthma'],
+        coordinator:{
+          id:'person-1', full_name:'Fixture Coordinator', specialization:'Pneumology', public_bio:'Fixture bio.',
+          scientific_leadership:{
+            evidence:[
+              {type:'scientific_leadership',description:{en:'Coordinates multicentre airway research.',es:'Coordina investigación multicéntrica de vía aérea.'},visibility:'approved_public',display_priority:10},
+              {type:'recognition',description:{en:'Approved recognition.',es:'Reconocimiento aprobado.'},visibility:'approved_public',display_priority:10},
+              {type:'network_role',description:{en:'Scientific network role.',es:'Participación en red científica.'},visibility:'approved_public',display_priority:10}
+            ],
+            scholarly_identity:[{label:'ORCID',url:'https://orcid.org/0000-0000-0000-0000',visibility:'approved_public'}],
+            research_footprint:{publications:42,citations:1200,h_index:18,source:'Fixture source',verified_at:'2026-10-02'}
+          }
+        }
+      }}});
+    }
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{ data:[] }});
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{ data:[] }});
+    return route.fulfill({ json:{ data:[] }});
+  });
+
+  await page.goto('/line/?id=test-line');
+  const trigger = page.locator('#lineTrajectoryButton');
+  await expect(trigger).toBeVisible();
+  await trigger.click();
+
+  const overlay = page.locator('#lineTrajectoryOverlay');
+  const sheet = page.locator('#lineTrajectorySheet');
+  await expect(overlay).toHaveAttribute('aria-hidden','false');
+  await expect(sheet).toBeVisible();
+  await expect(page.locator('#lineTrajectoryContent')).toContainText('Fixture Coordinator');
+  await expect(page.locator('.line-trajectory__section-label')).toHaveCount(5);
+  await expectNoHorizontalOverflow(page);
+
+  await page.keyboard.press('Escape');
+  await expect(overlay).toHaveAttribute('aria-hidden','true');
+  await page.waitForTimeout(280);
+  await expect(trigger).toBeFocused();
+});
+
 for (const width of [390, 768, 1440, 2048]) {
   test(`R1.2 leadership preview stays contained at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1440 ? 900 : 1024) });
