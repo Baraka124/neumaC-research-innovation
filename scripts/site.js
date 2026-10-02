@@ -116,6 +116,91 @@
     if(p==='news')return 'articles';
     return p;
   }
+  function h2PageContext(){
+    var hdr=document.getElementById('hdr');
+    var page=(hdr&&hdr.dataset.page)||document.body.dataset.page||'home';
+    var map={
+      home:{section:['neumACt','neumACt'],detail:['Research & Innovation','Investigación e Innovación']},
+      clinical:{section:['Research','Investigación'],detail:['Research programme','Programa de investigación']},
+      innovation:{section:['Innovation','Innovación'],detail:['Clinical innovation','Innovación clínica']},
+      news:{section:['Publications','Publicaciones'],detail:['Scientific output','Producción científica']},
+      team:{section:['Team','Equipo'],detail:['Multidisciplinary team','Equipo multidisciplinar']},
+      line:{section:['Research','Investigación'],detail:['Research line','Línea de investigación']}
+    };
+    var ctx=map[page]||map.home;
+    if(page==='line'){
+      var title=document.getElementById('lineTitle');
+      if(title){
+        var en=title.querySelector('[lang="en"]');
+        var es=title.querySelector('[lang="es"]');
+        var raw=String(title.textContent||'').trim();
+        ctx={section:['Research','Investigación'],detail:[String(en&&en.textContent||raw||'Research line').trim(),String(es&&es.textContent||raw||'Línea de investigación').trim()]};
+      }
+    }
+    return ctx;
+  }
+
+  function h2SyncContextRail(){
+    var rail=document.getElementById('hdrContextRail');if(!rail)return;
+    var ctx=h2PageContext();
+    var section=rail.querySelector('.hdr-context__section');
+    var detail=rail.querySelector('.hdr-context__detail');
+    if(section)section.innerHTML=ixBi(ctx.section[0],ctx.section[1]);
+    if(detail)detail.innerHTML=ixBi(ctx.detail[0],ctx.detail[1]);
+  }
+
+  function h2BuildMasthead(){
+    var hdr=document.getElementById('hdr');if(!hdr)return;
+    var hdrInner=hdr.querySelector('.hdr-inner');
+    hdr.style.transition='none';
+    if(hdrInner)hdrInner.style.transition='none';
+    hdr.classList.add('hdr--scientific');
+    document.body.classList.add('has-scientific-masthead');
+    void hdr.offsetHeight;
+    requestAnimationFrame(function(){
+      hdr.style.transition='';
+      if(hdrInner)hdrInner.style.transition='';
+    });
+
+    var nav=hdr.querySelector('.hdr-nav');
+    if(nav&&!nav.querySelector('.hdr-nav-signature')){
+      var signature=document.createElement('span');
+      signature.className='hdr-nav-signature';
+      signature.setAttribute('aria-hidden','true');
+      nav.appendChild(signature);
+    }
+
+    var mobileToggle=hdr.querySelector('#mobToggle');
+    if(mobileToggle&&!mobileToggle.querySelector('.mob-index-label')){
+      mobileToggle.innerHTML='<span class="mob-index-glyph" aria-hidden="true"><i></i><i></i><i></i></span><span class="mob-index-label">'+ixBi('Index','Índice')+'</span>';
+      mobileToggle.setAttribute('aria-label','Open index / Abrir índice');
+      mobileToggle.setAttribute('title','Index / Índice');
+    }
+
+    var search=hdr.querySelector('#hdrSearchBtn');
+    if(search&&!search.querySelector('.hdr-search-label')){
+      var label=document.createElement('span');
+      label.className='hdr-search-label';
+      label.innerHTML=ixBi('Search','Buscar');
+      search.appendChild(label);
+    }
+
+    if(!document.getElementById('hdrContextRail')){
+      var rail=document.createElement('div');
+      rail.className='hdr-context';rail.id='hdrContextRail';
+      rail.setAttribute('aria-label','Page context / Contexto de página');
+      rail.innerHTML='<div class="hdr-context__inner"><span class="hdr-context__section"></span><span class="hdr-context__mark" aria-hidden="true"></span><span class="hdr-context__detail"></span><span class="hdr-context__rule" aria-hidden="true"></span><span class="hdr-context__statement">'+ixBi('Science for better respiratory health','Ciencia para una mejor salud respiratoria')+'</span></div>';
+      hdr.appendChild(rail);
+    }
+    h2SyncContextRail();
+
+    var lineTitle=document.getElementById('lineTitle');
+    if(lineTitle&&window.MutationObserver){
+      new MutationObserver(h2SyncContextRail).observe(lineTitle,{childList:true,subtree:true,characterData:true});
+    }
+    document.addEventListener('neumac:languagechange',h2SyncContextRail);
+  }
+
   function ixBuild(){
     if(indexState.panel)return;
     var hdr=document.getElementById('hdr'); if(!hdr)return;
@@ -125,14 +210,14 @@
       var indexBtn=document.createElement('button');
       indexBtn.type='button'; indexBtn.className='hdr-index-btn'; indexBtn.id='hdrIndexBtn';
       indexBtn.setAttribute('aria-haspopup','dialog'); indexBtn.setAttribute('aria-controls','globalIndex'); indexBtn.setAttribute('aria-expanded','false');
-      indexBtn.innerHTML=ixBi('Index','Índice');
+      indexBtn.innerHTML='<span class="hdr-index-glyph" aria-hidden="true"><i></i><i></i><i></i></span><span class="hdr-index-label">'+ixBi('Index','Índice')+'</span>';
       var contact=right.querySelector('.hdr-contact-btn');
       if(contact)right.insertBefore(indexBtn,contact); else right.appendChild(indexBtn);
     }
 
     var active=ixPageKey();
     var wrap=document.createElement('div');
-    wrap.className='global-index'; wrap.id='globalIndex'; wrap.hidden=true; wrap.setAttribute('aria-hidden','true');
+    wrap.className='global-index global-index--h2'; wrap.id='globalIndex'; wrap.hidden=true; wrap.setAttribute('aria-hidden','true');
     wrap.innerHTML='\
       <div class="global-index__backdrop" id="globalIndexBackdrop" aria-hidden="true"></div>\
       <section class="global-index__surface" id="globalIndexSurface" role="dialog" aria-modal="true" aria-labelledby="globalIndexTitle" tabindex="-1">\
@@ -349,6 +434,7 @@
   }
 
   function initEditorialIndex(){
+    h2BuildMasthead();
     ixBuild();
     if(!indexState.panel)return;
     var mob=document.getElementById('mobToggle');
@@ -464,6 +550,9 @@
         var path=location.pathname.replace(/\/+$/,'')||'/';
         if(path==='/'||path==='/team') hdr.classList.toggle('light',y>60);
         hdr.classList.toggle('scrolled',y>40);
+        hdr.classList.toggle('hdr--context-compact',y>120);
+        document.body.classList.toggle('has-scrolled-masthead',y>40);
+        document.body.classList.toggle('has-compact-masthead',y>120);
         hdr.classList.remove('hdr-hidden');
 }
 
@@ -581,22 +670,33 @@
   function initNavPill(){
     var nav = document.querySelector('.hdr-nav');
     var pill = nav && nav.querySelector('.hdr-nav-pill');
-    if (!nav || !pill) return;
+    var signature = nav && nav.querySelector('.hdr-nav-signature');
+    if (!nav || (!pill && !signature)) return;
 
     function moveTo(el){
       if (!el) return;
       var navRect = nav.getBoundingClientRect();
       var r = el.getBoundingClientRect();
-      // pill is a 1px base at left:0; translateX to the item and
-      // scaleX up to its width — pure transform, no layout.
       var x = r.left - navRect.left;
-      pill.style.transform = 'translateY(-50%) translateX(' + x + 'px) scaleX(' + r.width + ')';
-      pill.style.opacity = '1';
+      if(pill){
+        pill.style.transform = 'translateY(-50%) translateX(' + x + 'px) scaleX(' + r.width + ')';
+        pill.style.opacity = '1';
+      }
+      if(signature){
+        var sigWidth=Math.max(24,Math.min(42,r.width*.38));
+        var sigX=x+(r.width-sigWidth)/2;
+        signature.style.width=sigWidth+'px';
+        signature.style.transform='translateX('+sigX+'px)';
+        signature.style.opacity='1';
+      }
     }
     function reset(){
-      var current = nav.querySelector('.hdr-nav-link[data-current="true"]')
-;
-      if (current) moveTo(current); else pill.style.opacity = '0';
+      var current = nav.querySelector('.hdr-nav-link[data-current="true"]');
+      if (current) moveTo(current);
+      else {
+        if(pill)pill.style.opacity='0';
+        if(signature)signature.style.opacity='0';
+      }
     }
 
     nav.querySelectorAll('.hdr-nav-link').forEach(function(link){
@@ -903,6 +1003,7 @@
   }
 
   function bootEnhancements(){
+    initNavPill();
     initDrawerFocusTrap();
     initLangRovingTabindex();
     initLangToast();

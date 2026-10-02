@@ -1904,3 +1904,283 @@ body.is-index-open{overflow:hidden;}
   .global-search__filters{margin-top:.7rem;}
   .site-footer--institutional .footer-shell,.site-footer--institutional .footer-bottom-bar{width:calc(100% - 1.25rem);}
 }
+
+
+/* ════════════════════════════════════════════════════════════════
+   H2 — SCIENTIFIC MASTHEAD SYSTEM
+   Institutional masthead + scientific context rail + interface/media grammar.
+   ════════════════════════════════════════════════════════════════ */
+.hdr--scientific{
+  --h2-main:76px;
+  --h2-rail:27px;
+  height:calc(var(--h2-main) + var(--h2-rail));
+  background:linear-gradient(102deg,#073560 0%,#082f56 48%,#062b4f 100%);
+  border-bottom:0;
+  box-shadow:0 1px 0 rgba(255,255,255,.05);
+}
+.hdr--scientific .hdr-main{height:var(--h2-main)}
+.hdr--scientific .hdr-inner{
+  height:var(--h2-main);
+  max-width:1760px;
+  padding-inline:clamp(1.6rem,2.8vw,3.2rem);
+}
+.hdr--scientific .hdr-logo{gap:1rem}
+.hdr--scientific .hdr-brand-plate{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  min-height:46px;
+  padding:.38rem .28rem .34rem;
+  background:transparent;
+}
+.hdr--scientific .hdr-brand-plate::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,rgba(39,195,200,0),rgba(39,195,200,.58),rgba(39,195,200,0));
+  opacity:.55;
+}
+.hdr--scientific .hdr-logo-img{
+  height:34px;max-width:132px;
+  filter:brightness(0) invert(1);
+}
+.hdr--scientific .hdr-brand-meta{padding-left:1rem}
+.hdr--scientific .hdr-brand-meta::before{height:34px;background:rgba(255,255,255,.23)}
+.hdr--scientific .hdr-brand-title{font-size:.61rem;letter-spacing:.095em;color:rgba(255,255,255,.91)}
+.hdr--scientific .hdr-brand-org{font-size:.49rem;letter-spacing:.07em;color:rgba(255,255,255,.48)}
+
+.hdr--scientific .hdr-nav{position:relative;gap:.12rem}
+.hdr--scientific .hdr-nav-link{
+  min-height:46px;padding:.7rem .82rem;
+  font-size:.88rem;font-weight:530;color:rgba(255,255,255,.70);
+}
+.hdr--scientific .hdr-nav-link::before{
+  content:"";position:absolute;left:50%;bottom:7px;width:3px;height:3px;border-radius:50%;
+  transform:translateX(-50%) scale(0);background:#58d6d8;opacity:0;
+  transition:transform .18s ease,opacity .18s ease;
+}
+.hdr--scientific .hdr-nav-link[data-current="true"]::after{display:none}
+.hdr--scientific .hdr-nav-link[data-current="true"]::before{transform:translateX(-50%) scale(1);opacity:1}
+.hdr--scientific .hdr-nav-link[data-current="true"]{color:#fff;font-weight:650}
+.hdr-nav-signature{
+  position:absolute;bottom:1px;left:0;width:30px;height:1px;background:#44c7cc;
+  transform:translateX(var(--h2-nav-x,0));opacity:.92;pointer-events:none;
+  transition:transform .22s var(--ease-clinical),width .22s var(--ease-clinical),opacity .18s;
+}
+.hdr--scientific .hdr-nav:hover .hdr-nav-signature{opacity:1}
+
+.hdr--scientific .hdr-right{
+  position:relative;gap:.2rem;padding-left:.85rem;
+  border-left:1px solid rgba(255,255,255,.13);
+}
+.hdr--scientific .hdr-index-btn{
+  min-height:38px;gap:.55rem;padding:.48rem .68rem;border:0;border-radius:0;
+  background:transparent;color:rgba(255,255,255,.82);font-size:.7rem;font-weight:620;
+}
+.hdr-index-glyph{display:grid;gap:2px;width:14px}
+.hdr-index-glyph i{display:block;height:1px;background:currentColor}
+.hdr-index-glyph i:nth-child(1){width:8px}.hdr-index-glyph i:nth-child(2){width:14px}.hdr-index-glyph i:nth-child(3){width:10px}
+.hdr--scientific .hdr-index-btn:hover,.hdr--scientific .hdr-index-btn:focus-visible,.hdr--scientific .hdr-index-btn[aria-expanded="true"]{
+  background:rgba(255,255,255,.045);border-color:transparent;color:#fff;
+}
+.hdr--scientific .hdr-search-btn{
+  width:auto;min-width:38px;height:38px;display:flex;align-items:center;gap:.45rem;
+  padding:0 .55rem;border-radius:0;color:rgba(255,255,255,.74);overflow:hidden;
+}
+.hdr-search-label{
+  max-width:0;opacity:0;overflow:hidden;white-space:nowrap;
+  font-size:.67rem;font-weight:600;transition:max-width .22s ease,opacity .18s ease;
+}
+.hdr--scientific .hdr-search-btn:hover .hdr-search-label,
+.hdr--scientific .hdr-search-btn:focus-visible .hdr-search-label{max-width:70px;opacity:1}
+.hdr--scientific .lang-switch{margin-left:.35rem;padding-left:.65rem;border-left:1px solid rgba(255,255,255,.12)}
+.hdr--scientific .lang-opt[aria-checked="true"]::after{
+  content:"";position:absolute;left:0;right:0;bottom:-7px;height:1.5px;background:#54d2d5;
+}
+.hdr--scientific .hdr-contact-btn{display:none}
+
+.hdr-context{
+  height:var(--h2-rail);display:flex;align-items:center;
+  border-top:1px solid rgba(255,255,255,.075);
+  background:rgba(2,29,54,.56);
+  transition:height .2s ease,opacity .2s ease;
+}
+.hdr-context__inner{
+  width:min(1760px,calc(100% - clamp(3.2rem,5.6vw,6.4rem)));
+  margin-inline:auto;display:grid;
+  grid-template-columns:auto 24px auto minmax(40px,1fr) auto;
+  align-items:center;gap:.65rem;
+}
+.hdr-context__section,.hdr-context__detail,.hdr-context__statement{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.hdr-context__section{
+  font:650 .54rem/1.2 var(--ff-mono,'DM Mono',monospace);
+  letter-spacing:.13em;text-transform:uppercase;color:#dff9f8;
+}
+.hdr-context__mark{
+  position:relative;width:24px;height:1px;background:rgba(87,211,215,.62);
+  transform:rotate(-48deg) scaleX(.72);
+}
+.hdr-context__detail{font-size:.66rem;font-weight:520;color:rgba(255,255,255,.76)}
+.hdr-context__rule{height:1px;background:linear-gradient(90deg,rgba(255,255,255,.22),rgba(255,255,255,.04))}
+.hdr-context__statement{
+  font:500 .49rem/1.2 var(--ff-mono,'DM Mono',monospace);
+  letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);
+}
+
+.hdr--scientific.scrolled{height:calc(64px + var(--h2-rail));background:rgba(4,34,64,.985)}
+.hdr--scientific.scrolled .hdr-main,.hdr--scientific.scrolled .hdr-inner{height:64px}
+.hdr--scientific.scrolled .hdr-logo-img{height:30px}
+.hdr--scientific.scrolled .hdr-brand-org{display:none}
+.hdr--scientific.hdr--context-compact{height:64px}
+.hdr--scientific.hdr--context-compact .hdr-context{height:0;opacity:0;overflow:hidden}
+.hdr--scientific.hdr--context-compact + .global-index{top:64px}
+
+/* H2 media-interface grammar: subtle registration traces, never a decorative overlay wall. */
+body[data-page="line"] .line-hero__media,
+body[data-page="clinical"] .research-hero__media,
+body[data-page="innovation"] .innovation-hero__media,
+body[data-page="team"] .team-hero__media,
+body[data-page="news"] .pub-hero__media{
+  position:relative;isolation:isolate;
+}
+body[data-page="line"] .line-hero__media::after,
+body[data-page="clinical"] .research-hero__media::after,
+body[data-page="innovation"] .innovation-hero__media::after,
+body[data-page="team"] .team-hero__media::after,
+body[data-page="news"] .pub-hero__media::after{
+  content:"";position:absolute;inset:8% 7% auto auto;width:clamp(120px,16vw,260px);aspect-ratio:1;
+  border:1px solid rgba(129,214,222,.22);border-left-color:transparent;border-bottom-color:transparent;
+  border-radius:50%;pointer-events:none;z-index:3;transform:rotate(18deg);
+}
+@media(prefers-reduced-motion:reduce){
+  .hdr-nav-signature,.hdr-search-label,.hdr-context{transition:none!important}
+}
+
+
+/* H2 interaction geometry — Index/Search follows the full masthead state. */
+.hdr--scientific + .global-index{top:calc(var(--h2-main) + var(--h2-rail))}
+.hdr--scientific.scrolled + .global-index{top:calc(64px + var(--h2-rail))}
+.hdr--scientific.hdr--context-compact + .global-index{top:64px}
+.hdr--scientific + .global-index .global-index__surface{
+  max-height:calc(100dvh - var(--h2-main) - var(--h2-rail));
+}
+.hdr--scientific.scrolled + .global-index .global-index__surface{
+  max-height:calc(100dvh - 64px - var(--h2-rail));
+}
+.hdr--scientific.hdr--context-compact + .global-index .global-index__surface{
+  max-height:calc(100dvh - 64px);
+}
+
+/* Keyboard focus is part of the masthead composition, not an afterthought. */
+.hdr--scientific .hdr-nav-link:focus-visible,
+.hdr--scientific .hdr-index-btn:focus-visible,
+.hdr--scientific .hdr-search-btn:focus-visible,
+.hdr--scientific .lang-opt:focus-visible{
+  outline:1px solid rgba(115,225,228,.88);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+
+/* H2.4 — canonical media/interface surfaces */
+.home-hero-media,
+.research-hero__media,
+.innovation-hero__media,
+.pub-hero__media,
+.team-visual-hero__media,
+.line-hero__media{
+  position:relative;
+  isolation:isolate;
+}
+.research-hero__media::before,
+.innovation-hero__media::before,
+.pub-hero__media::before,
+.line-hero__media::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:clamp(36px,7vw,118px);
+  background:linear-gradient(90deg,rgba(251,250,247,.86),rgba(251,250,247,.32) 42%,transparent);
+  pointer-events:none;z-index:2;
+}
+.home-hero-media::after,
+.research-hero__media::after,
+.innovation-hero__media::after,
+.pub-hero__media::after,
+.team-visual-hero__media::after,
+.line-hero__media::after{
+  content:"";position:absolute;right:clamp(18px,4vw,72px);top:clamp(18px,8%,64px);
+  width:clamp(100px,14vw,230px);aspect-ratio:1;
+  border:1px solid rgba(112,211,219,.23);
+  border-left-color:transparent;border-bottom-color:transparent;
+  border-radius:50%;pointer-events:none;z-index:3;transform:rotate(16deg);
+}
+.team-visual-hero__media::after{opacity:.55}
+.home-hero-media::after{opacity:.42}
+@media(max-width:880px){
+  .research-hero__media::before,
+  .innovation-hero__media::before,
+  .pub-hero__media::before,
+  .line-hero__media::before{width:46px;opacity:.7}
+  .home-hero-media::after,
+  .research-hero__media::after,
+  .innovation-hero__media::after,
+  .pub-hero__media::after,
+  .team-visual-hero__media::after,
+  .line-hero__media::after{width:96px;right:14px;top:14px;opacity:.48}
+}
+
+
+/* H2 authoritative masthead geometry. */
+body.has-scientific-masthead{
+  padding-top:calc(var(--h2-main,76px) + var(--h2-rail,27px));
+}
+.hdr--scientific + .global-index{
+  position:fixed!important;
+  left:0!important;right:0!important;bottom:0!important;
+  top:calc(var(--h2-main) + var(--h2-rail))!important;
+}
+.hdr--scientific.scrolled + .global-index{
+  top:calc(64px + var(--h2-rail))!important;
+}
+.hdr--scientific.hdr--context-compact + .global-index{
+  top:64px!important;
+}
+@media(max-width:880px){
+  body.has-scientific-masthead{
+    padding-top:calc(var(--h2-main,62px) + var(--h2-rail,22px));
+  }
+  .hdr--scientific + .global-index{top:0!important}
+}
+
+
+/* H2 resilient Index positioning: explicit component state, no DOM adjacency dependency. */
+.global-index--h2{
+  position:fixed!important;
+  left:0!important;right:0!important;bottom:0!important;
+  top:calc(var(--h2-main,76px) + var(--h2-rail,27px))!important;
+}
+body.has-scrolled-masthead .global-index--h2{
+  top:calc(64px + var(--h2-rail,27px))!important;
+}
+body.has-compact-masthead .global-index--h2{
+  top:64px!important;
+}
+@media(max-width:880px){
+  .global-index--h2{top:0!important}
+}
+
+
+/* H2 final Index geometry — explicit responsive constants.
+   The Index is not a descendant of the header, so it does not consume
+   header-scoped custom properties. */
+@media(min-width:881px) and (max-width:1679px){
+  .global-index.global-index--h2{top:103px!important}
+  body.has-scrolled-masthead .global-index.global-index--h2{top:91px!important}
+  body.has-compact-masthead .global-index.global-index--h2{top:64px!important}
+}
+@media(min-width:1680px){
+  .global-index.global-index--h2{top:106px!important}
+  body.has-scrolled-masthead .global-index.global-index--h2{top:92px!important}
+  body.has-compact-masthead .global-index.global-index--h2{top:64px!important}
+}
+@media(max-width:880px){
+  .global-index.global-index--h2{top:0!important}
+}

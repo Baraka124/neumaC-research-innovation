@@ -158,3 +158,73 @@
     padding-inline:.82rem;
   }
 }
+
+
+/* H2.6 — tablet/mobile masthead compositions */
+@media(max-width:880px){
+  .hdr--scientific{
+    --h2-main:62px;--h2-rail:22px;
+    height:calc(var(--h2-main) + var(--h2-rail));
+  }
+  .hdr--scientific .hdr-main,.hdr--scientific .hdr-inner{height:var(--h2-main)}
+  .hdr--scientific .hdr-brand-plate::after{opacity:.32}
+  .hdr--scientific .hdr-right{border-left:0;padding-left:0}
+  .hdr--scientific .hdr-index-btn{display:none!important}
+  .hdr--scientific .hdr-search-btn{width:38px;min-width:38px;padding:0;justify-content:center}
+  .hdr--scientific .hdr-search-label{display:none}
+  .hdr--scientific .lang-switch{display:none!important}
+  .hdr-context__inner{
+    width:calc(100% - 1.7rem);
+    grid-template-columns:auto 18px minmax(0,1fr);
+    gap:.45rem;
+  }
+  .hdr-context__rule,.hdr-context__statement{display:none}
+  .hdr-context__section{font-size:.49rem;letter-spacing:.1em}
+  .hdr-context__detail{font-size:.6rem}
+  .hdr--scientific.scrolled{height:calc(58px + var(--h2-rail))}
+  .hdr--scientific.scrolled .hdr-main,.hdr--scientific.scrolled .hdr-inner{height:58px}
+  .hdr--scientific.hdr--context-compact{height:58px}
+}
+@media(max-width:560px){
+  .hdr--scientific{--h2-main:58px;--h2-rail:20px}
+  .hdr--scientific .hdr-search-btn{display:none!important}
+  .hdr-context__inner{width:calc(100% - 1.35rem);grid-template-columns:auto 14px minmax(0,1fr)}
+  .hdr-context__section{font-size:.46rem}
+  .hdr-context__detail{font-size:.57rem}
+}
+
+
+/* H2 mobile Index trigger: neutralise legacy hamburger span paint. */
+.mob-toggle .mob-index-label{
+  width:auto!important;
+  height:auto!important;
+  background:transparent!important;
+  color:inherit!important;
+  border:0!important;
+  border-radius:0!important;
+  font:650 .68rem/1 var(--ff-body,'DM Sans',sans-serif)!important;
+  letter-spacing:.01em!important;
+}
+.mob-toggle .mob-index-glyph{
+  width:14px!important;
+  height:auto!important;
+  background:transparent!important;
+}
+.mob-toggle .mob-index-glyph i{
+  display:block;
+  height:1px;
+  background:currentColor;
+}
+
+
+/* H2 mobile Index bilingual label: inner language spans are text, not hamburger bars. */
+.mob-toggle .mob-index-label > span[lang]{
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  color:inherit!important;
+  line-height:inherit!important;
+}
