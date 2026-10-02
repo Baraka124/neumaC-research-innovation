@@ -164,3 +164,113 @@ body[data-page="home"] .home-affiliation-card__link:hover{
     backdrop-filter:none;
   }
 }
+
+
+/* ============================================================
+   PHASE 4 — INIBIC GLASS REFINEMENT
+   Cooler neutral glass, reduced verbal repetition, and a typographic
+   editorial arrow. Preserve the exact official embedded INIBIC mark.
+   ============================================================ */
+body[data-page="home"] .home-affiliation-card{
+  background-color:rgba(250,252,254,.72);
+  background-image:
+    linear-gradient(135deg,rgba(255,255,255,.64) 0%,rgba(250,252,254,.34) 48%,rgba(243,247,250,.20) 100%);
+  border:1px solid rgba(123,145,162,.22);
+  border-top-color:rgba(255,255,255,.88);
+  border-left-color:rgba(255,255,255,.70);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.44),
+    0 10px 32px rgba(12,34,54,.055);
+  -webkit-backdrop-filter:blur(18px) saturate(112%);
+  backdrop-filter:blur(18px) saturate(112%);
+}
+
+body[data-page="home"] .home-affiliation-card::before{
+  background:
+    linear-gradient(132deg,rgba(255,255,255,.42),rgba(255,255,255,.08) 38%,rgba(225,234,241,.05) 100%);
+}
+
+body[data-page="home"] .home-affiliation-card::after{
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.96),rgba(255,255,255,.36) 66%,rgba(255,255,255,0));
+}
+
+body[data-page="home"] .home-affiliation-card h3{
+  max-width:29ch;
+  margin-top:.42rem;
+  font-size:clamp(1.2rem,1.35vw,1.48rem);
+  line-height:1.12;
+  letter-spacing:-.018em;
+  color:#103a63;
+}
+
+body[data-page="home"] .home-affiliation-card__institution{
+  display:none!important;
+}
+
+body[data-page="home"] .home-affiliation-card p:not(.home-affiliation-card__eyebrow):not(.home-affiliation-card__institution){
+  max-width:48ch;
+  color:#405b72;
+}
+
+body[data-page="home"] .home-affiliation-card__link{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding-top:.9rem;
+  color:#0a6671;
+  border-top-color:rgba(79,104,122,.17);
+  text-decoration:none;
+}
+
+body[data-page="home"] .home-affiliation-card__link svg{
+  display:none!important;
+}
+
+body[data-page="home"] .home-affiliation-card__link::after{
+  content:"↗";
+  flex:0 0 auto;
+  display:inline-grid;
+  place-items:center;
+  width:1.45rem;
+  height:1.45rem;
+  font-family:var(--ff-body,'DM Sans',sans-serif);
+  font-size:1rem;
+  font-weight:500;
+  line-height:1;
+  color:#0a6671;
+  transform:translateY(-.5px);
+  transition:transform .18s var(--ease-clinical),color .18s ease;
+}
+
+body[data-page="home"] .home-affiliation-card__link:hover::after,
+body[data-page="home"] .home-affiliation-card__link:focus-visible::after{
+  transform:translate(.14rem,-.14rem);
+  color:#084f59;
+}
+
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  body[data-page="home"] .home-affiliation-card{
+    background:rgba(250,252,254,.96);
+  }
+}
+
+@media(max-width:640px){
+  body[data-page="home"] .home-affiliation-card{
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.86),rgba(247,250,253,.66));
+    -webkit-backdrop-filter:blur(10px) saturate(108%);
+    backdrop-filter:blur(10px) saturate(108%);
+  }
+  body[data-page="home"] .home-affiliation-card h3{
+    font-size:1.2rem;
+  }
+}
+
+@media(prefers-reduced-transparency:reduce){
+  body[data-page="home"] .home-affiliation-card{
+    background:rgba(250,252,254,.985);
+  }
+}

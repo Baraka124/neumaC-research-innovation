@@ -857,3 +857,70 @@ for (const width of [320, 390, 620]) {
     await expectNoHorizontalOverflow(page);
   });
 }
+
+
+test('INIBIC plaque avoids repeated visible institution naming', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/');
+
+  const title = page.locator('.home-affiliation-card h3');
+  const body = page.locator('.home-affiliation-card p:not(.home-affiliation-card__eyebrow):not(.home-affiliation-card__institution)');
+  const link = page.locator('.home-affiliation-card__link');
+
+  await expect(title).toBeVisible();
+  await expect(link).toBeVisible();
+
+  await expect(title).not.toHaveText(/^INIBIC$/i);
+  await expect(body).not.toContainText(/INIBIC/i);
+  await expect(link).not.toContainText(/INIBIC/i);
+});
+
+test('INIBIC plaque uses neutral glass material and editorial arrow', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/');
+
+  const material = await page.locator('.home-affiliation-card').evaluate(el => {
+    const s = getComputedStyle(el);
+    const link = el.querySelector('.home-affiliation-card__link');
+    const arrow = getComputedStyle(link, '::after');
+    return {
+      backgroundImage:s.backgroundImage,
+      backdrop:s.backdropFilter || s.webkitBackdropFilter || '',
+      borderTop:s.borderTopColor,
+      arrowContent:arrow.content,
+      arrowDisplay:arrow.display
+    };
+  });
+
+  expect(material.backgroundImage).toContain('linear-gradient');
+  expect(material.backdrop).toMatch(/blur\((1[0-9]|[2-9][0-9])px\)/);
+  expect(material.arrowContent).toContain('↗');
+  expect(material.arrowDisplay).not.toBe('none');
+});
+
+test('INIBIC plaque remains visually restrained on phone after glass refinement', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.goto('/');
+
+  const plaque = page.locator('.home-affiliation-card');
+  await expect(plaque).toBeVisible();
+
+  const data = await plaque.evaluate(el => {
+    const r=el.getBoundingClientRect();
+    const s=getComputedStyle(el);
+    return {
+      left:r.left,
+      right:r.right,
+      width:r.width,
+      viewport:window.innerWidth,
+      radius:parseFloat(s.borderTopLeftRadius),
+      backdrop:s.backdropFilter || s.webkitBackdropFilter || ''
+    };
+  });
+
+  expect(data.left).toBeGreaterThanOrEqual(-1);
+  expect(data.right).toBeLessThanOrEqual(data.viewport + 1);
+  expect(data.radius).toBeLessThanOrEqual(6);
+  expect(data.backdrop).toMatch(/blur\(/);
+  await expectNoHorizontalOverflow(page);
+});
