@@ -170,6 +170,13 @@
       nav.appendChild(signature);
     }
 
+    var mobileToggle=hdr.querySelector('#mobToggle');
+    if(mobileToggle&&!mobileToggle.querySelector('.mob-index-label')){
+      mobileToggle.innerHTML='<span class="mob-index-glyph" aria-hidden="true"><i></i><i></i><i></i></span><span class="mob-index-label">'+ixBi('Index','Índice')+'</span>';
+      mobileToggle.setAttribute('aria-label','Open index / Abrir índice');
+      mobileToggle.setAttribute('title','Index / Índice');
+    }
+
     var search=hdr.querySelector('#hdrSearchBtn');
     if(search&&!search.querySelector('.hdr-search-label')){
       var label=document.createElement('span');
