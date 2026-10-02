@@ -730,3 +730,73 @@ test('Team roster and public profile architecture remain intact after intro reco
   await expect(page.locator('#teamProfileSheet')).toBeAttached();
   await expectNoHorizontalOverflow(page);
 });
+
+
+for (const width of [390, 620, 768, 1024]) {
+  test(`Innovation clinical process remains ordered and contained at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width <= 390 ? 844 : 900 });
+    await page.goto('/innovation/');
+
+    const prompts = page.locator('.innovation-question');
+    await expect(prompts).toHaveCount(4);
+
+    const labels = await prompts.locator('h3').evaluateAll(nodes =>
+      nodes.map(node => (node.textContent || '').trim())
+    );
+
+    expect(labels[0]).toMatch(/Measure|Medir/);
+    expect(labels[1]).toMatch(/Decide|Decidir/);
+    expect(labels[2]).toMatch(/Work|Trabajar/);
+    expect(labels[3]).toMatch(/Connect|Conectar/);
+
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+test('Innovation phone uses a vertical process spine', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.goto('/innovation/');
+
+  const spine = await page.locator('.innovation-question-list').evaluate(el => {
+    const s = getComputedStyle(el, '::before');
+    return {
+      content:s.content,
+      width:parseFloat(s.width),
+      height:parseFloat(s.height),
+      left:parseFloat(s.left)
+    };
+  });
+
+  expect(spine.content).not.toBe('none');
+  expect(spine.width).toBeLessThanOrEqual(2);
+  expect(spine.height).toBeGreaterThan(80);
+});
+
+test('Innovation desktop keeps the process flat and horizontally connected', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/innovation/');
+
+  const prompt = page.locator('.innovation-question').first();
+  const line = await prompt.evaluate(el => {
+    const s = getComputedStyle(el, '::before');
+    return {
+      content:s.content,
+      width:parseFloat(s.width),
+      height:parseFloat(s.height)
+    };
+  });
+
+  expect(line.content).not.toBe('none');
+  expect(line.height).toBeLessThanOrEqual(2);
+  expect(line.width).toBeGreaterThan(40);
+
+  const projectClasses = await page.locator('.innovation-project-row').evaluateAll(items =>
+    items.map(el => el.className)
+  );
+
+  for (const className of projectClasses) {
+    expect(className).not.toMatch(/card|raised|floating/);
+  }
+
+  await expectNoHorizontalOverflow(page);
+});
