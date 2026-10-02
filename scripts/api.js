@@ -1737,10 +1737,14 @@ async function loadLineDetail() {
     }
     showLineEl(heroEl);
 
-    // Coordinator is the human anchor of the line. Approved public portraits
-    // override brittle backend URLs where we have an explicitly supplied asset.
+    // Coordinator is evidence of the line's scientific leadership, not the
+    // destination. The preview renders only approved/available evidence and
+    // remains independent from the live activity metrics below.
+    const leadershipSection = document.getElementById('lineLeadershipSection');
     const introSection = document.getElementById('lineIntroSection');
     const coordCard = document.getElementById('lineCoordinatorCard');
+    const signalsHost = document.getElementById('lineLeadershipSignals');
+    const trajectoryButton = document.getElementById('lineTrajectoryButton');
     if (coordCard && line.coordinator) {
       const c = line.coordinator;
       const displayName = String(c.full_name || '').replace(/^(?:Prof\.?\s*)?(?:Dr\.?|Dra\.?)\s+/i, '').trim();
@@ -1756,6 +1760,69 @@ async function loadLineDetail() {
         <p class="line-lead__affiliation">Servicio de Neumología · Área Sanitaria da Coruña e Cee</p>
         <div class="line-lead__bio">${coordinatorEditorialBio(c, line)}</div>
       </div>`;
+
+      const leadershipData = line.scientific_leadership || c.scientific_leadership || c.public_profile?.scientific_leadership || {};
+      const evidence = Array.isArray(leadershipData.evidence) ? leadershipData.evidence
+        : (Array.isArray(c.public_evidence) ? c.public_evidence : []);
+      const approved = evidence.filter(item => !item?.visibility || item.visibility === 'approved_public');
+      const groups = [
+        {
+          key:'leadership',
+          title:['Scientific leadership & contribution','Liderazgo y contribución científica'],
+          mark:'01',
+          types:new Set(['scientific_leadership','clinical_leadership','guideline','consensus','programme_milestone'])
+        },
+        {
+          key:'recognition',
+          title:['Recognition','Reconocimiento'],
+          mark:'02',
+          types:new Set(['recognition','award'])
+        },
+        {
+          key:'networks',
+          title:['Networks & societies','Redes y sociedades'],
+          mark:'03',
+          types:new Set(['society_role','network_role','registry_role'])
+        }
+      ];
+      const signalItems = groups.map(group => {
+        const item = approved
+          .filter(entry => group.types.has(String(entry?.type || '').toLowerCase()))
+          .sort((a,b) => Number(a?.display_priority ?? 50) - Number(b?.display_priority ?? 50))[0];
+        if (!item) return null;
+        const raw = item.description || item.title || '';
+        const en = typeof raw === 'object' ? (raw.en || raw.es || '') : String(raw);
+        const es = typeof raw === 'object' ? (raw.es || raw.en || '') : String(raw);
+        if (!en && !es) return null;
+        return `<article class="line-leadership__signal">
+          <span class="line-leadership__signal-mark" aria-hidden="true">${group.mark}</span>
+          <h3>${bilingual(group.title[0],group.title[1])}</h3>
+          <p>${bilingual(en || es,es || en)}</p>
+        </article>`;
+      }).filter(Boolean);
+
+      // A coordinator role is always factual line-level evidence, so sparse
+      // profiles receive one concise signal rather than an empty evidence rail.
+      if (!signalItems.length) {
+        signalItems.push(`<article class="line-leadership__signal">
+          <span class="line-leadership__signal-mark" aria-hidden="true">01</span>
+          <h3>${bilingual('Scientific leadership & contribution','Liderazgo y contribución científica')}</h3>
+          <p>${bilingual('Coordinates this research line within the neumACt programme.','Coordina esta línea de investigación dentro del programa neumACt.')}</p>
+        </article>`);
+      }
+
+      if (signalsHost) {
+        signalsHost.innerHTML = signalItems.slice(0,3).join('');
+        signalsHost.classList.toggle('is-single',signalItems.length === 1);
+      }
+
+      const hasTrajectory = Boolean(
+        approved.length ||
+        (Array.isArray(leadershipData.scholarly_identity) && leadershipData.scholarly_identity.length) ||
+        leadershipData.research_footprint
+      );
+      if (trajectoryButton) trajectoryButton.hidden = !hasTrajectory;
+      showLineEl(leadershipSection);
     }
 
     // Live activity metrics. Every number shown is derived from a public record
