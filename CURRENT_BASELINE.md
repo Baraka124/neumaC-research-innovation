@@ -189,3 +189,30 @@ P1.7 multidisciplinary stress coverage includes an ordinary clinician, research-
 P1.8 visual certification covers 390px, 1440px and 2048px and protects equal profile geometry and identity hierarchy across ordinary clinician and leadership states.
 
 Future Team work must preserve this equality invariant unless replaced by an explicitly stronger certified professional-identity model.
+
+
+## Scientific Masthead System — H2.1–H2.8 complete
+
+H2.1–H2.8 are implemented, certified and merged.
+
+Canonical baseline:
+`SCIENTIFIC_MASTHEAD_H2_BASELINE.md`
+
+Governing principles:
+
+> **The masthead is an institutional scientific interface, not a row of links.**
+
+> **Media is part of the interface architecture, not decoration placed inside it.**
+
+The global masthead now includes an integrated institutional lockup, editorial primary navigation, a separate utility interaction class, a scientific context rail, a bespoke navigation registration signature, state-driven Index/Search alignment, compact scroll composition and a controlled media/interface integration grammar.
+
+Responsive compositions are explicitly certified for phone, tablet, laptop and workstation rather than treated as scaled versions of one layout.
+
+H2 certification covers Home, Research, Innovation, Publications, Team and Research Line across 390px, 768px, 1440px and 2048px, with additional checks for Index/Search geometry, compact scroll state, mobile Index navigation, dynamic research-line context, horizontal containment and masthead/hero integration.
+
+The protected neumACt masthead signature is now the combination of:
+- Scientific Context Rail;
+- Media–Interface Integration;
+- Scientific Registration Language.
+
+Future masthead work should preserve H2 unless a later milestone replaces it with stronger evidence and regression coverage.
