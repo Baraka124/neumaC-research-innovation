@@ -126,6 +126,11 @@ for(const viewport of VIEWPORTS){
       await expect(content.locator('#teamProfileName')).toBeVisible();
       await expect(content).toContainText(/Professional identity|Identidad profesional/);
 
+      await page.evaluate(() => {
+        const cookie=document.getElementById('cookieBanner');
+        if(cookie)cookie.style.display='none';
+      });
+
       const geometry=await sheet.evaluate(el=>{
         const r=el.getBoundingClientRect();
         return {left:r.left,right:r.right,width:r.width,height:r.height,viewport:window.innerWidth};
