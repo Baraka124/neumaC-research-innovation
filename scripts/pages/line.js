@@ -139,12 +139,49 @@
       </div>`).join('');
   }
 
+  const capabilityLabels = {
+    clinical_domains:['Clinical domains','Ámbitos clínicos'],
+    clinical_capabilities:['Clinical capabilities','Capacidades clínicas'],
+    research_capabilities:['Research capabilities','Capacidades de investigación'],
+    translational_capabilities:['Translational capabilities','Capacidades traslacionales'],
+    digital_innovation_capabilities:['Digital & innovation capabilities','Capacidades digitales e innovación']
+  };
+
+  function capabilityGroupsMarkup(line){
+    const groups = safeArray(line?.capability_groups)
+      .filter(group => group && (!group.visibility || group.visibility === 'approved_public'))
+      .map(group => {
+        const type = String(group.type || '').trim();
+        const fallbackLabel = capabilityLabels[type] || ['Scientific capabilities','Capacidades científicas'];
+        const labelPair = textPair(group.label);
+        const summaryPair = textPair(group.summary);
+        const items = safeArray(group.items)
+          .filter(item => !item || typeof item !== 'object' || !item.visibility || item.visibility === 'approved_public')
+          .map(readableItem)
+          .filter(Boolean)
+          .sort((a,b) => Number(a?.display_priority ?? 50) - Number(b?.display_priority ?? 50));
+        if (!items.length) return '';
+        return `<section class="line-capability-group" data-capability-type="${esc(type || 'general')}">
+          <div class="line-capability-group__head">
+            <h3>${bi(labelPair[0] || fallbackLabel[0],labelPair[1] || fallbackLabel[1])}</h3>
+            ${summaryPair[0] || summaryPair[1] ? `<p>${bi(summaryPair[0] || summaryPair[1],summaryPair[1] || summaryPair[0])}</p>` : ''}
+          </div>
+          <ul class="line-capability-group__items">
+            ${items.map(item => `<li>${item.en === item.es ? esc(item.en) : bi(item.en,item.es)}${item.meta ? `<small>${esc(item.meta)}</small>` : ''}</li>`).join('')}
+          </ul>
+        </section>`;
+      }).filter(Boolean);
+    return groups.join('');
+  }
+
   function renderOverview(line){
     const section = $('lineOverviewSection');
     if (!section || !line) return;
 
     const narrative = paragraphMarkup(line.deep_content);
-    const capabilities = listMarkup(line.capabilities);
+    const groupedCapabilities = capabilityGroupsMarkup(line);
+    const legacyCapabilities = groupedCapabilities ? '' : listMarkup(line.capabilities);
+    const capabilities = groupedCapabilities || legacyCapabilities;
     const track = listMarkup(line.track_record);
 
     const narrativeEl = $('lineOverviewNarrative');
@@ -154,7 +191,10 @@
     const trackList = $('lineTrackRecordList');
 
     if (narrativeEl) narrativeEl.innerHTML = narrative;
-    if (capabilitiesList) capabilitiesList.innerHTML = capabilities;
+    if (capabilitiesList) {
+      capabilitiesList.classList.toggle('is-grouped',Boolean(groupedCapabilities));
+      capabilitiesList.innerHTML = capabilities;
+    }
     if (trackList) trackList.innerHTML = track;
 
     if (capabilitiesBlock) capabilitiesBlock.hidden = !capabilities;
