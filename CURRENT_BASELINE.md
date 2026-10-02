@@ -92,3 +92,21 @@ Implemented identities:
 - Innovation — Clinical Process Spine
 
 The site remains predominantly flat outside these authored opening transitions. Phase 4 is visual certification/polish only; it should not reopen the page identities without evidence from screenshots or a regression.
+
+
+## Floating Editorial Re-composition — Phase 4 complete
+
+Phase 4 visual certification and polish is complete.
+
+Canonical closeout baseline:
+`FLOATING_EDITORIAL_PHASE4_BASELINE.md`
+
+Completed evidence-based refinements:
+- mobile masthead / Index trigger geometry;
+- INIBIC Architectural Glass Plaque material and hierarchy;
+- Publications empty-state rhythm;
+- Team hero illustration restraint.
+
+Research and Innovation required no Phase 4 production changes after visual review.
+
+Phases 1–4 are now closed as the stable Floating Editorial baseline. Future design work should begin as a new milestone rather than continuing Phase 4 by default.
