@@ -513,3 +513,22 @@ a.line-network-row:focus-visible{outline:2px solid #00899c;outline-offset:3px}
   .line-network-row__period{grid-column:1}
   .line-network-row__arrow{grid-column:2;grid-row:1}
 }
+
+
+/* ============================================================
+   R1.7 — PEOPLE & CONTRIBUTIONS
+   Every person is presented through a public contribution basis.
+   ============================================================ */
+.line-contributor__evidence{margin-top:.85rem}
+.line-contributor__evidence-label{
+  margin:0 0 .2rem;
+  color:#087883;
+  font:500 .53rem/1.35 var(--ff-mono);
+  letter-spacing:.075em;
+  text-transform:uppercase;
+}
+.line-contributor__evidence .line-contributor__sources{margin-top:0}
+.line-contribution-source--membership .line-contribution-source__title{
+  color:#5e7186;
+  font-style:italic;
+}
