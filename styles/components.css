@@ -2149,3 +2149,20 @@ body.has-scientific-masthead{
   }
   .hdr--scientific + .global-index{top:0!important}
 }
+
+
+/* H2 resilient Index positioning: explicit component state, no DOM adjacency dependency. */
+.global-index--h2{
+  position:fixed!important;
+  left:0!important;right:0!important;bottom:0!important;
+  top:calc(var(--h2-main,76px) + var(--h2-rail,27px))!important;
+}
+body.has-scrolled-masthead .global-index--h2{
+  top:calc(64px + var(--h2-rail,27px))!important;
+}
+body.has-compact-masthead .global-index--h2{
+  top:64px!important;
+}
+@media(max-width:880px){
+  .global-index--h2{top:0!important}
+}
