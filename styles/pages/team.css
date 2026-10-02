@@ -381,36 +381,36 @@ body[data-page="team"] .team-hero__context>p{
 
 
 /* ============================================================
-   PHASE 4 — TEAM HERO RESTRAINT
-   Keep the synthetic multidisciplinary illustration as context,
-   while preventing it from overpowering the institutional page.
+   TEAM HERO FULL-SCENE REGRESSION FIX
+   Preserve each authored responsive asset without crop/zoom.
+   The source files are intentionally composed for desktop, tablet and phone.
    ============================================================ */
 @media(min-width:901px){
   body[data-page="team"] .team-visual-hero__media{
-    aspect-ratio:auto;
-    height:clamp(300px,24vw,390px);
+    aspect-ratio:3 / 1;
+    height:auto;
   }
   body[data-page="team"] .team-visual-hero__media img{
-    object-position:50% 48%;
+    object-position:50% 50%;
   }
 }
 
 @media(min-width:641px) and (max-width:900px){
   body[data-page="team"] .team-visual-hero__media{
-    aspect-ratio:auto;
-    height:clamp(240px,32vw,285px);
+    aspect-ratio:1400 / 651;
+    height:auto;
   }
   body[data-page="team"] .team-visual-hero__media img{
-    object-position:50% 48%;
+    object-position:50% 50%;
   }
 }
 
 @media(max-width:640px){
   body[data-page="team"] .team-visual-hero__media{
-    aspect-ratio:auto;
-    height:clamp(190px,52vw,215px);
+    aspect-ratio:16 / 9;
+    height:auto;
   }
   body[data-page="team"] .team-visual-hero__media img{
-    object-position:50% 48%;
+    object-position:50% 50%;
   }
 }
