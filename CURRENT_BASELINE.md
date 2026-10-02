@@ -216,3 +216,13 @@ The protected neumACt masthead signature is now the combination of:
 - Scientific Registration Language.
 
 Future masthead work should preserve H2 unless a later milestone replaces it with stronger evidence and regression coverage.
+
+
+## Elite Institutional Refinements — 01–04 complete
+
+Refinements 01–04 are implemented and certified.
+
+Canonical baseline:
+`ELITE_REFINEMENTS_01_04_BASELINE.md`
+
+The site now has canonical semantic typography roles, shared section rhythm, a governed scientific media primitive and a reusable scientific figure/process language. These systems are certified across principal public pages and 390px / 1440px / 2048px reference widths.
