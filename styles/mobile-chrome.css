@@ -215,3 +215,16 @@
   height:1px;
   background:currentColor;
 }
+
+
+/* H2 mobile Index bilingual label: inner language spans are text, not hamburger bars. */
+.mob-toggle .mob-index-label > span[lang]{
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  color:inherit!important;
+  line-height:inherit!important;
+}
