@@ -1,4 +1,6 @@
 > Canonical visual and editorial principles: see `DESIGN_PRINCIPLES.md`.
+>
+> Canonical responsive/composition rules: see `RESPONSIVE_EDITORIAL_COMPOSITION_CONTRACT.md`. Responsive safety and device-corridor rules in that contract take precedence over general visual guidance.
 
 # neumACt R&I — Site Reference Guide
 

@@ -57,3 +57,20 @@ Open: `http://localhost:8080/`
 - Index chapter numbering is removed from the public navigation surface.
 - Shared masthead, Index/Search and footer have explicit workstation, tablet and small-phone calibration corridors.
 - Responsive certification targets include 1920×1080, 1600×900, 1366×768, 1024×768, 834×1194, 430×932, 390×844, 375×812 and 360×800.
+
+
+## M6.1–M6.4 responsive editorial system
+- M6.1 makes `Index / Índice` part of the navigation family, removes Contact from the first-order masthead, uses an explicit mobile Index trigger and adds small-phone Research Lines disclosure.
+- M6.3A refines phone Index/Search choreography without introducing a second runtime owner.
+- M6.3B treats 881–1440px as a dedicated laptop corridor, protecting masthead containment and the Research/Pedro split-sheet from workstation stretch.
+- M6.3C preserves a broad workstation Index while constraining Search interaction measure and excess vertical footprint.
+- Automated certification covers phone, tablet, laptop, wide desktop and 2048px workstation containment/interaction invariants.
+
+## M6.4 — Responsive editorial composition contract
+`RESPONSIVE_EDITORIAL_COMPOSITION_CONTRACT.md` is now the canonical governing specification for responsive composition, Index/Search behaviour, typography ceilings, reading measure, Research/Pedro containment, media cropping, floating-surface behaviour, institutional affiliation treatment and future Floating Editorial Re-composition work.
+
+The durable rule is:
+
+> **Mobile, laptop and workstation are different compositions, not three scales of one composition.**
+
+Future visual phases must preserve the protected responsive invariants unless an explicit later phase replaces them with equivalent or stronger cross-device evidence and regression coverage.

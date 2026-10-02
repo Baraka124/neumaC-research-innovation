@@ -37,7 +37,9 @@ This is the canonical technical reference after the 2026 consolidation. The obje
 │       ├── report.js
 │       └── feed.js
 │
-└── SITE_GUIDE.md       # editorial/design reference
+├── SITE_GUIDE.md       # editorial/design reference
+├── RESPONSIVE_EDITORIAL_COMPOSITION_CONTRACT.md # canonical responsive/composition contract
+└── FLOATING_EDITORIAL_RECOMPOSITION_SPEC.md    # future floating phase, subordinate to responsive contract
 ```
 
 ## CSS contract
@@ -187,3 +189,28 @@ Backend content can outlive public identity changes. The public rendering layer 
 ## Global masthead ownership — H1 Editorial Index
 
 The public masthead is a shared system. `styles/components.css` owns its visual grammar and `scripts/site.js` owns Index/Search state, responsive behaviour, focus management and navigation interactions. Page stylesheets must not fork `.global-index`, `.hdr-index-btn` or the canonical `.hdr*` system. The desktop primary navigation remains visible; `Index / Índice` opens the full programme map, while the Research chevron remains a narrow six-line fast path. On ≤880px layouts, the existing drawer markup is retained only as fallback and the hamburger opens the full-height editorial Index.
+
+
+## M6 responsive composition ownership
+
+The progressive shared layers loaded by `scripts/bootstrap.js` are intentional and sit on top of the consolidated canonical CSS architecture:
+
+- `styles/editorial-surfaces.css` — shared elevation/floating grammar.
+- `styles/mobile-chrome.css` — mobile shared chrome refinement.
+- `styles/workstation.css` — final wide-screen geometry authority.
+- `styles/editorial-rhythm.css` — shared type/spacing rhythm.
+- `styles/editorial-hierarchy.css` — hierarchy/contrast refinement.
+- `styles/editorial-media.css` — media discipline.
+- `styles/index-navigation.css` — device-aware Index/navigation enhancement.
+- `styles/inibic-affiliation.css` — institutional affiliation treatment.
+
+`scripts/site.js` remains the canonical owner of Editorial Index/Search state. `scripts/index-navigation.js` enhances placement/disclosure with bounded readiness retries only; it is not a second state owner.
+
+The governing responsive rules are defined in `RESPONSIVE_EDITORIAL_COMPOSITION_CONTRACT.md`. In particular:
+- phone, laptop and workstation are distinct compositions;
+- 881–1440px is a protected laptop corridor;
+- `workstation.css` must not distort laptop geometry;
+- wide Search interaction measure remains constrained even when the outer folio widens;
+- the Research hero uses normal-flow overlap and must keep Pedro/leadership contained at all certified widths.
+
+The current responsive certification suite includes 390, 620, 768, 1024, 1440, 1680 and 2048px corridors plus targeted laptop and workstation assertions.
