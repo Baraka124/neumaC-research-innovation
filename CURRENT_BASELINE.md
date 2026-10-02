@@ -74,3 +74,21 @@ The durable rule is:
 > **Mobile, laptop and workstation are different compositions, not three scales of one composition.**
 
 Future visual phases must preserve the protected responsive invariants unless an explicit later phase replaces them with equivalent or stronger cross-device evidence and regression coverage.
+
+
+## Floating Editorial Re-composition — Phase 3 implemented
+
+The page-specific recomposition defined in Phase 1/2 is now implemented and protected by regression coverage.
+
+Canonical implementation baseline:
+`FLOATING_EDITORIAL_PHASE3_BASELINE.md`
+
+Implemented identities:
+- Home — Open Editorial Threshold
+- INIBIC — Architectural Glass Plaque
+- Research — Scientific Margin
+- Publications — Open Research Folio
+- Team — Quiet Open Sheet
+- Innovation — Clinical Process Spine
+
+The site remains predominantly flat outside these authored opening transitions. Phase 4 is visual certification/polish only; it should not reopen the page identities without evidence from screenshots or a regression.

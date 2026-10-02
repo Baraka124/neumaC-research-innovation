@@ -800,3 +800,28 @@ test('Innovation desktop keeps the process flat and horizontally connected', asy
 
   await expectNoHorizontalOverflow(page);
 });
+
+
+for (const viewport of [
+  { width:1440, height:900, label:'laptop' },
+  { width:2048, height:1152, label:'workstation' }
+]) {
+  test(`Phase 3 editorial identities coexist without overflow on ${viewport.label}`, async ({ page }) => {
+    const checks = [
+      ['/', '.home-programme-panel'],
+      ['/clinical/', '.research-hero__sheet'],
+      ['/news/', '.pub-hero__panel'],
+      ['/team/', '.team-hero__grid'],
+      ['/innovation/', '.innovation-question-list']
+    ];
+
+    await page.setViewportSize({ width:viewport.width, height:viewport.height });
+
+    for (const [path, selector] of checks) {
+      await page.goto(path);
+      await expect(page.locator(selector)).toBeVisible();
+      await expectContainedInViewport(page.locator(selector), viewport.width);
+      await expectNoHorizontalOverflow(page);
+    }
+  });
+}
