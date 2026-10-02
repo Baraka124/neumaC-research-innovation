@@ -286,3 +286,82 @@ for (const width of [1680, 2048]) {
     await expectNoHorizontalOverflow(page);
   });
 }
+
+
+for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
+  test(`Publications folio remains contained and restrained at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
+    await page.goto('/news/');
+
+    const folio = page.locator('.pub-hero__panel');
+    const identity = page.locator('.pub-hero__identity');
+    const context = page.locator('.pub-hero__context');
+
+    await expect(folio).toBeVisible();
+    await expectContainedInViewport(folio, width);
+    await expect(identity).toBeVisible();
+    await expect(context).toBeVisible();
+
+    const geo = await folio.evaluate(el => {
+      const r = el.getBoundingClientRect();
+      const s = getComputedStyle(el);
+      return {
+        width:r.width,
+        left:r.left,
+        right:r.right,
+        position:s.position,
+        transform:s.transform,
+        radius:s.borderTopLeftRadius,
+        vw:window.innerWidth
+      };
+    });
+
+    expect(geo.width).toBeGreaterThan(0);
+    expect(geo.left).toBeGreaterThanOrEqual(-1);
+    expect(geo.right).toBeLessThanOrEqual(geo.vw + 1);
+    expect(geo.transform).toBe('none');
+
+    if (width <= 820) {
+      const cols = await folio.evaluate(el => getComputedStyle(el).gridTemplateColumns);
+      expect(cols.split(' ').length).toBeLessThanOrEqual(2);
+    }
+
+    if (width >= 1680) {
+      expect(geo.width).toBeLessThanOrEqual(1482);
+    }
+
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+test('Publications mobile folio stays in normal flow without absolute positioning', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.goto('/news/');
+
+  const geometry = await page.locator('.pub-hero__panel').evaluate(el => {
+    const s=getComputedStyle(el);
+    const r=el.getBoundingClientRect();
+    return {
+      position:s.position,
+      transform:s.transform,
+      left:r.left,
+      right:r.right,
+      viewport:window.innerWidth
+    };
+  });
+
+  expect(geometry.position).toBe('relative');
+  expect(geometry.transform).toBe('none');
+  expect(geometry.left).toBeGreaterThanOrEqual(-1);
+  expect(geometry.right).toBeLessThanOrEqual(geometry.viewport + 1);
+});
+
+test('Publications feed remains flat after folio recomposition', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/news/');
+
+  await expect(page.locator('.pub-item')).not.toHaveClass(/card|raised|floating/);
+  await expect(page.locator('.pub-feature')).toBeVisible();
+  await expect(page.locator('.pub-index')).toBeVisible();
+  await expectNoHorizontalOverflow(page);
+});
