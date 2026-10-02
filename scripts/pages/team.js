@@ -60,7 +60,7 @@
     6:['Precision Medicine & Clinical Innovation','Medicina de precisión e innovación clínica']
   };
 
-  const state={people:[],lines:[],memberships:new Map(),rosterPeople:[],activePersonId:null,lastProfileTrigger:null,profileCloseTimer:null,historyGuard:false};
+  const state={people:[],lines:[],memberships:new Map(),rosterPeople:[],profilePeople:[],activePersonId:null,lastProfileTrigger:null,profileCloseTimer:null,historyGuard:false};
   const $=id=>document.getElementById(id);
   const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const bi=(en,es)=>`<span lang="en">${esc(en)}</span><span lang="es">${esc(es)}</span>`;
@@ -131,10 +131,95 @@
     }
     const scholar=safeUrl(person?.scholar_url||'');
     if(scholar)links.push({label:'Google Scholar',url:scholar});
+    const pubmed=safeUrl(person?.pubmed_url||'');
+    if(pubmed)links.push({label:'PubMed',url:pubmed});
+    const webOfScience=safeUrl(person?.web_of_science_url||person?.researcher_id_url||'');
+    if(webOfScience)links.push({label:'Web of Science',url:webOfScience});
+    const institutional=safeUrl(person?.institutional_profile_url||'');
+    if(institutional)links.push({label:'Institutional profile',url:institutional});
     const researchgate=safeUrl(person?.researchgate_url||'');
     if(researchgate)links.push({label:'ResearchGate',url:researchgate});
     return links;
   }
+  function publicItems(...values){
+    const raw=values.flatMap(value=>Array.isArray(value)?value:(value?[value]:[]));
+    return raw.filter(item=>item&&(
+      typeof item!=='object' ||
+      !item.visibility ||
+      item.visibility==='approved_public'
+    ));
+  }
+
+  function itemPair(item){
+    if(item==null)return null;
+    if(typeof item==='string'||typeof item==='number'){
+      const value=String(item).trim();
+      return value?[value,value]:null;
+    }
+    if(typeof item!=='object')return null;
+    const source=item.label||item.title||item.name||item.description||item.value||'';
+    if(source&&typeof source==='object'){
+      const en=String(source.en||source.english||source.es||'').trim();
+      const es=String(source.es||source.spanish||source.en||'').trim();
+      return en||es?[en||es,es||en]:null;
+    }
+    const en=String(item.label_en||item.title_en||item.name_en||item.description_en||source||item.label_es||item.title_es||'').trim();
+    const es=String(item.label_es||item.title_es||item.name_es||item.description_es||source||item.label_en||item.title_en||'').trim();
+    return en||es?[en||es,es||en]:null;
+  }
+
+  function evidenceList(items){
+    const rows=publicItems(...items).map(item=>{
+      const pair=itemPair(item);
+      if(!pair)return '';
+      const meta=typeof item==='object'?[item.organisation,item.role,item.period,item.year].filter(Boolean).join(' · '):'';
+      return `<li class="team-profile__evidence-item"><span>${bi(pair[0],pair[1])}</span>${meta?`<small>${esc(meta)}</small>`:''}</li>`;
+    }).filter(Boolean);
+    return rows.length?`<ul class="team-profile__evidence-list">${rows.join('')}</ul>`:'';
+  }
+
+  function professionalEvidence(person){
+    return {
+      expertise:publicItems(person?.clinical_expertise,person?.expertise_areas,person?.areas_of_expertise,person?.clinical_domains),
+      current:publicItems(person?.professional_contributions,person?.current_contributions,person?.clinical_contributions,person?.public_contributions),
+      scientific:publicItems(person?.scientific_contributions,person?.research_contributions,person?.innovation_contributions),
+      networks:publicItems(person?.professional_networks,person?.scientific_networks,person?.society_roles,person?.network_roles)
+    };
+  }
+
+  function leadershipEvidence(person){
+    const items=publicItems(person?.leadership_roles);
+    if(person?.coordinates_line){
+      const line=lineForCoordinator(person)||person.coordinates_line;
+      const pair=lineNamePair(line);
+      items.unshift({
+        label:{en:`Coordinates research line: ${pair[0]}`,es:`Coordina la línea de investigación: ${pair[1]}`},
+        type:'research_line_coordination',
+        line_id:line?.id
+      });
+    }
+    if(person?.is_chief_of_department){
+      items.unshift({
+        label:{en:'Department leadership · Respiratory Medicine',es:'Dirección de servicio · Neumología'},
+        type:'department_leadership'
+      });
+    }
+    return items;
+  }
+
+  function researchFootprint(person){
+    const fp=person?.research_footprint;
+    if(!fp||typeof fp!=='object')return '';
+    const metrics=[
+      fp.publications!=null?['Publications','Publicaciones',fp.publications]:null,
+      fp.citations!=null?['Citations','Citas',fp.citations]:null,
+      fp.h_index!=null?['h-index','Índice h',fp.h_index]:null
+    ].filter(Boolean);
+    if(!metrics.length)return '';
+    return `<div class="team-profile__metrics">${metrics.map(m=>`<div><strong>${esc(m[2])}</strong><span>${bi(m[0],m[1])}</span></div>`).join('')}</div>
+      ${fp.source||fp.verified_at?`<p class="team-profile__metric-source">${esc([fp.source,fp.verified_at].filter(Boolean).join(' · '))}</p>`:''}`;
+  }
+
   function rosterPortrait(person){
     const src=photoUrl(person),ini=initials(nameOf(person));
     const pid=esc(person?.id||'');
@@ -266,18 +351,18 @@
   }
 
   function profilePosition(person){
-    const index=state.rosterPeople.findIndex(p=>p.id===person?.id);
+    const index=state.profilePeople.findIndex(p=>p.id===person?.id);
     if(index<0)return {index:-1,previous:null,next:null};
     return {
       index,
-      previous:index>0?state.rosterPeople[index-1]:null,
-      next:index<state.rosterPeople.length-1?state.rosterPeople[index+1]:null
+      previous:index>0?state.profilePeople[index-1]:null,
+      next:index<state.profilePeople.length-1?state.profilePeople[index+1]:null
     };
   }
 
   function profileNavigation(person){
     const pos=profilePosition(person);
-    if(pos.index<0||state.rosterPeople.length<2)return '';
+    if(pos.index<0||state.profilePeople.length<2)return '';
     const prev=pos.previous;
     const next=pos.next;
     return `<nav class="team-profile__person-nav" aria-label="${document.documentElement.dataset.lang==='es'?'Navegar entre perfiles':'Navigate team profiles'}">
@@ -285,7 +370,7 @@
         <span class="team-profile__person-nav-direction">${bi('Previous','Anterior')}</span>
         <span class="team-profile__person-nav-name">${prev?esc(nameOf(prev)):'—'}</span>
       </button>
-      <span class="team-profile__person-nav-count">${pos.index+1} / ${state.rosterPeople.length}</span>
+      <span class="team-profile__person-nav-count">${pos.index+1} / ${state.profilePeople.length}</span>
       <button type="button" class="team-profile__person-nav-btn team-profile__person-nav-btn--next" ${next?`data-profile-nav="${esc(next.id)}"`:'disabled'}>
         <span class="team-profile__person-nav-direction">${bi('Next','Siguiente')}</span>
         <span class="team-profile__person-nav-name">${next?esc(nameOf(next)):'—'}</span>
@@ -343,7 +428,7 @@
   function resolvePersonParam(value){
     const key=String(value||'').trim();
     if(!key)return null;
-    return state.rosterPeople.find(p=>p.id===key||personParam(p)===key)||null;
+    return state.profilePeople.find(p=>p.id===key||personParam(p)===key)||null;
   }
 
   function openProfile(personId,trigger,{history=true}={}){
@@ -390,7 +475,7 @@
       const nav=event.target.closest('[data-profile-nav]');
       if(!nav)return;
       const nextId=nav.dataset.profileNav;
-      const person=state.rosterPeople.find(p=>p.id===nextId);
+      const person=state.profilePeople.find(p=>p.id===nextId);
       if(!person)return;
       historyPush(person);
       state.activePersonId=person.id;
@@ -413,7 +498,7 @@
       else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
     });
     window.addEventListener('popstate',()=>{
-      if(!state.rosterPeople.length)return;
+      if(!state.profilePeople.length)return;
       const param=new URL(location.href).searchParams.get('person');
       state.historyGuard=true;
       const person=resolvePersonParam(param);
@@ -440,6 +525,7 @@
       const results=await Promise.allSettled([apiFetch('/api/team/website'),apiFetch('/api/research-lines/website')]);
       if(results[0].status!=='fulfilled'||!Array.isArray(results[0].value?.data))throw new Error('Public team unavailable');
       state.people=results[0].value.data.filter(p=>p&&p.is_public!==false);
+      state.profilePeople=[...state.people].sort((a,b)=>nameOf(a).localeCompare(nameOf(b),undefined,{sensitivity:'base'}));
       state.lines=results[1].status==='fulfilled'&&Array.isArray(results[1].value?.data)?results[1].value.data:[];
       for(const p of state.people){
         if(p.coordinates_line)addRelation(p.id,p.coordinates_line);
