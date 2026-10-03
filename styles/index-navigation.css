@@ -614,3 +614,41 @@
   .global-index--h2 .global-index__surface{max-height:min(650px,calc(100dvh - 106px))!important}
   .global-index--h2.is-search .global-index__surface{max-height:min(650px,calc(100dvh - 106px))!important}
 }
+
+
+/* H2 chapter-aware Index: chapter rail controls the centre register in place.
+   Preserve existing geometry; only normalize button semantics and row cue. */
+.global-index__chapter[data-index-chapter]{
+  width:100%;
+  appearance:none;
+  -webkit-appearance:none;
+  border-left:0;
+  border-right:0;
+  border-top:0;
+  font:inherit;
+  text-align:left;
+  cursor:pointer;
+}
+.global-index__chapter[data-index-chapter]:focus-visible{
+  outline:2px solid rgba(23,173,182,.42);
+  outline-offset:2px;
+}
+.global-index__line--chapter{
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center;
+  gap:.85rem;
+}
+.global-index__line-arrow{
+  color:#188e96;
+  font-size:.72rem;
+  line-height:1;
+  opacity:.72;
+}
+@media(max-width:620px){
+  .global-index__chapter[data-index-chapter]{
+    background:transparent;
+  }
+  .global-index__line--chapter{
+    min-height:46px!important;
+  }
+}
