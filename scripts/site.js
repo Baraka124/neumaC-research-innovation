@@ -476,7 +476,14 @@
     if(!indexState.results)return;
     var q=(indexState.input?indexState.input.value:'').trim().toLowerCase();
     if(!q){
-      indexState.results.innerHTML='<div class="global-search__prompt"><strong>'+ixBi('Research · People · Publications · Innovation','Investigación · Personas · Publicaciones · Innovación')+'</strong><p>'+ixBi('Type a name, topic or DOI.','Escriba un nombre, tema o DOI.')+'</p></div>';
+      indexState.results.innerHTML='<section class="global-search__discovery" aria-labelledby="globalSearchDiscoveryTitle">'
+        +'<div class="global-search__discovery-intro"><span class="global-search__discovery-kicker">'+ixBi('Search scope','Ámbito de búsqueda')+'</span><h2 id="globalSearchDiscoveryTitle">'+ixBi('Discover across the neumACt programme','Explorar el programa neumACt')+'</h2><p>'+ixBi('Search by name, clinical topic, research line, publication title, author or DOI.','Busque por nombre, tema clínico, línea de investigación, título de publicación, autor o DOI.')+'</p></div>'
+        +'<div class="global-search__scope-list">'
+        +'<div class="global-search__scope"><span class="global-search__scope-no">01</span><strong>'+ixBi('Research','Investigación')+'</strong><small>'+ixBi('Programme and research lines','Programa y líneas de investigación')+'</small></div>'
+        +'<div class="global-search__scope"><span class="global-search__scope-no">02</span><strong>'+ixBi('People','Personas')+'</strong><small>'+ixBi('Multidisciplinary professional profiles','Perfiles profesionales multidisciplinares')+'</small></div>'
+        +'<div class="global-search__scope"><span class="global-search__scope-no">03</span><strong>'+ixBi('Publications','Publicaciones')+'</strong><small>'+ixBi('Titles, authors, topics and DOI','Títulos, autores, temas y DOI')+'</small></div>'
+        +'<div class="global-search__scope"><span class="global-search__scope-no">04</span><strong>'+ixBi('Innovation','Innovación')+'</strong><small>'+ixBi('Clinical innovation projects','Proyectos de innovación clínica')+'</small></div>'
+        +'</div></section>';
       return;
     }
     var lang=root.dataset.lang==='es'?1:0;
