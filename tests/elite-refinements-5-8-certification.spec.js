@@ -23,8 +23,7 @@ test('Refinement 05 — principal imagery declares governed photography roles',a
     ['/clinical/', '.research-hero__media img','media-photo--editorial'],
     ['/clinical/', '.research-leadership__portrait img','media-photo--documentary'],
     ['/innovation/', '.innovation-hero__media img','media-photo--editorial'],
-    ['/news/', '.pub-hero__media img','media-photo--editorial'],
-    ['/team/', '#teamHeroImage','media-photo--illustrative']
+    ['/news/', '.pub-hero__media img','media-photo--editorial']
   ];
   for(const [url,selector,cls] of targets){
     await page.goto(url);
@@ -35,6 +34,15 @@ test('Refinement 05 — principal imagery declares governed photography roles',a
     expect(style.fit).toBe('cover');
     if(cls!=='media-photo--placeholder') expect(style.filter).toBe('none');
   }
+});
+
+test('Refinement 05 — Team opening does not manufacture illustrative photography',async({page})=>{
+  await emptyApi(page);
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/team/');
+  await expect(page.locator('.team-hero--people')).toBeVisible();
+  await expect(page.locator('#teamHeroImage,.team-visual-hero,.media-photo--illustrative')).toHaveCount(0);
+  await noOverflow(page);
 });
 
 test('Refinement 05 — Team runtime distinguishes documentary and placeholder photography',async({page})=>{
@@ -117,12 +125,14 @@ for(const vp of [
   {name:'laptop',width:1440,height:900},
   {name:'workstation',width:2048,height:1152}
 ]){
-  test(`Refinements 05–08 visual — Team photography ${vp.name}`,async({page})=>{
+  test(`Refinements 05–08 visual — Team people-led opening ${vp.name}`,async({page})=>{
     await emptyApi(page);
     await page.setViewportSize({width:vp.width,height:vp.height});
     await page.emulateMedia({reducedMotion:'reduce'});
     await page.goto('/team/');
-    await expect(page.locator('#teamHeroImage')).toBeVisible();
+    await expect(page.locator('.team-hero--people')).toBeVisible();
+    await expect(page.locator('.team-hero__disciplines')).toBeVisible();
+    await expect(page.locator('.team-visual-hero')).toHaveCount(0);
     await noOverflow(page);
     await page.screenshot({path:path.join(OUTPUT,`elite-5-8-team-${vp.name}-${vp.width}.png`),fullPage:false,animations:'disabled'});
   });
@@ -137,3 +147,14 @@ for(const vp of [
     await page.screenshot({path:path.join(OUTPUT,`elite-5-8-publications-empty-${vp.name}-${vp.width}.png`),fullPage:false,animations:'disabled'});
   });
 }
+
+
+test('Team opening is people-led and contains no synthetic rabbit hero assets', async ({ page }) => {
+  const response = await page.request.get('/team/');
+  expect(response.ok()).toBe(true);
+  const html = await response.text();
+  expect(html).toContain('team-hero--people');
+  expect(html).toContain('team-hero__disciplines');
+  expect(html).not.toContain('multidisciplinary-rabbit-team');
+  expect(html).not.toContain('rabbit-team');
+});

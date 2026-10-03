@@ -111,8 +111,7 @@ for(const vp of [
 for(const target of [
   ['/innovation/','.innovation-hero__media'],
   ['/clinical/','.research-hero__media'],
-  ['/news/','.pub-hero__media'],
-  ['/team/','.team-visual-hero__media']
+  ['/news/','.pub-hero__media']
 ]){
   test(`E — hero media is clean without generic H2 decoration on ${target[0]}`,async({page})=>{
     await stubApi(page);
@@ -129,6 +128,17 @@ for(const target of [
     await noOverflow(page);
   });
 }
+
+test('E — Team uses a clean people-led opening without generic H2 media decoration',async({page})=>{
+  await stubApi(page);
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/team/');
+  const hero=page.locator('.team-hero--people');
+  await expect(hero).toBeVisible();
+  await expect(page.locator('.team-visual-hero')).toHaveCount(0);
+  await expect(page.locator('.h2-media-arc,.h2-media-trace,.h2-media-registration')).toHaveCount(0);
+  await noOverflow(page);
+});
 
 test('C — Search remains integrated inside refined Index',async({page})=>{
   await stubApi(page);

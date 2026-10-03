@@ -33,9 +33,6 @@
   <link rel="stylesheet" href="../styles/components.css">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0C3868">
-  <link rel="preload" as="image" href="/assets/team/multidisciplinary-rabbit-team-wooden-lung-desktop.webp" type="image/webp" media="(min-width: 901px)" fetchpriority="high">
-  <link rel="preload" as="image" href="/assets/team/multidisciplinary-rabbit-team-wooden-lung-tablet.webp" type="image/webp" media="(min-width: 641px) and (max-width: 900px)" fetchpriority="high">
-  <link rel="preload" as="image" href="/assets/team/multidisciplinary-rabbit-team-wooden-lung-mobile.webp" type="image/webp" media="(max-width: 640px)" fetchpriority="high">
 </head>
 <body data-page="team">
 <a href="#mainContent" class="skip-link">Skip to main content</a>
@@ -92,32 +89,22 @@
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 
 <main id="mainContent">
-  <!-- Synthetic editorial metaphor: multidisciplinary profiles working around a wooden lung model.
-       Provenance is documented in /assets/team/README.md; this is not documentary evidence. -->
-  <figure class="team-visual-hero" id="teamVisualHero" data-label-en="Multidisciplinary respiratory research illustration in A Coruña" data-label-es="Ilustración multidisciplinar de investigación respiratoria en A Coruña" aria-label="Multidisciplinary respiratory research illustration in A Coruña">
-    <div class="team-visual-hero__media sci-media sci-media--hero">
-      <picture>
-        <source media="(max-width: 640px)" srcset="/assets/team/multidisciplinary-rabbit-team-wooden-lung-mobile.webp" type="image/webp">
-        <source media="(max-width: 900px)" srcset="/assets/team/multidisciplinary-rabbit-team-wooden-lung-tablet.webp" type="image/webp">
-        <source srcset="/assets/team/multidisciplinary-rabbit-team-wooden-lung-desktop.webp" type="image/webp">
-        <img id="teamHeroImage" class="media-photo media-photo--illustrative" src="/assets/team/multidisciplinary-rabbit-team-wooden-lung-synthetic.png"
-             data-alt-en="Synthetic editorial illustration of rabbit clinical, nursing, research, engineering and computing profiles working together around a wooden lung model in a coastal A Coruña laboratory, with a pulmonary X-ray poster on the wall."
-             data-alt-es="Ilustración editorial sintética de perfiles clínicos, de enfermería, investigación, ingeniería e informática trabajando conjuntamente alrededor de un modelo pulmonar de madera en un laboratorio costero de A Coruña, con un póster radiológico pulmonar en la pared."
-             alt="Synthetic editorial illustration of rabbit clinical, nursing, research, engineering and computing profiles working together around a wooden lung model in a coastal A Coruña laboratory, with a pulmonary X-ray poster on the wall."
-             width="2172" height="724" decoding="async" fetchpriority="high">
-      </picture>
-      <span class="team-visual-hero__topwash" aria-hidden="true"></span>
-      <span class="team-visual-hero__glass" aria-hidden="true"></span>
-    </div>
-  </figure>
-  <section class="team-hero" aria-labelledby="teamHeroTitle">
+  <section class="team-hero team-hero--people" aria-labelledby="teamHeroTitle">
     <div class="container team-hero__grid">
       <div class="team-hero__copy reveal">
+        <p class="team-kicker"><span lang="en">Multidisciplinary programme</span><span lang="es">Programa multidisciplinar</span></p>
         <h1 id="teamHeroTitle"><span lang="en">Our team</span><span lang="es">Nuestro equipo</span></h1>
         <p class="team-hero__lead"><span lang="en">neumACt brings together clinical, nursing, research and technical professionals in respiratory research.</span><span lang="es">neumACt reúne profesionales clínicos, de enfermería, investigación y tecnología en investigación respiratoria.</span></p>
       </div>
       <div class="team-hero__context reveal reveal-d1">
         <p><span lang="en">The team includes specialist and primary care clinicians, nursing and study coordination, biomedical and laboratory research, engineering, computing and data. Other clinical services participate in specific studies and projects when required.</span><span lang="es">El equipo incluye especialistas y profesionales de atención primaria, enfermería y coordinación de estudios, investigación biomédica y de laboratorio, ingeniería, informática y datos. Otros servicios clínicos participan en estudios y proyectos concretos cuando es necesario.</span></p>
+      </div>
+      <div class="team-hero__disciplines" aria-label="Professional domains / Ámbitos profesionales">
+        <span><span lang="en">Clinical care</span><span lang="es">Asistencia clínica</span></span>
+        <span><span lang="en">Nursing</span><span lang="es">Enfermería</span></span>
+        <span><span lang="en">Research</span><span lang="es">Investigación</span></span>
+        <span><span lang="en">Engineering</span><span lang="es">Ingeniería</span></span>
+        <span><span lang="en">Computing &amp; data</span><span lang="es">Informática y datos</span></span>
       </div>
     </div>
   </section>
