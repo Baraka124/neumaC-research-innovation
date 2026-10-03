@@ -108,6 +108,25 @@ for(const width of [390,768]){
 }
 
 
+test('Index 2.0 tablet Search command keeps icon and label together',async({page})=>{
+  await stubApi(page);
+  await page.setViewportSize({width:768,height:1024});
+  await page.goto('/innovation/');
+  await page.locator('#mobToggle').click();
+  const action=page.locator('.global-index__utility-link--search');
+  await expect(action).toBeVisible();
+  const geo=await action.evaluate(el=>{
+    const icon=el.querySelector('svg').getBoundingClientRect();
+    const label=el.querySelector('span').getBoundingClientRect();
+    const row=el.getBoundingClientRect();
+    return {gap:label.left-icon.right,width:row.width};
+  });
+  expect(geo.gap).toBeGreaterThanOrEqual(4);
+  expect(geo.gap).toBeLessThanOrEqual(16);
+  expect(geo.width).toBeLessThan(180);
+  await noOverflow(page);
+});
+
 for(const vp of [
   {name:'phone',width:390,height:844},
   {name:'tablet',width:768,height:1024},
