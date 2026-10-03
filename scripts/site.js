@@ -216,6 +216,13 @@
     }
 
     var active=ixPageKey();
+    var activeContext={
+      research:['Research programme','Programa de investigación'],
+      innovation:['Clinical innovation','Innovación clínica'],
+      articles:['Scientific output','Producción científica'],
+      team:['Multidisciplinary team','Equipo multidisciplinar'],
+      home:['Research & Innovation','Investigación e Innovación']
+    }[active]||['Research & Innovation','Investigación e Innovación'];
     var wrap=document.createElement('div');
     wrap.className='global-index global-index--h2'; wrap.id='globalIndex'; wrap.hidden=true; wrap.setAttribute('aria-hidden','true');
     wrap.innerHTML='\
@@ -226,7 +233,7 @@
           <button type="button" class="global-index__close global-index__close--mobile" data-index-close aria-label="Close / Cerrar"><span aria-hidden="true">×</span></button>\
         </div>\
         <div class="global-index__toolbar">\
-          <div class="global-index__title-block"><span class="global-index__eyebrow">'+ixBi('Scientific index','Índice científico')+'</span><p class="global-index__title" id="globalIndexTitle">'+ixBi('Index','Índice')+'</p></div>\
+          <div class="global-index__title-block"><div class="global-index__title-copy"><span class="global-index__eyebrow">'+ixBi('Scientific index','Índice científico')+'</span><p class="global-index__title" id="globalIndexTitle">'+ixBi('Index','Índice')+'</p></div><p class="global-index__statement">'+ixBi('Navigate the neumACt research programme, scientific output and multidisciplinary network.','Explore el programa de investigación, la producción científica y la red multidisciplinar de neumACt.')+'</p></div>\
           <div class="global-index__toolbar-actions">\
             <button type="button" class="global-index__search-trigger" id="globalIndexSearchOpen">'+ixSearchSvg()+'<span>'+ixBi('Search neumACt…','Buscar en neumACt…')+'</span></button>\
             <button type="button" class="global-index__close" data-index-close aria-label="Close / Cerrar"><span aria-hidden="true">×</span></button>\
@@ -234,22 +241,24 @@
         </div>\
         <div class="global-index__index-view" id="globalIndexIndexView">\
           <nav class="global-index__chapters" aria-label="Site index">\
-            <a href="/clinical/" class="global-index__chapter '+(active==='research'?'is-current':'')+'"><span class="global-index__chapter-no">01</span><span class="global-index__chapter-name">'+ixBi('Research','Investigación')+'</span></a>\
-            <a href="/innovation/" class="global-index__chapter '+(active==='innovation'?'is-current':'')+'"><span class="global-index__chapter-no">02</span><span class="global-index__chapter-name">'+ixBi('Innovation','Innovación')+'</span></a>\
-            <a href="/news/" class="global-index__chapter '+(active==='articles'?'is-current':'')+'"><span class="global-index__chapter-no">03</span><span class="global-index__chapter-name">'+ixBi('Publications','Publicaciones')+'</span></a>\
-            <a href="/team/" class="global-index__chapter '+(active==='team'?'is-current':'')+'"><span class="global-index__chapter-no">04</span><span class="global-index__chapter-name">'+ixBi('Team','Equipo')+'</span></a>\
+            <p class="global-index__column-label">'+ixBi('Programme map','Mapa del programa')+'</p>\
+            <a href="/clinical/" class="global-index__chapter '+(active==='research'?'is-current':'')+'"><span class="global-index__chapter-no">01</span><span class="global-index__chapter-copy"><span class="global-index__chapter-name">'+ixBi('Research','Investigación')+'</span><span class="global-index__chapter-desc">'+ixBi('Scientific programme & research lines','Programa científico y líneas de investigación')+'</span></span></a>\
+            <a href="/innovation/" class="global-index__chapter '+(active==='innovation'?'is-current':'')+'"><span class="global-index__chapter-no">02</span><span class="global-index__chapter-copy"><span class="global-index__chapter-name">'+ixBi('Innovation','Innovación')+'</span><span class="global-index__chapter-desc">'+ixBi('Clinical questions to implementation','De preguntas clínicas a implementación')+'</span></span></a>\
+            <a href="/news/" class="global-index__chapter '+(active==='articles'?'is-current':'')+'"><span class="global-index__chapter-no">03</span><span class="global-index__chapter-copy"><span class="global-index__chapter-name">'+ixBi('Publications','Publicaciones')+'</span><span class="global-index__chapter-desc">'+ixBi('Scientific output register','Registro de producción científica')+'</span></span></a>\
+            <a href="/team/" class="global-index__chapter '+(active==='team'?'is-current':'')+'"><span class="global-index__chapter-no">04</span><span class="global-index__chapter-copy"><span class="global-index__chapter-name">'+ixBi('Team','Equipo')+'</span><span class="global-index__chapter-desc">'+ixBi('Multidisciplinary professional network','Red profesional multidisciplinar')+'</span></span></a>\
           </nav>\
           <section class="global-index__lines" aria-labelledby="globalIndexLinesTitle">\
             <div class="global-index__section-head">\
-              <h2 id="globalIndexLinesTitle">'+ixBi('Research lines','Líneas de investigación')+'</h2>\
+              <div><span class="global-index__column-label">'+ixBi('Scientific core','Núcleo científico')+'</span><h2 id="globalIndexLinesTitle">'+ixBi('Research lines','Líneas de investigación')+'</h2></div>\
               <a href="/clinical/">'+ixBi('View research','Ver investigación')+'</a>\
             </div>\
             <div class="global-index__line-list" id="globalIndexLines"><div class="global-index__loading">'+ixBi('Loading research lines…','Cargando líneas de investigación…')+'</div></div>\
           </section>\
           <aside class="global-index__utilities">\
-            <p class="global-index__utility-label">'+ixBi('Explore','Explorar')+'</p>\
-            <button type="button" class="global-index__utility-link" data-open-index-search>'+ixBi('Search neumACt','Buscar en neumACt')+'</button>\
-            <a class="global-index__utility-link" href="/#contact">'+ixBi('Contact','Contacto')+'</a>\
+            <p class="global-index__utility-label">'+ixBi('Command rail','Panel de acceso')+'</p>\
+            <div class="global-index__current"><span>'+ixBi('Current context','Contexto actual')+'</span><strong>'+ixBi(activeContext[0],activeContext[1])+'</strong></div>\
+            <button type="button" class="global-index__utility-link global-index__utility-link--search" data-open-index-search>'+ixSearchSvg()+'<span>'+ixBi('Search neumACt','Buscar en neumACt')+'</span></button>\
+            <a class="global-index__utility-link" href="/#contact"><span>'+ixBi('Contact','Contacto')+'</span><span aria-hidden="true">↗</span></a>\
             <div class="global-index__latest" id="globalIndexLatest" hidden></div>\
             <div class="global-index__institutions" aria-label="Institutions">\
               <span>Área Sanitaria da Coruña e Cee</span><span>INIBIC</span><span>SERGAS</span>\
@@ -366,7 +375,7 @@
   function ixRenderLines(){
     var host=document.getElementById('globalIndexLines');if(!host)return;
     if(!indexState.lines.length){host.innerHTML='<div class="global-index__loading state-panel state-panel--error"><span class="state-panel__label">'+ixBi('Temporary issue','Incidencia temporal')+'</span><h3 class="state-panel__title">'+ixBi('Research lines are temporarily unavailable.','Las líneas de investigación no están disponibles temporalmente.')+'</h3></div>';return;}
-    host.innerHTML=indexState.lines.map(function(l){return '<a class="global-index__line" href="/line/?id='+encodeURIComponent(l.id)+'"><strong>'+ixEsc(ixLineLabel(l))+'</strong></a>';}).join('');
+    host.innerHTML=indexState.lines.map(function(l){var n=String(l.line_number||'').padStart(2,'0');return '<a class="global-index__line" href="/line/?id='+encodeURIComponent(l.id)+'"><span class="global-index__line-no">'+(n?'L'+ixEsc(n):'—')+'</span><strong>'+ixEsc(ixLineLabel(l))+'</strong><span class="global-index__line-arrow" aria-hidden="true">→</span></a>';}).join('');
   }
   function ixRenderLatest(){
     var host=document.getElementById('globalIndexLatest');if(!host)return;
