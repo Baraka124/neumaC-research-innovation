@@ -97,6 +97,9 @@ test('Phone Index keeps four chapter controls and chapter-aware centre content',
   await page.locator('[data-index-chapter="team"]').click();
   await expect(page.locator('#globalIndexLinesTitle')).toContainText(/People & programme|Personas y programa/);
   await expect(page.locator('#globalIndexLines')).toContainText(/Multidisciplinary team|Equipo multidisciplinar/);
+  await expect(page.locator('.global-index__lines-toggle-label')).toContainText(/4 sections|4 secciones/);
+  await expect(page.locator('.global-index__lines-all')).toHaveAttribute('href','/team/');
+  await expect(page.locator('.global-index__lines-all')).toContainText(/Open team|Abrir equipo/);
   await noOverflow(page);
 
   await page.screenshot({path:path.join(OUTPUT,'index-chapter-aware-team-phone-390.png'),fullPage:false,animations:'disabled'});
