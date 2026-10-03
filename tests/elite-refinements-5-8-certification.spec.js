@@ -117,12 +117,14 @@ for(const vp of [
   {name:'laptop',width:1440,height:900},
   {name:'workstation',width:2048,height:1152}
 ]){
-  test(`Refinements 05–08 visual — Team photography ${vp.name}`,async({page})=>{
+  test(`Refinements 05–08 visual — Team people-led opening ${vp.name}`,async({page})=>{
     await emptyApi(page);
     await page.setViewportSize({width:vp.width,height:vp.height});
     await page.emulateMedia({reducedMotion:'reduce'});
     await page.goto('/team/');
-    await expect(page.locator('#teamHeroImage')).toBeVisible();
+    await expect(page.locator('.team-hero--people')).toBeVisible();
+    await expect(page.locator('.team-hero__disciplines')).toBeVisible();
+    await expect(page.locator('.team-visual-hero')).toHaveCount(0);
     await noOverflow(page);
     await page.screenshot({path:path.join(OUTPUT,`elite-5-8-team-${vp.name}-${vp.width}.png`),fullPage:false,animations:'disabled'});
   });
