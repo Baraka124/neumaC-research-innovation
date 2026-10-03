@@ -7,7 +7,7 @@ const OUTPUT = path.join(process.cwd(), 'phase4-visual-artifacts');
 const PAGES = [
   { path: '/', name: 'home', selector: '.home-programme-panel' },
   { path: '/clinical/', name: 'research', selector: '.research-hero__sheet' },
-  { path: '/news/', name: 'publications', selector: '.pub-hero__panel' },
+  { path: '/news/', name: 'publications', selector: '.pub-hero__register-shell' },
   { path: '/team/', name: 'team', selector: '.team-hero__grid' },
   { path: '/innovation/', name: 'innovation', selector: '.innovation-question-list' },
 ];

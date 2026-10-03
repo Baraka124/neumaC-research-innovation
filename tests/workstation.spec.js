@@ -4,7 +4,7 @@ const WORKSTATION_PAGES = [
   { path: '/', selector: '.home-programme-panel' },
   { path: '/clinical/', selector: '.research-hero__sheet' },
   { path: '/innovation/', selector: '.innovation-hero__grid' },
-  { path: '/news/', selector: '.pub-hero__panel-wrap' },
+  { path: '/news/', selector: '.pub-hero__register-shell' },
   { path: '/team/', selector: '.team-hero__grid' },
 ];
 

@@ -38,7 +38,7 @@ const heroPages=[
   {name:'home',url:'/',selector:'.home-hero-title',media:'.home-hero-media'},
   {name:'research',url:'/clinical/',selector:'.research-hero h1',media:'.research-hero__media'},
   {name:'innovation',url:'/innovation/',selector:'.innovation-hero h1',media:'.innovation-hero__media'},
-  {name:'publications',url:'/news/',selector:'.pub-hero__identity h1',media:'.pub-hero__media'},
+  {name:'publications',url:'/news/',selector:'.pub-hero__identity h1',media:null},
   {name:'team',url:'/team/',selector:'.team-hero h1',media:null},
   {name:'line',url:'/line/?id=refine-line',selector:'.line-hero__title',media:'.line-hero__media'}
 ];
@@ -122,6 +122,10 @@ test('Refinement 03 — canonical hero media surfaces opt into governed media gr
     expect(style.overflow).not.toBe('visible');
     await noOverflow(page);
   }
+  await page.goto('/news/');
+  await expect(page.locator('.pub-hero--register')).toBeVisible();
+  await expect(page.locator('.pub-hero__media')).toHaveCount(0);
+  await noOverflow(page);
   await page.goto('/team/');
   await expect(page.locator('.team-hero--people')).toBeVisible();
   await expect(page.locator('.team-visual-hero')).toHaveCount(0);
