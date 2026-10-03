@@ -711,68 +711,79 @@ test('INIBIC plaque remains readable without backdrop-filter support', async ({ 
 
 
 for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
-  test(`Team quiet sheet remains contained and image-led at ${width}px`, async ({ page }) => {
+  test(`Team people-led opening remains contained at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
     await page.goto('/team/');
 
-    const image = page.locator('.team-visual-hero');
-    const sheet = page.locator('.team-hero__grid');
+    const hero = page.locator('.team-hero--people');
+    const grid = page.locator('.team-hero__grid');
+    const disciplines = page.locator('.team-hero__disciplines');
 
-    await expect(image).toBeVisible();
-    await expect(sheet).toBeVisible();
-    await expectContainedInViewport(sheet, width);
+    await expect(hero).toBeVisible();
+    await expect(grid).toBeVisible();
+    await expect(disciplines).toBeVisible();
+    await expect(page.locator('.team-visual-hero')).toHaveCount(0);
+    await expectContainedInViewport(grid, width);
+    await expectContainedInViewport(disciplines, width);
 
     const geometry = await page.evaluate(() => {
-      const image = document.querySelector('.team-visual-hero').getBoundingClientRect();
-      const sheet = document.querySelector('.team-hero__grid').getBoundingClientRect();
+      const hero = document.querySelector('.team-hero--people').getBoundingClientRect();
+      const grid = document.querySelector('.team-hero__grid').getBoundingClientRect();
+      const disciplines = document.querySelector('.team-hero__disciplines').getBoundingClientRect();
       const style = getComputedStyle(document.querySelector('.team-hero__grid'));
       return {
-        image:{top:image.top,bottom:image.bottom,height:image.height},
-        sheet:{top:sheet.top,bottom:sheet.bottom,left:sheet.left,right:sheet.right,width:sheet.width},
+        hero:{top:hero.top,bottom:hero.bottom,height:hero.height},
+        grid:{top:grid.top,bottom:grid.bottom,left:grid.left,right:grid.right,width:grid.width},
+        disciplines:{left:disciplines.left,right:disciplines.right,width:disciplines.width},
         transform:style.transform,
         position:style.position,
         viewport:window.innerWidth
       };
     });
 
-    expect(geometry.sheet.top).toBeLessThan(geometry.image.bottom + 24);
-    expect(geometry.image.height).toBeGreaterThan(100);
+    expect(geometry.hero.height).toBeGreaterThan(width <= 640 ? 300 : 260);
     expect(geometry.transform).toBe('none');
-    expect(geometry.sheet.left).toBeGreaterThanOrEqual(-1);
-    expect(geometry.sheet.right).toBeLessThanOrEqual(geometry.viewport + 1);
+    expect(geometry.grid.left).toBeGreaterThanOrEqual(-1);
+    expect(geometry.grid.right).toBeLessThanOrEqual(geometry.viewport + 1);
+    expect(geometry.disciplines.left).toBeGreaterThanOrEqual(geometry.grid.left - 1);
+    expect(geometry.disciplines.right).toBeLessThanOrEqual(geometry.grid.right + 1);
 
     if (width >= 1680) {
-      expect(geometry.sheet.width).toBeLessThanOrEqual(1522);
+      expect(geometry.grid.width).toBeLessThanOrEqual(1562);
     }
 
     await expectNoHorizontalOverflow(page);
   });
 }
 
-
-for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
-  test(`Team hero preserves the authored full-scene aspect at ${width}px`, async ({ page }) => {
-    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
+for (const width of [390, 620, 768, 1024, 1440, 2048]) {
+  test(`Team professional-domain rail recomposes at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : 900 });
     await page.goto('/team/');
 
-    const media = page.locator('.team-visual-hero__media');
-    await expect(media).toBeVisible();
+    const rail = page.locator('.team-hero__disciplines');
+    await expect(rail).toBeVisible();
+    await expect(rail.locator(':scope > span')).toHaveCount(5);
 
-    const data = await media.evaluate(el => {
-      const r = el.getBoundingClientRect();
-      const img = el.querySelector('img');
-      const s = img ? getComputedStyle(img) : null;
-      return {
-        ratio:r.width / r.height,
-        objectFit:s ? s.objectFit : '',
-        objectPosition:s ? s.objectPosition : ''
-      };
+    const data = await rail.evaluate(el => {
+      const style = getComputedStyle(el);
+      const items = Array.from(el.children).map(node => {
+        const r=node.getBoundingClientRect();
+        return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width};
+      });
+      return {columns:style.gridTemplateColumns,items};
     });
 
-    const expectedRatio = width <= 640 ? (16 / 9) : (width <= 900 ? (1400 / 651) : 3);
-    expect(Math.abs(data.ratio - expectedRatio)).toBeLessThan(0.04);
-    expect(data.objectFit).toBe('cover');
-    expect(data.objectPosition).toMatch(/50% 50%/);
+    const rowTops=[...new Set(data.items.map(i=>Math.round(i.top)))];
+    if (width <= 640) {
+      expect(rowTops.length).toBe(3);
+      expect(data.items[4].width).toBeGreaterThan(data.items[0].width * 1.8);
+    } else if (width <= 900) {
+      expect(rowTops.length).toBe(2);
+    } else {
+      expect(rowTops.length).toBe(1);
+    }
+
     await expectNoHorizontalOverflow(page);
   });
 }
