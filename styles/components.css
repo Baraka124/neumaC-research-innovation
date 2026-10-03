@@ -2958,3 +2958,21 @@ svg.icon-ui{
     font-size:.79rem;
   }
 }
+
+
+/* Shared enquiry state hardening — semantic, bilingual runtime states. */
+:where(.home-contact,.research-contact,.innovation-contact) .form-success.is-error{
+  background:rgba(220,38,38,.10)!important;
+  border-color:rgba(248,113,113,.32)!important;
+  color:#ffc5c9!important;
+}
+:where(.home-contact,.research-contact,.innovation-contact) .form-error-msg{
+  background:rgba(220,38,38,.09);
+  border-color:rgba(248,113,113,.28);
+  color:#ffc5c9;
+  border-radius:2px;
+}
+:where(.home-contact,.research-contact,.innovation-contact) button[type="submit"][aria-busy="true"]{
+  cursor:progress;
+  opacity:.82;
+}
