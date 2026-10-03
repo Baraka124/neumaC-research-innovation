@@ -39,7 +39,7 @@ const heroPages=[
   {name:'research',url:'/clinical/',selector:'.research-hero h1',media:'.research-hero__media'},
   {name:'innovation',url:'/innovation/',selector:'.innovation-hero h1',media:'.innovation-hero__media'},
   {name:'publications',url:'/news/',selector:'.pub-hero__identity h1',media:'.pub-hero__media'},
-  {name:'team',url:'/team/',selector:'.team-hero h1',media:'.team-visual-hero__media'},
+  {name:'team',url:'/team/',selector:'.team-hero h1',media:null},
   {name:'line',url:'/line/?id=refine-line',selector:'.line-hero__title',media:'.line-hero__media'}
 ];
 
@@ -110,7 +110,7 @@ test('Refinement 02 — major sections share deliberate vertical rhythm',async({
 test('Refinement 03 — canonical hero media surfaces opt into governed media grammar',async({page})=>{
   await stubApi(page);
   await page.setViewportSize({width:1440,height:900});
-  for(const target of heroPages){
+  for(const target of heroPages.filter(target=>target.media)){
     await page.goto(target.url);
     const media=page.locator(target.media).first();
     await expect(media).toBeAttached();
@@ -122,6 +122,10 @@ test('Refinement 03 — canonical hero media surfaces opt into governed media gr
     expect(style.overflow).not.toBe('visible');
     await noOverflow(page);
   }
+  await page.goto('/team/');
+  await expect(page.locator('.team-hero--people')).toBeVisible();
+  await expect(page.locator('.team-visual-hero')).toHaveCount(0);
+  await noOverflow(page);
 });
 
 test('Refinement 04 — Innovation process is a semantic scientific figure',async({page})=>{
