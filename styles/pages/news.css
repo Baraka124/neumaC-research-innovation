@@ -595,3 +595,131 @@ body[data-page="news"] .pub-feed .pub-empty .state-panel__copy{
     opacity:.42;
   }
 }
+
+
+/* ============================================================
+   POST-ELITE PUBLICATION READER — SCHOLARLY FOLIO
+   Desktop records dock beneath the live scientific masthead rather than
+   floating above it as an application card. Tablet/mobile retain the
+   established bottom-sheet/full-screen reading behavior.
+   ============================================================ */
+@media(min-width:821px){
+  body[data-page="news"] .pub-reader__backdrop{
+    background:rgba(4,28,50,.12);
+    backdrop-filter:blur(2px) saturate(.96);
+    -webkit-backdrop-filter:blur(2px) saturate(.96);
+  }
+  body[data-page="news"] .pub-reader{
+    top:var(--pub-reader-top,103px);
+    right:0;
+    bottom:0;
+    width:min(820px,54vw);
+    min-width:620px;
+    border:0;
+    border-left:1px solid #c9d9de;
+    border-radius:0;
+    box-shadow:-18px 0 46px rgba(5,35,61,.13);
+    background:#fbfaf7;
+  }
+  body[data-page="news"] .pub-reader__chrome{
+    min-height:56px;
+    padding:.72rem 1.45rem;
+    border-bottom:1px solid #d6e1e4;
+    background:rgba(251,250,247,.985);
+    box-shadow:none;
+  }
+  body[data-page="news"] .pub-reader__brand{
+    color:#234d68;
+    font-size:.59rem;
+    letter-spacing:.085em;
+    text-transform:uppercase;
+  }
+  body[data-page="news"] .pub-reader__close{
+    width:38px;
+    height:38px;
+    background:#fbfaf7;
+  }
+  body[data-page="news"] .pub-reader__progress{
+    height:2px;
+    background:#e6edef;
+  }
+  body[data-page="news"] .pub-reader__scroll{
+    padding:clamp(2.5rem,3.8vw,4rem) clamp(2.6rem,4.3vw,4.35rem) 4rem;
+    scroll-padding-top:1.5rem;
+  }
+  body[data-page="news"] .pub-reader__scroll>article{
+    max-width:52rem;
+    margin:0 auto;
+  }
+  body[data-page="news"] .pub-reader__header{
+    padding-bottom:.15rem;
+  }
+  body[data-page="news"] .pub-reader__header h1{
+    max-width:15ch;
+    margin:.8rem 0 1.15rem;
+    font-size:clamp(2.75rem,3.6vw,4.25rem);
+    line-height:.98;
+    letter-spacing:-.047em;
+  }
+  body[data-page="news"] .pub-reader__authors{
+    max-width:48rem;
+    font-size:.8rem;
+    line-height:1.58;
+  }
+  body[data-page="news"] .pub-reader__journal{
+    margin-top:.7rem;
+  }
+  body[data-page="news"] .pub-reader__meta{
+    margin-top:1.05rem;
+  }
+  body[data-page="news"] .pub-reader__section{
+    padding-top:1.85rem;
+    margin-top:1.85rem;
+  }
+  body[data-page="news"] .pub-reader__section h2{
+    font-size:1.5rem;
+  }
+  body[data-page="news"] .pub-reader__body{
+    max-width:48rem;
+    font-size:.92rem;
+    line-height:1.8;
+  }
+  body[data-page="news"] .pub-reader__context-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:1rem;
+  }
+  body[data-page="news"] .pub-reader__context-item{
+    min-width:0;
+  }
+}
+
+@media(min-width:821px) and (max-width:1100px){
+  body[data-page="news"] .pub-reader{
+    width:min(680px,64vw);
+    min-width:0;
+  }
+  body[data-page="news"] .pub-reader__scroll{
+    padding-inline:clamp(2rem,4vw,3rem);
+  }
+  body[data-page="news"] .pub-reader__header h1{
+    font-size:clamp(2.45rem,5vw,3.45rem);
+  }
+  body[data-page="news"] .pub-reader__context-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(min-width:1680px){
+  body[data-page="news"] .pub-reader__backdrop{
+    background:rgba(4,28,50,.075);
+  }
+  body[data-page="news"] .pub-reader{
+    width:min(840px,43vw);
+    min-width:700px;
+    box-shadow:-20px 0 54px rgba(5,35,61,.105);
+  }
+  body[data-page="news"] .pub-reader__scroll{
+    padding-left:4.25rem;
+    padding-right:4.25rem;
+  }
+}
