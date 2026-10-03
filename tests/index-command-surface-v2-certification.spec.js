@@ -1,4 +1,9 @@
 const { test, expect } = require('@playwright/test');
+const fs = require('fs');
+const path = require('path');
+
+const OUTPUT=path.join(process.cwd(),'phase4-visual-artifacts');
+test.beforeAll(()=>fs.mkdirSync(OUTPUT,{recursive:true}));
 
 const lineFixture = [
   {id:'idx-line-1',line_number:1,name:'Transplantation & Pulmonary Hypertension',short_name:'Transplantation'},
@@ -101,3 +106,42 @@ for(const width of [390,768]){
     await noOverflow(page);
   });
 }
+
+
+for(const vp of [
+  {name:'phone',width:390,height:844},
+  {name:'tablet',width:768,height:1024},
+  {name:'laptop',width:1440,height:900},
+  {name:'workstation',width:2048,height:1152}
+]){
+  test(`Index 2.0 visual certification — ${vp.name}`,async({page})=>{
+    await stubApi(page);
+    await page.setViewportSize({width:vp.width,height:vp.height});
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.goto('/innovation/');
+    if(vp.width<=880) await page.locator('#mobToggle').click();
+    else await page.locator('#hdrIndexBtn').click();
+    await expect(page.locator('#globalIndex')).toHaveAttribute('aria-hidden','false');
+    await noOverflow(page);
+    await page.screenshot({
+      path:path.join(OUTPUT,`index-v2-${vp.name}-${vp.width}.png`),
+      fullPage:false,
+      animations:'disabled'
+    });
+  });
+}
+
+test('Index 2.0 visual certification — desktop Search',async({page})=>{
+  await stubApi(page);
+  await page.setViewportSize({width:1440,height:900});
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.goto('/clinical/');
+  await page.locator('#hdrSearchBtn').click();
+  await expect(page.locator('#globalIndex')).toHaveClass(/is-search/);
+  await noOverflow(page);
+  await page.screenshot({
+    path:path.join(OUTPUT,'index-v2-search-laptop-1440.png'),
+    fullPage:false,
+    animations:'disabled'
+  });
+});
