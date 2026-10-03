@@ -32,6 +32,8 @@ for(const vp of [
     await expect(page.locator('.not-found')).toBeVisible();
     await expect(page.locator('.not-found__title [lang="en"]')).toContainText('Page not found');
     await expect(page.locator('.not-found__shell .btn-text')).toHaveCount(3);
+    await expect(page.locator('.not-found + .affil-section')).toHaveCount(0);
+    await expect(page.locator('#siteFooter')).toBeAttached();
     await noOverflow(page);
     await page.evaluate(()=>{const c=document.getElementById('cookieBanner');if(c)c.style.display='none';});
     if(vp.name!=='laptop' || true){
