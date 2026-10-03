@@ -21,10 +21,11 @@ const people=[
 ];
 
 async function stub(page){
-  await page.route('**/api/news/website**',r=>r.fulfill({json:{data:[post]}}));
-  await page.route('**/api/team/website',r=>r.fulfill({json:{data:people}}));
-  await page.route('**/api/research-lines/website',r=>r.fulfill({json:{data:[post.research_line]}}));
+  // Playwright evaluates matching routes in reverse registration order.
   await page.route('**/api/**',r=>r.fulfill({json:{data:[]}}));
+  await page.route('**/api/research-lines/website',r=>r.fulfill({json:{data:[post.research_line]}}));
+  await page.route('**/api/team/website',r=>r.fulfill({json:{data:people}}));
+  await page.route('**/api/news/website**',r=>r.fulfill({json:{data:[post]}}));
 }
 async function noOverflow(page){
   const g=await page.evaluate(()=>({v:innerWidth,d:document.documentElement.scrollWidth,b:document.body.scrollWidth}));
