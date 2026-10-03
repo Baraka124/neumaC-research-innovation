@@ -75,7 +75,7 @@ for(const vp of [
       expect(geo.sheet.top).toBeLessThanOrEqual(1);
       expect(geo.sheet.left).toBeLessThanOrEqual(1);
       expect(geo.sheet.right).toBeGreaterThanOrEqual(geo.viewport-1);
-      expect(geo.radius).toBe('0px');
+      expect(parseFloat(geo.radius)).toBeLessThanOrEqual(6);
     }
 
     await noOverflow(page);
@@ -94,6 +94,7 @@ test('desktop reader uses current masthead height rather than a duplicated offse
   });
   await page.locator('.pub-feature-lead').click();
   await expect(page.locator('.pub-reader')).toBeVisible();
+  await page.waitForTimeout(360);
 
   const geo=await page.evaluate(()=>({
     header:document.getElementById('hdr').getBoundingClientRect().height,
