@@ -4,7 +4,7 @@ const CORE_PAGES = [
   { path: '/', selector: '.home-programme-panel', label: 'Home' },
   { path: '/clinical/', selector: '.research-hero__sheet', label: 'Research' },
   { path: '/innovation/', selector: '.innovation-hero__grid', label: 'Innovation' },
-  { path: '/news/', selector: '.pub-hero__panel', label: 'Publications' },
+  { path: '/news/', selector: '.pub-hero__register-shell', label: 'Publications' },
   { path: '/team/', selector: '.team-hero__grid', label: 'Team' },
 ];
 
@@ -62,6 +62,31 @@ for (const viewport of BREAKPOINTS) {
         await expectNoHorizontalOverflow(page);
       });
     }
+  });
+}
+
+for (const width of [390, 620, 768, 1024, 1440, 1680, 2048]) {
+  test(`Publications scholarly register remains composed at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
+    await page.goto('/news/');
+
+    const hero=page.locator('.pub-hero--register');
+    const shell=page.locator('.pub-hero__register-shell');
+    const taxonomy=page.locator('.pub-hero__taxonomy');
+
+    await expect(hero).toBeVisible();
+    await expect(shell).toBeVisible();
+    await expect(taxonomy).toBeVisible();
+    await expect(taxonomy.locator(':scope > span')).toHaveCount(4);
+    await expect(page.locator('.pub-hero__media')).toHaveCount(0);
+    await expectContainedInViewport(shell,width);
+    await expectContainedInViewport(taxonomy,width);
+
+    const rows=await taxonomy.evaluate(el=>[...new Set(Array.from(el.children).map(n=>Math.round(n.getBoundingClientRect().top)))].length);
+    if(width<=900) expect(rows).toBe(2);
+    else expect(rows).toBe(1);
+
+    await expectNoHorizontalOverflow(page);
   });
 }
 
