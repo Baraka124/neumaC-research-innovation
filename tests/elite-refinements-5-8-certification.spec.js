@@ -22,8 +22,7 @@ test('Refinement 05 — principal imagery declares governed photography roles',a
     ['/', '.home-hero-media img','media-photo--editorial'],
     ['/clinical/', '.research-hero__media img','media-photo--editorial'],
     ['/clinical/', '.research-leadership__portrait img','media-photo--documentary'],
-    ['/innovation/', '.innovation-hero__media img','media-photo--editorial'],
-    ['/news/', '.pub-hero__media img','media-photo--editorial']
+    ['/innovation/', '.innovation-hero__media img','media-photo--editorial']
   ];
   for(const [url,selector,cls] of targets){
     await page.goto(url);
@@ -34,6 +33,17 @@ test('Refinement 05 — principal imagery declares governed photography roles',a
     expect(style.fit).toBe('cover');
     if(cls!=='media-photo--placeholder') expect(style.filter).toBe('none');
   }
+});
+
+test('Refinement 05 — Publications opening is an information-led scholarly register',async({page})=>{
+  await emptyApi(page);
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/news/');
+  await expect(page.locator('.pub-hero--register')).toBeVisible();
+  await expect(page.locator('.pub-hero__taxonomy > span')).toHaveCount(4);
+  await expect(page.locator('.pub-hero__register-notes > span')).toHaveCount(2);
+  await expect(page.locator('.pub-hero__media')).toHaveCount(0);
+  await noOverflow(page);
 });
 
 test('Refinement 05 — Team opening does not manufacture illustrative photography',async({page})=>{
