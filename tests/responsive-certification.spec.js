@@ -314,20 +314,21 @@ for (const width of [1680, 2048]) {
 
 
 for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
-  test(`Publications folio remains contained and restrained at ${width}px`, async ({ page }) => {
+  test(`Publications register remains contained and restrained at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width >= 1920 ? 1152 : (width >= 1680 ? 1050 : 900) });
     await page.goto('/news/');
 
-    const folio = page.locator('.pub-hero__panel');
+    const register = page.locator('.pub-hero__register-shell');
     const identity = page.locator('.pub-hero__identity');
     const context = page.locator('.pub-hero__context');
 
-    await expect(folio).toBeVisible();
-    await expectContainedInViewport(folio, width);
+    await expect(register).toBeVisible();
+    await expectContainedInViewport(register, width);
     await expect(identity).toBeVisible();
     await expect(context).toBeVisible();
+    await expect(page.locator('.pub-hero__media,.pub-hero__panel,.pub-hero__panel-wrap')).toHaveCount(0);
 
-    const geo = await folio.evaluate(el => {
+    const geo = await register.evaluate(el => {
       const r = el.getBoundingClientRect();
       const s = getComputedStyle(el);
       return {
@@ -336,7 +337,6 @@ for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
         right:r.right,
         position:s.position,
         transform:s.transform,
-        radius:s.borderTopLeftRadius,
         vw:window.innerWidth
       };
     });
@@ -346,24 +346,19 @@ for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
     expect(geo.right).toBeLessThanOrEqual(geo.vw + 1);
     expect(geo.transform).toBe('none');
 
-    if (width <= 820) {
-      const cols = await folio.evaluate(el => getComputedStyle(el).gridTemplateColumns);
-      expect(cols.split(' ').length).toBeLessThanOrEqual(2);
-    }
-
     if (width >= 1680) {
-      expect(geo.width).toBeLessThanOrEqual(1482);
+      expect(geo.width).toBeLessThanOrEqual(1562);
     }
 
     await expectNoHorizontalOverflow(page);
   });
 }
 
-test('Publications mobile folio stays in normal flow without absolute positioning', async ({ page }) => {
+test('Publications mobile register stays in normal flow without absolute positioning', async ({ page }) => {
   await page.setViewportSize({ width:390, height:844 });
   await page.goto('/news/');
 
-  const geometry = await page.locator('.pub-hero__panel').evaluate(el => {
+  const geometry = await page.locator('.pub-hero__register-shell').evaluate(el => {
     const s=getComputedStyle(el);
     const r=el.getBoundingClientRect();
     return {
@@ -381,7 +376,7 @@ test('Publications mobile folio stays in normal flow without absolute positionin
   expect(geometry.right).toBeLessThanOrEqual(geometry.viewport + 1);
 });
 
-test('Publications empty Selection collapses reserved feature height', async ({ page }) => {
+test('Publications zero-output state removes redundant Selection and preserves one register state', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.goto('/news/');
   await page.evaluate(() => {
@@ -390,22 +385,22 @@ test('Publications empty Selection collapses reserved feature height', async ({ 
   });
 
   const stage = page.locator('.pub-feature__stage');
-  const empty = stage.locator('.pub-empty');
-  await expect(empty).toBeVisible();
+  const feedEmpty = page.locator('.pub-feed .pub-empty.state-panel');
+
   await expect(stage).toHaveClass(/is-empty/);
+  await expect(stage.locator('.pub-empty')).toHaveCount(0);
+  await expect(feedEmpty).toBeVisible();
+  await expect(feedEmpty.locator('.state-panel__label')).toContainText(/Public register|Registro público/);
+  await expect(feedEmpty.locator('.state-panel__title')).toContainText(/No public output|Todavía no hay producción pública/);
 
   const geometry = await page.evaluate(() => {
     const stage = document.querySelector('.pub-feature__stage').getBoundingClientRect();
-    const index = document.querySelector('.pub-index').getBoundingClientRect();
-    return {
-      stageHeight:stage.height,
-      stageBottom:stage.bottom,
-      indexTop:index.top
-    };
+    const empty = document.querySelector('.pub-feed .pub-empty').getBoundingClientRect();
+    return { stageHeight:stage.height, emptyHeight:empty.height };
   });
 
-  expect(geometry.stageHeight).toBeLessThan(120);
-  expect(geometry.indexTop - geometry.stageBottom).toBeLessThan(90);
+  expect(geometry.stageHeight).toBeLessThanOrEqual(1);
+  expect(geometry.emptyHeight).toBeGreaterThan(220);
   await expectNoHorizontalOverflow(page);
 });
 
@@ -1314,7 +1309,7 @@ for (const viewport of [
     const checks = [
       ['/', '.home-programme-panel'],
       ['/clinical/', '.research-hero__sheet'],
-      ['/news/', '.pub-hero__panel'],
+      ['/news/', '.pub-hero__register-shell'],
       ['/team/', '.team-hero__grid'],
       ['/innovation/', '.innovation-question-list']
     ];
