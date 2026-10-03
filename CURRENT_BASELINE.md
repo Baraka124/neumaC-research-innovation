@@ -255,3 +255,25 @@ Protected refinements:
 The Team responsive contract is explicitly certified across phone, tablet, laptop and workstation compositions.
 
 Future work must not restore the raster-wrapped logo or synthetic Team hero merely to satisfy older design assumptions or retired tests.
+
+
+## Scientific Index — chapter-aware refinement complete
+
+The Scientific Index now behaves as a genuine global scientific interface rather than a Research-only menu inside a global shell.
+
+Canonical baseline:
+`SCIENTIFIC_INDEX_CHAPTER_AWARE_BASELINE.md`
+
+Protected interaction:
+- Research / Innovation / Publications / Team chapters control the centre register in place;
+- the centre identity and content always match the selected chapter;
+- explicit `Open …` actions perform page navigation;
+- Research retains live research-line data;
+- Innovation, Publications and Team expose stable destinations already present in their public pages;
+- mobile disclosure language and destination follow the selected chapter;
+- Search remains an integrated state of the same Index surface.
+
+The former state where Innovation, Publications or Team could be selected while the centre still displayed Research lines is retired and must not be restored.
+
+Current fully green production repository state at this closeout:
+`c3da28b468007c068765599acff2e7afdcba6de1`
