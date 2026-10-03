@@ -1100,3 +1100,12 @@
     background:transparent!important;
   }
 }
+
+
+@media(max-width:880px){
+  .global-index--h2 .global-index__utility-link--search{
+    justify-content:flex-start!important;
+    width:max-content!important;
+    max-width:100%;
+  }
+}
