@@ -1,0 +1,103 @@
+const { test, expect } = require('@playwright/test');
+
+const lineFixture = [
+  {id:'idx-line-1',line_number:1,name:'Transplantation & Pulmonary Hypertension',short_name:'Transplantation'},
+  {id:'idx-line-2',line_number:2,name:'Airway Diseases',short_name:'Airway Diseases'},
+  {id:'idx-line-3',line_number:3,name:'Interventional Pulmonology & Lung Cancer',short_name:'Interventional Pulmonology'},
+  {id:'idx-line-4',line_number:4,name:'Respiratory Failure & Sleep',short_name:'Respiratory Failure & Sleep'},
+  {id:'idx-line-5',line_number:5,name:'Thoracic Surgery',short_name:'Thoracic Surgery'},
+  {id:'idx-line-6',line_number:6,name:'Precision Medicine',short_name:'Precision Medicine'}
+];
+
+async function stubApi(page){
+  await page.route('**/api/**',async route=>{
+    const url=route.request().url();
+    if(url.includes('/api/research-lines/website')) return route.fulfill({json:{data:lineFixture}});
+    if(url.includes('/api/news/website')) return route.fulfill({json:{data:[{
+      id:'idx-publication',title:'Indexed respiratory publication',published_at:'2026-09-01T00:00:00Z'
+    }]}});
+    if(url.includes('/api/team/website')) return route.fulfill({json:{data:[]}});
+    if(url.includes('/api/innovation-projects/website')) return route.fulfill({json:{data:[]}});
+    return route.fulfill({json:{data:[]}});
+  });
+}
+
+async function noOverflow(page){
+  const g=await page.evaluate(()=>({
+    viewport:innerWidth,
+    doc:document.documentElement.scrollWidth,
+    body:document.body.scrollWidth
+  }));
+  expect(g.doc).toBeLessThanOrEqual(g.viewport+2);
+  expect(g.body).toBeLessThanOrEqual(g.viewport+2);
+}
+
+test('Index 2.0 desktop exposes programme map, scientific core and command rail',async({page})=>{
+  await stubApi(page);
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/innovation/');
+  await page.locator('#hdrIndexBtn').click();
+
+  const index=page.locator('#globalIndex');
+  await expect(index).toHaveAttribute('aria-hidden','false');
+  await expect(page.locator('.global-index__statement')).toContainText(/Navigate the neumACt research programme|Explore el programa de investigación/);
+
+  const chapters=page.locator('.global-index__chapter');
+  await expect(chapters).toHaveCount(4);
+  await expect(page.locator('.global-index__chapter-desc')).toHaveCount(4);
+  await expect(chapters.nth(1)).toHaveClass(/is-current/);
+
+  await expect(page.locator('.global-index__current strong')).toContainText(/Clinical innovation|Innovación clínica/);
+
+  const lines=page.locator('.global-index__line');
+  await expect(lines).toHaveCount(6);
+  await expect(lines.nth(0).locator('.global-index__line-no')).toHaveText('L01');
+  await expect(lines.nth(5).locator('.global-index__line-no')).toHaveText('L06');
+
+  await expect(page.locator('#globalIndexLatest')).toBeVisible();
+  await noOverflow(page);
+});
+
+test('Index 2.0 search remains a mode of the same command surface',async({page})=>{
+  await stubApi(page);
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/clinical/');
+  await page.locator('#hdrSearchBtn').click();
+
+  const index=page.locator('#globalIndex');
+  await expect(index).toHaveClass(/is-search/);
+  await expect(page.locator('#globalIndexSearchInput')).toBeFocused();
+  await expect(page.locator('.global-search__filters button')).toHaveCount(5);
+  await expect(page.locator('.global-search__field')).toBeVisible();
+
+  await page.locator('#globalIndexSearchInput').fill('Airway');
+  await expect(page.locator('.global-search__result')).toHaveCount(1);
+  await expect(page.locator('.global-search__result').first()).toContainText('Airway Diseases');
+  await noOverflow(page);
+});
+
+for(const width of [390,768]){
+  test(`Index 2.0 preserves mobile/tablet navigation and line disclosure at ${width}px`,async({page})=>{
+    await stubApi(page);
+    await page.setViewportSize({width,height:width===390?844:1024});
+    await page.goto('/team/');
+    await page.locator('#mobToggle').click();
+
+    await expect(page.locator('#globalIndex')).toHaveAttribute('aria-hidden','false');
+    await expect(page.locator('.global-index__chapter')).toHaveCount(4);
+    await expect(page.locator('.global-index__chapter-desc')).toHaveCount(4);
+
+    if(width<=620){
+      const toggle=page.locator('.global-index__lines-toggle');
+      await expect(toggle).toBeVisible();
+      await expect(toggle).toHaveAttribute('aria-expanded','false');
+      await toggle.click();
+      await expect(toggle).toHaveAttribute('aria-expanded','true');
+      await expect(page.locator('.global-index__line')).toHaveCount(6);
+    }else{
+      await expect(page.locator('.global-index__line')).toHaveCount(6);
+    }
+
+    await noOverflow(page);
+  });
+}
