@@ -2796,3 +2796,165 @@ svg.icon-ui{
   stroke-linecap:round;
   stroke-linejoin:round;
 }
+
+
+/* ════════════════════════════════════════════════════════════════
+   POST-ELITE — INSTITUTIONAL FOOTER PRECISION PASS
+   Preserve the established dark institutional close while bringing its
+   measure, brand plate and information hierarchy in line with the current
+   scientific masthead and editorial system.
+   ════════════════════════════════════════════════════════════════ */
+.site-footer--institutional{
+  background:#061624;
+}
+.site-footer--institutional .footer-shell{
+  width:min(calc(100% - 4rem),1440px);
+  grid-template-columns:minmax(320px,1.08fr) minmax(170px,.42fr) minmax(300px,.72fr);
+  gap:clamp(3rem,5vw,5.6rem);
+  padding:clamp(3rem,4vw,4rem) 0 clamp(2.35rem,3.2vw,3rem);
+}
+.site-footer--institutional .footer-brand-plate{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:.42rem .56rem .38rem;
+  background:#fffdfa;
+  border:0;
+  border-radius:2px;
+  box-shadow:none;
+}
+.site-footer--institutional .footer-brand-plate::after{
+  content:"";
+  position:absolute;
+  left:.56rem;
+  right:.56rem;
+  bottom:0;
+  height:2px;
+  background:linear-gradient(90deg,#337eb5 0%,#2fa7a6 58%,#27a284 100%);
+  opacity:.84;
+  pointer-events:none;
+}
+.site-footer--institutional .footer-logo-img{
+  height:32px;
+  max-width:144px;
+}
+.site-footer--institutional .footer-descriptor{
+  margin-top:1.05rem;
+  color:rgba(255,255,255,.78);
+  font-size:.84rem;
+  line-height:1.5;
+}
+.site-footer--institutional .footer-institution{
+  margin-top:.5rem;
+  color:rgba(255,255,255,.50);
+  font-size:.59rem;
+  line-height:1.5;
+  letter-spacing:.05em;
+}
+.site-footer--institutional .footer-nav-label{
+  margin-bottom:.92rem;
+  color:rgba(255,255,255,.50)!important;
+  font-size:.56rem;
+  letter-spacing:.115em;
+}
+.site-footer--institutional .footer-col-nav nav{
+  gap:.62rem;
+}
+.site-footer--institutional .footer-col-nav nav a{
+  color:rgba(255,255,255,.72);
+  font-size:.82rem;
+}
+.site-footer--institutional .footer-address{
+  color:rgba(255,255,255,.61)!important;
+  font-size:.79rem;
+  line-height:1.5;
+}
+.site-footer--institutional .footer-address strong{
+  color:rgba(255,255,255,.88);
+}
+.site-footer--institutional .footer-enquiry-link{
+  margin-top:1.05rem;
+  color:#8fdfe0!important;
+  border-bottom-color:rgba(143,223,224,.32);
+  font-size:.77rem;
+}
+.site-footer--institutional .footer-bottom-bar{
+  width:min(calc(100% - 4rem),1440px);
+  padding:1rem 0 1.1rem;
+  border-top-color:rgba(255,255,255,.09);
+}
+.site-footer--institutional .footer-copy{
+  color:rgba(255,255,255,.46);
+  font-size:.68rem;
+}
+.site-footer--institutional .footer-legal-nav{
+  gap:1.35rem;
+}
+.site-footer--institutional .footer-legal-nav a{
+  color:rgba(255,255,255,.54);
+  font-size:.57rem;
+  letter-spacing:.07em;
+}
+.site-footer--institutional::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent 0%,rgba(48,126,181,.22) 28%,rgba(47,167,166,.28) 58%,rgba(39,162,132,.20) 78%,transparent 100%);
+  pointer-events:none;
+}
+
+@media(min-width:1600px){
+  .site-footer--institutional .footer-shell,
+  .site-footer--institutional .footer-bottom-bar{
+    width:min(calc(100% - 6rem),1440px);
+  }
+}
+
+@media(max-width:1100px){
+  .site-footer--institutional .footer-shell{
+    width:min(calc(100% - 3rem),980px);
+    grid-template-columns:minmax(0,1fr) minmax(180px,.46fr);
+    gap:2.35rem 3.75rem;
+  }
+  .site-footer--institutional .footer-bottom-bar{
+    width:min(calc(100% - 3rem),980px);
+  }
+}
+
+@media(max-width:760px){
+  .site-footer--institutional .footer-shell{
+    width:calc(100% - 2rem);
+    grid-template-columns:1fr;
+    gap:2rem;
+    padding:2.55rem 0 2rem;
+  }
+  .site-footer--institutional .footer-bottom-bar{
+    width:calc(100% - 2rem);
+    padding:.9rem 0 1rem;
+  }
+  .site-footer--institutional .footer-descriptor{margin-top:1rem;}
+}
+
+@media(max-width:520px){
+  .site-footer--institutional .footer-shell,
+  .site-footer--institutional .footer-bottom-bar{
+    width:calc(100% - 1.5rem);
+  }
+  .site-footer--institutional .footer-brand-plate{
+    padding:.36rem .48rem .33rem;
+  }
+  .site-footer--institutional .footer-brand-plate::after{
+    left:.48rem;
+    right:.48rem;
+  }
+  .site-footer--institutional .footer-logo-img{
+    height:30px;
+    max-width:136px;
+  }
+  .site-footer--institutional .footer-descriptor{
+    font-size:.79rem;
+  }
+}
