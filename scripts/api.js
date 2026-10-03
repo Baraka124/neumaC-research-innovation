@@ -1324,17 +1324,31 @@ document.addEventListener('keydown', function(e) {
 // previously a missing name/email silently did nothing at all, since
 // novalidate suppressed the browser's own warning and there was no
 // fallback message of any kind.
-function showFormError(form, text) {
+function contactStateMarkup(en, es) {
+  return '<span lang="en">'+en+'</span><span lang="es">'+es+'</span>';
+}
+
+function showFormError(form, en, es) {
   let el = form.querySelector('.form-error-msg');
   if (!el) {
     el = document.createElement('div');
     el.className = 'form-error-msg';
+    el.setAttribute('role','status');
+    el.setAttribute('aria-live','polite');
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.insertAdjacentElement('beforebegin', el);
     else form.appendChild(el);
   }
-  el.textContent = text;
+  el.innerHTML = contactStateMarkup(en, es);
   el.hidden = false;
+}
+
+function clearFormError(form) {
+  const el = form.querySelector('.form-error-msg');
+  if (el) {
+    el.hidden = true;
+    el.innerHTML = '';
+  }
 }
 
 function initContactForm() {
@@ -1344,6 +1358,44 @@ function initContactForm() {
             || document.getElementById('researchForm')
             || document.getElementById('innovForm');
   if (!form) return;
+
+  const success = document.getElementById('formSuccess');
+  const successOriginalHTML = success ? success.innerHTML : '';
+  let stateTimer = null;
+
+  if (success) {
+    success.setAttribute('role','status');
+    success.setAttribute('aria-live','polite');
+    success.setAttribute('aria-atomic','true');
+  }
+
+  function clearStateTimer() {
+    if (stateTimer) {
+      clearTimeout(stateTimer);
+      stateTimer = null;
+    }
+  }
+
+  function resetStatus() {
+    clearStateTimer();
+    clearFormError(form);
+    if (!success) return;
+    success.classList.remove('show','is-error');
+    success.innerHTML = successOriginalHTML;
+  }
+
+  function showStatus(kind, en, es, timeout) {
+    if (!success) return;
+    clearStateTimer();
+    success.classList.toggle('is-error',kind === 'error');
+    success.innerHTML = kind === 'success' ? successOriginalHTML : contactStateMarkup(en, es);
+    success.classList.add('show');
+    stateTimer = setTimeout(() => {
+      success.classList.remove('show','is-error');
+      success.innerHTML = successOriginalHTML;
+      stateTimer = null;
+    }, timeout);
+  }
 
   // Pre-fill context when arriving from a specific line.html page's
   // "Get in touch" link, instead of every line funneling to the exact
@@ -1356,50 +1408,56 @@ function initContactForm() {
     }
   }
 
+  form.addEventListener('input',function(){
+    const el=form.querySelector('.form-error-msg');
+    if(el&&!el.hidden) clearFormError(form);
+  });
+
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const btn = form.querySelector('button[type="submit"]');
-    const success = document.getElementById('formSuccess');
     const originalText = btn ? btn.innerHTML : '';
+    resetStatus();
 
     // Collect fields by their `name` attribute. This is robust to each page's
-    // own field order/layout, unlike reading by position (fields[0], fields[1]…),
-    // which silently scrambles data whenever a page's form differs from the
-    // original index.html layout this was written against.
+    // own field order/layout, unlike reading by position.
     const data = {};
     form.querySelectorAll('[name]').forEach(el => {
       data[el.name] = el.value;
     });
 
-    // Some pages (clinical, innovation) have a second dropdown — e.g. "Nature
-    // of Inquiry" or "Partnership Model" — that doesn't have its own slot in
-    // the backend's contact payload. Fold it into the free-text message
-    // instead of silently dropping it.
+    // Some pages have an additional enquiry topic. Fold it into the free-text
+    // message so no page-specific context is silently discarded.
     let message = data.message || '';
     if (data.secondary_topic) {
       message = `[${data.secondary_topic}]\n\n${message}`;
     }
 
     const payload = {
-      name:             data.contact_name || '',
-      organisation:     data.organisation || '',
-      email:            data.email || '',
+      name:             (data.contact_name || '').trim(),
+      organisation:     (data.organisation || '').trim(),
+      email:            (data.email || '').trim(),
       area_of_interest: data.area_of_interest || '',
       message:          message
     };
 
     if (!payload.name || !payload.email) {
-      showFormError(form, 'Please fill in your name and email before sending.');
+      showFormError(
+        form,
+        'Please add your name and email before sending.',
+        'Añada su nombre y correo electrónico antes de enviar.'
+      );
       return;
     }
 
-    // Loading state
+    // Loading state remains bilingual and restores each page's own button label.
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = `<svg class="icon icon--spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      btn.setAttribute('aria-busy','true');
+      btn.innerHTML = `<svg class="icon icon--spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-      </svg> Sending…`;
+      </svg><span lang="en">Sending…</span><span lang="es">Enviando…</span>`;
     }
 
     try {
@@ -1408,31 +1466,24 @@ function initContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      const json = await res.json();
+      let json = {};
+      try { json = await res.json(); } catch (_) {}
       if (!res.ok) throw new Error(json.error || 'Submission failed');
 
-      // Success
       form.reset();
-      if (success) {
-        success.classList.add('show');
-        setTimeout(() => success.classList.remove('show'), 7000);
-      }
+      showStatus('success','','',7000);
     } catch (err) {
       console.error('Contact form error:', err);
-      if (success) {
-        success.style.background = 'rgba(220,38,38,.08)';
-        success.style.borderColor = 'rgba(220,38,38,.2)';
-        success.style.color = '#dc2626';
-        success.textContent = 'Something went wrong. Please email us directly.';
-        success.classList.add('show');
-        setTimeout(() => {
-          success.classList.remove('show');
-          success.removeAttribute('style');
-        }, 6000);
-      }
+      showStatus(
+        'error',
+        'The enquiry could not be sent. Please try again later.',
+        'No se ha podido enviar la consulta. Inténtelo de nuevo más tarde.',
+        6000
+      );
     } finally {
       if (btn) {
         btn.disabled = false;
+        btn.removeAttribute('aria-busy');
         btn.innerHTML = originalText;
       }
     }
