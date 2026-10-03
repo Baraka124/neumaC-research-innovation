@@ -277,3 +277,23 @@ The former state where Innovation, Publications or Team could be selected while 
 
 Current fully green production repository state at this closeout:
 `c3da28b468007c068765599acff2e7afdcba6de1`
+
+
+## Post-Index Public Surface Refinements — complete
+
+Scientific Search, Team public identity fallback, Publications register/reader and the shared institutional footer are implemented, certified and merged.
+
+Canonical closeout baseline:
+`POST_INDEX_PUBLIC_SURFACES_BASELINE.md`
+
+Protected refinements:
+- Scientific Search is a four-domain discovery surface integrated with the Scientific Index;
+- named Team members use approved documentary photography or institutional initials only;
+- Publications is an information-led scholarly register rather than a repeated image hero;
+- the desktop/workstation publication reader is a masthead-synchronized docked scholarly folio while mobile keeps its adaptive reading behavior;
+- the shared institutional footer has a bounded workstation measure, masthead-aligned brand signature and explicit institutional/legal hierarchy.
+
+Current certified production implementation:
+`c2da8b087dbf8d09e7a302c19554f8c65a6a8c74`
+
+Future work must preserve these contracts unless an explicitly stronger certified milestone replaces them.
