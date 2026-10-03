@@ -402,17 +402,15 @@ test('Publications zero-output state removes redundant Selection and preserves o
 
 test('Publications populated Selection preserves authored feature stage', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
-  await page.addInitScript(() => {
-    window._newsAllPosts = [{
-      id: 'regression-feature-1',
-      post_type: 'publication',
-      title: 'Regression featured publication',
-      authors_text: 'neumACt',
-      journal_name: 'Fixture Journal',
-      published_at: '2026-01-15T00:00:00Z',
-      is_featured: true
-    }];
-  });
+  await page.route('**/api/news/website**',async route=>route.fulfill({json:{data:[{
+    id:'regression-feature-1',
+    post_type:'publication',
+    title:'Regression featured publication',
+    authors_text:'neumACt',
+    journal_name:'Fixture Journal',
+    published_at:'2026-01-15T00:00:00Z',
+    is_featured:true
+  }]}}));
   await page.goto('/news/');
 
   const stage = page.locator('.pub-feature__stage');
@@ -426,18 +424,16 @@ test('Publications populated Selection preserves authored feature stage', async 
 
 test('Publications feed remains flat after folio recomposition', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
-  await page.addInitScript(() => {
-    window._newsAllPosts = [{
-      id: 'regression-publication-1',
-      post_type: 'publication',
-      title: 'Regression fixture publication',
-      authors_text: 'neumACt',
-      journal_name: 'Fixture Journal',
-      published_at: '2026-01-15T00:00:00Z',
-      doi: '10.0000/neumact.fixture',
-      research_line: { id: 'fixture-line', line_number: 1, name: 'Transplantation' }
-    }];
-  });
+  await page.route('**/api/news/website**',async route=>route.fulfill({json:{data:[{
+    id:'regression-publication-1',
+    post_type:'publication',
+    title:'Regression fixture publication',
+    authors_text:'neumACt',
+    journal_name:'Fixture Journal',
+    published_at:'2026-01-15T00:00:00Z',
+    doi:'10.0000/neumact.fixture',
+    research_line:{id:'fixture-line',line_number:1,name:'Transplantation'}
+  }]}}));
   await page.goto('/news/');
 
   await expect(page.locator('.pub-item').first()).toBeVisible();
