@@ -75,7 +75,7 @@ test('Scientific Index uses page-aware centre content on Publications and Team',
   await page.locator('#hdrIndexBtn').click();
   await expect(page.locator('[data-index-chapter="articles"]')).toHaveClass(/is-current/);
   await expect(page.locator('#globalIndexLinesTitle')).toContainText(/Scholarly register|Registro científico/);
-  await page.locator('[data-index-close]').first().click();
+  await page.locator('.global-index__toolbar [data-index-close]').click();
 
   await page.goto('/team/');
   await page.locator('#hdrIndexBtn').click();
