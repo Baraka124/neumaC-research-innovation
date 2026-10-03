@@ -137,3 +137,14 @@ for(const vp of [
     await page.screenshot({path:path.join(OUTPUT,`elite-5-8-publications-empty-${vp.name}-${vp.width}.png`),fullPage:false,animations:'disabled'});
   });
 }
+
+
+test('Team opening is people-led and contains no synthetic rabbit hero assets', async ({ page }) => {
+  const response = await page.request.get('/team/');
+  expect(response.ok()).toBe(true);
+  const html = await response.text();
+  expect(html).toContain('team-hero--people');
+  expect(html).toContain('team-hero__disciplines');
+  expect(html).not.toContain('multidisciplinary-rabbit-team');
+  expect(html).not.toContain('rabbit-team');
+});
