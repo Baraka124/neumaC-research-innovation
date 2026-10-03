@@ -65,6 +65,37 @@
     }
   }
 
+
+  function activeChapter(){
+    var current=document.querySelector('[data-index-chapter][aria-pressed="true"],[data-index-chapter].is-current');
+    return current&&current.dataset.indexChapter||'research';
+  }
+
+  function syncDisclosureContext(){
+    var section=document.querySelector('.global-index__lines');
+    var toggle=section&&section.querySelector('.global-index__lines-toggle');
+    var label=toggle&&toggle.querySelector('.global-index__lines-toggle-label');
+    var list=document.getElementById('globalIndexLines');
+    var all=section&&section.querySelector('.global-index__lines-all');
+    var open=document.getElementById('globalIndexChapterOpen');
+    if(!section||!toggle||!label||!list)return;
+
+    var chapter=activeChapter();
+    var count=list.querySelectorAll('.global-index__line').length;
+    if(chapter==='research'){
+      label.innerHTML=bi((count||6)+' lines',(count||6)+' líneas');
+    }else{
+      label.innerHTML=bi((count||0)+' sections',(count||0)+' secciones');
+    }
+
+    if(all&&open){
+      all.href=open.getAttribute('href')||'#';
+      var en=open.querySelector('[lang="en"]');
+      var es=open.querySelector('[lang="es"]');
+      all.innerHTML=bi((en&&en.textContent||'Open chapter')+' →',(es&&es.textContent||'Abrir capítulo')+' →');
+    }
+  }
+
   function ensureLinesDisclosure(){
     var section=document.querySelector('.global-index__lines');
     var head=section&&section.querySelector('.global-index__section-head');
@@ -77,7 +108,7 @@
       toggle.type='button';
       toggle.className='global-index__lines-toggle';
       toggle.setAttribute('aria-controls','globalIndexLines');
-      toggle.innerHTML='<span class="global-index__lines-toggle-label">'+bi('6 lines','6 líneas')+'</span><span class="global-index__lines-toggle-mark" aria-hidden="true">+</span>';
+      toggle.innerHTML='<span class="global-index__lines-toggle-label"></span><span class="global-index__lines-toggle-mark" aria-hidden="true">+</span>';
       head.appendChild(toggle);
       toggle.addEventListener('click',function(){
         var expanded=toggle.getAttribute('aria-expanded')==='true';
@@ -86,7 +117,7 @@
     }
 
     if(!section.querySelector('.global-index__lines-all')){
-      var source=head.querySelector('a[href="/clinical/"]');
+      var source=document.getElementById('globalIndexChapterOpen');
       var all=document.createElement('a');
       all.className='global-index__lines-all';
       all.href='/clinical/';
@@ -95,6 +126,7 @@
       if(source)source.classList.add('global-index__lines-head-link');
     }
 
+    syncDisclosureContext();
     if(window.innerWidth<=MOBILE_DISCLOSURE){
       if(section.dataset.mobilePrepared!=='true'){
         section.dataset.mobilePrepared='true';
@@ -141,6 +173,10 @@
       resizeTimer=setTimeout(function(){reconcileWhenReady(0);},80);
     },{passive:true});
     document.addEventListener('neumac:languagechange',function(){reconcileWhenReady(0);});
+    document.addEventListener('click',function(e){
+      if(!e.target.closest('[data-index-chapter]'))return;
+      requestAnimationFrame(function(){syncDisclosureContext();});
+    });
   }
 
   document.addEventListener('neumac:indexready',function(){
