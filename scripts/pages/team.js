@@ -68,9 +68,6 @@
   const initials=name=>String(name||'').replace(/\b(?:Dra|Dr|Prof)\.?\s*/gi,'').split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase()||'—';
 
   const slugifyName=name=>String(name||'').replace(/\b(?:Dra|Dr|Prof)\.?\s*/gi,'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-  const localPlaceholderSlugs=new Set([
-    'baraka-laiza','francisco-mendez-salazar','luis-dominguez-juncal','manuel-fernandez-rivas','santiago-de-jorge-dominguez-pazos','adela-antelo-del-rio','alicia-tirados','ana-santalla','ana-souto-alonso','berta-varona-galan','cecilia-mouronte-roibas','cristina-balboa-mejuto','enriqueta-alvarez-moyano','iria-horiales-rodriguez','laura-yoris-marin','maria-fernandez-marrube','miguel-brun-otero'
-  ]);
 
   function safeUrl(value){
     const raw=String(value||'').trim();
@@ -78,16 +75,8 @@
     if(raw.startsWith('/'))return raw;
     try{const u=new URL(raw,location.origin);return ['https:','http:'].includes(u.protocol)?u.href:'';}catch{return '';}
   }
-  function genericPlaceholderUrl(){
-    return '/assets/team/placeholders/rabbit-clinical-overall.webp';
-  }
-  function localPlaceholderUrl(person){
-    const slug=slugifyName(nameOf(person));
-    if(localPlaceholderSlugs.has(slug))return `/assets/team/people/${slug}.webp`;
-    return genericPlaceholderUrl();
-  }
   function documentaryPhotoUrl(p){return safeUrl(portraitOverrides[p?.id]||p?.public_photo_url||'');}
-  function photoUrl(p){return documentaryPhotoUrl(p)||safeUrl(localPlaceholderUrl(p)||'');}
+  function photoUrl(p){return documentaryPhotoUrl(p);}
   function hasDocumentaryPhoto(p){return Boolean(documentaryPhotoUrl(p));}
   function rolePair(p){
     if(roleLabels[p?.staff_type])return roleLabels[p.staff_type];
@@ -229,13 +218,13 @@
     const pid=esc(person?.id||'');
     const documentary=hasDocumentaryPhoto(person);
     if(src)return `<span class="team-person__portrait media-photo-frame has-photo${documentary?'':' is-placeholder'}" data-media-kind="${documentary?'documentary':'placeholder'}" data-person-id="${pid}" aria-hidden="true"><img class="media-photo ${documentary?'media-photo--documentary':'media-photo--placeholder'}" src="${esc(src)}" alt="" loading="lazy" decoding="async" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.classList.add('team-person__portrait--initials');this.parentElement.innerHTML='<span>${esc(ini)}</span>'"></span>`;
-    return `<span class="team-person__portrait team-person__portrait--initials" data-person-id="${pid}" aria-hidden="true"><span>${esc(ini)}</span></span>`;
+    return `<span class="team-person__portrait team-person__portrait--initials" data-media-kind="initials" data-person-id="${pid}" aria-hidden="true"><span>${esc(ini)}</span></span>`;
   }
   function profilePortrait(person){
     const src=photoUrl(person),ini=initials(nameOf(person));
     const documentary=hasDocumentaryPhoto(person);
     if(src)return `<figure class="team-profile__portrait media-photo-frame has-photo${documentary?'':' is-placeholder'}" data-media-kind="${documentary?'documentary':'placeholder'}" data-person-id="${esc(person?.id||'')}"${documentary?'':` aria-hidden="true"`}><img class="media-photo ${documentary?'media-photo--documentary':'media-photo--placeholder'}" src="${esc(src)}" alt="${documentary?esc(nameOf(person)):''}" decoding="async" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.classList.add('team-profile__portrait--initials');this.parentElement.innerHTML='<span>${esc(ini)}</span>'"></figure>`;
-    return `<div class="team-profile__portrait team-profile__portrait--initials" aria-hidden="true"><span>${esc(ini)}</span></div>`;
+    return `<div class="team-profile__portrait team-profile__portrait--initials" data-media-kind="initials" data-person-id="${esc(person?.id||'')}" aria-hidden="true"><span>${esc(ini)}</span></div>`;
   }
 
   function syncMediaLanguage(lang=document.documentElement.dataset.lang||'en'){
@@ -260,7 +249,7 @@
     const src=photoUrl(p),ini=initials(nameOf(p));
     const pid=esc(p?.id||'');
     if(src)return `<figure class="${cls} media-photo-frame has-photo" data-media-kind="documentary" data-person-id="${pid}"><img class="media-photo media-photo--documentary" src="${esc(src)}" alt="${esc(nameOf(p))}" ${lazy?'loading="lazy"':'loading="eager"'} decoding="async" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.classList.add('${cls}--initials');this.parentElement.innerHTML='${esc(ini)}'"></figure>`;
-    return `<div class="${cls} ${cls}--initials" data-person-id="${pid}" aria-hidden="true"><span>${esc(ini)}</span></div>`;
+    return `<div class="${cls} ${cls}--initials" data-media-kind="initials" data-person-id="${pid}" aria-hidden="true"><span>${esc(ini)}</span></div>`;
   }
 
   function renderLeadership(){

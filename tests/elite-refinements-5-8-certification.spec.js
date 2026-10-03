@@ -55,7 +55,7 @@ test('Refinement 05 — Team opening does not manufacture illustrative photograp
   await noOverflow(page);
 });
 
-test('Refinement 05 — Team runtime distinguishes documentary and placeholder photography',async({page})=>{
+test('Refinement 05 — Team runtime uses documentary photography or institutional initials only',async({page})=>{
   const people=[
     {id:'pi',full_name:'Pedro Example',staff_type:'Principal Investigator',specialization:'Pneumology',public_photo_url:'/assets/research/pi-pedro-marcos.jpg',is_pi:true},
     {id:'member',full_name:'Ada Example',staff_type:'Clinician',specialization:'Pneumology'}
@@ -67,10 +67,9 @@ test('Refinement 05 — Team runtime distinguishes documentary and placeholder p
   await page.waitForTimeout(300);
   const documentary=page.locator('[data-media-kind="documentary"]').first();
   await expect(documentary).toBeAttached();
-  const placeholder=page.locator('[data-media-kind="placeholder"]').first();
-  if(await placeholder.count()){
-    await expect(placeholder.locator('img')).toHaveClass(/media-photo--placeholder/);
-  }
+  const initials=page.locator('[data-media-kind="initials"]').first();
+  await expect(initials).toBeAttached();
+  await expect(page.locator('[data-media-kind="placeholder"], img[src*="rabbit"], img[src*="/assets/team/people/"]')).toHaveCount(0);
   await noOverflow(page);
 });
 

@@ -31,39 +31,18 @@ The scene shows rabbit clinical, nursing, research, engineering and computing pr
 Approved documentary photography may later replace this semantic slot without changing the Team data model or information architecture. Do not reuse this illustration as scientific evidence or imply that any rabbit represents a named member of the group.
 
 
-## Phase 7.9 — Team portrait placeholders
+## Current public portrait rule — documentary or initials
 
-For public team members without approved portraits, the page now uses **editorial rabbit placeholders** derived from the Team hero illustration. These are explicit placeholders only.
+The public Team system must never use synthetic imagery to represent a named person.
 
-### Generic placeholder assets
+For every public profile:
+- if an approved documentary portrait is available through the governed public photo field, render that portrait;
+- otherwise render the existing institutional initials identity treatment;
+- never substitute rabbit, avatar, stock, generated, or other synthetic person imagery for a named member.
 
-Located in `assets/team/placeholders/`:
-- `rabbit-clinician-a.webp`
-- `rabbit-clinician-b.webp`
-- `rabbit-nurse.webp`
-- `rabbit-researcher.webp`
-- `rabbit-lab.webp`
-- `rabbit-engineer.webp`
+Legacy rabbit portrait assets remain archived in this repository only for provenance from earlier design phases. They are not part of the current public runtime contract.
 
-### Standardised replaceable person portraits
+When a verified public portrait becomes available, expose it through the approved public-photo data path rather than replacing placeholder files in-place.
 
-Located in `assets/team/people/` and named with a predictable person slug, for example:
-- `baraka-laiza.webp`
-- `francisco-mendez-salazar.webp`
-- `adela-antelo-del-rio.webp`
+This rule applies consistently to programme leadership, research-line coordinators, the multidisciplinary roster and professional profile sheets.
 
-When a real approved portrait becomes available, replace the file **at the same path and filename**. No code changes are required.
-
-
-## Editorial portrait placeholders
-
-The files in `assets/team/people/` are **synthetic editorial placeholder portraits** used only for public-page composition where confirmed public photographs are not yet available. Each file already uses the final per-person filename so it can later be replaced in-place with a verified portrait without changing the page code.
-
-
-## Final no-photo portrait rule
-All team members without an approved public photograph use the same clean **clinical rabbit portrait** as a clearly synthetic editorial placeholder. The image is neutral, non-sexualized and contains no human hair or exaggerated human anatomy. Each person-specific placeholder still keeps the stable `assets/team/people/<person-slug>.webp` filename so a verified real portrait can replace it in-place later.
-
-
-## Phase 7.12.1 final corrections
-- The hero keeps only the approved `Pulmonary · neumACt 2026` wall title; invented event/date/venue/slogan copy has been removed.
-- Synthetic portrait placeholders use one neutral clinical rabbit portrait with natural rabbit anatomy, no human hair and no sexualized human body features.
