@@ -52,7 +52,7 @@
   var indexState={
     panel:null,surface:null,indexView:null,searchView:null,input:null,results:null,
     mode:'index',open:false,lastFocus:null,lines:[],people:[],posts:[],loaded:false,loading:false,
-    filter:'all',projects:[]
+    filter:'all',projects:[],chapter:'research'
   };
 
   function ixEsc(v){
@@ -216,6 +216,7 @@
     }
 
     var active=ixPageKey();
+    indexState.chapter=['research','innovation','articles','team'].indexOf(active)>-1?active:'research';
     var wrap=document.createElement('div');
     wrap.className='global-index global-index--h2'; wrap.id='globalIndex'; wrap.hidden=true; wrap.setAttribute('aria-hidden','true');
     wrap.innerHTML='\
@@ -234,17 +235,17 @@
         </div>\
         <div class="global-index__index-view" id="globalIndexIndexView">\
           <nav class="global-index__chapters" aria-label="Site index">\
-            <a href="/clinical/" class="global-index__chapter '+(active==='research'?'is-current':'')+'"><span class="global-index__chapter-no">01</span><span class="global-index__chapter-name">'+ixBi('Research','Investigación')+'</span></a>\
-            <a href="/innovation/" class="global-index__chapter '+(active==='innovation'?'is-current':'')+'"><span class="global-index__chapter-no">02</span><span class="global-index__chapter-name">'+ixBi('Innovation','Innovación')+'</span></a>\
-            <a href="/news/" class="global-index__chapter '+(active==='articles'?'is-current':'')+'"><span class="global-index__chapter-no">03</span><span class="global-index__chapter-name">'+ixBi('Publications','Publicaciones')+'</span></a>\
-            <a href="/team/" class="global-index__chapter '+(active==='team'?'is-current':'')+'"><span class="global-index__chapter-no">04</span><span class="global-index__chapter-name">'+ixBi('Team','Equipo')+'</span></a>\
+            <button type="button" data-index-chapter="research" aria-pressed="'+(indexState.chapter==='research'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='research'?'is-current':'')+'"><span class="global-index__chapter-no">01</span><span class="global-index__chapter-name">'+ixBi('Research','Investigación')+'</span></button>\
+            <button type="button" data-index-chapter="innovation" aria-pressed="'+(indexState.chapter==='innovation'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='innovation'?'is-current':'')+'"><span class="global-index__chapter-no">02</span><span class="global-index__chapter-name">'+ixBi('Innovation','Innovación')+'</span></button>\
+            <button type="button" data-index-chapter="articles" aria-pressed="'+(indexState.chapter==='articles'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='articles'?'is-current':'')+'"><span class="global-index__chapter-no">03</span><span class="global-index__chapter-name">'+ixBi('Publications','Publicaciones')+'</span></button>\
+            <button type="button" data-index-chapter="team" aria-pressed="'+(indexState.chapter==='team'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='team'?'is-current':'')+'"><span class="global-index__chapter-no">04</span><span class="global-index__chapter-name">'+ixBi('Team','Equipo')+'</span></button>\
           </nav>\
           <section class="global-index__lines" aria-labelledby="globalIndexLinesTitle">\
             <div class="global-index__section-head">\
-              <h2 id="globalIndexLinesTitle">'+ixBi('Research lines','Líneas de investigación')+'</h2>\
-              <a href="/clinical/">'+ixBi('View research','Ver investigación')+'</a>\
+              <h2 id="globalIndexLinesTitle"></h2>\
+              <a id="globalIndexChapterOpen" href="/clinical/"></a>\
             </div>\
-            <div class="global-index__line-list" id="globalIndexLines"><div class="global-index__loading">'+ixBi('Loading research lines…','Cargando líneas de investigación…')+'</div></div>\
+            <div class="global-index__line-list" id="globalIndexLines"></div>\
           </section>\
           <aside class="global-index__utilities">\
             <p class="global-index__utility-label">'+ixBi('Explore','Explorar')+'</p>\
@@ -296,6 +297,10 @@
     wrap.querySelector('#globalIndexBackdrop').addEventListener('click',function(){ixClose(true);});
     wrap.querySelector('#globalIndexSearchOpen').addEventListener('click',function(){ixSetMode('search',true);});
     wrap.querySelectorAll('[data-open-index-search]').forEach(function(btn){btn.addEventListener('click',function(){ixSetMode('search',true);});});
+    wrap.querySelectorAll('[data-index-chapter]').forEach(function(btn){btn.addEventListener('click',function(){
+      indexState.chapter=btn.dataset.indexChapter||'research';
+      ixRenderChapter();
+    });});
     wrap.querySelector('#globalIndexSearchBack').addEventListener('click',function(){ixSetMode('index',true);});
     wrap.querySelector('#globalIndexSearchFilters').addEventListener('click',function(e){
       var b=e.target.closest('[data-filter]');if(!b)return;
@@ -315,7 +320,7 @@
       if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
       else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
     });
-    document.addEventListener('neumac:languagechange',function(){ixSyncLanguage();ixRenderLines();ixRenderLatest();ixRenderSearch();});
+    document.addEventListener('neumac:languagechange',function(){ixSyncLanguage();ixRenderChapter();ixRenderLatest();ixRenderSearch();});
     ixSyncLanguage();
   }
 
@@ -338,6 +343,7 @@
     var idxBtn=document.getElementById('hdrIndexBtn'); if(idxBtn)idxBtn.setAttribute('aria-expanded','true');
     var mob=document.getElementById('mobToggle'); if(mob)mob.setAttribute('aria-expanded','true');
     ixSetMode(mode||'index',false);
+    ixRenderChapter();
     requestAnimationFrame(function(){indexState.panel.classList.add('is-open');if(mode==='search'&&indexState.input)indexState.input.focus();else indexState.surface.focus({preventScroll:true});});
     ixLoadData();
   }
@@ -363,11 +369,68 @@
   }
 
   function ixLineLabel(l){var pair=ixLinePair(l);return pair[root.dataset.lang==='es'?1:0]||pair[0]||'';}
-  function ixRenderLines(){
-    var host=document.getElementById('globalIndexLines');if(!host)return;
-    if(!indexState.lines.length){host.innerHTML='<div class="global-index__loading state-panel state-panel--error"><span class="state-panel__label">'+ixBi('Temporary issue','Incidencia temporal')+'</span><h3 class="state-panel__title">'+ixBi('Research lines are temporarily unavailable.','Las líneas de investigación no están disponibles temporalmente.')+'</h3></div>';return;}
-    host.innerHTML=indexState.lines.map(function(l){return '<a class="global-index__line" href="/line/?id='+encodeURIComponent(l.id)+'"><strong>'+ixEsc(ixLineLabel(l))+'</strong></a>';}).join('');
+  function ixChapterStaticRows(key){
+    var map={
+      innovation:[
+        {href:'/innovation/#top',en:'Clinical question',es:'Pregunta clínica'},
+        {href:'/innovation/#projects',en:'Current projects',es:'Proyectos actuales'},
+        {href:'/innovation/#contact',en:'Research & technical collaboration',es:'Colaboración en investigación y tecnología'}
+      ],
+      articles:[
+        {href:'/news/#pubFeatureStage',en:'Selected output',es:'Selección'},
+        {href:'/news/#publicationsIndex',en:'Recent output',es:'Producción reciente'},
+        {href:'/news/#publicationsIndex',en:'Search the scholarly register',es:'Buscar en el registro científico'}
+      ],
+      team:[
+        {href:'/team/#teamLeadership',en:'Programme leadership',es:'Dirección del programa'},
+        {href:'/team/#teamCoordinators',en:'Research-line coordinators',es:'Coordinación de las líneas'},
+        {href:'/team/#teamRoster',en:'Multidisciplinary team',es:'Equipo multidisciplinar'},
+        {href:'/team/#collaboration',en:'Research collaboration',es:'Colaboración en investigación'}
+      ]
+    };
+    return map[key]||[];
   }
+  function ixRenderChapter(){
+    var host=document.getElementById('globalIndexLines');
+    var title=document.getElementById('globalIndexLinesTitle');
+    var open=document.getElementById('globalIndexChapterOpen');
+    if(!host||!title||!open)return;
+    var key=indexState.chapter||'research';
+    var meta={
+      research:{title:['Research lines','Líneas de investigación'],open:['Open research','Abrir investigación'],href:'/clinical/'},
+      innovation:{title:['Innovation pathway','Ruta de innovación'],open:['Open innovation','Abrir innovación'],href:'/innovation/'},
+      articles:{title:['Scholarly register','Registro científico'],open:['Open publications','Abrir publicaciones'],href:'/news/'},
+      team:{title:['People & programme','Personas y programa'],open:['Open team','Abrir equipo'],href:'/team/'}
+    }[key];
+    if(!meta)return;
+
+    indexState.panel.querySelectorAll('[data-index-chapter]').forEach(function(btn){
+      var on=btn.dataset.indexChapter===key;
+      btn.classList.toggle('is-current',on);
+      btn.setAttribute('aria-pressed',String(on));
+    });
+    title.innerHTML=ixBi(meta.title[0],meta.title[1]);
+    open.href=meta.href;
+    open.innerHTML=ixBi(meta.open[0],meta.open[1]);
+
+    if(key==='research'){
+      if(!indexState.loaded){
+        host.innerHTML='<div class="global-index__loading">'+ixBi('Loading research lines…','Cargando líneas de investigación…')+'</div>';
+        return;
+      }
+      if(!indexState.lines.length){
+        host.innerHTML='<div class="global-index__loading state-panel state-panel--error"><span class="state-panel__label">'+ixBi('Temporary issue','Incidencia temporal')+'</span><h3 class="state-panel__title">'+ixBi('Research lines are temporarily unavailable.','Las líneas de investigación no están disponibles temporalmente.')+'</h3></div>';
+        return;
+      }
+      host.innerHTML=indexState.lines.map(function(l){return '<a class="global-index__line" href="/line/?id='+encodeURIComponent(l.id)+'"><strong>'+ixEsc(ixLineLabel(l))+'</strong></a>';}).join('');
+      return;
+    }
+
+    host.innerHTML=ixChapterStaticRows(key).map(function(row){
+      return '<a class="global-index__line global-index__line--chapter" href="'+row.href+'"><strong>'+ixBi(row.en,row.es)+'</strong><span class="global-index__line-arrow" aria-hidden="true">↗</span></a>';
+    }).join('');
+  }
+  function ixRenderLines(){ixRenderChapter();}
   function ixRenderLatest(){
     var host=document.getElementById('globalIndexLatest');if(!host)return;
     var p=indexState.posts[0];if(!p){host.hidden=true;return;}
@@ -392,7 +455,7 @@
       indexState.lines.sort(function(a,b){return Number(a.line_number||0)-Number(b.line_number||0);});
       indexState.posts.sort(function(a,b){return new Date(b.published_at||b.created_at||0)-new Date(a.published_at||a.created_at||0);});
       indexState.loaded=true;indexState.loading=false;
-      ixRenderLines();ixRenderLatest();ixRenderSearch();
+      ixRenderChapter();ixRenderLatest();ixRenderSearch();
     });
   }
   function ixSearchItems(){
