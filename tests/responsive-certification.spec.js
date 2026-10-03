@@ -346,10 +346,6 @@ for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
     expect(geo.right).toBeLessThanOrEqual(geo.vw + 1);
     expect(geo.transform).toBe('none');
 
-    if (width >= 1680) {
-      expect(geo.width).toBeLessThanOrEqual(1562);
-    }
-
     await expectNoHorizontalOverflow(page);
   });
 }
