@@ -41,6 +41,12 @@ test('Scientific Search opens with authored four-domain discovery registry',asyn
   await expect(page.locator('.global-search__scope-list')).toContainText(/People|Personas/);
   await expect(page.locator('.global-search__scope-list')).toContainText(/Publications|Publicaciones/);
   await expect(page.locator('.global-search__scope-list')).toContainText(/Innovation|Innovación/);
+  const geometry=await page.evaluate(()=>{
+    const view=document.querySelector('#globalIndexSearchView').getBoundingClientRect();
+    const discovery=document.querySelector('.global-search__discovery').getBoundingClientRect();
+    return {viewWidth:view.width,discoveryWidth:discovery.width,left:discovery.left,right:discovery.right};
+  });
+  expect(geometry.discoveryWidth / geometry.viewWidth).toBeGreaterThan(.9);
   await noOverflow(page);
 
   await page.evaluate(()=>{const c=document.getElementById('cookieBanner');if(c)c.style.display='none';});
@@ -79,6 +85,8 @@ test('Phone Scientific Search keeps discovery registry contained and single-colu
 
   const rows=await page.locator('.global-search__scope').evaluateAll(items=>items.map(el=>Math.round(el.getBoundingClientRect().top)));
   expect(new Set(rows).size).toBe(4);
+  const surfaceBackground=await page.locator('#globalIndexSurface').evaluate(el=>getComputedStyle(el).backgroundColor);
+  expect(surfaceBackground).toMatch(/^rgb\(/);
   await noOverflow(page);
 
   await page.evaluate(()=>{const c=document.getElementById('cookieBanner');if(c)c.style.display='none';});
