@@ -1081,3 +1081,22 @@
   .global-index--h2 .global-index__chapter::after,
   .global-index--h2 .global-index__line{transition:none!important}
 }
+
+
+/* Index 2.0 search-mode cleanup: one control rail, one focus language. */
+@media(min-width:881px){
+  .global-index--h2.is-search .global-index__toolbar{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  .global-index--h2.is-search .global-index__toolbar-actions{
+    display:none!important;
+  }
+  .global-index--h2 .global-search__field input,
+  .global-index--h2 .global-search__field input:focus,
+  .global-index--h2 .global-search__field input:focus-visible{
+    border:0!important;
+    outline:0!important;
+    box-shadow:none!important;
+    background:transparent!important;
+  }
+}
