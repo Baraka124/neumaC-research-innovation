@@ -107,6 +107,38 @@ test('Refinement 07 — interaction motion uses institutional timing and reduced
   expect(Math.max(...reducedSeconds)).toBeLessThan(.01);
 });
 
+test('Refinement 05 — populated Publications register preserves authored scholarly hierarchy',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.addInitScript(()=>{
+    window._newsAllPosts=[{
+      id:'visual-publication-1',
+      post_type:'publication',
+      title:'Clinical translation in respiratory research',
+      authors_text:'neumACt Research & Innovation',
+      journal_name:'Respiratory Research',
+      published_at:'2026-09-18T00:00:00Z',
+      doi:'10.0000/neumact.visual',
+      is_featured:true,
+      research_line:{id:'visual-line',line_number:2,name:'Airway Diseases'}
+    },{
+      id:'visual-article-2',
+      post_type:'article',
+      title:'From clinical question to research protocol',
+      summary:'A structured editorial fixture used to certify the populated publication register.',
+      published_at:'2026-08-22T00:00:00Z',
+      author:{full_name:'neumACt Editorial'},
+      research_line:{id:'visual-line',line_number:2,name:'Airway Diseases'}
+    }];
+  });
+  await page.goto('/news/');
+  await expect(page.locator('.pub-feature-lead')).toBeVisible();
+  await expect(page.locator('.pub-item').first()).toBeVisible();
+  await expect(page.locator('.pub-feature-lead__media.is-fallback')).toBeVisible();
+  await noOverflow(page);
+  await page.evaluate(()=>{const c=document.getElementById('cookieBanner');if(c)c.style.display='none';});
+  await page.screenshot({path:path.join(OUTPUT,'publications-register-populated-laptop-1440.png'),fullPage:false,animations:'disabled'});
+});
+
 test('Refinement 08 — Publications empty state uses institutional state language',async({page})=>{
   await emptyApi(page);
   await page.setViewportSize({width:1440,height:900});
