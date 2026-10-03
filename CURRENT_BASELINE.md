@@ -236,3 +236,22 @@ Canonical baseline:
 `ELITE_REFINEMENTS_05_08_BASELINE.md`
 
 The public system now has governed photography roles, canonical shared iconography, restrained institutional motion and a unified loading / empty / error-state language. These refinements preserve the protected 01–04 design grammar and existing page architecture.
+
+
+## Post-Elite Brand + Team Refinement — complete
+
+The canonical neumACt native vector reconstruction and people-led Team opening are implemented, visually certified and merged.
+
+Canonical closeout baseline:
+`POST_ELITE_BRAND_TEAM_BASELINE.md`
+
+Protected refinements:
+- `logo.svg` is now native vector geometry traced from the approved neumACt artwork rather than a raster image embedded inside SVG;
+- the approved wordmark silhouette remains the identity source of truth; no replacement icon or generic font reconstruction is permitted;
+- the public Team opening no longer uses the synthetic rabbit laboratory hero;
+- Team identity is now carried by its multidisciplinary professional architecture and responsive professional-domain rail;
+- P1 professional profiles, shared masthead, Index/Search, Research, Innovation, Publications and the rest of the Elite 01–08 baseline remain unchanged.
+
+The Team responsive contract is explicitly certified across phone, tablet, laptop and workstation compositions.
+
+Future work must not restore the raster-wrapped logo or synthetic Team hero merely to satisfy older design assumptions or retired tests.
