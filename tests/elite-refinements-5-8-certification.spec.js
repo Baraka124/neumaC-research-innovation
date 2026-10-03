@@ -23,8 +23,7 @@ test('Refinement 05 — principal imagery declares governed photography roles',a
     ['/clinical/', '.research-hero__media img','media-photo--editorial'],
     ['/clinical/', '.research-leadership__portrait img','media-photo--documentary'],
     ['/innovation/', '.innovation-hero__media img','media-photo--editorial'],
-    ['/news/', '.pub-hero__media img','media-photo--editorial'],
-    ['/team/', '#teamHeroImage','media-photo--illustrative']
+    ['/news/', '.pub-hero__media img','media-photo--editorial']
   ];
   for(const [url,selector,cls] of targets){
     await page.goto(url);
@@ -35,6 +34,15 @@ test('Refinement 05 — principal imagery declares governed photography roles',a
     expect(style.fit).toBe('cover');
     if(cls!=='media-photo--placeholder') expect(style.filter).toBe('none');
   }
+});
+
+test('Refinement 05 — Team opening does not manufacture illustrative photography',async({page})=>{
+  await emptyApi(page);
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/team/');
+  await expect(page.locator('.team-hero--people')).toBeVisible();
+  await expect(page.locator('#teamHeroImage,.team-visual-hero,.media-photo--illustrative')).toHaveCount(0);
+  await noOverflow(page);
 });
 
 test('Refinement 05 — Team runtime distinguishes documentary and placeholder photography',async({page})=>{
