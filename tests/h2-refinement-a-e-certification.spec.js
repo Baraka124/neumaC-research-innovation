@@ -29,13 +29,15 @@ async function noOverflow(page){
   expect(g.body).toBeLessThanOrEqual(g.viewport+2);
 }
 
-test('A — logo.svg preserves the canonical neumACT artwork',async({page})=>{
+test('A — logo.svg preserves the canonical neumACT artwork as native vector paths',async({page})=>{
   const response=await page.request.get('/logo.svg');
   expect(response.ok()).toBe(true);
   const svg=await response.text();
   expect(svg).toContain('viewBox="0 0 988 286"');
-  expect(svg).toContain('data:image/png;base64,');
-  expect(svg).toMatch(/<image\b/i);
+  expect(svg).toContain('data-brand-fidelity="canonical-neumact-2026-10"');
+  expect(svg).toMatch(/<path\b/i);
+  expect(svg).not.toContain('data:image/png;base64,');
+  expect(svg).not.toMatch(/<image\b/i);
 });
 
 for(const width of [1440,2048]){
