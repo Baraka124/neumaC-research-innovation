@@ -690,3 +690,131 @@ body[data-page="clinical"] .research-context__system span:first-child{
     transition:none!important;
   }
 }
+
+
+/* ============================================================
+   RESEARCH — PHASE 2
+   Signature interaction: living scientific programme index.
+   ============================================================ */
+@media(min-width:621px){
+  body[data-page="clinical"] .research-line-list{
+    --research-programme-progress:0;
+    --research-spine-x:29px;
+    position:relative;
+    isolation:isolate;
+  }
+
+  body[data-page="clinical"] .research-line-list::before,
+  body[data-page="clinical"] .research-line-list::after{
+    content:"";
+    position:absolute;
+    z-index:0;
+    left:var(--research-spine-x);
+    top:1.35rem;
+    bottom:1.35rem;
+    width:1px;
+    pointer-events:none;
+    transform-origin:top;
+  }
+
+  body[data-page="clinical"] .research-line-list::before{
+    background:#d6e1e4;
+  }
+
+  body[data-page="clinical"] .research-line-list::after{
+    background:#159da6;
+    transform:scaleY(var(--research-programme-progress));
+    transition:transform .08s linear;
+  }
+
+  body[data-page="clinical"] .research-line-row{
+    z-index:1;
+  }
+
+  body[data-page="clinical"] .research-line-row::before{
+    position:relative;
+    z-index:2;
+    transition:color .2s ease,transform .22s cubic-bezier(.2,.75,.2,1);
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line::before{
+    color:#00818a;
+    transform:translateX(2px);
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line{
+    background:linear-gradient(90deg,rgba(13,129,139,.035),transparent 38%);
+    border-bottom-color:#cbdadd;
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line::after{
+    transform:scaleY(1);
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line .research-line__title{
+    color:#08737d;
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line .research-line__media img{
+    transform:scale(1.012);
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line .research-line__side{
+    border-left-color:#bad0d4;
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line .research-line__coord-label{
+    color:#5f7f8b;
+  }
+
+  body[data-page="clinical"] .research-line__media img,
+  body[data-page="clinical"] .research-line__side,
+  body[data-page="clinical"] .research-line__coord-label{
+    transition:transform .28s var(--ease-clinical),border-color .2s ease,color .2s ease;
+  }
+}
+
+@media(min-width:621px) and (max-width:1100px){
+  body[data-page="clinical"] .research-line-list{
+    --research-spine-x:23px;
+  }
+}
+
+@media(max-width:620px){
+  body[data-page="clinical"] .research-line-list::before,
+  body[data-page="clinical"] .research-line-list::after{
+    display:none;
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line{
+    background:transparent;
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line::before{
+    color:#79909d;
+    transform:none;
+  }
+
+  body[data-page="clinical"] .research-line-row.is-active-line .research-line__media img{
+    transform:none;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body[data-page="clinical"] .research-line-list{
+    --research-programme-progress:1!important;
+  }
+
+  body[data-page="clinical"] .research-line-list::after{
+    transition:none!important;
+    transform:scaleY(1)!important;
+  }
+
+  body[data-page="clinical"] .research-line-row::before,
+  body[data-page="clinical"] .research-line__media img,
+  body[data-page="clinical"] .research-line__side,
+  body[data-page="clinical"] .research-line__coord-label{
+    transition:none!important;
+    transform:none!important;
+  }
+}
