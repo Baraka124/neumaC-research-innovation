@@ -1128,3 +1128,174 @@ body[data-page="clinical"] .research-contact.is-inquiry-open .research-contact__
     transform:none!important;
   }
 }
+
+
+/* ============================================================
+   FLOATING SIGNATURE RESTORATION — RESEARCH
+   Cards are intentional programme objects, not random containers.
+   ============================================================ */
+@media(min-width:881px){
+  body[data-page="clinical"] .research-lines-section{
+    background:
+      linear-gradient(#fff,#fff) padding-box,
+      linear-gradient(180deg,#f8fbfb,#fff) border-box;
+  }
+
+  body[data-page="clinical"] .research-line-list{
+    display:block;
+    padding-top:1rem;
+  }
+
+  body[data-page="clinical"] .research-line-row + .research-line-row{
+    margin-top:1rem;
+  }
+
+  body[data-page="clinical"] .research-line-row{
+    position:relative;
+    grid-template-columns:180px minmax(0,1fr) minmax(190px,.42fr);
+    min-height:144px;
+    padding:1rem 1.15rem;
+    border:1px solid #dce5e8;
+    border-radius:14px;
+    background:#fff;
+    box-shadow:0 10px 28px rgba(7,39,66,.055);
+    transition:transform .2s cubic-bezier(.2,.75,.2,1),box-shadow .2s ease,border-color .2s ease,background .2s ease;
+    overflow:hidden;
+  }
+
+  body[data-page="clinical"] .research-line-row::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:18px;
+    bottom:18px;
+    width:2px;
+    background:#16959e;
+    transform:scaleY(.42);
+    transform-origin:center;
+    opacity:.42;
+    transition:transform .2s ease,opacity .2s ease;
+  }
+
+  body[data-page="clinical"] .research-line-row:hover,
+  body[data-page="clinical"] .research-line-row:focus-visible,
+  body[data-page="clinical"] .research-line-row.is-active-line{
+    transform:translateY(-3px);
+    border-color:#bfd3d7;
+    background:#fff;
+    box-shadow:0 18px 44px rgba(7,39,66,.095);
+  }
+
+  body[data-page="clinical"] .research-line-row:hover::before,
+  body[data-page="clinical"] .research-line-row:focus-visible::before,
+  body[data-page="clinical"] .research-line-row.is-active-line::before{
+    transform:scaleY(1);
+    opacity:1;
+  }
+
+  body[data-page="clinical"] .research-line__media{
+    height:112px;
+    border-radius:10px;
+    box-shadow:0 8px 18px rgba(6,35,60,.06);
+  }
+
+  body[data-page="clinical"] .research-line__side{
+    border-left-color:#d9e3e5;
+  }
+
+  body[data-page="clinical"] .study-portfolio .container{
+    position:relative;
+  }
+
+  body[data-page="clinical"] .study-toolbar{
+    margin-bottom:1rem;
+    padding:.9rem 1rem;
+    border:1px solid #d9e3e6;
+    border-radius:12px;
+    background:#fff;
+    box-shadow:0 9px 24px rgba(7,39,66,.045);
+  }
+
+  body[data-page="clinical"] .study-list{
+    display:grid;
+    gap:.72rem;
+    padding:.15rem 0;
+    border-bottom:0;
+  }
+
+  body[data-page="clinical"] .study-row{
+    position:relative;
+    padding:1rem 1.05rem;
+    border:1px solid #e0e7e9;
+    border-radius:12px;
+    background:#fff;
+    box-shadow:0 7px 20px rgba(8,40,66,.038);
+    transition:transform .18s cubic-bezier(.2,.75,.2,1),box-shadow .18s ease,border-color .18s ease,background .18s ease;
+  }
+
+  body[data-page="clinical"] .study-row:hover,
+  body[data-page="clinical"] .study-row:focus-visible{
+    transform:translateY(-2px);
+    border-color:#bfd2d6;
+    background:#fff;
+    box-shadow:0 14px 34px rgba(8,40,66,.075);
+  }
+
+  body[data-page="clinical"] .study-row.is-study-origin{
+    border-color:#9ec5cb;
+    box-shadow:0 16px 38px rgba(8,40,66,.09);
+  }
+
+  body[data-page="clinical"] .study-row.is-study-origin::after{
+    border-left:0;
+    inset:0 auto 0 0;
+    width:3px;
+    background:#1499a2;
+  }
+
+  body[data-page="clinical"] .study-list__footer{
+    padding-top:1.2rem;
+  }
+}
+
+@media(max-width:880px){
+  body[data-page="clinical"] .research-line-list{
+    display:block;
+  }
+
+  body[data-page="clinical"] .research-line-row + .research-line-row{
+    margin-top:.72rem;
+  }
+
+  body[data-page="clinical"] .research-line-row{
+    padding:.9rem;
+    border:1px solid #e0e7e9;
+    border-radius:12px;
+    background:#fff;
+    box-shadow:0 7px 18px rgba(8,40,66,.04);
+  }
+
+  body[data-page="clinical"] .study-row{
+    margin-bottom:.65rem;
+    padding:1rem .95rem;
+    border:1px solid #e1e7e9;
+    border-radius:12px;
+    background:#fff;
+  }
+}
+
+@media(max-width:620px){
+  body[data-page="clinical"] .research-line-row,
+  body[data-page="clinical"] .study-row{
+    border-radius:10px;
+    box-shadow:none;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body[data-page="clinical"] .research-line-row,
+  body[data-page="clinical"] .study-row{
+    transition:none!important;
+    transform:none!important;
+  }
+}
