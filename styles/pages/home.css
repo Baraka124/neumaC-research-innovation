@@ -443,3 +443,182 @@ body[data-page="home"] .home-line-title{
     opacity:1!important;
   }
 }
+
+
+/* ============================================================
+   HOME HERO — FINAL CLINICAL IMAGE TREATMENT
+   Dedicated Home-only media. Preserve the established landing structure;
+   only the image field, translucency and local scientific registration
+   details are refined here.
+   ============================================================ */
+body[data-page="home"] .home-hero{
+  min-height:clamp(520px,58svh,650px);
+  overflow:hidden;
+  background:#062746;
+}
+
+body[data-page="home"] .home-hero-media{
+  inset:0 0 0 auto;
+  width:min(80vw,1540px);
+  z-index:0!important;
+  overflow:hidden;
+  background:#eaf2f5;
+}
+
+body[data-page="home"] .home-hero-media img{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover;
+  object-position:50% 48%;
+  transform:none!important;
+  filter:none!important;
+}
+
+body[data-page="home"] .home-hero-shade{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  z-index:1!important;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(4,28,51,.96) 0%,
+      rgba(4,28,51,.90) 22%,
+      rgba(4,30,54,.76) 34%,
+      rgba(5,34,60,.54) 46%,
+      rgba(6,39,68,.27) 60%,
+      rgba(7,43,74,.08) 76%,
+      rgba(7,43,74,.012) 90%,
+      rgba(7,43,74,0) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(3,23,42,.02) 0%,
+      rgba(3,23,42,.03) 55%,
+      rgba(3,23,42,.12) 100%
+    );
+}
+
+body[data-page="home"] .home-hero-shade::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.56;
+  background:
+    radial-gradient(
+      circle at 13% 55%,
+      transparent 0 9.6rem,
+      rgba(107,207,216,.18) 9.65rem 9.72rem,
+      transparent 9.78rem 15.3rem,
+      rgba(107,207,216,.075) 15.35rem 15.41rem,
+      transparent 15.47rem
+    );
+}
+
+body[data-page="home"] .home-hero-shade::after{
+  content:"";
+  position:absolute;
+  left:clamp(1.6rem,4vw,4.5rem);
+  bottom:clamp(3.8rem,7vw,6.5rem);
+  width:116px;
+  height:68px;
+  pointer-events:none;
+  opacity:.20;
+  background-image:radial-gradient(circle,rgba(126,220,226,.9) 1px,transparent 1.2px);
+  background-size:13px 13px;
+  -webkit-mask-image:linear-gradient(90deg,#000,transparent);
+  mask-image:linear-gradient(90deg,#000,transparent);
+}
+
+body[data-page="home"] .home-hero-content{
+  position:relative;
+  z-index:2!important;
+}
+
+@media(min-width:1680px){
+  body[data-page="home"] .home-hero-media{
+    width:min(77vw,1600px);
+  }
+  body[data-page="home"] .home-hero-media img{
+    object-position:50% 47%;
+  }
+}
+
+@media(max-width:880px){
+  body[data-page="home"] .home-hero{
+    min-height:560px;
+  }
+
+  body[data-page="home"] .home-hero-media{
+    inset:0;
+    width:100%;
+  }
+
+  body[data-page="home"] .home-hero-media img{
+    object-position:66% 48%;
+  }
+
+  body[data-page="home"] .home-hero-shade{
+    background:
+      linear-gradient(
+        90deg,
+        rgba(4,28,51,.90) 0%,
+        rgba(4,29,52,.82) 46%,
+        rgba(5,34,60,.56) 72%,
+        rgba(6,40,69,.24) 100%
+      ),
+      linear-gradient(180deg,rgba(3,22,40,.035),rgba(3,22,40,.19));
+  }
+
+  body[data-page="home"] .home-hero-shade::before{
+    opacity:.36;
+    background:
+      radial-gradient(
+        circle at 18% 56%,
+        transparent 0 7rem,
+        rgba(107,207,216,.15) 7.05rem 7.1rem,
+        transparent 7.15rem 11rem,
+        rgba(107,207,216,.065) 11.05rem 11.1rem,
+        transparent 11.15rem
+      );
+  }
+}
+
+@media(max-width:560px){
+  body[data-page="home"] .home-hero{
+    min-height:540px;
+  }
+
+  body[data-page="home"] .home-hero-media img{
+    object-position:70% 48%;
+  }
+
+  body[data-page="home"] .home-hero-shade{
+    background:
+      linear-gradient(
+        90deg,
+        rgba(4,27,49,.92) 0%,
+        rgba(4,28,51,.84) 58%,
+        rgba(5,34,60,.50) 100%
+      ),
+      linear-gradient(180deg,rgba(3,22,40,.05),rgba(3,22,40,.22));
+  }
+
+  body[data-page="home"] .home-hero-shade::after{
+    width:86px;
+    height:52px;
+    left:1rem;
+    bottom:3rem;
+    opacity:.16;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body[data-page="home"] .home-hero-media img{
+    transform:none!important;
+  }
+}
