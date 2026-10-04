@@ -51,6 +51,7 @@ for(const width of [320,390,430,620]){
     expect(sizes.disclosure.h).toBeGreaterThanOrEqual(44);
 
     await page.locator('[data-open-index-search]').click();
+    await expect(page.locator('.global-search__close')).toBeHidden();
     const searchSizes=await page.evaluate(()=>{
       function box(sel){
         const el=document.querySelector(sel); if(!el)return null;
@@ -59,12 +60,10 @@ for(const width of [320,390,430,620]){
       const filters=Array.from(document.querySelectorAll('.global-search__filters button')).map(el=>{
         const r=el.getBoundingClientRect(); return {w:r.width,h:r.height};
       });
-      return {back:box('.global-search__back'),close:box('.global-search__close'),filters};
+      return {back:box('.global-search__back'),filters};
     });
 
     expect(searchSizes.back.h).toBeGreaterThanOrEqual(44);
-    expect(searchSizes.close.h).toBeGreaterThanOrEqual(44);
-    expect(searchSizes.close.w).toBeGreaterThanOrEqual(44);
     for(const item of searchSizes.filters) expect(item.h).toBeGreaterThanOrEqual(44);
 
     await noOverflow(page);
