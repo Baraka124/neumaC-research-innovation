@@ -840,3 +840,44 @@
     min-height:44px!important;
   }
 }
+
+
+/* ============================================================
+   RESPONSIVENESS — SHORT LANDSCAPE INDEX GEOMETRY
+   Desktop H2 Index keeps a 12px editorial breathing gap above the surface.
+   Couple max-height to the same masthead anchor + gap so short landscape
+   viewports cannot extend below the visual viewport.
+   ============================================================ */
+@media(min-width:881px){
+  .global-index.global-index--h2{
+    --index-h2-anchor:103px;
+    --index-h2-air:12px;
+    top:var(--index-h2-anchor)!important;
+  }
+  body.has-scrolled-masthead .global-index.global-index--h2{
+    --index-h2-anchor:91px;
+  }
+  body.has-compact-masthead .global-index.global-index--h2{
+    --index-h2-anchor:64px;
+  }
+  .global-index--h2 .global-index__surface,
+  .global-index--h2.is-search .global-index__surface{
+    max-height:min(620px,calc(100dvh - var(--index-h2-anchor) - var(--index-h2-air)))!important;
+  }
+}
+
+@media(min-width:1680px){
+  .global-index.global-index--h2{
+    --index-h2-anchor:106px;
+  }
+  body.has-scrolled-masthead .global-index.global-index--h2{
+    --index-h2-anchor:92px;
+  }
+  body.has-compact-masthead .global-index.global-index--h2{
+    --index-h2-anchor:64px;
+  }
+  .global-index--h2 .global-index__surface,
+  .global-index--h2.is-search .global-index__surface{
+    max-height:min(650px,calc(100dvh - var(--index-h2-anchor) - var(--index-h2-air)))!important;
+  }
+}
