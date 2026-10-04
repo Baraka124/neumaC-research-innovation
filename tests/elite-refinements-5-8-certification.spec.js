@@ -41,7 +41,8 @@ test('Refinement 05 — Publications opening is an information-led scholarly reg
   await page.goto('/news/');
   await expect(page.locator('.pub-hero--register')).toBeVisible();
   await expect(page.locator('.pub-hero__taxonomy > span')).toHaveCount(4);
-  await expect(page.locator('.pub-hero__register-notes > span')).toHaveCount(2);
+  await expect(page.locator('.pub-hero__register-notes > span')).toHaveCount(0);
+  await expect(page.locator('.pub-hero__taxonomy small')).toHaveCount(4);
   await expect(page.locator('.pub-hero__media')).toHaveCount(0);
   await noOverflow(page);
 });

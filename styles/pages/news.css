@@ -723,3 +723,141 @@ body[data-page="news"] .pub-feed .pub-empty .state-panel__copy{
     padding-right:4.25rem;
   }
 }
+
+
+/* ============================================================
+   PUBLICATIONS — OCT 04 REFINEMENT
+   Strengthens the public Research Library without changing its architecture.
+   ============================================================ */
+body[data-page="news"] .pub-hero__taxonomy>span{
+  display:flex;
+  flex-direction:column;
+  gap:.42rem;
+}
+body[data-page="news"] .pub-hero__taxonomy strong{
+  color:#315970;
+  font:600 .64rem/1.35 var(--ff-mono,"DM Mono",monospace);
+  letter-spacing:.065em;
+  text-transform:uppercase;
+}
+body[data-page="news"] .pub-hero__taxonomy small{
+  max-width:24rem;
+  color:#718491;
+  font:400 .72rem/1.48 var(--ff-body,"DM Sans",sans-serif);
+  letter-spacing:0;
+  text-transform:none;
+}
+body[data-page="news"] .pub-hero__register-notes{display:none}
+
+body[data-page="news"] .pub-search{
+  width:min(420px,100%);
+  gap:.75rem;
+  padding:.62rem .15rem .58rem;
+  border:0;
+  border-bottom:1px solid #b8cbd1;
+  border-radius:0;
+  background:transparent;
+}
+body[data-page="news"] .pub-search:focus-within{
+  border-bottom-color:#00818a;
+  box-shadow:0 1px 0 #00818a;
+}
+body[data-page="news"] .pub-search input{
+  font-size:.78rem;
+  font-weight:500;
+}
+
+body[data-page="news"] .pub-line-filters{
+  gap:1rem;
+  padding:.72rem 0 .8rem;
+}
+body[data-page="news"] .pub-line-filters__label{
+  margin-right:.25rem;
+  color:#63798a;
+}
+body[data-page="news"] .pub-line-filter{
+  min-width:0;
+  padding:.38rem 0 .42rem;
+  border:0;
+  border-bottom:1px solid transparent;
+  border-radius:0;
+  background:transparent;
+  color:#526f80;
+  font-family:var(--ff-body,"DM Sans",sans-serif);
+  font-size:.66rem;
+}
+body[data-page="news"] .pub-line-filter:hover,
+body[data-page="news"] .pub-line-filter:focus-visible{
+  border-bottom-color:#87aeb5;
+  color:#0c5364;
+}
+body[data-page="news"] .pub-line-filter.is-active{
+  border-bottom-color:#00818a;
+  background:transparent;
+  color:#006d76;
+  font-weight:600;
+}
+
+body[data-page="news"] .pub-feature-lead__media.is-fallback{
+  background:
+    linear-gradient(145deg,#f0f4f3 0%,#e3eeec 100%);
+  border:1px solid #cfdddf;
+}
+body[data-page="news"] .pub-feature-lead__media.is-fallback::before{
+  content:"PUBLICATION";
+  top:1.35rem;
+  bottom:auto;
+  color:#21717a;
+  font:500 .58rem/1.35 var(--ff-mono,"DM Mono",monospace);
+  letter-spacing:.11em;
+}
+body[data-page="news"] .pub-feature-lead__media.is-fallback::after{
+  content:"neumACt\AResearch & Innovation";
+  align-items:flex-end;
+  background:
+    linear-gradient(90deg,rgba(12,56,104,.08) 1px,transparent 1px) 0 0/48px 100%,
+    linear-gradient(rgba(12,56,104,.06) 1px,transparent 1px) 0 0/100% 36px;
+  color:#0c3868;
+  font:600 clamp(1.75rem,2.7vw,2.8rem)/1 var(--ff-display,"Fraunces",serif);
+}
+
+body[data-page="news"] .pub-item--publication{
+  grid-template-columns:54px minmax(0,1fr) minmax(190px,220px) minmax(150px,195px);
+  gap:1.45rem;
+  padding:1.25rem .45rem 1.32rem;
+}
+body[data-page="news"] .pub-publication__title{
+  margin:.32rem 0 .42rem;
+  font-size:clamp(1.08rem,1.28vw,1.28rem);
+  line-height:1.16;
+  letter-spacing:-.018em;
+}
+body[data-page="news"] .pub-publication__authors{
+  color:#5e707e;
+  font-size:.73rem;
+  line-height:1.5;
+}
+body[data-page="news"] .pub-publication__source{
+  gap:.24rem;
+  color:#5a7484;
+  font-size:.66rem;
+  line-height:1.45;
+}
+body[data-page="news"] .pub-publication__source strong{
+  color:#294f67;
+  font:600 .79rem/1.35 var(--ff-display,"Fraunces",serif);
+  font-style:italic;
+}
+body[data-page="news"] .pub-doi-static{
+  font-size:.57rem;
+}
+body[data-page="news"] .pub-publication__line{
+  font-size:.60rem;
+  line-height:1.5;
+}
+
+@media(max-width:620px){
+  body[data-page="news"] .pub-hero__taxonomy strong{font-size:.57rem}
+  body[data-page="news"] .pub-hero__taxonomy small{font-size:.66rem}
+  body[data-page="news"] .pub-line-filters{gap:.8rem}
+}
