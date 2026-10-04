@@ -1662,3 +1662,185 @@ body[data-page="news"] .pub-register-guide{
     padding-top:1.45rem;
   }
 }
+
+
+/* ============================================================
+   PUBLICATIONS — DEPTH + MOTION PHASE 1
+   Quiet spatial response. The register remains grounded.
+   ============================================================ */
+
+/* Signature floating instrument: research-area selector. */
+@media(min-width:621px){
+  body[data-page="news"] .pub-area-selector__panel{
+    opacity:0;
+    transform:translateY(-6px);
+    transform-origin:top left;
+    transition:opacity .18s ease,transform .22s cubic-bezier(.2,.75,.2,1),box-shadow .22s ease;
+  }
+  body[data-page="news"] .pub-area-selector[open] .pub-area-selector__panel{
+    opacity:1;
+    transform:translateY(0);
+    box-shadow:0 22px 52px rgba(8,45,73,.14),0 2px 8px rgba(8,45,73,.04);
+  }
+  body[data-page="news"] .pub-area-selector__summary::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:100%;
+    bottom:-1px;
+    height:1px;
+    background:#00818a;
+    transition:right .22s cubic-bezier(.2,.75,.2,1);
+  }
+  body[data-page="news"] .pub-area-selector[open] .pub-area-selector__summary::after{
+    right:0;
+  }
+}
+
+/* Search behaves like an instrument, not a box. */
+body[data-page="news"] .pub-search{
+  position:relative;
+}
+body[data-page="news"] .pub-search::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:100%;
+  bottom:-1px;
+  height:1px;
+  background:#00818a;
+  transition:right .2s cubic-bezier(.2,.75,.2,1);
+}
+body[data-page="news"] .pub-search:focus-within::after{
+  right:0;
+}
+
+/* Featured folio assembles once as it enters the viewport. */
+body[data-page="news"] .pub-feature-lead.pub-motion-target{
+  opacity:0;
+  transform:translateY(10px);
+}
+body[data-page="news"] .pub-feature-lead.pub-motion-target.is-revealed{
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity .34s ease,transform .42s cubic-bezier(.2,.75,.2,1);
+}
+body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__folio{
+  transition:border-color .22s ease;
+}
+body[data-page="news"] .pub-feature-lead--typographic:hover .pub-feature-lead__folio,
+body[data-page="news"] .pub-feature-lead--typographic:focus-visible .pub-feature-lead__folio{
+  border-right-color:#84aeb5;
+}
+
+/* Publication records remain grounded: only local optical response. */
+body[data-page="news"] .pub-item{
+  position:relative;
+}
+body[data-page="news"] .pub-item.pub-motion-target{
+  opacity:0;
+  transform:translateY(7px);
+}
+body[data-page="news"] .pub-item.pub-motion-target.is-revealed{
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity .28s ease,transform .34s cubic-bezier(.2,.75,.2,1);
+}
+body[data-page="news"] .pub-item--publication::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:20%;
+  bottom:20%;
+  width:1px;
+  background:#18aab3;
+  transform:scaleY(0);
+  transform-origin:center;
+  transition:transform .18s ease;
+}
+body[data-page="news"] .pub-item--publication:hover::before,
+body[data-page="news"] .pub-item--publication:focus-visible::before{
+  transform:scaleY(1);
+}
+body[data-page="news"] .pub-publication__title,
+body[data-page="news"] .pub-publication__source,
+body[data-page="news"] .pub-publication__context{
+  transition:transform .18s ease,color .18s ease,opacity .18s ease;
+}
+body[data-page="news"] .pub-item--publication:hover .pub-publication__title,
+body[data-page="news"] .pub-item--publication:focus-visible .pub-publication__title{
+  transform:translateX(2px);
+  color:#08717a;
+}
+body[data-page="news"] .pub-item--publication:hover .pub-publication__source,
+body[data-page="news"] .pub-item--publication:hover .pub-publication__context,
+body[data-page="news"] .pub-item--publication:focus-visible .pub-publication__source,
+body[data-page="news"] .pub-item--publication:focus-visible .pub-publication__context{
+  color:#365f72;
+}
+
+/* Years act as quiet chronology anchors. */
+body[data-page="news"] .pub-year-group__year{
+  transition:color .2s ease,opacity .2s ease,transform .22s ease;
+}
+body[data-page="news"] .pub-year-group:not(.is-current-year) .pub-year-group__year{
+  opacity:.72;
+}
+body[data-page="news"] .pub-year-group.is-current-year .pub-year-group__year{
+  color:#007f88;
+  transform:translateX(2px);
+}
+
+/* Archive mirrors the visible chronology. */
+body[data-page="news"] .pub-archive__year{
+  position:relative;
+  transition:color .18s ease,border-color .18s ease,transform .18s ease;
+}
+body[data-page="news"] .pub-archive__year::after{
+  content:"";
+  position:absolute;
+  left:0;
+  top:-1px;
+  width:0;
+  height:1px;
+  background:#00818a;
+  transition:width .2s ease;
+}
+body[data-page="news"] .pub-archive__year:hover,
+body[data-page="news"] .pub-archive__year:focus-visible,
+body[data-page="news"] .pub-archive__year.is-current{
+  outline:none;
+  color:#007f88;
+  transform:translateY(-1px);
+}
+body[data-page="news"] .pub-archive__year:hover::after,
+body[data-page="news"] .pub-archive__year:focus-visible::after,
+body[data-page="news"] .pub-archive__year.is-current::after{
+  width:100%;
+}
+
+/* Touch devices should not simulate hover depth. */
+@media(hover:none){
+  body[data-page="news"] .pub-item--publication::before{display:none}
+  body[data-page="news"] .pub-item--publication:hover .pub-publication__title{transform:none}
+}
+
+/* Motion is an enhancement, never a dependency. */
+@media(prefers-reduced-motion:reduce){
+  body[data-page="news"] .pub-area-selector__panel,
+  body[data-page="news"] .pub-area-selector__summary::after,
+  body[data-page="news"] .pub-search::after,
+  body[data-page="news"] .pub-feature-lead,
+  body[data-page="news"] .pub-item,
+  body[data-page="news"] .pub-item--publication::before,
+  body[data-page="news"] .pub-publication__title,
+  body[data-page="news"] .pub-publication__source,
+  body[data-page="news"] .pub-publication__context,
+  body[data-page="news"] .pub-year-group__year,
+  body[data-page="news"] .pub-archive__year,
+  body[data-page="news"] .pub-archive__year::after{
+    transition:none!important;
+    transform:none!important;
+    opacity:1!important;
+  }
+}
