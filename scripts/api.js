@@ -1829,8 +1829,15 @@ async function loadLineDetail() {
     const summary = lineCleanSummary(line.description || '');
     const descTag = document.getElementById('pageDescription');
     if (descTag && summary) descTag.setAttribute('content', summary);
+    const canonicalUrl = `${window.NEUMAC_CONFIG.siteBase}/line/?id=${lineId}`;
     const canonicalTag = document.getElementById('canonicalLink');
-    if (canonicalTag) canonicalTag.setAttribute('href', `${window.NEUMAC_CONFIG.siteBase}/line/?id=${lineId}`);
+    if (canonicalTag) canonicalTag.setAttribute('href', canonicalUrl);
+    const ogTitleTag = document.querySelector('meta[property="og:title"]');
+    if (ogTitleTag) ogTitleTag.setAttribute('content', titleText);
+    const ogDescTag = document.querySelector('meta[property="og:description"]');
+    if (ogDescTag && summary) ogDescTag.setAttribute('content', summary);
+    const ogUrlTag = document.querySelector('meta[property="og:url"]');
+    if (ogUrlTag) ogUrlTag.setAttribute('content', canonicalUrl);
     const jsonLdTag = document.getElementById('lineJsonLd');
     if (jsonLdTag) {
       jsonLdTag.textContent = JSON.stringify({
