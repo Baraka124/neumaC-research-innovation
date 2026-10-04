@@ -3170,3 +3170,87 @@ svg.icon-ui{
     grid-template-columns:1fr;
   }
 }
+
+
+/* ════════════════════════════════════════════════════════════════
+   PUBLIC SUPPORT SURFACES — 404 RECOVERY
+   ════════════════════════════════════════════════════════════════ */
+.not-found{
+  position:relative;
+  min-height:calc(100vh - var(--hdr));
+  padding:clamp(5rem,8vw,8rem) 0 clamp(5rem,8vw,8rem);
+  background:
+    radial-gradient(circle at 84% 12%,rgba(0,140,148,.06),transparent 24rem),
+    linear-gradient(145deg,#fbfaf7 0%,#f6f9f7 100%);
+  border-bottom:1px solid #d8e2e2;
+  display:flex;
+  align-items:center;
+}
+.not-found__shell{
+  width:min(calc(100% - 3rem),1120px);
+  max-width:none;
+  margin:0 auto;
+  text-align:left;
+}
+.not-found__code{
+  margin:0 0 1rem;
+  color:#07838b;
+  font:500 .66rem/1.2 var(--ff-mono,'DM Mono',monospace);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.not-found__title{
+  max-width:10ch;
+  margin:0 0 1.6rem;
+  color:#092f58;
+  font:700 clamp(4rem,7vw,7rem)/.9 var(--ff-display,'Fraunces',serif);
+  letter-spacing:-.055em;
+}
+.not-found__copy{
+  max-width:42rem;
+  margin:0 0 2rem;
+  color:#486174;
+  font-size:clamp(1rem,1.2vw,1.14rem);
+  line-height:1.72;
+}
+.not-found__shell>p:last-child{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.85rem 1.2rem;
+  align-items:center;
+}
+.not-found__shell>p:last-child .btn-text{
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  color:#087f87;
+  text-decoration:none;
+  border-bottom:1px solid rgba(8,127,135,.28);
+}
+.not-found + .affil-section{
+  padding:3.5rem 0 4rem;
+  background:#f4f7f5;
+}
+.not-found + .affil-section>.wrap{
+  width:min(calc(100% - 3rem),1120px);
+  max-width:none;
+}
+.not-found + .affil-section .affil-card,
+.not-found + .affil-section .affil-card--placeholder{
+  border-radius:2px;
+  box-shadow:none;
+}
+
+@media(max-width:560px){
+  .not-found{
+    min-height:auto;
+    padding:4rem 0 4.5rem;
+  }
+  .not-found__shell,
+  .not-found + .affil-section>.wrap{
+    width:calc(100% - 2rem);
+  }
+  .not-found__title{
+    font-size:clamp(3.2rem,15vw,4.5rem);
+  }
+}
