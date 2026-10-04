@@ -464,12 +464,33 @@
     return state.profilePeople.find(p=>p.id===key||personParam(p)===key)||null;
   }
 
+  function clearProfileOrigin(){
+    document.querySelectorAll('.is-profile-origin').forEach(el=>{
+      el.classList.remove('is-profile-origin');
+      el.removeAttribute('aria-current');
+    });
+    document.body.removeAttribute('data-team-profile-line');
+  }
+
+  function markProfileOrigin(trigger){
+    clearProfileOrigin();
+    if(!trigger||!trigger.closest)return;
+    const origin=trigger.closest('.team-person,.team-coordinator,.team-lead');
+    if(!origin)return;
+    origin.classList.add('is-profile-origin');
+    origin.setAttribute('aria-current','true');
+    const coordinator=origin.matches('.team-coordinator')?origin:null;
+    const line=coordinator?.dataset?.lineNumber;
+    if(line)document.body.setAttribute('data-team-profile-line',String(line).padStart(2,'0'));
+  }
+
   function openProfile(personId,trigger,{history=true}={}){
     const person=state.people.find(p=>p.id===personId);
     const overlay=$('teamProfileOverlay'),sheet=$('teamProfileSheet');
     if(!person||!overlay||!sheet)return;
     state.activePersonId=personId;
     state.lastProfileTrigger=trigger||document.activeElement;
+    markProfileOrigin(trigger);
     if(history&&!state.historyGuard){historyPush(person);}
     if(state.profileCloseTimer){window.clearTimeout(state.profileCloseTimer);state.profileCloseTimer=null;}
     renderProfile(person);
@@ -494,6 +515,7 @@
     document.body.classList.remove('team-profile-open');
     const restore=state.lastProfileTrigger;
     state.activePersonId=null;
+    clearProfileOrigin();
     if(history&&!state.historyGuard){const clean=profileUrlFor(null);window.history.pushState({teamProfile:null},'',clean);}
     state.profileCloseTimer=window.setTimeout(()=>{overlay.hidden=true;state.profileCloseTimer=null;if(restore&&document.contains(restore))restore.focus({preventScroll:true});},240);
   }
@@ -513,6 +535,7 @@
       if(!person)return;
       historyPush(person);
       state.activePersonId=person.id;
+      clearProfileOrigin();
       renderProfile(person);
       const content=$('teamProfileContent');if(content)content.scrollTop=0;
       $('teamProfileSheet')?.focus({preventScroll:true});
