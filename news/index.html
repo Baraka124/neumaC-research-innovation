@@ -145,16 +145,20 @@
         </label>
       </div>
 
-      <div class="pub-filter-row" role="group" aria-label="Filter publications">
-        <button class="pub-filter is-active" type="button" data-type=""><span lang="en">All output</span><span lang="es">Toda la producción</span></button>
-        <button class="pub-filter" type="button" data-type="publication"><span lang="en">Scientific publications</span><span lang="es">Publicaciones científicas</span></button>
-        <button class="pub-filter" type="button" data-type="article"><span lang="en">Articles</span><span lang="es">Artículos</span></button>
-        <button class="pub-filter" type="button" data-type="update"><span lang="en">Updates</span><span lang="es">Actualizaciones</span></button>
-        <button class="pub-filter" type="button" data-type="highlight"><span lang="en">Highlights</span><span lang="es">Destacados</span></button>
-        <span class="pub-filter-count" id="filterCount" aria-live="polite"></span>
-      </div>
+      <div class="pub-query-surface">
+        <div class="pub-filter-row" role="group" aria-label="Filter publications">
+          <button class="pub-filter is-active" type="button" data-type=""><span lang="en">All output</span><span lang="es">Toda la producción</span></button>
+          <button class="pub-filter" type="button" data-type="publication"><span lang="en">Scientific publications</span><span lang="es">Publicaciones científicas</span></button>
+          <button class="pub-filter" type="button" data-type="article"><span lang="en">Articles</span><span lang="es">Artículos</span></button>
+          <button class="pub-filter" type="button" data-type="update"><span lang="en">Updates</span><span lang="es">Actualizaciones</span></button>
+          <button class="pub-filter" type="button" data-type="highlight"><span lang="en">Highlights</span><span lang="es">Destacados</span></button>
+        </div>
 
-      <div class="pub-line-filters" id="pubLineFilters" aria-label="Filter by research line" hidden></div>
+        <div class="pub-query-scope">
+          <div class="pub-line-filters" id="pubLineFilters" aria-label="Filter by research line" hidden></div>
+          <span class="pub-filter-count" id="filterCount" aria-live="polite"></span>
+        </div>
+      </div>
 
       <div class="pub-feed" id="blogFeed" aria-live="polite">
         <div class="pub-feed__skeleton" id="feedSkeleton" aria-hidden="true">
