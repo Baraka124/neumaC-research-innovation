@@ -453,7 +453,7 @@ async function loadTrials(filters = {}) {
     }).join('');
 
     listEl.querySelectorAll('.study-row[data-trial-id]').forEach(row => {
-      row.addEventListener('click', () => openTrialModal(row.dataset.trialId));
+      row.addEventListener('click', () => openTrialModal(row.dataset.trialId, row));
     });
 
     if (expandBtn) {
@@ -1224,13 +1224,28 @@ function _fadeInRows(selector) {
 // ─────────────────────────────────────────────
 
 window._trialData = {};
+let _trialModalOrigin = null;
+let _trialModalCloseTimer = null;
 
-window.openTrialModal = function(id) {
+window.openTrialModal = function(id, origin) {
   const t = window._trialData[id];
   if (!t) return;
 
   const modal = document.getElementById('trialModal');
   if (!modal) return;
+  if (_trialModalCloseTimer) {
+    clearTimeout(_trialModalCloseTimer);
+    _trialModalCloseTimer = null;
+  }
+  if (_trialModalOrigin && _trialModalOrigin !== origin) {
+    _trialModalOrigin.classList.remove('is-study-origin');
+    _trialModalOrigin.removeAttribute('aria-current');
+  }
+  _trialModalOrigin = origin && origin.isConnected ? origin : null;
+  if (_trialModalOrigin) {
+    _trialModalOrigin.classList.add('is-study-origin');
+    _trialModalOrigin.setAttribute('aria-current','true');
+  }
 
   const tmProtocol = document.getElementById('tmProtocol');
   const tmTitle = document.getElementById('tmTitle');
@@ -1306,17 +1321,43 @@ window.openTrialModal = function(id) {
   }
 
   modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden','false');
   document.body.style.overflow = 'hidden';
+  document.body.classList.add('trial-detail-open');
+  requestAnimationFrame(() => {
+    modal.classList.add('is-open');
+    const dialog = modal.querySelector('.trial-modal__dialog');
+    if (dialog) dialog.focus({preventScroll:true});
+  });
 };
 
-window.closeTrialModal = function() {
+window.closeTrialModal = function(restoreFocus = true) {
   const modal = document.getElementById('trialModal');
-  if (modal) modal.style.display = 'none';
+  const origin = _trialModalOrigin;
+  _trialModalOrigin = null;
+  if (origin) {
+    origin.classList.remove('is-study-origin');
+    origin.removeAttribute('aria-current');
+  }
+  document.body.classList.remove('trial-detail-open');
   document.body.style.overflow = '';
+  if (!modal) {
+    if (restoreFocus && origin && origin.isConnected) origin.focus({preventScroll:true});
+    return;
+  }
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden','true');
+  _trialModalCloseTimer = setTimeout(() => {
+    modal.style.display = 'none';
+    _trialModalCloseTimer = null;
+    if (restoreFocus && origin && origin.isConnected) {
+      try { origin.focus({preventScroll:true}); } catch (_e) { origin.focus(); }
+    }
+  }, 220);
 };
 
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') window.closeTrialModal();
+  if (e.key === 'Escape') window.closeTrialModal(true);
 });
 // ─────────────────────────────────────────────
 

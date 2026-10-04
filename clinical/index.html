@@ -217,13 +217,13 @@
   </section>
 
   <div class="trial-modal" id="trialModal" role="dialog" aria-modal="true" aria-labelledby="tmTitle">
-    <div class="trial-modal__overlay" onclick="closeTrialModal()"></div>
-    <div class="trial-modal__dialog">
-      <div class="trial-modal__header"><div><div class="trial-modal__protocol" id="tmProtocol"></div><div class="trial-modal__title" id="tmTitle"></div></div><button class="trial-modal__icon-close" onclick="closeTrialModal()" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+    <div class="trial-modal__overlay" onclick="closeTrialModal(true)"></div>
+    <div class="trial-modal__dialog" tabindex="-1">
+      <div class="trial-modal__header"><div><div class="trial-modal__protocol" id="tmProtocol"></div><div class="trial-modal__title" id="tmTitle"></div></div><button class="trial-modal__icon-close" onclick="closeTrialModal(true)" aria-label="Close"><span aria-hidden="true">×</span></button></div>
       <div class="trial-modal__meta" id="tmMeta"></div>
       <div class="trial-modal__registry" id="tmRegistry"></div>
       <div class="trial-modal__description" id="tmDesc"></div>
-      <div class="trial-modal__actions"><a href="#contact" onclick="closeTrialModal()" class="research-modal-contact"><span lang="en">Ask about this study</span><span lang="es">Consultar sobre este estudio</span></a><button class="trial-modal__secondary-close" onclick="closeTrialModal()"><span lang="en">Close</span><span lang="es">Cerrar</span></button></div>
+      <div class="trial-modal__actions"><a href="#contact" onclick="closeTrialModal(false)" class="research-modal-contact"><span lang="en">Ask about this study</span><span lang="es">Consultar sobre este estudio</span></a><button class="trial-modal__secondary-close" onclick="closeTrialModal(true)"><span lang="en">Close</span><span lang="es">Cerrar</span></button></div>
     </div>
   </div>
 </main>

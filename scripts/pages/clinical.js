@@ -79,3 +79,22 @@ refreshRows();
 
 document.addEventListener('neumac:languagechange',requestUpdate);
 })();
+
+/* Phase 4: Research inquiry surface follows the canonical shared toggle state
+   without creating a second state owner. */
+(function(){
+  var panel=document.getElementById('researchInquiryPanel');
+  var toggle=document.getElementById('researchInquiryToggle');
+  var contact=document.querySelector('.research-contact');
+  if(!panel||!toggle||!contact)return;
+
+  function syncInquirySurface(){
+    var open=!panel.hidden&&toggle.getAttribute('aria-expanded')==='true';
+    contact.classList.toggle('is-inquiry-open',open);
+    panel.classList.toggle('is-raised-open',open);
+  }
+
+  new MutationObserver(syncInquirySurface).observe(panel,{attributes:true,attributeFilter:['hidden']});
+  new MutationObserver(syncInquirySurface).observe(toggle,{attributes:true,attributeFilter:['aria-expanded']});
+  syncInquirySurface();
+})();
