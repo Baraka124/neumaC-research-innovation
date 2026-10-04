@@ -90,15 +90,15 @@ for(const vp of [
   {name:'laptop',width:1440,height:900},
   {name:'workstation',width:2048,height:1152}
 ]){
-  test(`D — Home restores CT/lung workstation hero at ${vp.name}`,async({page})=>{
+  test(`D — Home uses dedicated clinical X-ray hero at ${vp.name}`,async({page})=>{
     await stubApi(page);
     await page.setViewportSize({width:vp.width,height:vp.height});
     await page.goto('/');
     const img=page.locator('.home-hero-media img');
     await expect(img).toBeVisible();
-    await expect(img).toHaveAttribute('src','/assets/research/research-hero-clinician-lungs.jpg');
+    await expect(img).toHaveAttribute('src','/assets/home/neumact-home-hero-xray-clinicians-v2.webp');
     const renderedSource=await img.evaluate(el=>el.currentSrc);
-    expect(renderedSource).toContain('/assets/research/research-hero-clinician-lungs.jpg');
+    expect(renderedSource).toContain('/assets/home/neumact-home-hero-xray-clinicians-v2.webp');
     const natural=await img.evaluate(el=>({w:el.naturalWidth,h:el.naturalHeight}));
     expect(natural.w).toBeGreaterThan(900);
     expect(natural.h).toBeGreaterThan(300);
