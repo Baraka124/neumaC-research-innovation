@@ -3292,3 +3292,64 @@ body[data-page="news"] .hdr-context__detail{
   color:rgba(255,255,255,.66);
 }
 
+
+
+/* ============================================================
+   GLOBAL SEARCH — FOCUSED QUERY INSTRUMENT
+   Search is intentionally narrower than the result canvas.
+   ============================================================ */
+@media(min-width:881px){
+  .global-index.is-search .global-index__search-view{
+    padding-top:1.25rem;
+  }
+  .global-search__head{
+    margin-bottom:1.15rem;
+  }
+  .global-search__field{
+    width:min(920px,72%);
+    height:56px;
+    margin-inline:auto;
+    grid-template-columns:22px minmax(0,1fr);
+    gap:.7rem;
+    padding:0 1rem;
+    border-radius:9px;
+    border-color:#c7d7dc;
+    background:#fff;
+    box-shadow:0 5px 18px rgba(6,35,61,.035);
+  }
+  .global-search__field:focus-within{
+    border-color:#4db2b9;
+    box-shadow:0 0 0 3px rgba(22,174,183,.075);
+  }
+  .global-search__icon svg{
+    width:17px;
+    height:17px;
+  }
+  .global-search__field input{
+    font-size:.9rem;
+  }
+  .global-search__filters{
+    width:min(920px,72%);
+    margin:.7rem auto .75rem;
+    justify-content:center;
+    gap:.15rem 1.2rem;
+  }
+  .global-search__filters button{
+    padding:.42rem .02rem .62rem;
+  }
+}
+
+@media(max-width:1180px) and (min-width:881px){
+  .global-search__field,
+  .global-search__filters{
+    width:min(820px,82%);
+  }
+}
+
+@media(max-width:880px){
+  .global-search__field,
+  .global-search__filters{
+    width:100%;
+    margin-inline:0;
+  }
+}
