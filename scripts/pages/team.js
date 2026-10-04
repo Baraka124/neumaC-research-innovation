@@ -279,7 +279,8 @@
       const role=rolePair(p);
       const spec=specialtyPair(p.specialization);
       const lineName=lineNamePair(line);
-      return `<article class="team-coordinator">
+      return `<article class="team-coordinator" data-line-number="${esc(line.line_number||'')}">
+        <span class="team-coordinator__index" aria-hidden="true">L${String(line.line_number||'').padStart(2,'0')}</span>
         ${portrait(p,'team-coordinator__portrait')}
         <div class="team-coordinator__body">
           <h3>${esc(nameOf(p))}</h3>
