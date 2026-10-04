@@ -1088,40 +1088,6 @@ body[data-page="news"] .pub-publication__line{
    Real-screen correction: page context must not compete with the
    canonical masthead, and the opening field must remain optically clean.
    ============================================================ */
-body[data-page="news"]{
-  --h2-rail:24px;
-}
-body[data-page="news"] .hdr-context{
-  height:var(--h2-rail);
-  background:#062f55;
-  border-top:1px solid rgba(255,255,255,.06);
-}
-body[data-page="news"] .hdr-context__inner{
-  grid-template-columns:auto 1px auto minmax(60px,1fr);
-  gap:.72rem;
-}
-body[data-page="news"] .hdr-context__mark{
-  width:1px;
-  height:11px;
-  background:rgba(88,214,216,.5);
-  transform:none;
-}
-body[data-page="news"] .hdr-context__rule{
-  background:linear-gradient(90deg,rgba(255,255,255,.16),rgba(255,255,255,.025));
-}
-body[data-page="news"] .hdr-context__statement{
-  display:none;
-}
-body[data-page="news"] .hdr-context__section{
-  font-size:.52rem;
-  letter-spacing:.12em;
-  color:rgba(232,252,251,.88);
-}
-body[data-page="news"] .hdr-context__detail{
-  font-size:.61rem;
-  font-weight:520;
-  color:rgba(255,255,255,.66);
-}
 body[data-page="news"] .pub-hero--register{
   background:#fbfaf7;
 }
