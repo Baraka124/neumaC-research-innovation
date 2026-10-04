@@ -1,4 +1,8 @@
 const { test, expect } = require('@playwright/test');
+const fs=require('fs');
+const path=require('path');
+const OUTPUT=path.join(process.cwd(),'phase4-visual-artifacts');
+test.beforeAll(()=>fs.mkdirSync(OUTPUT,{recursive:true}));
 
 const POST={
   id:'responsive-landscape-publication',
@@ -82,6 +86,11 @@ for(const vp of [
     expect(geo.left).toBeGreaterThanOrEqual(-1);
     expect(geo.right).toBeLessThanOrEqual(vp.width+1);
     expect(geo.bottom).toBeLessThanOrEqual(vp.height+1);
+
+    if(vp.width===932){
+      await page.evaluate(()=>{const c=document.getElementById('cookieBanner');if(c)c.style.display='none';});
+      await page.screenshot({path:path.join(OUTPUT,'responsive-index-landscape-932x430.png'),fullPage:false,animations:'disabled'});
+    }
 
     await page.locator('[data-open-index-search]').first().click();
     await expect(page.locator('#globalIndexSearchView')).toBeVisible();
