@@ -861,3 +861,87 @@ body[data-page="news"] .pub-publication__line{
   body[data-page="news"] .pub-hero__taxonomy small{font-size:.66rem}
   body[data-page="news"] .pub-line-filters{gap:.8rem}
 }
+
+
+/* ============================================================
+   PUBLICATIONS — VISUAL POLISH
+   Screenshot-led refinement after public Research Library pass.
+   ============================================================ */
+@media(min-width:901px){
+  body[data-page="news"] .pub-hero--register{
+    padding:clamp(3.6rem,5.2vw,5.2rem) 0 clamp(2.2rem,3.1vw,3rem);
+  }
+  body[data-page="news"] .pub-hero__register-shell{
+    gap:clamp(2.1rem,4.2vw,4.4rem);
+  }
+  body[data-page="news"] .pub-hero__taxonomy{
+    margin-top:0;
+  }
+  body[data-page="news"] .pub-index{
+    padding-top:1rem;
+  }
+  body[data-page="news"] .pub-section-heading h2,
+  body[data-page="news"] .pub-index__head h2{
+    font-size:clamp(2.35rem,3vw,3.35rem);
+  }
+  body[data-page="news"] .pub-feed .pub-empty .state-panel__title{
+    font-size:clamp(2rem,3vw,3.15rem);
+    max-width:14ch;
+  }
+}
+
+@media(max-width:620px){
+  body[data-page="news"] .pub-hero--register{
+    padding-top:2.8rem;
+    padding-bottom:2rem;
+  }
+  body[data-page="news"] .pub-hero__register-shell{
+    gap:1.15rem;
+  }
+  body[data-page="news"] .pub-hero__context{
+    margin-top:.1rem;
+  }
+  body[data-page="news"] .pub-hero__taxonomy{
+    margin-top:.1rem;
+  }
+  body[data-page="news"] .pub-feature{
+    padding-top:1.45rem;
+  }
+  body[data-page="news"] .pub-index{
+    padding-top:1.55rem;
+  }
+  body[data-page="news"] .pub-index__head{
+    gap:1.1rem;
+  }
+  body[data-page="news"] .pub-section-heading h2,
+  body[data-page="news"] .pub-index__head h2{
+    font-size:clamp(2.35rem,11.5vw,2.85rem);
+    line-height:.98;
+  }
+  body[data-page="news"] .pub-filter-row{
+    flex-wrap:wrap;
+    gap:.2rem 1rem;
+    overflow:visible;
+    scroll-snap-type:none;
+    padding-bottom:.35rem;
+  }
+  body[data-page="news"] .pub-filter{
+    padding:.52rem 0 .58rem;
+    font-size:.68rem;
+  }
+  body[data-page="news"] .pub-filter-count{
+    width:100%;
+    margin:.15rem 0 0;
+    padding-bottom:.35rem;
+  }
+  body[data-page="news"] .pub-line-filters{
+    gap:.25rem .9rem;
+  }
+  body[data-page="news"] .pub-feed .pub-empty.state-panel{
+    min-height:260px;
+  }
+  body[data-page="news"] .pub-feed .pub-empty .state-panel__title{
+    max-width:15ch;
+    font-size:clamp(2rem,10vw,2.7rem);
+  }
+}
