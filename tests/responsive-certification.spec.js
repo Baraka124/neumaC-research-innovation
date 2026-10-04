@@ -391,8 +391,8 @@ test('Publications zero-output state removes redundant Selection and preserves o
   await expect(stage).toHaveClass(/is-empty/);
   await expect(stage.locator('.pub-empty')).toHaveCount(0);
   await expect(feedEmpty).toBeVisible();
-  await expect(feedEmpty.locator('.state-panel__label')).toContainText(/Public register|Registro público/);
-  await expect(feedEmpty.locator('.state-panel__title')).toContainText(/No public output|Todavía no hay producción pública/);
+  await expect(feedEmpty.locator('.state-panel__label')).toContainText(/Publications|Publicaciones/);
+  await expect(feedEmpty.locator('.state-panel__title')).toContainText(/No public records are currently available|Actualmente no hay registros públicos disponibles/);
 
   const geometry = await page.evaluate(() => {
     const stage = document.querySelector('.pub-feature__stage').getBoundingClientRect();
@@ -449,7 +449,7 @@ test('Publications feed remains flat after folio recomposition', async ({ page }
   for (const className of itemClasses) {
     expect(className).not.toMatch(/card|raised|floating/);
   }
-  await expect(page.locator('.pub-feature')).toBeVisible();
+  await expect(page.locator('.pub-feature')).toBeHidden();
   await expect(page.locator('.pub-index')).toBeVisible();
   await expectNoHorizontalOverflow(page);
 });
