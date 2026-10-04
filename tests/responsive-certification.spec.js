@@ -137,7 +137,7 @@ test('phone masthead exposes an explicit Index trigger and removes header Contac
   await expectNoHorizontalOverflow(page);
 });
 
-test('phone Index opens as a compact editorial sheet with collapsed research lines', async ({ page }) => {
+test('phone Index opens as a compact editorial sheet with useful research content already visible', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/clinical/');
 
@@ -147,23 +147,28 @@ test('phone Index opens as a compact editorial sheet with collapsed research lin
 
   const disclosure = page.locator('.global-index__lines-toggle');
   await expect(disclosure).toBeVisible();
-  await expect(disclosure).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-collapsed/);
+  await expect(disclosure).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-expanded/);
+  await expect(page.locator('#globalIndexLines')).toBeVisible();
   await expect(page.locator('.global-index__institutions')).toBeHidden();
   await expectNoHorizontalOverflow(page);
 
+  await disclosure.click();
+  await expect(disclosure).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-collapsed/);
   await disclosure.click();
   await expect(disclosure).toHaveAttribute('aria-expanded', 'true');
   await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-expanded/);
 });
 
-test('large phone keeps progressive research-line disclosure', async ({ page }) => {
+test('large phone opens chapter content immediately while keeping optional disclosure', async ({ page }) => {
   await page.setViewportSize({ width: 620, height: 900 });
   await page.goto('/');
   await page.locator('#mobToggle').click();
 
   await expect(page.locator('.global-index__lines-toggle')).toBeVisible();
-  await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#globalIndexLines')).toBeVisible();
   await expectNoHorizontalOverflow(page);
 });
 

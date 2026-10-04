@@ -790,3 +790,53 @@
   width:100%;
   min-width:0;
 }
+
+
+/* ============================================================
+   MOBILE INTERACTION RESPONSIVENESS — ONE-TAP + TOUCH TARGETS
+   Phone Index chapter selection reveals useful content immediately.
+   Disclosure remains optional, never a required second step.
+   ============================================================ */
+@media(max-width:880px){
+  .mob-toggle{
+    height:44px!important;
+    min-height:44px!important;
+  }
+  .global-index__mobile-search,
+  .global-index__close--mobile{
+    width:44px!important;
+    height:44px!important;
+    min-width:44px!important;
+    min-height:44px!important;
+  }
+}
+
+@media(max-width:620px){
+  .global-index__lines-toggle{
+    min-height:44px!important;
+    padding:.15rem 0!important;
+  }
+  .global-index__lines-toggle-mark{
+    width:24px!important;
+    height:24px!important;
+  }
+  .global-index__line{
+    min-height:44px!important;
+  }
+  .global-search__back,
+  .global-search__close{
+    min-width:44px!important;
+    min-height:44px!important;
+  }
+  .global-search__filters button{
+    min-height:44px!important;
+    padding:.55rem 0!important;
+  }
+}
+
+@media(max-width:390px){
+  .mob-toggle{
+    height:44px!important;
+    min-height:44px!important;
+  }
+}
