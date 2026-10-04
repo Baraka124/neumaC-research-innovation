@@ -1081,3 +1081,21 @@ body[data-page="news"] .pub-publication__line{
     font-size:clamp(1.9rem,7vw,2.7rem);
   }
 }
+
+
+/* ============================================================
+   PUBLICATIONS — CLEAN MASTHEAD RAIL + CLEAN FIELD
+   Real-screen correction: page context must not compete with the
+   canonical masthead, and the opening field must remain optically clean.
+   ============================================================ */
+body[data-page="news"] .pub-hero--register{
+  background:#fbfaf7;
+}
+body[data-page="news"] .pub-hero--register::before{
+  display:none;
+}
+@media(max-width:620px){
+  body[data-page="news"] .pub-hero--register{
+    background:#fbfaf7;
+  }
+}
