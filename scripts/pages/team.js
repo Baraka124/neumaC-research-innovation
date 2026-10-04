@@ -584,3 +584,86 @@
   initProfileSheet();
   load();
 })();
+
+
+/* ============================================================
+   TEAM — PHASE 2
+   Living scientific coordination index: L01 → L06.
+   This is deliberately page-local and does not alter profile/data behavior.
+   ============================================================ */
+(function(){
+  'use strict';
+
+  var host=document.getElementById('teamCoordinators');
+  if(!host)return;
+
+  var rows=[];
+  var raf=0;
+  var observer=null;
+
+  function prefersReducedMotion(){
+    return !!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  function refreshRows(){
+    rows=Array.prototype.slice.call(host.querySelectorAll('.team-coordinator'));
+    rows.forEach(function(row){row.classList.remove('is-active-coordinator');});
+    requestUpdate();
+  }
+
+  function update(){
+    raf=0;
+
+    if(!rows.length||window.innerWidth<=640){
+      host.style.removeProperty('--team-coordination-progress');
+      rows.forEach(function(row){row.classList.remove('is-active-coordinator');});
+      return;
+    }
+
+    var viewportH=window.innerHeight||document.documentElement.clientHeight;
+    var anchor=viewportH*.46;
+    var rect=host.getBoundingClientRect();
+    var span=Math.max(1,rect.height);
+    var progress=Math.max(0,Math.min(1,(anchor-rect.top)/span));
+
+    host.style.setProperty(
+      '--team-coordination-progress',
+      (prefersReducedMotion()?1:progress).toFixed(3)
+    );
+
+    if(rect.bottom<0||rect.top>viewportH){
+      rows.forEach(function(row){row.classList.remove('is-active-coordinator');});
+      return;
+    }
+
+    var best=null;
+    var bestDistance=Infinity;
+    rows.forEach(function(row){
+      var rr=row.getBoundingClientRect();
+      var centre=rr.top+(rr.height*.5);
+      var distance=Math.abs(centre-anchor);
+      if(distance<bestDistance){
+        bestDistance=distance;
+        best=row;
+      }
+    });
+
+    rows.forEach(function(row){
+      row.classList.toggle('is-active-coordinator',row===best);
+    });
+  }
+
+  function requestUpdate(){
+    if(raf)return;
+    raf=requestAnimationFrame(update);
+  }
+
+  observer=new MutationObserver(refreshRows);
+  observer.observe(host,{childList:true,subtree:false});
+
+  window.addEventListener('scroll',requestUpdate,{passive:true});
+  window.addEventListener('resize',requestUpdate,{passive:true});
+  document.addEventListener('neumac:languagechange',requestUpdate);
+
+  refreshRows();
+})();
