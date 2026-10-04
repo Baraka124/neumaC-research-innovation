@@ -1299,3 +1299,116 @@ body[data-page="clinical"] .research-contact.is-inquiry-open .research-contact__
     transform:none!important;
   }
 }
+
+
+/* ============================================================
+   RESEARCH — FLOATING BALANCE REFINEMENT
+   Preserve spatial lift without boxed-card separation.
+   ============================================================ */
+@media(min-width:881px){
+  body[data-page="clinical"] .research-line-row{
+    border-color:rgba(132,159,169,.14);
+    border-radius:10px;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.88),rgba(255,255,255,.74));
+    box-shadow:
+      0 10px 26px rgba(7,39,66,.032),
+      0 1px 0 rgba(255,255,255,.86) inset;
+  }
+
+  body[data-page="clinical"] .research-line-row::before{
+    width:2px;
+    opacity:.32;
+  }
+
+  body[data-page="clinical"] .research-line-row:hover,
+  body[data-page="clinical"] .research-line-row:focus-visible,
+  body[data-page="clinical"] .research-line-row.is-active-line{
+    transform:translateY(-1px);
+    border-color:rgba(115,151,162,.20);
+    box-shadow:
+      0 14px 32px rgba(7,39,66,.05),
+      0 1px 0 rgba(255,255,255,.9) inset;
+  }
+
+  body[data-page="clinical"] .research-line__media{
+    border-radius:8px;
+    box-shadow:0 7px 16px rgba(6,35,60,.038);
+  }
+
+  body[data-page="clinical"] .research-line__side{
+    border-left-color:rgba(132,158,168,.18);
+  }
+
+  body[data-page="clinical"] .study-toolbar{
+    border-color:rgba(135,161,171,.13);
+    border-radius:9px;
+    background:rgba(255,255,255,.82);
+    box-shadow:
+      0 8px 22px rgba(7,39,66,.028),
+      0 1px 0 rgba(255,255,255,.84) inset;
+  }
+
+  body[data-page="clinical"] .study-row{
+    border-color:rgba(139,163,172,.12);
+    border-radius:9px;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,255,255,.70));
+    box-shadow:
+      0 8px 22px rgba(8,40,66,.026),
+      0 1px 0 rgba(255,255,255,.82) inset;
+  }
+
+  body[data-page="clinical"] .study-row:hover,
+  body[data-page="clinical"] .study-row:focus-visible{
+    transform:translateY(-1px);
+    border-color:rgba(116,153,164,.18);
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.78));
+    box-shadow:
+      0 12px 28px rgba(8,40,66,.045),
+      0 1px 0 rgba(255,255,255,.88) inset;
+  }
+
+  body[data-page="clinical"] .study-row.is-study-origin{
+    border-color:rgba(88,151,162,.24);
+    box-shadow:
+      0 13px 30px rgba(8,40,66,.05),
+      0 1px 0 rgba(255,255,255,.88) inset;
+  }
+
+  body[data-page="clinical"] .study-row.is-study-origin::after{
+    width:2px;
+  }
+
+  body[data-page="clinical"] .study-filters__grid{
+    border-color:rgba(124,153,164,.16);
+    border-radius:10px;
+    box-shadow:0 16px 38px rgba(8,43,79,.08);
+  }
+}
+
+@media(max-width:880px){
+  body[data-page="clinical"] .research-line-row,
+  body[data-page="clinical"] .study-row{
+    border-color:rgba(139,164,174,.12);
+    border-radius:9px;
+    background:rgba(255,255,255,.74);
+    box-shadow:0 6px 16px rgba(8,40,66,.022);
+  }
+}
+
+@media(max-width:620px){
+  body[data-page="clinical"] .research-line-row,
+  body[data-page="clinical"] .study-row{
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(8,40,66,.018);
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body[data-page="clinical"] .research-line-row,
+  body[data-page="clinical"] .study-row{
+    transform:none!important;
+  }
+}
