@@ -23,7 +23,7 @@ for(const [name,url] of indexablePages){
     }
     await page.goto(url);
 
-    await expect(page.locator('title')).not.toHaveText('');
+    expect((await page.title()).trim().length).toBeGreaterThan(4);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content',/.{20,}/);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href',/^https:\/\/neumact\.org\//);
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content',/.{5,}/);
