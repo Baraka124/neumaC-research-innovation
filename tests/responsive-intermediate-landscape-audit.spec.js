@@ -48,6 +48,7 @@ for(const width of [360,430,480]){
   test(`intermediate portrait cross-page containment — ${width}px`,async({page})=>{
     await stubCommon(page);
     await page.setViewportSize({width,height:900});
+    await page.emulateMedia({reducedMotion:'reduce'});
     for(const url of ['/','/clinical/','/innovation/','/news/','/team/']){
       await page.goto(url);
       await noOverflow(page);
@@ -65,6 +66,7 @@ for(const vp of [
   test(`landscape Index/Search audit — ${vp.name}`,async({page})=>{
     await stubCommon(page);
     await page.setViewportSize({width:vp.width,height:vp.height});
+    await page.emulateMedia({reducedMotion:'reduce'});
     await page.goto('/innovation/');
 
     const mobileTrigger=page.locator('#mobToggle');
@@ -73,6 +75,7 @@ for(const vp of [
     else await desktopTrigger.click();
 
     await expect(page.locator('#globalIndex')).toHaveAttribute('aria-hidden','false');
+    await page.waitForTimeout(80);
     await noOverflow(page);
 
     const indexGeo=await page.evaluate(()=>{
@@ -100,9 +103,11 @@ for(const vp of [
   test(`landscape publication reader audit — ${vp.name}`,async({page})=>{
     await stubCommon(page);
     await page.setViewportSize({width:vp.width,height:vp.height});
+    await page.emulateMedia({reducedMotion:'reduce'});
     await page.goto('/news/?post=landscape-reader-1');
     const sheet=page.locator('.pub-reader');
     await expect(sheet).toBeVisible();
+    await page.waitForTimeout(80);
 
     const geo=await sheet.evaluate(el=>{
       const r=el.getBoundingClientRect();
@@ -128,6 +133,7 @@ for(const vp of [
   test(`landscape Team profile audit — ${vp.name}`,async({page})=>{
     await stubCommon(page);
     await page.setViewportSize({width:vp.width,height:vp.height});
+    await page.emulateMedia({reducedMotion:'reduce'});
     await page.goto('/team/?person=landscape-clinician');
 
     const sheet=page.locator('#teamProfileSheet');
