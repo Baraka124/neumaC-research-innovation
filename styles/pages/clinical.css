@@ -1142,9 +1142,12 @@ body[data-page="clinical"] .research-contact.is-inquiry-open .research-contact__
   }
 
   body[data-page="clinical"] .research-line-list{
-    display:grid;
-    gap:1rem;
+    display:block;
     padding-top:1rem;
+  }
+
+  body[data-page="clinical"] .research-line-row + .research-line-row{
+    margin-top:1rem;
   }
 
   body[data-page="clinical"] .research-line-row{
@@ -1257,8 +1260,11 @@ body[data-page="clinical"] .research-contact.is-inquiry-open .research-contact__
 
 @media(max-width:880px){
   body[data-page="clinical"] .research-line-list{
-    display:grid;
-    gap:.72rem;
+    display:block;
+  }
+
+  body[data-page="clinical"] .research-line-row + .research-line-row{
+    margin-top:.72rem;
   }
 
   body[data-page="clinical"] .research-line-row{
