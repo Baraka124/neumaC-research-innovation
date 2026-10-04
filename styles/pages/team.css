@@ -769,7 +769,9 @@ body[data-page="team"] .team-coordinator .team-inline-link{
 }
 
 body[data-page="team"] .team-coordinator .team-profile-launch{
-  display:none;
+  display:inline-flex;
+  margin-top:.28rem;
+  color:#5f7f89;
 }
 
 /* Roster: embedded people index. The profile sheet carries the depth. */
