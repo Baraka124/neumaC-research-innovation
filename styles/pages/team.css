@@ -1021,3 +1021,126 @@ body[data-page="team"] .team-network__system span:first-child{
     transform:none!important;
   }
 }
+
+
+/* ============================================================
+   TEAM — PHASE 2
+   Signature interaction: living L01–L06 coordination register.
+   ============================================================ */
+@media(min-width:641px){
+  body[data-page="team"] .team-coordinator-grid{
+    --team-coordination-progress:0;
+    --team-coordination-spine-x:29px;
+    position:relative;
+    isolation:isolate;
+  }
+
+  body[data-page="team"] .team-coordinator-grid::before,
+  body[data-page="team"] .team-coordinator-grid::after{
+    content:"";
+    position:absolute;
+    z-index:0;
+    left:var(--team-coordination-spine-x);
+    top:1.2rem;
+    bottom:1.2rem;
+    width:1px;
+    pointer-events:none;
+    transform-origin:top;
+  }
+
+  body[data-page="team"] .team-coordinator-grid::before{
+    background:#d5e1e4;
+  }
+
+  body[data-page="team"] .team-coordinator-grid::after{
+    background:#159ba4;
+    transform:scaleY(var(--team-coordination-progress));
+    transition:transform .08s linear;
+  }
+
+  body[data-page="team"] .team-coordinator{
+    z-index:1;
+    transition:background .18s ease,border-color .18s ease;
+  }
+
+  body[data-page="team"] .team-coordinator__index{
+    position:relative;
+    z-index:2;
+    transition:color .2s ease,transform .22s cubic-bezier(.2,.75,.2,1);
+  }
+
+  body[data-page="team"] .team-coordinator.is-active-coordinator{
+    background:linear-gradient(90deg,rgba(15,132,142,.034),transparent 38%);
+    border-bottom-color:#cadadd;
+  }
+
+  body[data-page="team"] .team-coordinator.is-active-coordinator .team-coordinator__index{
+    color:#007f88;
+    transform:translateX(2px);
+  }
+
+  body[data-page="team"] .team-coordinator.is-active-coordinator .team-coordinator__body h3{
+    color:#08747d;
+  }
+
+  body[data-page="team"] .team-coordinator.is-active-coordinator .team-coordinator__portrait img{
+    transform:scale(1.012);
+  }
+
+  body[data-page="team"] .team-coordinator.is-active-coordinator .team-coordinator__line-name{
+    border-left-color:#b9d0d4;
+    color:#1d5868;
+  }
+
+  body[data-page="team"] .team-coordinator__portrait img,
+  body[data-page="team"] .team-coordinator__line-name,
+  body[data-page="team"] .team-coordinator__body h3{
+    transition:transform .26s var(--ease-clinical),border-color .2s ease,color .2s ease;
+  }
+}
+
+@media(min-width:641px) and (max-width:1100px){
+  body[data-page="team"] .team-coordinator-grid{
+    --team-coordination-spine-x:23px;
+  }
+}
+
+@media(max-width:640px){
+  body[data-page="team"] .team-coordinator-grid::before,
+  body[data-page="team"] .team-coordinator-grid::after{
+    display:none;
+  }
+
+  body[data-page="team"] .team-coordinator.is-active-coordinator{
+    background:transparent;
+  }
+
+  body[data-page="team"] .team-coordinator.is-active-coordinator .team-coordinator__index{
+    color:#718995;
+    transform:none;
+  }
+
+  body[data-page="team"] .team-coordinator.is-active-coordinator .team-coordinator__portrait img{
+    transform:none;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body[data-page="team"] .team-coordinator-grid{
+    --team-coordination-progress:1!important;
+  }
+
+  body[data-page="team"] .team-coordinator-grid::after{
+    transition:none!important;
+    transform:scaleY(1)!important;
+  }
+
+  body[data-page="team"] .team-coordinator,
+  body[data-page="team"] .team-coordinator__index,
+  body[data-page="team"] .team-coordinator__portrait img,
+  body[data-page="team"] .team-coordinator__line-name,
+  body[data-page="team"] .team-coordinator__body h3{
+    transition:none!important;
+    transform:none!important;
+  }
+}
