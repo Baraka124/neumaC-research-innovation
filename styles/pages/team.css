@@ -743,7 +743,9 @@ body[data-page="team"] .team-coordinator .team-inline-link{
 
 body[data-page="team"] .team-coordinator__body h3{
   align-self:end;
-  font-size:clamp(1.42rem,1.8vw,1.75rem);
+  font-size:clamp(1.16rem,1.35vw,1.42rem);
+  line-height:1.08;
+  letter-spacing:-.018em;
 }
 
 body[data-page="team"] .team-coordinator__role{
