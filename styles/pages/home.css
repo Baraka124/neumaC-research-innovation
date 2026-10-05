@@ -738,12 +738,9 @@ body[data-page="home"] .home-lines-disclosure{
    Final Home-only visual layer. Medical imagery remains documentary;
    optical depth belongs to interface surfaces, not the photograph.
    ============================================================ */
-body[data-page="home"].has-scientific-masthead{
-  padding-top:0!important;
-}
-
 body[data-page="home"] .home-hero{
   min-height:clamp(610px,70svh,760px);
+  margin-top:-103px;
   isolation:isolate;
   background:#082a49;
 }
@@ -874,6 +871,12 @@ body[data-page="home"] .home-programme-panel::before{
   pointer-events:none;
 }
 
+@media(min-width:1680px){
+  body[data-page="home"] .home-hero{
+    margin-top:-106px;
+  }
+}
+
 @media(min-width:1800px){
   body[data-page="home"] .home-hero{
     min-height:min(760px,72svh);
@@ -918,11 +921,9 @@ body[data-page="home"] .home-programme-panel::before{
 }
 
 @media(max-width:880px){
-  body[data-page="home"].has-scientific-masthead{
-    padding-top:0!important;
-  }
   body[data-page="home"] .home-hero{
     min-height:680px;
+    margin-top:-84px;
     align-items:end;
   }
   body[data-page="home"] .home-hero-media img{
@@ -1015,7 +1016,7 @@ body[data-page="home"] .home-programme-panel::before{
 }
 
 @media print{
-  body[data-page="home"].has-scientific-masthead{padding-top:0!important}
+  body[data-page="home"] .home-hero{margin-top:0}
   body[data-page="home"] .home-hero-pane{
     width:auto;
     padding:0;
