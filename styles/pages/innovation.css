@@ -291,3 +291,27 @@ body[data-page="innovation"] .innovation-question:last-child::before{
     font-size:.84rem;
   }
 }
+
+
+/* ============================================================
+   FINAL WORKSTATION QA — Innovation
+   Use hospital-desktop width without changing <=1679px behavior.
+   ============================================================ */
+@media(min-width:1680px){
+  body[data-page="innovation"] .container{
+    width:min(calc(100% - 6rem),1600px);
+    max-width:1600px;
+  }
+  body[data-page="innovation"] .innovation-hero__grid{
+    grid-template-columns:minmax(0,1.08fr) minmax(520px,.92fr);
+    gap:clamp(3.5rem,5vw,6.5rem);
+  }
+  body[data-page="innovation"] .innovation-section-intro{
+    grid-template-columns:minmax(0,1fr) minmax(420px,.48fr);
+    gap:clamp(4rem,7vw,8rem);
+  }
+  body[data-page="innovation"] .innovation-project-row{
+    grid-template-columns:minmax(0,1fr) 310px;
+    gap:2.2rem;
+  }
+}
