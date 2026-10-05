@@ -18,7 +18,7 @@ async function stubKnownPublicApi(page) {
   await page.route('**/api/clinical-trials/website*', fulfill);
 }
 
-const PAGES = ['/', '/team/', '/clinical/', '/innovation/', '/news/',
+const PAGES = ['/', '/team/', '/clinical/', '/innovation/', '/news/', '/formacion/',
                '/privacidad/', '/accesibilidad/', '/aviso-legal/'];
 
 for (const path of PAGES) {
