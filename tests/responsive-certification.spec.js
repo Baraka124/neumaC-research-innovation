@@ -1622,3 +1622,29 @@ test('Scientific masthead remains optically separated at 1918px', async ({ page 
 
   await expectNoHorizontalOverflow(page);
 });
+
+
+test('Scientific masthead exposes only Área Sanitaria as visible affiliation', async ({ page }) => {
+  await page.setViewportSize({ width:1918, height:912 });
+  await page.goto('/formacion/');
+
+  const org = page.locator('.hdr--scientific .hdr-brand-org');
+  await expect(org).toHaveText('Área Sanitaria da Coruña e Cee');
+  await expect(org).not.toContainText('INIBIC');
+  await expect(org).not.toContainText('SERGAS');
+
+  const style = await org.evaluate(el => {
+    const s = getComputedStyle(el);
+    return {
+      fontSize: parseFloat(s.fontSize),
+      fontWeight: parseInt(s.fontWeight, 10),
+      color: s.color
+    };
+  });
+  expect(style.fontSize).toBeGreaterThanOrEqual(8.5);
+  expect(style.fontWeight).toBeGreaterThanOrEqual(600);
+  expect(style.color).not.toContain('0.48');
+
+  await expect(page.locator('.site-footer')).toContainText('INIBIC');
+  await expect(page.locator('.site-footer')).toContainText('SERGAS');
+});
