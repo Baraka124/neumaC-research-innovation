@@ -143,7 +143,7 @@ test('phone Index opens as a compact editorial sheet with useful research conten
 
   await page.locator('#mobToggle').click();
   await expect(page.locator('#globalIndex')).toHaveAttribute('aria-hidden', 'false');
-  await expect(page.locator('.global-index__chapter')).toHaveCount(4);
+  await expect(page.locator('.global-index__chapter')).toHaveCount(5);
 
   const disclosure = page.locator('.global-index__lines-toggle');
   await expect(disclosure).toBeVisible();
