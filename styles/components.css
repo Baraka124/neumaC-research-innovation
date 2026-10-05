@@ -1946,7 +1946,7 @@ body.is-index-open{overflow:hidden;}
 .hdr--scientific .hdr-brand-meta{padding-left:1rem}
 .hdr--scientific .hdr-brand-meta::before{height:34px;background:rgba(255,255,255,.23)}
 .hdr--scientific .hdr-brand-title{font-size:.61rem;letter-spacing:.095em;color:rgba(255,255,255,.91)}
-.hdr--scientific .hdr-brand-org{font-size:.49rem;letter-spacing:.07em;color:rgba(255,255,255,.48)}
+.hdr--scientific .hdr-brand-org{font-size:.53rem;font-weight:600;letter-spacing:.045em;color:rgba(255,255,255,.68)}
 
 .hdr--scientific .hdr-nav{position:relative;gap:.12rem}
 .hdr--scientific .hdr-nav-link{
@@ -3362,7 +3362,7 @@ body[data-page="news"] .hdr-context__detail{
   .hdr--scientific .hdr-inner{gap:clamp(.78rem,1.15vw,1.15rem)}
   .hdr--scientific .hdr-brand-meta{padding-left:.66rem}
   .hdr--scientific .hdr-brand-title{font-size:.535rem;letter-spacing:.056em}
-  .hdr--scientific .hdr-brand-org{font-size:.435rem;letter-spacing:.04em}
+  .hdr--scientific .hdr-brand-org{font-size:.49rem;font-weight:600;letter-spacing:.032em;color:rgba(255,255,255,.67)}
   .hdr--scientific .hdr-nav{gap:.03rem}
   .hdr--scientific .hdr-nav-link{padding-inline:.27rem;font-size:.775rem}
   .hdr--scientific .hdr-right{padding-left:.55rem}
@@ -3468,9 +3468,10 @@ body[data-page="home"] .hdr--scientific.scrolled .hdr-context{
     letter-spacing:.082em;
   }
   .hdr--scientific .hdr-brand-org{
-    font-size:.505rem;
-    letter-spacing:.054em;
-    color:rgba(255,255,255,.62);
+    font-size:.55rem;
+    font-weight:600;
+    letter-spacing:.034em;
+    color:rgba(255,255,255,.74);
     white-space:nowrap;
   }
   .hdr--scientific .hdr-nav{
