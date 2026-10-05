@@ -2114,3 +2114,17 @@ body.pub-reader-open[data-page="news"] .pub-feature-lead:not(.is-reader-origin){
     transform:none!important;
   }
 }
+
+
+/* FINAL RESPONSIVE CERTIFICATION — PUBLICATIONS */
+@media(max-width:620px){
+  body[data-page="news"] .pub-hero__taxonomy>span{font-size:.64rem;line-height:1.42}
+  body[data-page="news"] .pub-hero__register-notes small{font-size:.59rem}
+  body[data-page="news"] .pub-filter-count{font-size:.58rem}
+  body[data-page="news"] .pub-doi-static{font-size:.60rem}
+  body[data-page="news"] .pub-publication__line{font-size:.63rem}
+  body[data-page="news"] .pub-reader__context-item span{font-size:.61rem}
+}
+@media(max-width:390px){
+  body[data-page="news"] .pub-line-filter{font-size:.64rem}
+}
