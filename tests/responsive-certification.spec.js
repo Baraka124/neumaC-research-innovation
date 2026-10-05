@@ -14,6 +14,7 @@ const BREAKPOINTS = [
   { width: 620, height: 900, name: 'large phone' },
   { width: 768, height: 1024, name: 'tablet' },
   { width: 1024, height: 900, name: 'small laptop' },
+  { width: 1366, height: 768, name: 'laptop' },
   { width: 1440, height: 900, name: 'desktop' },
   { width: 1680, height: 1050, name: 'wide desktop' },
   { width: 2048, height: 1152, name: 'hospital workstation' },
