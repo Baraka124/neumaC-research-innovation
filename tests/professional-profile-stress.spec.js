@@ -7,8 +7,8 @@ const airwayLine = {
 };
 const precisionLine = {
   id:'line-precision', line_number:6,
-  name:'Precision Medicine & Clinical Innovation',
-  short_name:'Precision Medicine & Clinical Innovation',
+  name:'Personalised Respiratory Medicine, Management & Clinical Innovation',
+  short_name:'Personalised Respiratory Medicine, Management & Clinical Innovation',
   team:[]
 };
 
@@ -97,6 +97,11 @@ const people = [
     research_lines:[precisionLine]
   },
   {
+    id:'long-name', full_name:'Dra. María Cristina Fernández Domínguez', is_public:true,
+    staff_type:'attending_physician', specialization:'Neumología',
+    primary_dept_name:'Servicio de Neumología'
+  },
+  {
     id:'resident', full_name:'Dra. Sparse Resident', is_public:true,
     staff_type:'medical_resident', specialization:'Neumología',
     primary_dept_name:'Servicio de Neumología'
@@ -145,7 +150,7 @@ test('P1 department leader remains inside the same professional profile system',
   const content=page.locator('#teamProfileContent');
   await expect(content).toContainText(/Professional profile|Perfil profesional/);
   await expect(content.locator('.team-profile__section--leadership')).toContainText(/Department leadership|Dirección de servicio/);
-  await expect(content.locator('.team-profile__person-nav-count')).toContainText('/ 6');
+  await expect(content.locator('.team-profile__person-nav-count')).toContainText('/ 7');
 });
 
 for (const person of [
@@ -161,6 +166,40 @@ for (const person of [
     await expect(content.locator('.team-profile__section--leadership')).toHaveCount(0);
   });
 }
+
+test('Profile research relationships render as institutional L-code rows', async ({page}) => {
+  await stubProfessionalApi(page);
+  await page.goto('/team/?person=luis-biomedical-engineer');
+  const row=page.locator('.team-profile__lines a').first();
+  await expect(row).toBeVisible();
+  await expect(row.locator('.team-profile__line-code')).toHaveText('L06');
+  await expect(row.locator('.team-profile__line-title')).toContainText(/Personalised Respiratory Medicine|Medicina Respiratoria Personalizada/);
+  const geometry=await row.evaluate(el=>{
+    const title=el.querySelector('.team-profile__line-title').getBoundingClientRect();
+    return {titleWidth:title.width,rowWidth:el.getBoundingClientRect().width};
+  });
+  expect(geometry.titleWidth).toBeGreaterThan(120);
+  expect(geometry.titleWidth).toBeLessThan(geometry.rowWidth);
+});
+
+test('Profile footer exposes elite team browsing controls', async ({page}) => {
+  await stubProfessionalApi(page);
+  await page.goto('/team/?person=francisco-mendez-salazar');
+  const footer=page.locator('.team-profile__footer');
+  await expect(footer).toBeVisible();
+  await expect(footer.locator('.team-profile__browse-all')).toContainText(/View full team|Ver equipo completo/);
+  await expect(footer.locator('.team-profile__person-nav-count')).toContainText('/ 7');
+});
+
+test('Very long professional names receive the controlled identity scale', async ({page}) => {
+  await stubProfessionalApi(page);
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/team/?person=maria-cristina-fernandez-dominguez');
+  const content=page.locator('#teamProfileContent');
+  await expect(content).toHaveClass(/has-very-long-name/);
+  const size=await page.locator('#teamProfileName').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+  expect(size).toBeLessThan(32);
+});
 
 test('P1 sparse profile remains intentional and contains no empty evidence modules', async ({page}) => {
   await stubProfessionalApi(page);
