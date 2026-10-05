@@ -1505,6 +1505,47 @@ test('INIBIC plaque remains visually restrained on phone after glass refinement'
 });
 
 
+
+for (const viewport of [
+  { width:390, height:844, label:'phone' },
+  { width:1366, height:768, label:'laptop' },
+  { width:2048, height:1152, label:'workstation' }
+]) {
+  test(`Formación research pathway stays floating and unboxed on ${viewport.label}`, async ({ page }) => {
+    await page.setViewportSize({ width:viewport.width, height:viewport.height });
+    await page.goto('/formacion/');
+
+    const pathway = page.locator('.training-pathway');
+    await expect(pathway).toBeVisible();
+
+    const visual = await pathway.evaluate(el => {
+      const s = getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      return {
+        background:s.backgroundColor,
+        borderTop:parseFloat(s.borderTopWidth),
+        borderRight:parseFloat(s.borderRightWidth),
+        borderBottom:parseFloat(s.borderBottomWidth),
+        borderLeft:parseFloat(s.borderLeftWidth),
+        boxShadow:s.boxShadow,
+        left:r.left,
+        right:r.right,
+        viewport:innerWidth
+      };
+    });
+
+    expect(visual.background).toMatch(/rgba\(0, 0, 0, 0\)|transparent/);
+    expect(visual.borderTop).toBe(0);
+    expect(visual.borderRight).toBe(0);
+    expect(visual.borderBottom).toBe(0);
+    expect(visual.borderLeft).toBe(0);
+    expect(visual.boxShadow).toBe('none');
+    expect(visual.left).toBeGreaterThanOrEqual(-1);
+    expect(visual.right).toBeLessThanOrEqual(visual.viewport + 1);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
 for (const viewport of [
   { width:390, height:844, label:'phone' },
   { width:768, height:1024, label:'tablet' },
