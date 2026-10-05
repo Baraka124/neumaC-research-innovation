@@ -25,8 +25,7 @@ for(const width of [320,390,430,620]){
     await expect(trigger).toBeVisible();
     await trigger.click();
 
-    await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded','false');
-    await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-collapsed/);
+    await expect(page.locator('.global-index__lines')).toBeHidden();
 
     await page.locator('[data-index-chapter="team"]').click();
     await expect(page).toHaveURL(/\/team\/?$/);
@@ -46,7 +45,7 @@ for(const width of [320,390,430,620]){
     expect(sizes.trigger.h).toBeGreaterThanOrEqual(44);
     expect(sizes.close.h).toBeGreaterThanOrEqual(44);
     expect(sizes.close.w).toBeGreaterThanOrEqual(44);
-    expect(sizes.disclosure.h).toBeGreaterThanOrEqual(44);
+    expect(sizes.disclosure).toBeNull();
 
     await page.locator('[data-open-index-search]').click();
     await expect(page.locator('.global-search__close')).toBeHidden();
