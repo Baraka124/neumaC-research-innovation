@@ -125,6 +125,7 @@
       innovation:{section:['Innovation','Innovación'],detail:['Clinical innovation','Innovación clínica']},
       news:{section:['Publications','Publicaciones'],detail:['Scientific output','Producción científica']},
       team:{section:['Team','Equipo'],detail:['Multidisciplinary team','Equipo multidisciplinar']},
+      training:{section:['Training','Formación'],detail:['Research development','Desarrollo investigador']},
       line:{section:['Research','Investigación'],detail:['Research line','Línea de investigación']}
     };
     var ctx=map[page]||map.home;
@@ -238,7 +239,8 @@
             <button type="button" data-index-chapter="research" aria-pressed="'+(indexState.chapter==='research'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='research'?'is-current':'')+'"><span class="global-index__chapter-no">01</span><span class="global-index__chapter-name">'+ixBi('Research','Investigación')+'</span></button>\
             <button type="button" data-index-chapter="innovation" aria-pressed="'+(indexState.chapter==='innovation'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='innovation'?'is-current':'')+'"><span class="global-index__chapter-no">02</span><span class="global-index__chapter-name">'+ixBi('Innovation','Innovación')+'</span></button>\
             <button type="button" data-index-chapter="articles" aria-pressed="'+(indexState.chapter==='articles'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='articles'?'is-current':'')+'"><span class="global-index__chapter-no">03</span><span class="global-index__chapter-name">'+ixBi('Publications','Publicaciones')+'</span></button>\
-            <button type="button" data-index-chapter="team" aria-pressed="'+(indexState.chapter==='team'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='team'?'is-current':'')+'"><span class="global-index__chapter-no">04</span><span class="global-index__chapter-name">'+ixBi('Team','Equipo')+'</span></button>\
+            <button type="button" data-index-chapter="training" aria-pressed="'+(indexState.chapter==='training'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='training'?'is-current':'')+'"><span class="global-index__chapter-no">04</span><span class="global-index__chapter-name">'+ixBi('Training','Formación')+'</span></button>\
+            <button type="button" data-index-chapter="team" aria-pressed="'+(indexState.chapter==='team'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='team'?'is-current':'')+'"><span class="global-index__chapter-no">05</span><span class="global-index__chapter-name">'+ixBi('Team','Equipo')+'</span></button>\
           </nav>\
           <section class="global-index__lines" aria-labelledby="globalIndexLinesTitle">\
             <div class="global-index__section-head">\
@@ -273,6 +275,7 @@
             <button type="button" data-filter="people">'+ixBi('People','Personas')+'</button>\
             <button type="button" data-filter="articles">'+ixBi('Publications','Publicaciones')+'</button>\
             <button type="button" data-filter="innovation">'+ixBi('Innovation','Innovación')+'</button>\
+            <button type="button" data-filter="training">'+ixBi('Training','Formación')+'</button>\
           </div>\
           <div class="global-search__results" id="globalIndexSearchResults" aria-live="polite"></div>\
         </div>\
@@ -381,6 +384,12 @@
         {href:'/news/#publicationsIndex',en:'Recent output',es:'Producción reciente'},
         {href:'/news/#publicationsIndex',en:'Search the scholarly register',es:'Buscar en el registro científico'}
       ],
+      training:[
+        {href:'/formacion/#top',en:'Training & research development',es:'Formación y desarrollo investigador'},
+        {href:'/formacion/#trainingEnvironmentTitle',en:'Research environment',es:'Entorno investigador'},
+        {href:'/formacion/#trainingDevelopmentTitle',en:'Development areas',es:'Ámbitos de desarrollo'},
+        {href:'/formacion/#trainingInnovationTitle',en:'Respiratory clinical innovation',es:'Innovación clínica respiratoria'}
+      ],
       team:[
         {href:'/team/#teamLeadership',en:'Programme leadership',es:'Dirección del programa'},
         {href:'/team/#teamCoordinators',en:'Research-line coordinators',es:'Coordinación de las líneas'},
@@ -400,6 +409,7 @@
       research:{title:['Research lines','Líneas de investigación'],open:['Open research','Abrir investigación'],href:'/clinical/'},
       innovation:{title:['Innovation pathway','Ruta de innovación'],open:['Open innovation','Abrir innovación'],href:'/innovation/'},
       articles:{title:['Scholarly register','Registro científico'],open:['Open publications','Abrir publicaciones'],href:'/news/'},
+      training:{title:['Training & research development','Formación y desarrollo investigador'],open:['Open training','Abrir formación'],href:'/formacion/'},
       team:{title:['People & programme','Personas y programa'],open:['Open team','Abrir equipo'],href:'/team/'}
     }[key];
     if(!meta)return;
@@ -463,7 +473,8 @@
       {type:'research',code:'01',title:['Research','Investigación'],sub:['Research overview','Resumen de investigación'],href:'/clinical/',keywords:''},
       {type:'innovation',code:'02',title:['Innovation','Innovación'],sub:['Clinical innovation projects','Proyectos de innovación clínica'],href:'/innovation/',keywords:''},
       {type:'articles',code:'03',title:['Publications','Publicaciones'],sub:['Scientific publications, articles and updates','Publicaciones científicas, artículos y actualizaciones'],href:'/news/',keywords:''},
-      {type:'people',code:'04',title:['Team','Equipo'],sub:['Multidisciplinary team','Equipo multidisciplinar'],href:'/team/',keywords:''}
+      {type:'training',code:'04',title:['Training','Formación'],sub:['Research development in respiratory medicine','Desarrollo investigador en medicina respiratoria'],href:'/formacion/',keywords:'residency residents fellows rotations visiting professionals research training clinical innovation respiratory formación residencia rotaciones estancias investigación innovación clínica'},
+      {type:'people',code:'05',title:['Team','Equipo'],sub:['Multidisciplinary team','Equipo multidisciplinar'],href:'/team/',keywords:''}
     ];
     indexState.lines.forEach(function(l){var pair=ixLinePair(l);items.push({type:'research',code:'',title:pair,sub:['Research line','Línea de investigación'],href:'/line/?id='+encodeURIComponent(l.id),keywords:pair.join(' ')+' L'+String(l.line_number||'').padStart(2,'0')});});
     indexState.people.forEach(function(p){var n=p.display_name||p.full_name||'';if(!n)return;var role=ixPersonRolePair(p);items.push({type:'people',code:'Person',title:[n,n],sub:role,href:'/team/?person='+ixSlug(n),keywords:[role[0],role[1],p.specialization||'',p.primary_dept_name||''].join(' ')});});
@@ -483,6 +494,7 @@
         +'<div class="global-search__scope"><span class="global-search__scope-no">02</span><strong>'+ixBi('People','Personas')+'</strong><small>'+ixBi('Multidisciplinary professional profiles','Perfiles profesionales multidisciplinares')+'</small></div>'
         +'<div class="global-search__scope"><span class="global-search__scope-no">03</span><strong>'+ixBi('Publications','Publicaciones')+'</strong><small>'+ixBi('Titles, authors, topics and DOI','Títulos, autores, temas y DOI')+'</small></div>'
         +'<div class="global-search__scope"><span class="global-search__scope-no">04</span><strong>'+ixBi('Innovation','Innovación')+'</strong><small>'+ixBi('Clinical innovation projects','Proyectos de innovación clínica')+'</small></div>'
+        +'<div class="global-search__scope"><span class="global-search__scope-no">05</span><strong>'+ixBi('Training','Formación')+'</strong><small>'+ixBi('Research development in respiratory medicine','Desarrollo investigador en medicina respiratoria')+'</small></div>'
         +'</div></section>';
       return;
     }
@@ -492,6 +504,53 @@
       return (it.title[lang]+' '+it.title[0]+' '+it.title[1]+' '+it.sub[lang]+' '+it.sub[0]+' '+it.sub[1]+' '+it.code+' '+(it.keywords||'')).toLowerCase().indexOf(q)>-1;
     }).slice(0,14);
     indexState.results.innerHTML=hits.length?hits.map(function(it){return '<a class="global-search__result'+(!it.code?' global-search__result--no-code':'')+'" href="'+ixEsc(it.href)+'">'+(it.code?'<span class="global-search__result-code">'+ixEsc(it.code)+'</span>':'')+'<span><strong>'+ixEsc(it.title[lang])+'</strong><small>'+ixEsc(it.sub[lang])+'</small></span></a>';}).join(''):'<div class="global-search__prompt"><strong>'+ixBi('No matches','Sin resultados')+'</strong><p>'+ixBi('Try another name or topic.','Pruebe otro nombre o tema.')+'</p></div>';
+  }
+
+  function ensureTrainingNavigation(){
+    var current=ixPageKey()==='training';
+    document.querySelectorAll('.hdr-nav').forEach(function(nav){
+      var existing=nav.querySelector('a[href="/formacion/"]');
+      if(!existing){
+        var team=nav.querySelector('a[href="/team/"]');
+        if(team){
+          existing=document.createElement('a');
+          existing.href='/formacion/';
+          existing.className='hdr-nav-link';
+          existing.dataset.nav='training';
+          existing.innerHTML=ixBi('Training','Formación');
+          team.before(existing);
+        }
+      }
+      if(existing&&current){
+        existing.dataset.current='true';
+        existing.setAttribute('aria-current','page');
+      }
+    });
+    document.querySelectorAll('.mob-drawer-nav').forEach(function(nav){
+      var existing=nav.querySelector('a[href="/formacion/"]');
+      if(!existing){
+        var team=nav.querySelector('a[href="/team/"]');
+        if(team){
+          existing=document.createElement('a');
+          existing.href='/formacion/';
+          existing.innerHTML=ixBi('Training','Formación');
+          team.before(existing);
+        }
+      }
+      if(existing&&current){
+        existing.classList.add('current');
+        existing.setAttribute('aria-current','page');
+      }
+    });
+    document.querySelectorAll('.footer-col-nav nav').forEach(function(nav){
+      if(nav.querySelector('a[href="/formacion/"]'))return;
+      var team=nav.querySelector('a[href="/team/"]');
+      if(!team)return;
+      var link=document.createElement('a');
+      link.href='/formacion/';
+      link.innerHTML=ixBi('Training','Formación');
+      team.before(link);
+    });
   }
 
   function normalizePublicationsLabel(){
@@ -725,6 +784,7 @@
   function bootCore(){
     setLang(getSavedLang(),false);
     normalizePublicationsLabel();
+    ensureTrainingNavigation();
     initEditorialIndex();
     initChrome(); initScrollUI(); initAnchors(); initReveal(); initCookie(); initImageFallbacks(); initErrorSafety(); initResearchInquiry();
   }
@@ -939,7 +999,7 @@
   }
 
   /* ── 8 + 9: keyboard shortcuts, help overlay, command palette ─ */
-  var GO = { h:'/', r:'/clinical/', i:'/innovation/', a:'/news/', t:'/team/', p:'/report/' };
+  var GO = { h:'/', r:'/clinical/', i:'/innovation/', a:'/news/', f:'/formacion/', t:'/team/', p:'/report/' };
   function initKeyboardLayer(){
     var pendingG = false, gTimer = null;
 
@@ -986,6 +1046,7 @@
       '<dt><kbd>g r</kbd></dt><dd>Research</dd>' +
       '<dt><kbd>g i</kbd></dt><dd>Innovation</dd>' +
       '<dt><kbd>g a</kbd></dt><dd>Publications</dd>' +
+      '<dt><kbd>g f</kbd></dt><dd>Training</dd>' +
       '<dt><kbd>g t</kbd></dt><dd>Team</dd>' +
       '<dt><kbd>g p</kbd></dt><dd>Annual report</dd>' +
       '<dt><kbd>?</kbd></dt><dd>This overlay</dd></dl></div>';
@@ -1004,6 +1065,7 @@
     {k:'page', t:'Research · Investigación', href:'/clinical/'},
     {k:'page', t:'Innovation · Innovación', href:'/innovation/'},
     {k:'page', t:'Publications · Publicaciones', href:'/news/'},
+    {k:'page', t:'Training · Formación', href:'/formacion/'},
     {k:'page', t:'Team · Equipo', href:'/team/'},
     {k:'page', t:'Annual report · Memoria anual', href:'/report/'},
     {k:'page', t:'Contact · Contacto', href:'/#contact'},
