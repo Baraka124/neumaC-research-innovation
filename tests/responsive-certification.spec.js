@@ -1471,3 +1471,27 @@ test('INIBIC plaque remains visually restrained on phone after glass refinement'
   expect(data.backdrop).toMatch(/blur\(/);
   await expectNoHorizontalOverflow(page);
 });
+
+
+for (const viewport of [
+  { width:390, height:844, label:'phone' },
+  { width:1440, height:900, label:'laptop' },
+  { width:2048, height:1152, label:'workstation' }
+]) {
+  test(`Formación remains contained and visually complete on ${viewport.label}`, async ({ page }) => {
+    await page.setViewportSize({ width:viewport.width, height:viewport.height });
+    await page.goto('/formacion/');
+
+    await expect(page.locator('.training-hero')).toBeVisible();
+    await expect(page.locator('.training-pathway')).toBeVisible();
+    await expect(page.locator('.training-media img')).toBeVisible();
+    await expect(page.locator('.training-media img')).toHaveAttribute('src','/assets/training/neumact-training-research-clinicians.webp');
+    await expect(page.locator('.training-register__row')).toHaveCount(4);
+    await expect(page.locator('.training-innovation__process li')).toHaveCount(5);
+
+    await expectContainedInViewport(page.locator('.training-hero__grid'), viewport.width);
+    await expectContainedInViewport(page.locator('.training-environment__grid'), viewport.width);
+    await expectContainedInViewport(page.locator('.training-development .container'), viewport.width);
+    await expectNoHorizontalOverflow(page);
+  });
+}
