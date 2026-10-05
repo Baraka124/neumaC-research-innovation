@@ -1614,5 +1614,11 @@ test('Scientific masthead remains optically separated at 1918px', async ({ page 
   expect(geo.rightLeft - geo.navRight).toBeGreaterThanOrEqual(18);
   expect(Math.abs(geo.navCenter - geo.viewport / 2)).toBeLessThanOrEqual(90);
   expect(geo.orgOpacityColor).not.toContain('0.48');
+
+  const affiliation = page.locator('.hdr--scientific .hdr-brand-org');
+  await expect(affiliation).toHaveText('Área Sanitaria da Coruña e Cee');
+  await expect(affiliation).not.toContainText('INIBIC');
+  await expect(affiliation).not.toContainText('SERGAS');
+
   await expectNoHorizontalOverflow(page);
 });
