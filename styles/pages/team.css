@@ -217,7 +217,7 @@ body[data-page="team"] main{overflow:hidden;}
 .team-network__system span{padding:.85rem 0;font:500 .61rem/1.35 var(--ff-mono);letter-spacing:.07em;text-transform:uppercase;color:#566a80;}
 
 /* Contact — same dark institutional close used elsewhere. */
-.team-contact{padding:clamp(3.5rem,4.8vw,4.8rem) 0;background:#061a30;color:#fff;border-top:1px solid rgba(255,255,255,.08);}
+.team-contact{padding:clamp(3.5rem,4.8vw,4.8rem) 0;background:var(--institutional-anchor-deep);color:#fff;border-top:1px solid rgba(255,255,255,.08);}
 .team-contact__grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(360px,.7fr);gap:clamp(2.5rem,6vw,6rem);align-items:center;}
 .team-contact h2{color:#fff;max-width:12ch;}
 .team-contact__copy>p{max-width:46rem;margin:1rem 0 0;color:rgba(255,255,255,.64);line-height:1.68;}

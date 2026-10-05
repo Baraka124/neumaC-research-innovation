@@ -9,6 +9,16 @@
   --navy-2: #0C447C;
   --navy-3: #185FA5;
   --navy-footer: #07111F;
+
+  /* Institutional tonal hierarchy — surface roles, not replacement brand colours. */
+  --institutional-anchor-light: #0D3D58;
+  --institutional-anchor: #0B3652;
+  --institutional-anchor-deep: #092B3F;
+  --institutional-mid-1: #15495E;
+  --institutional-mid-2: #195367;
+  --institutional-mid-3: #1D5C6D;
+  --institutional-atmosphere: #E8EFF0;
+
   --teal: #007A7A;
   --teal-2: #00B3B3;
   --teal-lt: #E2F0F0;

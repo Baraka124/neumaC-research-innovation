@@ -90,8 +90,8 @@ a.home-line-row:hover .home-line-title{color:#007b84;}
 .home-current-record__body{display:flex;flex-direction:column;justify-content:center;padding:clamp(1.25rem,2vw,1.8rem);}
 .home-current-record--text-only{display:flex;min-height:225px;}
 .home-current-record--text-only .home-current-record__body{max-width:62rem;padding-left:clamp(1rem,1.55vw,1.4rem);padding-right:clamp(1rem,2vw,1.8rem);}
-.home-current-record--innovation{padding:clamp(1.3rem,2vw,1.75rem);background:linear-gradient(145deg,#0b2c49 0%,#0d3552 58%,#10405a 100%);color:#fff;border-color:rgba(178,226,227,.085);box-shadow:0 20px 56px rgba(5,29,51,.055),inset 0 1px 0 rgba(255,255,255,.035);}
-.home-current-record--innovation:hover{background:linear-gradient(145deg,#0d3150 0%,#0f3a58 58%,#124560 100%);}
+.home-current-record--innovation{padding:clamp(1.3rem,2vw,1.75rem);background:linear-gradient(145deg,var(--institutional-mid-1) 0%,var(--institutional-mid-2) 58%,var(--institutional-mid-3) 100%);color:#fff;border-color:rgba(178,226,227,.07);box-shadow:0 20px 56px rgba(15,57,73,.045),inset 0 1px 0 rgba(255,255,255,.035);}
+.home-current-record--innovation:hover{background:linear-gradient(145deg,#185167 0%,#1D5A6D 58%,#216477 100%);}
 .home-current-kind{display:inline-flex;align-items:center;width:max-content;font:500 .58rem/1.35 var(--ff-mono);letter-spacing:.10em;text-transform:uppercase;color:#00838c;}
 .home-current-record--innovation .home-current-kind{color:#83dddd;}
 .home-current-record h3{margin:.62rem 0 0;font-family:var(--ff-display);font-size:clamp(1.62rem,2.05vw,2.25rem);font-weight:700;line-height:1.035;letter-spacing:-.034em;color:#103e68;text-wrap:balance;}
@@ -119,7 +119,7 @@ a.home-line-row:hover .home-line-title{color:#007b84;}
 .home-institution-row em{font-style:normal;color:#00858b;}
 
 /* CONTACT */
-.home-contact{position:relative;padding:clamp(3rem,3.7vw,3.75rem) 0;background:#061a30;border-top:1px solid rgba(255,255,255,.08);}
+.home-contact{position:relative;padding:clamp(3rem,3.7vw,3.75rem) 0;background:var(--institutional-anchor-deep);border-top:1px solid rgba(255,255,255,.08);}
 .home-contact-shell{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.68fr);gap:clamp(3rem,7vw,7rem);align-items:center;}
 .home-contact-copy{max-width:48rem;}
 .home-contact-title{max-width:18ch;margin:0;font-family:var(--ff-display);font-size:clamp(2.35rem,3.25vw,3.45rem);font-weight:700;line-height:.98;letter-spacing:-.042em;color:#fff;}
