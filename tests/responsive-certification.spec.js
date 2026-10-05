@@ -1585,3 +1585,34 @@ test('Formación final laptop composition is contained and media-led at 1918x928
 
   await expectNoHorizontalOverflow(page);
 });
+
+
+test('Scientific masthead remains optically separated at 1918px', async ({ page }) => {
+  await page.setViewportSize({ width:1918, height:912 });
+  await page.goto('/formacion/');
+
+  const geo = await page.evaluate(() => {
+    const logo = document.querySelector('.hdr--scientific .hdr-logo')?.getBoundingClientRect();
+    const nav = document.querySelector('.hdr--scientific .hdr-nav')?.getBoundingClientRect();
+    const right = document.querySelector('.hdr--scientific .hdr-right')?.getBoundingClientRect();
+    const org = document.querySelector('.hdr--scientific .hdr-brand-org');
+    const orgStyle = org ? getComputedStyle(org) : null;
+    return {
+      viewport: innerWidth,
+      logoLeft: logo?.left ?? -1,
+      logoRight: logo?.right ?? -1,
+      navLeft: nav?.left ?? -1,
+      navRight: nav?.right ?? -1,
+      navCenter: nav ? (nav.left + nav.right) / 2 : -1,
+      rightLeft: right?.left ?? -1,
+      orgOpacityColor: orgStyle?.color ?? ''
+    };
+  });
+
+  expect(geo.logoLeft).toBeGreaterThanOrEqual(0);
+  expect(geo.navLeft - geo.logoRight).toBeGreaterThanOrEqual(18);
+  expect(geo.rightLeft - geo.navRight).toBeGreaterThanOrEqual(18);
+  expect(Math.abs(geo.navCenter - geo.viewport / 2)).toBeLessThanOrEqual(90);
+  expect(geo.orgOpacityColor).not.toContain('0.48');
+  await expectNoHorizontalOverflow(page);
+});
