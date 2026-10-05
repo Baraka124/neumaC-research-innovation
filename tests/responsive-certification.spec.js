@@ -5,6 +5,7 @@ const CORE_PAGES = [
   { path: '/clinical/', selector: '.research-hero__sheet', label: 'Research' },
   { path: '/innovation/', selector: '.innovation-hero__grid', label: 'Innovation' },
   { path: '/news/', selector: '.pub-hero__register-shell', label: 'Publications' },
+  { path: '/formacion/', selector: '.training-hero__grid', label: 'Training' },
   { path: '/team/', selector: '.team-hero__grid', label: 'Team' },
 ];
 
