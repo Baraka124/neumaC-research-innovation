@@ -282,7 +282,7 @@ for f in sorted(set(public_text_files)):
         internal_name.append(f.as_posix())
 check('public files do not expose internal platform naming', not internal_name, ', '.join(internal_name[:8]))
 home_html=Path('index.html').read_text(encoding='utf-8')
-check('homepage exposes compact six-line research programme', 'researchLinesGrid' in home_html and all(label in home_html for label in ['Transplantation &amp; Pulmonary Hypertension','Airway Diseases','Interventional Pneumology &amp; Lung Cancer','Respiratory Failure &amp; Sleep Medicine','Innovation in Thoracic Surgery','Precision Medicine &amp; Clinical Innovation']))
+check('homepage exposes compact six-line research programme', 'researchLinesGrid' in home_html and all(label in home_html for label in ['Transplantation, Pulmonary Hypertension &amp; Diffuse Lung Disease','Airway Diseases','Interventional Pulmonology &amp; Lung Cancer','Respiratory Failure, Critical Care &amp; Sleep Medicine','Innovation in Thoracic Surgery','Personalised Respiratory Medicine, Management &amp; Clinical Innovation']))
 check('homepage links official neumACt INIBIC institutional profile', 'https://www.inibic.es/portfolio-items/neumact-medicina-respiratoria-traslacional-y-de-precision/' in home_html)
 check('obsolete scroll-to-top utility removed from public HTML', all('id="scrollTop"' not in Path(rel).read_text(encoding='utf-8') for rel in ['index.html','clinical/index.html','innovation/index.html','team/index.html']))
 check('homepage uses progressive-disclosure contact', 'home-contact-disclosure' in home_html and '<details' in home_html)
