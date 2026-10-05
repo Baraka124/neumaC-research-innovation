@@ -95,7 +95,7 @@ body[data-page="clinical"] main{overflow-x:clip;}
 .research-context__system span{padding:.9rem 0;font:500 .61rem/1.35 var(--ff-mono);letter-spacing:.06em;text-transform:uppercase;color:#566a80;border-bottom:1px solid #cfd6d9;}
 
 /* Contact stays compact until explicit intent. */
-.research-contact{padding:clamp(3rem,4.4vw,4.2rem) 0;background:#061a30;color:#fff;border-top:1px solid rgba(255,255,255,.08);}
+.research-contact{padding:clamp(3rem,4.4vw,4.2rem) 0;background:var(--institutional-anchor-deep);color:#fff;border-top:1px solid rgba(255,255,255,.08);}
 .research-contact__grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(340px,.62fr);gap:clamp(2.8rem,7vw,7rem);align-items:center;}
 .research-contact h2{color:#fff;max-width:12ch;}
 .research-contact__copy>p{max-width:46rem;margin:.85rem 0 0;color:rgba(255,255,255,.66);line-height:1.62;font-size:.88rem;}
@@ -1042,7 +1042,7 @@ body[data-page="clinical"] .research-contact__form-panel.is-raised-open{
   padding:1.35rem clamp(1.1rem,2.2vw,1.8rem) 1.5rem;
   border:1px solid rgba(111,212,215,.22);
   border-top-color:rgba(111,224,225,.46);
-  background:#0a2139;
+  background:#10384D;
   box-shadow:0 20px 48px rgba(0,0,0,.14);
   transform:translateY(0);
 }
