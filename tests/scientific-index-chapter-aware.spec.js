@@ -84,34 +84,14 @@ test('Scientific Index uses page-aware centre content on Publications and Team',
   await noOverflow(page);
 });
 
-test('Phone Index keeps five chapter controls and chapter-aware centre content',async({page})=>{
+test('Phone Index keeps five direct top-level destinations',async({page})=>{
   await stubIndexApi(page);
   await page.setViewportSize({width:390,height:844});
   await page.goto('/innovation/');
   await page.locator('#mobToggle').click();
 
   await expect(page.locator('[data-index-chapter]')).toHaveCount(5);
-  await expect(page.locator('[data-index-chapter="innovation"]')).toHaveAttribute('aria-pressed','true');
-  await expect(page.locator('#globalIndexLinesTitle')).toContainText(/Innovation pathway|Ruta de innovación/);
-
   await page.locator('[data-index-chapter="training"]').click();
-  await expect(page.locator('#globalIndexLinesTitle')).toContainText(/Training & research development|Formación y desarrollo investigador/);
-  await expect(page.locator('#globalIndexChapterOpen')).toHaveAttribute('href','/formacion/');
-  await expect(page.locator('#globalIndexLines')).toContainText(/Research environment|Entorno investigador/);
-
-  await page.locator('[data-index-chapter="team"]').click();
-  await expect(page.locator('#globalIndexLinesTitle')).toContainText(/People & programme|Personas y programa/);
-  await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded','false');
-  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-collapsed/);
-  await expect(page.locator('.global-index__lines-toggle-label')).toContainText(/4 sections|4 secciones/);
-  await page.locator('.global-index__lines-toggle').click();
-  await expect(page.locator('#globalIndexLines')).toContainText(/Multidisciplinary team|Equipo multidisciplinar/);
-  await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded','true');
-  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-expanded/);
-  await expect(page.locator('#globalIndexLines')).toBeVisible();
-  await expect(page.locator('.global-index__lines-all')).toHaveAttribute('href','/team/');
-  await expect(page.locator('.global-index__lines-all')).toContainText(/Open team|Abrir equipo/);
+  await expect(page).toHaveURL(/\/formacion\/?$/);
   await noOverflow(page);
-
-  await page.screenshot({path:path.join(OUTPUT,'index-chapter-aware-team-phone-390.png'),fullPage:false,animations:'disabled'});
 });
