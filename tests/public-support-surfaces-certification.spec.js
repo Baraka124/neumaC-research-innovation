@@ -97,3 +97,23 @@ test('Annual Report remains bilingual and year-scoped',async({page})=>{
   await expect(page).toHaveTitle(/Annual Report 2026/);
   await noOverflow(page);
 });
+
+
+test('legal/support mastheads keep the simplified institutional affiliation', async ({ page }) => {
+  for (const path of ['/privacidad/','/accesibilidad/','/aviso-legal/','/404.html']) {
+    await page.goto(path);
+    const org = page.locator('.hdr-brand-org');
+    await expect(org).toHaveText('Área Sanitaria da Coruña e Cee');
+    await expect(org).not.toContainText('INIBIC');
+    await expect(org).not.toContainText('SERGAS');
+  }
+});
+
+test('legal pages do not expose unpublished partner placeholder cards', async ({ page }) => {
+  for (const path of ['/privacidad/','/accesibilidad/','/aviso-legal/']) {
+    await page.goto(path);
+    await expect(page.locator('.affil-card--placeholder')).toHaveCount(0);
+    await expect(page.getByText('Add partner', { exact:true })).toHaveCount(0);
+    await expect(page.getByText('Añadir colaborador', { exact:true })).toHaveCount(0);
+  }
+});
