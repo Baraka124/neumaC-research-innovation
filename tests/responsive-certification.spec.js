@@ -1507,7 +1507,10 @@ test('INIBIC plaque remains visually restrained on phone after glass refinement'
 
 for (const viewport of [
   { width:390, height:844, label:'phone' },
-  { width:1440, height:900, label:'laptop' },
+  { width:768, height:1024, label:'tablet' },
+  { width:1366, height:768, label:'laptop' },
+  { width:1440, height:900, label:'desktop' },
+  { width:1918, height:928, label:'hospital desktop' },
   { width:2048, height:1152, label:'workstation' }
 ]) {
   test(`Formación remains contained and visually complete on ${viewport.label}`, async ({ page }) => {
@@ -1516,49 +1519,40 @@ for (const viewport of [
 
     await expect(page.locator('.training-hero')).toBeVisible();
     await expect(page.locator('.training-pathway')).toBeVisible();
-    await expect(page.locator('.training-media img')).toBeVisible();
-    await expect(page.locator('.training-media img')).toHaveAttribute('src','/assets/training/neumact-training-research-clinicians.webp');
+    await expect(page.locator('.training-participation')).toBeVisible();
+    await expect(page.locator('.training-media img')).toHaveCount(0);
     await expect(page.locator('.training-register__row')).toHaveCount(4);
     await expect(page.locator('.training-innovation__process li')).toHaveCount(5);
 
     await expectContainedInViewport(page.locator('.training-hero__grid'), viewport.width);
     await expectContainedInViewport(page.locator('.training-environment__grid'), viewport.width);
+    await expectContainedInViewport(page.locator('.training-participation'), viewport.width);
     await expectContainedInViewport(page.locator('.training-development .container'), viewport.width);
     await expectNoHorizontalOverflow(page);
   });
 }
 
 
-test('Formación final laptop composition is contained and media-led at 1918x928', async ({ page }) => {
+test('Formación final hospital-desktop composition is contained and editorial at 1918x928', async ({ page }) => {
   await page.setViewportSize({ width:1918, height:928 });
   await page.goto('/formacion/');
 
   const hero = page.locator('.training-hero__grid');
   const environment = page.locator('.training-environment__grid');
-  const media = page.locator('.training-media');
-  const mediaImage = media.locator('img');
+  const participation = page.locator('.training-participation');
   const development = page.locator('.training-development .container');
 
   await expect(hero).toBeVisible();
   await expect(environment).toBeVisible();
-  await expect(media).toBeVisible();
-  await expect(mediaImage).toBeVisible();
+  await expect(participation).toBeVisible();
   await expect(development).toBeVisible();
-
-  const imageState = await mediaImage.evaluate(img => ({
-    complete: img.complete,
-    naturalWidth: img.naturalWidth,
-    naturalHeight: img.naturalHeight
-  }));
-  expect(imageState.complete).toBeTruthy();
-  expect(imageState.naturalWidth).toBeGreaterThanOrEqual(700);
-  expect(imageState.naturalHeight).toBeGreaterThanOrEqual(250);
 
   const geometry = await page.evaluate(() => {
     const env = document.querySelector('.training-environment__grid').getBoundingClientRect();
-    const media = document.querySelector('.training-media').getBoundingClientRect();
+    const participation = document.querySelector('.training-participation').getBoundingClientRect();
     const envHeading = document.querySelector('.training-environment__copy h2');
     const devHeading = document.querySelector('.training-section-head h2');
+    const innovationHeading = document.querySelector('.training-innovation__head h2');
     const firstRow = document.querySelector('.training-register__row');
     const rowTitle = firstRow.querySelector('h3').getBoundingClientRect();
     const rowCopy = firstRow.querySelector('p').getBoundingClientRect();
@@ -1566,24 +1560,29 @@ test('Formación final laptop composition is contained and media-led at 1918x928
       viewport: innerWidth,
       envLeft: env.left,
       envRight: env.right,
-      mediaRatio: media.width / media.height,
+      participationRatio: participation.width / participation.height,
       envHeadingSize: parseFloat(getComputedStyle(envHeading).fontSize),
       devHeadingSize: parseFloat(getComputedStyle(devHeading).fontSize),
+      innovationHeadingSize: parseFloat(getComputedStyle(innovationHeading).fontSize),
       registerGap: rowCopy.left - rowTitle.right
     };
   });
 
   expect(geometry.envLeft).toBeGreaterThanOrEqual(-1);
   expect(geometry.envRight).toBeLessThanOrEqual(geometry.viewport + 1);
-  expect(geometry.mediaRatio).toBeGreaterThan(1.45);
-  expect(geometry.envHeadingSize).toBeLessThanOrEqual(68);
-  expect(geometry.devHeadingSize).toBeLessThanOrEqual(68);
+  expect(geometry.participationRatio).toBeGreaterThan(1.05);
+  expect(geometry.envHeadingSize).toBeLessThanOrEqual(64);
+  expect(geometry.devHeadingSize).toBeLessThanOrEqual(64);
+  expect(geometry.innovationHeadingSize).toBeLessThanOrEqual(72);
   expect(geometry.registerGap).toBeGreaterThanOrEqual(12);
   expect(geometry.registerGap).toBeLessThanOrEqual(110);
 
   const visibleText = await page.locator('body').innerText();
   expect(visibleText).not.toContain('neumACT');
   expect(visibleText).toContain('neumACt');
+  expect(visibleText).not.toContain('De la exposición clínica a la contribución científica');
+  expect(visibleText).not.toContain('De las preguntas clínicas a la práctica investigadora');
+  expect(visibleText).not.toContain('De un problema clínico a una contribución científica defendible');
 
   await expectNoHorizontalOverflow(page);
 });
