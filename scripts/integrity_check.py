@@ -267,12 +267,18 @@ check('DESIGN_PRINCIPLES.md exists', principles.exists())
 public_text_files=[]
 for pattern in ('*.html','*.md','*.json','*.txt','*.xml'):
     public_text_files.extend(Path('.').rglob(pattern))
-legacy_identity=[]
-for f in sorted(set(public_text_files)):
+masthead_identity_violations=[]
+for f in sorted(Path('.').rglob('*.html')):
     text=f.read_text(encoding='utf-8',errors='ignore')
-    if 'CHUAC' in text:
-        legacy_identity.append(f.as_posix())
-check('public identity uses Área Sanitaria da Coruña e Cee, not CHUAC', not legacy_identity, ', '.join(legacy_identity[:8]))
+    if 'class="hdr-brand-org"' not in text:
+        continue
+    if 'class="hdr-brand-org">Área Sanitaria da Coruña e Cee</' not in text:
+        masthead_identity_violations.append(f.as_posix())
+check(
+    'public masthead keeps Área Sanitaria da Coruña e Cee while clinical copy may name CHUAC',
+    not masthead_identity_violations,
+    ', '.join(masthead_identity_violations[:8])
+)
 
 internal_name=[]
 for f in sorted(set(public_text_files)):
