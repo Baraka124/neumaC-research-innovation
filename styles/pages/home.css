@@ -1031,3 +1031,25 @@ body[data-page="home"] .home-programme-panel::before{
     backdrop-filter:none;
   }
 }
+
+
+/* ============================================================
+   FINAL WORKSTATION QA — Home
+   Hospital-desktop only. Preserve laptop/mobile compositions.
+   ============================================================ */
+@media(min-width:1680px){
+  body[data-page="home"] .home-hero{
+    /* Clear the full scientific masthead instead of shaving the first hero glyph. */
+    margin-top:-98px;
+  }
+  body[data-page="home"] .home-affiliation-dock{
+    width:min(100% - 6rem,1600px);
+    max-width:1600px;
+    margin-inline:auto;
+  }
+  body[data-page="home"] .home-affiliation-card{
+    width:min(100%,410px);
+    margin-top:-.75rem;
+    margin-right:0;
+  }
+}
