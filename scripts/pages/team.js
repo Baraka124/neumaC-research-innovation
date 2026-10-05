@@ -362,17 +362,24 @@
     if(pos.index<0||state.profilePeople.length<2)return '';
     const prev=pos.previous;
     const next=pos.next;
-    return `<nav class="team-profile__person-nav" aria-label="${document.documentElement.dataset.lang==='es'?'Navegar entre perfiles':'Navigate team profiles'}">
-      <button type="button" class="team-profile__person-nav-btn team-profile__person-nav-btn--prev" ${prev?`data-profile-nav="${esc(prev.id)}"`:'disabled'}>
-        <span class="team-profile__person-nav-direction">${bi('Previous','Anterior')}</span>
-        <span class="team-profile__person-nav-name">${prev?esc(nameOf(prev)):'—'}</span>
+    return `<footer class="team-profile__footer">
+      <p class="team-profile__footer-label">${bi('Continue through the team','Seguir explorando el equipo')}</p>
+      <nav class="team-profile__person-nav" aria-label="${document.documentElement.dataset.lang==='es'?'Navegar entre perfiles':'Navigate team profiles'}">
+        <button type="button" class="team-profile__person-nav-btn team-profile__person-nav-btn--prev" ${prev?`data-profile-nav="${esc(prev.id)}"`:'disabled'}>
+          <span class="team-profile__person-nav-direction">${bi('Previous','Anterior')}</span>
+          <span class="team-profile__person-nav-name">${prev?esc(nameOf(prev)):'—'}</span>
+        </button>
+        <span class="team-profile__person-nav-count">${pos.index+1} / ${state.profilePeople.length}</span>
+        <button type="button" class="team-profile__person-nav-btn team-profile__person-nav-btn--next" ${next?`data-profile-nav="${esc(next.id)}"`:'disabled'}>
+          <span class="team-profile__person-nav-direction">${bi('Next','Siguiente')}</span>
+          <span class="team-profile__person-nav-name">${next?esc(nameOf(next)):'—'}</span>
+        </button>
+      </nav>
+      <button type="button" class="team-profile__browse-all" data-profile-browse-all>
+        <span>${bi('View full team','Ver equipo completo')}</span>
+        <span class="team-profile__browse-all-arrow" aria-hidden="true">↗</span>
       </button>
-      <span class="team-profile__person-nav-count">${pos.index+1} / ${state.profilePeople.length}</span>
-      <button type="button" class="team-profile__person-nav-btn team-profile__person-nav-btn--next" ${next?`data-profile-nav="${esc(next.id)}"`:'disabled'}>
-        <span class="team-profile__person-nav-direction">${bi('Next','Siguiente')}</span>
-        <span class="team-profile__person-nav-name">${next?esc(nameOf(next)):'—'}</span>
-      </button>
-    </nav>`;
+    </footer>`;
   }
 
   function renderProfile(person){
@@ -393,8 +400,15 @@
     const networks=evidenceList(evidence.networks);
     const leadershipList=evidenceList(leadership);
     const moduleCount=[facts.length,bio,expertise,current,lines.length,scientific,networks,links.length,footprint,leadershipList].filter(Boolean).length;
+    const profileName=nameOf(person);
+    const nameLength=profileName.replace(/\s+/g,' ').trim().length;
     content.classList.toggle('is-sparse',moduleCount<=3);
     content.classList.toggle('is-rich',moduleCount>=7);
+    content.classList.toggle('has-long-name',nameLength>=24);
+    content.classList.toggle('has-very-long-name',nameLength>=34);
+    const pos=profilePosition(person);
+    const chromeCount=$('teamProfileChromeCount');
+    if(chromeCount&&pos.index>=0)chromeCount.textContent=`${pos.index+1} / ${state.profilePeople.length}`;
 
     content.innerHTML=`
       <div class="team-profile__identity">
@@ -425,7 +439,15 @@
       ${lines.length?`<section class="team-profile__section">
         <p class="team-profile__section-label">${bi('Research relationships','Relaciones de investigación')}</p>
         <p class="team-profile__section-note">${bi('Current public research-line relationships.','Relaciones públicas actuales con líneas de investigación.')}</p>
-        <div class="team-profile__lines">${lines.map(line=>{const label=lineNamePair(line);return `<a href="/line/?id=${encodeURIComponent(line.id)}"><span>${bi(label[0],label[1])}</span></a>`;}).join('')}</div>
+        <div class="team-profile__lines">${lines.map(line=>{
+          const label=lineNamePair(line);
+          const code=`L${String(line.line_number||'').padStart(2,'0')}`;
+          return `<a href="/line/?id=${encodeURIComponent(line.id)}">
+            <span class="team-profile__line-code">${esc(code)}</span>
+            <span class="team-profile__line-title">${bi(label[0],label[1])}</span>
+            <span class="team-profile__line-arrow" aria-hidden="true">→</span>
+          </a>`;
+        }).join('')}</div>
       </section>`:''}
       ${scientific?`<section class="team-profile__section">
         <p class="team-profile__section-label">${bi('Research & innovation contribution','Contribución a investigación e innovación')}</p>
@@ -507,6 +529,15 @@
       });
     }
     $('teamProfileContent')?.addEventListener('click',event=>{
+      const browseAll=event.target.closest('[data-profile-browse-all]');
+      if(browseAll){
+        closeProfile();
+        window.setTimeout(()=>{
+          const target=$('teamRoster')||document.querySelector('.team-roster');
+          target?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+        },260);
+        return;
+      }
       const nav=event.target.closest('[data-profile-nav]');
       if(!nav)return;
       const nextId=nav.dataset.profileNav;

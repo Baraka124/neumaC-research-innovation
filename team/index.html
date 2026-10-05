@@ -179,6 +179,10 @@
   <div class="team-profile-backdrop" id="teamProfileBackdrop" aria-hidden="true"></div>
   <aside class="team-profile-sheet" id="teamProfileSheet" role="dialog" aria-modal="true" aria-labelledby="teamProfileName" tabindex="-1">
     <div class="team-profile-sheet__chrome">
+      <div class="team-profile-sheet__context" aria-live="polite">
+        <span class="team-profile-sheet__context-label"><span lang="en">Professional profile</span><span lang="es">Perfil profesional</span></span>
+        <span class="team-profile-sheet__context-count" id="teamProfileChromeCount"></span>
+      </div>
       <button class="team-profile-sheet__close icon-button" id="teamProfileClose" type="button" aria-label="Close profile / Cerrar perfil">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
