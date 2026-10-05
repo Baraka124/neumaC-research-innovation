@@ -2171,3 +2171,80 @@ body[data-page="news"] .pub-editorial__context strong,
 body[data-page="news"] .pub-editorial__context span{
   overflow-wrap:anywhere;
 }
+
+/* ============================================================
+   FINAL VIDEO QA — Publications featured-record containment
+   1918px hospital workstation: long live titles must enlarge the
+   editorial stage, never spill into the register/search section.
+   ============================================================ */
+@media(min-width:1600px){
+  body[data-page="news"] .pub-feature{
+    padding-bottom:clamp(3.4rem,4vw,4.8rem);
+  }
+
+  body[data-page="news"] .pub-feature__stage{
+    min-height:390px;
+  }
+
+  body[data-page="news"] .pub-feature-lead--typographic{
+    grid-template-columns:minmax(270px,.52fr) minmax(0,1.48fr);
+    gap:clamp(3rem,4.8vw,5.4rem);
+    align-items:start;
+    min-height:390px;
+    padding:.55rem 0 1.8rem;
+  }
+
+  body[data-page="news"] .pub-feature-lead__folio{
+    min-height:360px;
+    padding-top:1rem;
+    padding-bottom:1.55rem;
+  }
+
+  body[data-page="news"] .pub-feature-lead__folio-year{
+    margin-top:1.5rem;
+    font-size:clamp(4.25rem,5.2vw,6rem);
+    line-height:.86;
+  }
+
+  body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__copy{
+    align-self:start;
+    justify-content:flex-start;
+    min-width:0;
+    padding:1rem 0 1.45rem;
+  }
+
+  body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__title{
+    max-width:18ch;
+    font-size:clamp(2.05rem,2.45vw,2.9rem);
+    line-height:1.025;
+    overflow-wrap:anywhere;
+  }
+
+  body[data-page="news"] .pub-feature-lead__excerpt,
+  body[data-page="news"] .pub-feature-lead__source,
+  body[data-page="news"] .pub-meta{
+    max-width:100%;
+    overflow-wrap:anywhere;
+  }
+
+  body[data-page="news"] .pub-index{
+    position:relative;
+    z-index:1;
+    padding-top:1.45rem;
+    background:#fbfaf7;
+  }
+
+  body[data-page="news"] .pub-index__head{
+    gap:3rem;
+  }
+
+  body[data-page="news"] .pub-index__head h2{
+    min-width:0;
+  }
+
+  body[data-page="news"] .pub-search{
+    flex:0 0 min(430px,34vw);
+    min-width:0;
+    margin-left:auto;
+  }
+}
