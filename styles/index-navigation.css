@@ -177,14 +177,14 @@
    untouched.
    ============================================================ */
 @media(max-width:620px){
-  /* Phone Index: navigation first, contextual exploration second. */
+  /* Phone Index: direct destinations only. Contextual subnavigation belongs inside each page. */
   .global-index__index-view{
     display:flex!important;
     flex-direction:column;
   }
   .global-index__chapters{order:1;}
   .global-index__utilities{order:2;}
-  .global-index__lines{order:3;}
+  .global-index__lines{display:none!important;}
   .global-index__chapter{
     min-height:46px!important;
   }
