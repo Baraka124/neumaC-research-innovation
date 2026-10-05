@@ -178,6 +178,11 @@
    ============================================================ */
 @media(max-width:620px){
   /* Phone Index: direct destinations only. Contextual subnavigation belongs inside each page. */
+  .global-index__chapter--home{
+    display:grid!important;
+    text-decoration:none;
+    color:inherit;
+  }
   .global-index__index-view{
     display:flex!important;
     flex-direction:column;
@@ -634,6 +639,8 @@
 
 /* H2 chapter-aware Index: chapter rail controls the centre register in place.
    Preserve existing geometry; only normalize button semantics and row cue. */
+.global-index__chapter--home{display:none!important;}
+
 .global-index__chapter[data-index-chapter]{
   width:100%;
   appearance:none;
