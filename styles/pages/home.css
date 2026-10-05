@@ -1006,7 +1006,7 @@ body[data-page="home"] .home-programme-panel::before{
   }
   body[data-page="home"] .home-hero-title{
     max-width:9.6ch;
-    font-size:clamp(2.35rem,10.4vw,3.15rem);
+    font-size:clamp(2.28rem,9.9vw,3.02rem);
     line-height:.94;
     letter-spacing:-.047em;
   }
@@ -1045,7 +1045,7 @@ body[data-page="home"] .home-programme-panel::before{
   }
   body[data-page="home"] .home-hero-title{
     max-width:9.3ch;
-    font-size:clamp(2.2rem,10.6vw,2.75rem);
+    font-size:clamp(2.14rem,10vw,2.66rem);
   }
 }
 
