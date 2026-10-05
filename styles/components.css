@@ -3365,3 +3365,76 @@ body[data-page="news"] .hdr-context__detail{
   .hdr--scientific .hdr-nav{gap:.06rem}
   .hdr--scientific .hdr-nav-link{padding-inline:.36rem;font-size:.81rem}
 }
+
+
+/* ============================================================
+   HOME SIGNATURE — SCIENTIFIC GLASS MASTHEAD
+   Home-only optical treatment; shared masthead geometry and behavior remain canonical.
+   ============================================================ */
+body[data-page="home"] .hdr--scientific{
+  background:
+    linear-gradient(108deg,rgba(4,31,56,.62),rgba(5,39,68,.48) 48%,rgba(5,35,62,.55));
+  border-bottom:1px solid rgba(190,232,235,.13);
+  box-shadow:0 8px 28px rgba(1,17,32,.07);
+  backdrop-filter:blur(22px) saturate(132%);
+  -webkit-backdrop-filter:blur(22px) saturate(132%);
+  transition:
+    height .22s var(--ease-clinical),
+    background .28s var(--ease-clinical),
+    border-color .28s var(--ease-clinical),
+    box-shadow .28s var(--ease-clinical);
+}
+
+body[data-page="home"] .hdr--scientific .hdr-main{
+  background:linear-gradient(180deg,rgba(255,255,255,.025),transparent 72%);
+}
+
+body[data-page="home"] .hdr--scientific .hdr-context{
+  background:rgba(3,27,50,.28);
+  border-top-color:rgba(205,239,240,.10);
+  backdrop-filter:blur(16px) saturate(118%);
+  -webkit-backdrop-filter:blur(16px) saturate(118%);
+}
+
+body[data-page="home"] .hdr--scientific .hdr-context__rule{
+  background:linear-gradient(90deg,rgba(214,243,244,.18),rgba(214,243,244,.025));
+}
+
+body[data-page="home"] .hdr--scientific .hdr-brand-meta,
+body[data-page="home"] .hdr--scientific .hdr-right{
+  border-color:rgba(218,245,246,.15);
+}
+
+body[data-page="home"] .hdr--scientific.scrolled{
+  background:
+    linear-gradient(108deg,rgba(4,32,59,.94),rgba(4,36,65,.91) 48%,rgba(4,31,57,.94));
+  border-bottom-color:rgba(255,255,255,.09);
+  box-shadow:0 10px 30px rgba(1,17,32,.16);
+  backdrop-filter:blur(20px) saturate(124%);
+  -webkit-backdrop-filter:blur(20px) saturate(124%);
+}
+
+body[data-page="home"] .hdr--scientific.scrolled .hdr-context{
+  background:rgba(3,27,50,.62);
+}
+
+@media(max-width:880px){
+  body[data-page="home"] .hdr--scientific,
+  body[data-page="home"] .hdr--scientific.scrolled{
+    background:rgba(4,31,56,.68);
+    border-bottom-color:rgba(214,243,244,.12);
+    box-shadow:0 5px 20px rgba(1,17,32,.08);
+    backdrop-filter:blur(18px) saturate(126%);
+    -webkit-backdrop-filter:blur(18px) saturate(126%);
+  }
+  body[data-page="home"] .hdr--scientific.scrolled{
+    background:rgba(4,31,57,.92);
+    box-shadow:0 8px 24px rgba(1,17,32,.15);
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body[data-page="home"] .hdr--scientific{
+    transition:none!important;
+  }
+}
