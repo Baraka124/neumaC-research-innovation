@@ -130,7 +130,7 @@
     if(window.innerWidth<=MOBILE_DISCLOSURE){
       if(section.dataset.mobilePrepared!=='true'){
         section.dataset.mobilePrepared='true';
-        setLinesExpanded(true,false);
+        setLinesExpanded(false,false);
       }
     }else{
       if(section.dataset.mobilePrepared!=='false')section.dataset.mobilePrepared='false';
@@ -177,7 +177,7 @@
       if(!e.target.closest('[data-index-chapter]'))return;
       requestAnimationFrame(function(){
         syncDisclosureContext();
-        if(window.innerWidth<=MOBILE_DISCLOSURE)setLinesExpanded(true,false);
+        if(window.innerWidth<=MOBILE_DISCLOSURE)setLinesExpanded(false,false);
       });
     });
 
@@ -187,7 +187,7 @@
         requestAnimationFrame(function(){
           if(window.innerWidth<=MOBILE_DISCLOSURE&&mobileTrigger.getAttribute('aria-expanded')==='true'){
             syncDisclosureContext();
-            setLinesExpanded(true,false);
+            setLinesExpanded(false,false);
           }
         });
       });
