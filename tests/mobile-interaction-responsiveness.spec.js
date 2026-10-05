@@ -26,6 +26,8 @@ for(const width of [320,390,430,620]){
     await trigger.click();
 
     await expect(page.locator('.global-index__lines')).toBeHidden();
+    await expect(page.locator('.global-index__chapter--home')).toBeVisible();
+    await expect(page.locator('.global-index__chapter--home')).toHaveAttribute('href','/');
 
     await page.locator('[data-index-chapter="team"]').click();
     await expect(page).toHaveURL(/\/team\/?$/);
