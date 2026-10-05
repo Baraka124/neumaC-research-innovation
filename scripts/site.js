@@ -236,6 +236,7 @@
         </div>\
         <div class="global-index__index-view" id="globalIndexIndexView">\
           <nav class="global-index__chapters" aria-label="Site index">\
+            <a class="global-index__chapter global-index__chapter--home" href="/"><span class="global-index__chapter-no">00</span><span class="global-index__chapter-name">'+ixBi('Home','Inicio')+'</span></a>\
             <button type="button" data-index-chapter="research" aria-pressed="'+(indexState.chapter==='research'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='research'?'is-current':'')+'"><span class="global-index__chapter-no">01</span><span class="global-index__chapter-name">'+ixBi('Research','Investigación')+'</span></button>\
             <button type="button" data-index-chapter="innovation" aria-pressed="'+(indexState.chapter==='innovation'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='innovation'?'is-current':'')+'"><span class="global-index__chapter-no">02</span><span class="global-index__chapter-name">'+ixBi('Innovation','Innovación')+'</span></button>\
             <button type="button" data-index-chapter="articles" aria-pressed="'+(indexState.chapter==='articles'?'true':'false')+'" class="global-index__chapter '+(indexState.chapter==='articles'?'is-current':'')+'"><span class="global-index__chapter-no">03</span><span class="global-index__chapter-name">'+ixBi('Publications','Publicaciones')+'</span></button>\
