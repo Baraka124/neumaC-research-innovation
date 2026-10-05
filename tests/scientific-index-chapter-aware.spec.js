@@ -91,6 +91,7 @@ test('Phone Index keeps five direct top-level destinations',async({page})=>{
   await page.locator('#mobToggle').click();
 
   await expect(page.locator('[data-index-chapter]')).toHaveCount(5);
+  await expect(page.locator('.global-index__lines')).toBeHidden();
   await page.locator('[data-index-chapter="training"]').click();
   await expect(page).toHaveURL(/\/formacion\/?$/);
   await noOverflow(page);
