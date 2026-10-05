@@ -1378,6 +1378,36 @@ for (const width of [320, 390, 620]) {
 for (const width of [1440, 1800, 2048]) {
   test(`Team coordinator portrait and copy do not overlap at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: width >= 1920 ? 1152 : 1000 });
+
+    const lines = Array.from({ length:6 }, (_, index) => ({
+      id:`fixture-line-${index + 1}`,
+      line_number:index + 1,
+      short_name:`Research line ${index + 1}`,
+      short_name_en:`Research line ${index + 1}`,
+      short_name_es:`Línea de investigación ${index + 1}`
+    }));
+    const coordinators = lines.map((line, index) => ({
+      id:`fixture-coordinator-${index + 1}`,
+      full_name:`Coordinator ${index + 1}`,
+      specialization:'Pneumology',
+      is_public:true,
+      coordinates_line:line
+    }));
+
+    await page.route('**/api/**', async route => {
+      const url = route.request().url();
+      if (url.includes('/api/team/website')) {
+        return route.fulfill({ json:{ data:coordinators } });
+      }
+      if (url.includes('/api/research-lines/website')) {
+        return route.fulfill({ json:{ data:lines } });
+      }
+      if (/\/api\/research-lines\/fixture-line-\d+\/website/.test(url)) {
+        return route.fulfill({ json:{ data:{ team:[] } } });
+      }
+      return route.fulfill({ json:{ data:[] } });
+    });
+
     await page.goto('/team/');
 
     const cards = page.locator('.team-coordinator');
