@@ -1375,6 +1375,37 @@ for (const width of [320, 390, 620]) {
 }
 
 
+for (const width of [1440, 1800, 2048]) {
+  test(`Team coordinator portrait and copy do not overlap at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width >= 1920 ? 1152 : 1000 });
+    await page.goto('/team/');
+
+    const cards = page.locator('.team-coordinator');
+    await expect(cards).toHaveCount(6);
+
+    const geometry = await cards.evaluateAll(items => items.map(card => {
+      const portrait = card.querySelector('.team-coordinator__portrait')?.getBoundingClientRect();
+      const body = card.querySelector('.team-coordinator__body')?.getBoundingClientRect();
+      const name = card.querySelector('.team-coordinator__body h3')?.getBoundingClientRect();
+      return portrait && body && name ? {
+        portraitRight: portrait.right,
+        bodyLeft: body.left,
+        nameLeft: name.left,
+        cardRight: card.getBoundingClientRect().right,
+        bodyRight: body.right
+      } : null;
+    }));
+
+    for (const item of geometry) {
+      expect(item).not.toBeNull();
+      expect(item.bodyLeft - item.portraitRight).toBeGreaterThanOrEqual(8);
+      expect(item.nameLeft).toBeGreaterThanOrEqual(item.bodyLeft - 1);
+      expect(item.bodyRight).toBeLessThanOrEqual(item.cardRight + 1);
+    }
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
 test('INIBIC plaque avoids repeated visible institution naming', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.goto('/');
