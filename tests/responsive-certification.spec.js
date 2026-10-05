@@ -1622,3 +1622,29 @@ test('Scientific masthead remains optically separated at 1918px', async ({ page 
 
   await expectNoHorizontalOverflow(page);
 });
+
+
+test('Final masthead microtypography remains legible at 1918px', async ({ page }) => {
+  await page.setViewportSize({ width:1918, height:912 });
+  await page.goto('/clinical/');
+
+  const metrics = await page.evaluate(() => {
+    const org = document.querySelector('.hdr--scientific .hdr-brand-org');
+    const statement = document.querySelector('.hdr-context__statement');
+    const orgStyle = org ? getComputedStyle(org) : null;
+    const statementStyle = statement ? getComputedStyle(statement) : null;
+    return {
+      orgFont: orgStyle ? parseFloat(orgStyle.fontSize) : 0,
+      orgWeight: orgStyle?.fontWeight || '',
+      orgLetterSpacing: orgStyle ? parseFloat(orgStyle.letterSpacing) : 0,
+      statementFont: statementStyle ? parseFloat(statementStyle.fontSize) : 0,
+      statementLetterSpacing: statementStyle ? parseFloat(statementStyle.letterSpacing) : 0
+    };
+  });
+
+  expect(metrics.orgFont).toBeGreaterThanOrEqual(8.5);
+  expect(Number(metrics.orgWeight)).toBeGreaterThanOrEqual(600);
+  expect(metrics.orgLetterSpacing).toBeLessThanOrEqual(1);
+  expect(metrics.statementFont).toBeGreaterThanOrEqual(7.5);
+  await expectNoHorizontalOverflow(page);
+});
