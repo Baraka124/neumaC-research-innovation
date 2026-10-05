@@ -450,7 +450,26 @@ body[data-page="training"] .container{
 @media(max-width:760px){
   body[data-page="training"] .container{width:calc(100% - 2rem);}
   .training-hero__grid{gap:2.2rem;padding-block:3.6rem 3.3rem;}
-  .training-hero h1{max-width:11ch;font-size:clamp(2.8rem,11.8vw,4rem);}
+
+  /* Long institutional titles need the full mobile measure. Desktop's
+     deliberately narrow editorial measures make multi-word headings look
+     vertically stacked once the copy becomes more substantive. */
+  .training-hero h1,
+  .training-environment__copy h2,
+  .training-section-head h2,
+  .training-innovation__head h2{
+    max-width:100%;
+    width:100%;
+    word-break:normal;
+    overflow-wrap:normal;
+    hyphens:none;
+    text-wrap:balance;
+  }
+  .training-hero h1{
+    font-size:clamp(2.35rem,9.8vw,3.3rem);
+    line-height:.96;
+    letter-spacing:-.042em;
+  }
   .training-hero__lead{font-size:.91rem;line-height:1.64;}
   .training-hero__lead--secondary{font-size:.81rem;}
   .training-pathway{padding:1.45rem 1rem 1.15rem;}
@@ -462,7 +481,11 @@ body[data-page="training"] .container{
   .training-pathway strong{font-size:1.07rem;}
 
   .training-environment{padding:4.2rem 0;}
-  .training-environment__copy h2,.training-section-head h2{font-size:clamp(2.55rem,10.4vw,3.55rem);}
+  .training-environment__copy h2,.training-section-head h2{
+    font-size:clamp(2.15rem,8.9vw,3rem);
+    line-height:.98;
+    letter-spacing:-.036em;
+  }
   .training-media{min-height:360px;}
   .training-media img{object-position:57% 50%;}
 
@@ -473,7 +496,11 @@ body[data-page="training"] .container{
 
   .training-innovation{padding:4.4rem 0;}
   .training-innovation__head{grid-template-columns:1fr;gap:1.2rem;}
-  .training-innovation__head h2{font-size:clamp(2.55rem,10.5vw,3.65rem);}
+  .training-innovation__head h2{
+    font-size:clamp(2.15rem,8.9vw,3.05rem);
+    line-height:.98;
+    letter-spacing:-.036em;
+  }
   .training-innovation__process{display:block;margin-top:2.15rem;overflow:visible;border-bottom:0;}
   .training-innovation__process li{min-height:0;padding:1rem 0;border-right:0;border-bottom:1px solid rgba(190,231,232,.13);}
   .training-innovation__process strong{margin:.62rem 0 .32rem;}
@@ -481,7 +508,17 @@ body[data-page="training"] .container{
 
 @media(max-width:390px){
   body[data-page="training"] .container{width:calc(100% - 1.4rem);}
-  .training-hero h1{font-size:clamp(2.5rem,11.4vw,3.35rem);}
+  .training-hero h1{font-size:clamp(2.2rem,9.5vw,2.75rem);}
+  .training-environment__copy h2,
+  .training-section-head h2,
+  .training-innovation__head h2{font-size:clamp(2rem,8.7vw,2.55rem);}
+  .training-register__row h3,
+  .training-pathway strong,
+  .training-innovation__process strong{
+    word-break:normal;
+    overflow-wrap:normal;
+    hyphens:none;
+  }
   .training-media{min-height:325px;}
 }
 
