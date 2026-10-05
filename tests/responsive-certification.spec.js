@@ -1692,6 +1692,51 @@ test('Final masthead microtypography remains legible at 1918px', async ({ page }
 });
 
 
+
+for (const viewport of [
+  { width:390, height:844, label:'phone' },
+  { width:620, height:900, label:'large phone' }
+]) {
+  test(`Home mobile hero remains image-led and unboxed on ${viewport.label}`, async ({ page }) => {
+    await page.setViewportSize({ width:viewport.width, height:viewport.height });
+    await page.goto('/');
+
+    const pane=page.locator('.home-hero-pane');
+    const title=page.locator('.home-hero-title');
+    await expect(pane).toBeVisible();
+    await expect(title).toBeVisible();
+
+    const geo=await page.evaluate(()=>{
+      const pane=document.querySelector('.home-hero-pane');
+      const title=document.querySelector('.home-hero-title');
+      const ps=getComputedStyle(pane);
+      const pr=pane.getBoundingClientRect();
+      const tr=title.getBoundingClientRect();
+      return {
+        paneWidth:pr.width,
+        titleWidth:tr.width,
+        viewport:innerWidth,
+        borderTop:parseFloat(ps.borderTopWidth),
+        borderRight:parseFloat(ps.borderRightWidth),
+        borderBottom:parseFloat(ps.borderBottomWidth),
+        borderLeft:parseFloat(ps.borderLeftWidth),
+        radius:parseFloat(ps.borderTopLeftRadius),
+        shadow:ps.boxShadow
+      };
+    });
+
+    expect(geo.borderTop).toBe(0);
+    expect(geo.borderRight).toBe(0);
+    expect(geo.borderBottom).toBe(0);
+    expect(geo.borderLeft).toBe(0);
+    expect(geo.radius).toBe(0);
+    expect(geo.shadow).toBe('none');
+    expect(geo.paneWidth / geo.viewport).toBeLessThan(0.94);
+    expect(geo.titleWidth / geo.viewport).toBeLessThan(0.88);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
 test('Workstation Home hero clears masthead and INIBIC dock stays contained', async ({ page }) => {
   await page.setViewportSize({ width:1918, height:912 });
   await page.goto('/');
