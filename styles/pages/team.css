@@ -1453,3 +1453,18 @@ body[data-page="team"] .team-network__system span:first-child{
     transform:none!important;
   }
 }
+
+
+/* FINAL RESPONSIVE CERTIFICATION — TEAM */
+@media(max-width:640px){
+  body[data-page="team"] .team-hero__context>p{font-size:.86rem;line-height:1.66}
+  body[data-page="team"] .team-hero__disciplines>span{font-size:.61rem;line-height:1.35}
+  body[data-page="team"] .team-coordinator__line-no{font-size:.60rem}
+  body[data-page="team"] .team-coordinator__role{font-size:.72rem}
+  body[data-page="team"] .team-coordinator__line-name{font-size:.76rem}
+  body[data-page="team"] .team-coordinator .team-inline-link{font-size:.70rem}
+  body[data-page="team"] .team-person__view{font-size:.60rem}
+  body[data-page="team"] .team-person__affiliation{font-size:.71rem}
+  body[data-page="team"] .team-lead__position{font-size:.82rem}
+  body[data-page="team"] .team-lead__bio{font-size:.80rem;line-height:1.56}
+}
