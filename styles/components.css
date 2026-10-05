@@ -1946,7 +1946,7 @@ body.is-index-open{overflow:hidden;}
 .hdr--scientific .hdr-brand-meta{padding-left:1rem}
 .hdr--scientific .hdr-brand-meta::before{height:34px;background:rgba(255,255,255,.23)}
 .hdr--scientific .hdr-brand-title{font-size:.61rem;letter-spacing:.095em;color:rgba(255,255,255,.91)}
-.hdr--scientific .hdr-brand-org{font-size:.53rem;font-weight:600;letter-spacing:.045em;color:rgba(255,255,255,.68)}
+.hdr--scientific .hdr-brand-org{font-size:.555rem;font-weight:610;letter-spacing:.034em;color:rgba(255,255,255,.73)}
 
 .hdr--scientific .hdr-nav{position:relative;gap:.12rem}
 .hdr--scientific .hdr-nav-link{
@@ -2024,8 +2024,8 @@ body.is-index-open{overflow:hidden;}
 .hdr-context__detail{font-size:.66rem;font-weight:520;color:rgba(255,255,255,.76)}
 .hdr-context__rule{height:1px;background:linear-gradient(90deg,rgba(255,255,255,.22),rgba(255,255,255,.04))}
 .hdr-context__statement{
-  font:500 .49rem/1.2 var(--ff-mono,'DM Mono',monospace);
-  letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);
+  font:520 .505rem/1.2 var(--ff-mono,'DM Mono',monospace);
+  letter-spacing:.135em;text-transform:uppercase;color:rgba(255,255,255,.48);
 }
 
 .hdr--scientific.scrolled{height:calc(64px + var(--h2-rail));background:rgba(11,54,82,.985)}
@@ -3362,7 +3362,7 @@ body[data-page="news"] .hdr-context__detail{
   .hdr--scientific .hdr-inner{gap:clamp(.78rem,1.15vw,1.15rem)}
   .hdr--scientific .hdr-brand-meta{padding-left:.66rem}
   .hdr--scientific .hdr-brand-title{font-size:.535rem;letter-spacing:.056em}
-  .hdr--scientific .hdr-brand-org{font-size:.49rem;font-weight:600;letter-spacing:.032em;color:rgba(255,255,255,.67)}
+  .hdr--scientific .hdr-brand-org{font-size:.505rem;font-weight:610;letter-spacing:.028em;color:rgba(255,255,255,.71)}
   .hdr--scientific .hdr-nav{gap:.03rem}
   .hdr--scientific .hdr-nav-link{padding-inline:.27rem;font-size:.775rem}
   .hdr--scientific .hdr-right{padding-left:.55rem}
@@ -3468,10 +3468,10 @@ body[data-page="home"] .hdr--scientific.scrolled .hdr-context{
     letter-spacing:.082em;
   }
   .hdr--scientific .hdr-brand-org{
-    font-size:.55rem;
-    font-weight:600;
-    letter-spacing:.034em;
-    color:rgba(255,255,255,.74);
+    font-size:.565rem;
+    font-weight:610;
+    letter-spacing:.03em;
+    color:rgba(255,255,255,.77);
     white-space:nowrap;
   }
   .hdr--scientific .hdr-nav{
@@ -3483,5 +3483,32 @@ body[data-page="home"] .hdr--scientific.scrolled .hdr-context{
     justify-self:end;
     margin-left:0;
     padding-left:.72rem;
+  }
+}
+
+
+/* ============================================================
+   FINAL WORKSTATION QA — Global search result containment
+   Dynamic titles/authors/topics stay inside their own result cell.
+   ============================================================ */
+.global-search__result>span:not(.global-search__result-code){
+  min-width:0;
+  max-width:100%;
+}
+.global-search__result strong,
+.global-search__result small{
+  max-width:100%;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+@media(min-width:1600px){
+  .global-search__results{
+    column-gap:2.35rem;
+  }
+  .global-search__result{
+    grid-template-columns:56px minmax(0,1fr);
+    gap:.8rem;
+    min-height:72px;
+    padding:.68rem .5rem .68rem .1rem;
   }
 }

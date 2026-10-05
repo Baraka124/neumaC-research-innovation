@@ -1622,3 +1622,78 @@ test('Scientific masthead remains optically separated at 1918px', async ({ page 
 
   await expectNoHorizontalOverflow(page);
 });
+
+
+test('Final masthead microtypography remains legible at 1918px', async ({ page }) => {
+  await page.setViewportSize({ width:1918, height:912 });
+  await page.goto('/clinical/');
+
+  const metrics = await page.evaluate(() => {
+    const org = document.querySelector('.hdr--scientific .hdr-brand-org');
+    const statement = document.querySelector('.hdr-context__statement');
+    const orgStyle = org ? getComputedStyle(org) : null;
+    const statementStyle = statement ? getComputedStyle(statement) : null;
+    return {
+      orgFont: orgStyle ? parseFloat(orgStyle.fontSize) : 0,
+      orgWeight: orgStyle?.fontWeight || '',
+      orgLetterSpacing: orgStyle ? parseFloat(orgStyle.letterSpacing) : 0,
+      statementFont: statementStyle ? parseFloat(statementStyle.fontSize) : 0,
+      statementLetterSpacing: statementStyle ? parseFloat(statementStyle.letterSpacing) : 0
+    };
+  });
+
+  expect(metrics.orgFont).toBeGreaterThanOrEqual(7.8);
+  expect(Number(metrics.orgWeight)).toBeGreaterThanOrEqual(600);
+  expect(metrics.orgLetterSpacing).toBeLessThanOrEqual(1);
+  expect(metrics.statementFont).toBeGreaterThanOrEqual(7);
+  await expectNoHorizontalOverflow(page);
+});
+
+
+test('Workstation Home hero clears masthead and INIBIC dock stays contained', async ({ page }) => {
+  await page.setViewportSize({ width:1918, height:912 });
+  await page.goto('/');
+
+  const geometry = await page.evaluate(() => {
+    const hdr = document.querySelector('.hdr--scientific')?.getBoundingClientRect();
+    const title = document.querySelector('.home-hero-title')?.getBoundingClientRect();
+    const card = document.querySelector('.home-affiliation-card')?.getBoundingClientRect();
+    return {
+      headerBottom: hdr?.bottom ?? 0,
+      titleTop: title?.top ?? -1,
+      titleBottom: title?.bottom ?? -1,
+      cardLeft: card?.left ?? 0,
+      cardRight: card?.right ?? 0,
+      viewport: innerWidth
+    };
+  });
+
+  expect(geometry.titleTop).toBeGreaterThanOrEqual(0);
+  expect(geometry.titleBottom).toBeGreaterThan(geometry.headerBottom + 24);
+  expect(geometry.cardLeft).toBeGreaterThanOrEqual(0);
+  expect(geometry.cardRight).toBeLessThanOrEqual(geometry.viewport + 1);
+  await expectNoHorizontalOverflow(page);
+});
+
+test('Workstation Innovation uses available desktop width without overflow', async ({ page }) => {
+  await page.setViewportSize({ width:1918, height:912 });
+  await page.goto('/innovation/');
+
+  const geometry = await page.evaluate(() => {
+    const hero = document.querySelector('.innovation-hero__grid')?.getBoundingClientRect();
+    const questions = document.querySelector('.innovation-question-list')?.getBoundingClientRect();
+    return {
+      heroWidth: hero?.width ?? 0,
+      heroLeft: hero?.left ?? 0,
+      heroRight: hero?.right ?? 0,
+      questionsWidth: questions?.width ?? 0,
+      viewport: innerWidth
+    };
+  });
+
+  expect(geometry.heroWidth).toBeGreaterThan(1450);
+  expect(geometry.questionsWidth).toBeGreaterThan(1100);
+  expect(geometry.heroLeft).toBeGreaterThanOrEqual(0);
+  expect(geometry.heroRight).toBeLessThanOrEqual(geometry.viewport + 1);
+  await expectNoHorizontalOverflow(page);
+});
