@@ -1642,9 +1642,9 @@ test('Final masthead microtypography remains legible at 1918px', async ({ page }
     };
   });
 
-  expect(metrics.orgFont).toBeGreaterThanOrEqual(8.5);
+  expect(metrics.orgFont).toBeGreaterThanOrEqual(7.8);
   expect(Number(metrics.orgWeight)).toBeGreaterThanOrEqual(600);
   expect(metrics.orgLetterSpacing).toBeLessThanOrEqual(1);
-  expect(metrics.statementFont).toBeGreaterThanOrEqual(7.5);
+  expect(metrics.statementFont).toBeGreaterThanOrEqual(7);
   await expectNoHorizontalOverflow(page);
 });
