@@ -546,7 +546,12 @@ for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
 
     await expect(panel).toBeVisible();
     await expect(intro).toBeVisible();
-    await expect(lines).toBeVisible();
+    if (width <= 640) {
+      await expect(page.locator('#homeLinesDisclosure')).toBeVisible();
+      await expect(lines).toBeHidden();
+    } else {
+      await expect(lines).toBeVisible();
+    }
     await expectContainedInViewport(panel, width);
 
     const geo = await panel.evaluate(el => {
@@ -568,7 +573,14 @@ for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
     expect(geo.left).toBeGreaterThanOrEqual(-1);
     expect(geo.right).toBeLessThanOrEqual(geo.viewport + 1);
 
-    if (width <= 1100) {
+    if (width <= 640) {
+      const relationship = await page.evaluate(() => {
+        const intro = document.querySelector('.home-programme-intro').getBoundingClientRect();
+        const disclosure = document.querySelector('#homeLinesDisclosure').getBoundingClientRect();
+        return { introBottom:intro.bottom, disclosureTop:disclosure.top };
+      });
+      expect(relationship.disclosureTop).toBeGreaterThanOrEqual(relationship.introBottom - 1);
+    } else if (width <= 1100) {
       const relationship = await page.evaluate(() => {
         const intro = document.querySelector('.home-programme-intro').getBoundingClientRect();
         const lines = document.querySelector('.home-programme-lines').getBoundingClientRect();
@@ -594,11 +606,19 @@ for (const width of [390, 620, 768, 1024, 1366, 1440, 1680, 2048]) {
   });
 }
 
-test('Home phone research-line index stays single-column and complete', async ({ page }) => {
+test('Home phone research-line index uses a complete accessible disclosure', async ({ page }) => {
   await page.setViewportSize({ width:390, height:844 });
   await page.goto('/');
 
+  const disclosure = page.locator('#homeLinesDisclosure');
   const grid = page.locator('.home-programme-lines');
+
+  await expect(disclosure).toBeVisible();
+  await expect(disclosure).toHaveAttribute('aria-expanded','false');
+  await expect(grid).toBeHidden();
+
+  await disclosure.click();
+  await expect(disclosure).toHaveAttribute('aria-expanded','true');
   await expect(grid).toBeVisible();
 
   const data = await grid.evaluate(el => ({

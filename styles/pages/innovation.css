@@ -242,3 +242,52 @@ body[data-page="innovation"] .innovation-question:last-child::before{
     left:-1.22rem;
   }
 }
+
+
+/* FINAL RESPONSIVE CERTIFICATION — INNOVATION */
+@media(max-width:640px){
+  body[data-page="innovation"] .innovation-section-intro>p{font-size:.88rem}
+  body[data-page="innovation"] .innovation-question>span,
+  body[data-page="innovation"] .innovation-project__meta span{font-size:.62rem}
+  body[data-page="innovation"] .innovation-question p{font-size:.80rem;line-height:1.56}
+  body[data-page="innovation"] .innovation-project__desc{font-size:.82rem;line-height:1.54}
+  body[data-page="innovation"] .innovation-project__fact span{font-size:.60rem}
+  body[data-page="innovation"] .innovation-project__fact p{font-size:.77rem}
+  body[data-page="innovation"] .innovation-contact__scope,
+  body[data-page="innovation"] .innovation-contact__entry-label,
+  body[data-page="innovation"] .innovation-contact__form-kicker,
+  body[data-page="innovation"] .innovation-field>span{font-size:.60rem}
+}
+@media(max-width:390px){
+  body[data-page="innovation"] .innovation-kicker{font-size:.64rem}
+}
+
+
+/* FINAL WORKSTATION CERTIFICATION — 2048px hospital desktop */
+@media(min-width:1800px){
+  body[data-page="innovation"] .innovation-hero>.container,
+  body[data-page="innovation"] .innovation-start>.container,
+  body[data-page="innovation"] .innovation-work>.container,
+  body[data-page="innovation"] .innovation-context>.container,
+  body[data-page="innovation"] .innovation-contact>.container{
+    max-width:1500px;
+  }
+
+  body[data-page="innovation"] .innovation-question h3{
+    font-size:1.62rem;
+  }
+
+  body[data-page="innovation"] .innovation-question p{
+    font-size:.80rem;
+    max-width:31ch;
+  }
+
+  body[data-page="innovation"] .innovation-project-row{
+    grid-template-columns:minmax(0,1fr) 300px;
+    gap:2rem;
+  }
+
+  body[data-page="innovation"] .innovation-project__desc{
+    font-size:.84rem;
+  }
+}

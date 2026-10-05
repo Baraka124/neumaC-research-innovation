@@ -1835,9 +1835,10 @@ body.is-index-open{overflow:hidden;}
   .hdr-brand-plate::after{left:.62rem;right:.62rem;}
   .hdr-logo-img{height:25px;max-width:112px;}
   .hdr-brand-meta{padding-left:.82rem;}
-  .hdr-brand-title{font-size:.54rem;letter-spacing:.065em;}
-  .hdr-brand-org{font-size:.45rem;}
-  .hdr-nav-link{padding-inline:.5rem;font-size:.83rem;}
+  .hdr-brand-title{font-size:.54rem;letter-spacing:.052em;}
+  .hdr-brand-org{font-size:.45rem;letter-spacing:.045em;}
+  .hdr-nav{gap:.08rem;}
+  .hdr-nav-link{padding-inline:.38rem;font-size:.81rem;}
   .hdr-right{gap:.45rem;}
   .hdr-index-btn{padding-inline:.7rem;}
   .hdr-contact-btn{padding-inline:.76rem;}
@@ -3352,4 +3353,15 @@ body[data-page="news"] .hdr-context__detail{
     width:100%;
     margin-inline:0;
   }
+}
+
+
+/* FINAL RESPONSIVE CERTIFICATION — scientific masthead laptop corridor.
+   Placed after the H2 masthead rules so Spanish-default geometry is authoritative. */
+@media(max-width:1450px) and (min-width:1181px){
+  .hdr--scientific .hdr-brand-meta{padding-left:.72rem}
+  .hdr--scientific .hdr-brand-title{font-size:.55rem;letter-spacing:.060em}
+  .hdr--scientific .hdr-brand-org{font-size:.445rem;letter-spacing:.045em}
+  .hdr--scientific .hdr-nav{gap:.06rem}
+  .hdr--scientific .hdr-nav-link{padding-inline:.36rem;font-size:.81rem}
 }

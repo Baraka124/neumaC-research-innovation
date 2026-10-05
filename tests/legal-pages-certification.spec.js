@@ -72,10 +72,11 @@ for(const vp of [
 test('institutional document system preserves bilingual and legal navigation behavior',async({page})=>{
   await page.setViewportSize({width:1440,height:900});
   await page.goto('/privacidad/');
-  await expect(page.locator('.legal-page__title [lang="en"]')).toBeVisible();
-  await page.locator('#ltBtnEs').click();
   await expect(page.locator('.legal-page__title [lang="es"]')).toBeVisible();
   await expect(page.locator('.legal-page__title [lang="en"]')).toBeHidden();
+  await page.locator('#ltBtnEn').click();
+  await expect(page.locator('.legal-page__title [lang="en"]')).toBeVisible();
+  await expect(page.locator('.legal-page__title [lang="es"]')).toBeHidden();
   await expect(page.locator('#siteFooter')).toBeAttached();
   await expect(page.locator('.footer-legal-nav a')).toHaveCount(3);
   await noOverflow(page);

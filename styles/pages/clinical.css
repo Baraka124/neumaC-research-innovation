@@ -1412,3 +1412,44 @@ body[data-page="clinical"] .research-contact.is-inquiry-open .research-contact__
     transform:none!important;
   }
 }
+
+
+/* FINAL RESPONSIVE CERTIFICATION — RESEARCH */
+@media(max-width:620px){
+  body[data-page="clinical"] .research-meta{font-size:.60rem}
+  body[data-page="clinical"] .research-leadership__role{font-size:.74rem}
+  body[data-page="clinical"] .research-leadership__bio{font-size:.72rem;line-height:1.5}
+  body[data-page="clinical"] .research-line__coord-label{font-size:.60rem}
+  body[data-page="clinical"] .study-row__protocol{font-size:.64rem}
+  body[data-page="clinical"] .study-row__facts{font-size:.65rem}
+  body[data-page="clinical"] .research-lines__head p,
+  body[data-page="clinical"] .study-portfolio__intro>p{font-size:.88rem}
+  body[data-page="clinical"] .research-contact__entry-label,
+  body[data-page="clinical"] .research-contact__form-kicker,
+  body[data-page="clinical"] .research-contact .form-group label{font-size:.60rem}
+}
+
+
+/* FINAL WORKSTATION CERTIFICATION — 2048px hospital desktop */
+@media(min-width:1800px){
+  body[data-page="clinical"] .research-hero__sheet{
+    width:min(calc(100% - 5rem),1500px);
+    max-width:1500px;
+  }
+
+  body[data-page="clinical"] .research-lines-section>.container,
+  body[data-page="clinical"] .research-section>.container,
+  body[data-page="clinical"] .research-context>.container,
+  body[data-page="clinical"] .research-contact>.container{
+    max-width:1500px;
+  }
+
+  body[data-page="clinical"] .research-line-row{
+    grid-template-columns:190px minmax(0,1fr) minmax(220px,.42fr);
+    gap:1.7rem;
+  }
+
+  body[data-page="clinical"] .research-line__summary{
+    font-size:.82rem;
+  }
+}

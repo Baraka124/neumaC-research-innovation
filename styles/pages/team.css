@@ -1453,3 +1453,69 @@ body[data-page="team"] .team-network__system span:first-child{
     transform:none!important;
   }
 }
+
+
+/* FINAL RESPONSIVE CERTIFICATION — TEAM */
+@media(max-width:640px){
+  body[data-page="team"] .team-hero__context>p{font-size:.86rem;line-height:1.66}
+  body[data-page="team"] .team-hero__disciplines>span{font-size:.61rem;line-height:1.35}
+  body[data-page="team"] .team-coordinator__line-no{font-size:.60rem}
+  body[data-page="team"] .team-coordinator__role{font-size:.72rem}
+  body[data-page="team"] .team-coordinator__line-name{font-size:.76rem}
+  body[data-page="team"] .team-coordinator .team-inline-link{font-size:.70rem}
+  body[data-page="team"] .team-person__view{font-size:.60rem}
+  body[data-page="team"] .team-person__affiliation{font-size:.71rem}
+  body[data-page="team"] .team-lead__position{font-size:.82rem}
+  body[data-page="team"] .team-lead__bio{font-size:.80rem;line-height:1.56}
+}
+
+
+/* FINAL WORKSTATION CERTIFICATION — 2048px hospital desktop.
+   Preserve the floating signature while giving long institutional names enough room. */
+@media(min-width:1800px){
+  body[data-page="team"] .team-leadership>.container,
+  body[data-page="team"] .team-coordinators>.container,
+  body[data-page="team"] .team-roster>.container,
+  body[data-page="team"] .team-network>.container,
+  body[data-page="team"] .team-contact>.container{
+    max-width:1500px;
+  }
+
+  body[data-page="team"] .team-coordinator-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:1.25rem;
+  }
+
+  body[data-page="team"] .team-coordinator{
+    grid-template-columns:42px 104px minmax(0,1fr);
+    min-height:206px;
+    gap:.85rem 1.05rem;
+    padding:1.12rem;
+  }
+
+  body[data-page="team"] .team-coordinator__portrait{
+    width:104px;
+  }
+
+  body[data-page="team"] .team-coordinator__body h3{
+    font-size:clamp(1.18rem,1.05vw,1.34rem);
+    line-height:1.06;
+    text-wrap:pretty;
+    overflow-wrap:anywhere;
+  }
+
+  body[data-page="team"] .team-coordinator__line-name{
+    font-size:.75rem;
+    line-height:1.42;
+    text-wrap:pretty;
+    overflow-wrap:anywhere;
+  }
+
+  body[data-page="team"] .team-roster__grid{
+    column-gap:1.25rem;
+  }
+
+  body[data-page="team"] .team-person__open{
+    min-height:128px;
+  }
+}

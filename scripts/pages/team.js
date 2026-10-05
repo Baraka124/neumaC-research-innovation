@@ -52,12 +52,12 @@
     'radiology':['Radiology','Radiología']
   };
   const lineLabels={
-    1:['Transplantation & Pulmonary Hypertension','Trasplante e hipertensión pulmonar'],
-    2:['Airway Diseases','Enfermedades de la vía aérea'],
-    3:['Interventional Pneumology & Lung Cancer','Neumología intervencionista y cáncer de pulmón'],
-    4:['Respiratory Failure & Sleep Medicine','Insuficiencia respiratoria y medicina del sueño'],
-    5:['Innovation in Thoracic Surgery','Innovación en cirugía torácica'],
-    6:['Precision Medicine & Clinical Innovation','Medicina de precisión e innovación clínica']
+    1:['Transplantation, Pulmonary Hypertension & Diffuse Lung Disease','Trasplante, Hipertensión y Enfermedad Difusa Pulmonar'],
+    2:['Airway Diseases','Enfermedades de la Vía Aérea'],
+    3:['Interventional Pulmonology & Lung Cancer','Neumología Intervencionista y Cáncer de Pulmón'],
+    4:['Respiratory Failure, Critical Care & Sleep Medicine','Insuficiencia Respiratoria, Cuidados Críticos y Medicina del Sueño'],
+    5:['Innovation in Thoracic Surgery','Innovación en Cirugía Torácica'],
+    6:['Personalised Respiratory Medicine, Management & Clinical Innovation','Medicina Respiratoria Personalizada, Gestión e Innovación Clínica']
   };
 
   const state={people:[],lines:[],memberships:new Map(),rosterPeople:[],profilePeople:[],activePersonId:null,lastProfileTrigger:null,profileCloseTimer:null,historyGuard:false};
@@ -99,8 +99,9 @@
     if(!line)return ['',''];
     const number=Number(line.line_number||0);
     const mapped=lineLabels[number];
-    const en=String(line.short_name_en||line.name_en||mapped?.[0]||line.short_name||line.name||'').trim();
-    const es=String(line.short_name_es||line.name_es||mapped?.[1]||line.short_name||line.name||'').trim();
+    if(mapped)return mapped;
+    const en=String(line.short_name_en||line.name_en||line.short_name||line.name||'').trim();
+    const es=String(line.short_name_es||line.name_es||line.short_name||line.name||'').trim();
     return [en,es];
   }
 

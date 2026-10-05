@@ -10,8 +10,8 @@
   var LANG_KEY='huac_lang';
 
   function getSavedLang(){
-    try{return localStorage.getItem(LANG_KEY)||localStorage.getItem('lang')||root.dataset.lang||'en';}
-    catch(e){return root.dataset.lang||'en';}
+    try{return localStorage.getItem(LANG_KEY)||localStorage.getItem('lang')||root.dataset.lang||'es';}
+    catch(e){return root.dataset.lang||'es';}
   }
 
   function syncLangControls(lang){

@@ -36,7 +36,10 @@
   addScript('indexNavigationJs','/scripts/index-navigation.js');
 
   try {
-    var lang = localStorage.getItem('huac_lang') || localStorage.getItem('lang');
-    if (lang === 'en' || lang === 'es') document.documentElement.dataset.lang = lang;
+    var lang = localStorage.getItem('huac_lang') || localStorage.getItem('lang') || 'es';
+    if (lang === 'en' || lang === 'es') {
+      document.documentElement.dataset.lang = lang;
+      document.documentElement.lang = lang;
+    }
   } catch (e) {}
 })();

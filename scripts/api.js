@@ -194,6 +194,31 @@ const RESEARCH_LINE_MEDIA = {
   6: '/assets/research/line-precision-medicine.jpg'
 };
 
+/* Institutional INIBIC nomenclature — public source of truth.
+   Spanish labels are preserved exactly; English is a direct public-site
+   translation of the same institutional research lines. */
+const INSTITUTIONAL_RESEARCH_LINES = {
+  1: ['Transplantation, Pulmonary Hypertension & Diffuse Lung Disease','Trasplante, Hipertensión y Enfermedad Difusa Pulmonar'],
+  2: ['Airway Diseases','Enfermedades de la Vía Aérea'],
+  3: ['Interventional Pulmonology & Lung Cancer','Neumología Intervencionista y Cáncer de Pulmón'],
+  4: ['Respiratory Failure, Critical Care & Sleep Medicine','Insuficiencia Respiratoria, Cuidados Críticos y Medicina del Sueño'],
+  5: ['Innovation in Thoracic Surgery','Innovación en Cirugía Torácica'],
+  6: ['Personalised Respiratory Medicine, Management & Clinical Innovation','Medicina Respiratoria Personalizada, Gestión e Innovación Clínica']
+};
+
+function institutionalResearchLinePair(line) {
+  const number = Number(line?.line_number || line || 0);
+  const mapped = INSTITUTIONAL_RESEARCH_LINES[number];
+  if (mapped) return mapped;
+  const fallback = String(line?.short_name || line?.name || '').trim();
+  return [fallback, fallback];
+}
+
+function institutionalResearchLineLabel(line, lang = document.documentElement.dataset.lang || 'es') {
+  const pair = institutionalResearchLinePair(line);
+  return lang === 'en' ? pair[0] : pair[1];
+}
+
 // Phase 6.0 — public coordinator media can be overridden by an approved
 // editorial asset without changing the backend person record. Backend
 // public_photo_url remains the default source for everyone else.
@@ -305,21 +330,12 @@ async function loadResearchLines() {
 
     // ── INDEX: landing research programme ──────────────────────────
     if (indexGrid) {
-      const homeLineNames = {
-        1: ['Transplantation & Pulmonary Hypertension','Trasplante e hipertensión pulmonar'],
-        2: ['Airway Diseases','Enfermedades de la vía aérea'],
-        3: ['Interventional Pneumology & Lung Cancer','Neumología intervencionista y cáncer de pulmón'],
-        4: ['Respiratory Failure & Sleep Medicine','Insuficiencia respiratoria y medicina del sueño'],
-        5: ['Innovation in Thoracic Surgery','Innovación en cirugía torácica'],
-        6: ['Precision Medicine & Clinical Innovation','Medicina de precisión e innovación clínica']
-      };
       const sorted = [...data].sort((a,b) => Number(a.line_number||0)-Number(b.line_number||0));
       indexGrid.style.transition = 'none';
       indexGrid.style.opacity = '0';
       indexGrid.innerHTML = sorted.map(line => {
         const n = Number(line.line_number) || 0;
-        const fallback = line.short_name || line.name || '';
-        const pair = homeLineNames[n] || [fallback,fallback];
+        const pair = institutionalResearchLinePair(line);
         return `
           <a href="/line/?id=${encodeURIComponent(line.id)}" class="home-line-row reveal">
             <span class="home-line-copy">
@@ -345,7 +361,10 @@ async function loadResearchLines() {
       data.forEach(line => {
         const opt = document.createElement('option');
         opt.value = String(line.line_number);
-        opt.textContent = line.short_name || line.name;
+        const pair = institutionalResearchLinePair(line);
+        opt.dataset.labelEn = pair[0];
+        opt.dataset.labelEs = pair[1];
+        opt.textContent = institutionalResearchLineLabel(line);
         filterLineEl.appendChild(opt);
       });
     }
@@ -355,7 +374,7 @@ async function loadResearchLines() {
       clinicalList.style.opacity = '0';
       const sortedLines = [...data].sort((a,b) => Number(a.line_number||0)-Number(b.line_number||0));
       clinicalList.innerHTML = sortedLines.map(line => {
-        const title = line.short_name || line.name || '';
+        const titlePair = institutionalResearchLinePair(line);
         const coordinator = line.coordinator?.full_name ? escHtml(line.coordinator.full_name) : '';
         const summaryRaw = researchOverviewSummary(line.description);
         const summary = summaryRaw || 'Clinical and translational research within this respiratory medicine area.';
@@ -365,7 +384,7 @@ async function loadResearchLines() {
           <a class="research-line-row" data-line="${lineNum}" href="/line/?id=${encodeURIComponent(line.id)}">
             <span class="research-line__media" aria-hidden="true"><img src="${media}" alt="" loading="lazy" decoding="async"></span>
             <span class="research-line__content">
-              <span class="research-line__title">${escHtml(title)}</span>
+              <span class="research-line__title"><span lang="en">${escHtml(titlePair[0])}</span><span lang="es">${escHtml(titlePair[1])}</span></span>
               <span class="research-line__summary">${escHtml(summary)}</span>
             </span>
             ${coordinator ? `<span class="research-line__side"><span class="research-line__coord-label"><span lang="en">Coordination</span><span lang="es">Coordinación</span></span><span class="research-line__coordinator">${coordinator}</span></span>` : '<span class="research-line__side" aria-hidden="true"></span>'}
@@ -1865,7 +1884,8 @@ async function loadLineDetail() {
 
 
     // SEO identity for the shared line template.
-    const titleText = `${line.short_name || line.name} | neumACt R&I`;
+    const lineTitlePair = institutionalResearchLinePair(line);
+    const titleText = `${institutionalResearchLineLabel(line)} | neumACt R&I`;
     document.title = titleText;
     const summary = lineCleanSummary(line.description || '');
     const descTag = document.getElementById('pageDescription');
@@ -1895,13 +1915,13 @@ async function loadLineDetail() {
       eyebrowEl.innerHTML = `<a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>`;
     }
     const titleEl = document.getElementById('lineTitle');
-    if (titleEl) titleEl.textContent = line.name || line.short_name || '';
+    if (titleEl) titleEl.innerHTML = `<span lang="en">${escHtml(lineTitlePair[0])}</span><span lang="es">${escHtml(lineTitlePair[1])}</span>`;
     const summaryEl = document.getElementById('lineHeroSummary');
     if (summaryEl) summaryEl.textContent = summary;
     const heroImg = document.getElementById('lineHeroImage');
     if (heroImg) {
       heroImg.src = lineDetailHeroMedia(line);
-      heroImg.alt = `${line.short_name || line.name || 'Research line'} — neumACt`;
+      heroImg.alt = `${institutionalResearchLineLabel(line)} — neumACt`;
     }
     const keywordsEl = document.getElementById('lineKeywords');
     if (keywordsEl && Array.isArray(line.keywords)) {
