@@ -207,7 +207,7 @@ html body[data-page="team"] .team-lead__body h3{
     --editorial-section-y:3rem;
     --editorial-section-y-compact:2.65rem;
     --editorial-heading:var(--editorial-heading-mobile);
-    --editorial-intro-size:.84rem;
+    --editorial-intro-size:.88rem;
     --editorial-intro-leading:1.58;
   }
 
@@ -216,7 +216,7 @@ html body[data-page="team"] .team-lead__body h3{
   html body[data-page="innovation"] .innovation-hero h1,
   html body[data-page="team"] .team-hero h1,
   html body[data-page="news"] .pub-hero__identity h1{
-    font-size:clamp(2.68rem,11.7vw,3.48rem);
+    font-size:clamp(2.58rem,11.2vw,3.34rem);
     line-height:.94;
     letter-spacing:-.044em;
   }
