@@ -80,86 +80,196 @@ body[data-page="training"] .container{
   line-height:1.65;
 }
 
-/* Editorial folio: the signature research-development object. */
+/* Floating research-development sequence.
+   No card, border or enclosing rectangle: the pathway sits directly in the
+   atmospheric hero and is held together by axis, anchors and typographic rhythm. */
 .training-pathway{
   position:relative;
   align-self:center;
-  padding:2.2rem 2.1rem 1.6rem;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.93),rgba(251,250,247,.87));
-  border-top:1px solid rgba(255,255,255,.96);
-  border-left:1px solid rgba(255,255,255,.76);
-  border-right:1px solid rgba(12,56,104,.055);
-  border-bottom:1px solid rgba(12,56,104,.07);
-  box-shadow:
-    0 32px 76px rgba(10,45,62,.085),
-    0 4px 14px rgba(10,45,62,.035),
-    inset 0 1px 0 rgba(255,255,255,.85);
-  backdrop-filter:blur(14px) saturate(106%);
-  -webkit-backdrop-filter:blur(14px) saturate(106%);
+  isolation:isolate;
+  padding:1.8rem 1.2rem 1.45rem 2.1rem;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
 }
 .training-pathway::before{
   content:"RESEARCH DEVELOPMENT";
   position:absolute;
-  right:1.1rem;
-  top:1rem;
-  font:600 .49rem/1 var(--ff-mono);
-  letter-spacing:.14em;
-  color:#8fa0a8;
+  z-index:2;
+  right:.25rem;
+  top:.1rem;
+  font:600 .48rem/1 var(--ff-mono);
+  letter-spacing:.15em;
+  color:rgba(76,104,123,.68);
 }
 .training-pathway::after{
   content:"";
   position:absolute;
-  left:0;
-  top:0;
-  width:86px;
-  height:2px;
-  background:linear-gradient(90deg,#3b84aa,#31a39f);
+  z-index:-1;
+  inset:-2.6rem -2.5rem -2.4rem -3rem;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 54% 46%,rgba(255,255,255,.52),rgba(255,255,255,.18) 36%,transparent 68%),
+    radial-gradient(circle at 78% 20%,rgba(73,184,188,.075),transparent 38%);
+  filter:blur(7px);
+  opacity:.92;
 }
 .training-pathway__rail{
   position:absolute;
-  left:3.18rem;
-  top:4.55rem;
-  bottom:2.65rem;
+  left:2.85rem;
+  top:4.2rem;
+  bottom:2rem;
   width:1px;
-  background:linear-gradient(#0d8a92,rgba(13,138,146,.11));
+  background:linear-gradient(
+    180deg,
+    rgba(8,132,141,.10) 0%,
+    rgba(8,132,141,.62) 14%,
+    rgba(8,132,141,.30) 78%,
+    rgba(8,132,141,0) 100%
+  );
 }
-.training-pathway ol{list-style:none;margin:0;padding:1.6rem 0 0;}
+.training-pathway ol{
+  list-style:none;
+  margin:0;
+  padding:1.35rem 0 0;
+}
 .training-pathway li{
   position:relative;
   display:grid;
-  grid-template-columns:2.15rem minmax(0,1fr);
-  column-gap:.95rem;
-  padding:.83rem 0 .88rem 2.25rem;
-  border-bottom:1px solid rgba(12,56,104,.08);
+  grid-template-columns:2rem minmax(0,1fr);
+  column-gap:1.25rem;
+  align-items:center;
+  min-height:3.8rem;
+  padding:.54rem 0 .58rem 2.45rem;
 }
-.training-pathway li:last-child{border-bottom:0;}
+.training-pathway li::after{
+  content:"";
+  position:absolute;
+  left:3.28rem;
+  right:0;
+  bottom:0;
+  height:1px;
+  background:linear-gradient(90deg,rgba(12,56,104,.12),rgba(12,56,104,.035) 62%,transparent);
+}
+.training-pathway li:last-child::after{display:none;}
 .training-pathway__index{
   position:absolute;
   left:0;
-  top:.98rem;
-  font:600 .54rem/1 var(--ff-mono);
-  letter-spacing:.08em;
-  color:#087f88;
+  top:50%;
+  transform:translateY(-50%);
+  width:1.55rem;
+  text-align:right;
+  font:600 .52rem/1 var(--ff-mono);
+  letter-spacing:.09em;
+  color:#07818a;
 }
 .training-pathway li::before{
   content:"";
   position:absolute;
-  left:.73rem;
-  top:.95rem;
-  width:8px;
-  height:8px;
+  left:.99rem;
+  top:50%;
+  width:7px;
+  height:7px;
+  transform:translateY(-50%);
   border-radius:50%;
-  background:#fbfaf7;
-  border:2px solid #0d8a92;
-  box-shadow:0 0 0 5px rgba(13,138,146,.055);
+  background:#edf3f2;
+  border:1.5px solid #0b9097;
+  box-shadow:
+    0 0 0 5px rgba(255,255,255,.42),
+    0 0 18px rgba(19,145,151,.08);
 }
 .training-pathway strong{
   grid-column:2;
+  max-width:24ch;
   font-family:var(--ff-display);
-  font-size:1.22rem;
+  font-size:clamp(1.28rem,1.55vw,1.62rem);
+  font-weight:600;
   line-height:1.08;
-  color:#153f62;
+  letter-spacing:-.018em;
+  color:#123f65;
+}
+
+/* Laptop: preserve the floating composition without letting it become oversized. */
+@media(max-width:1450px) and (min-width:1181px){
+  .training-pathway{
+    padding:1.45rem .4rem 1.2rem 1.35rem;
+  }
+  .training-pathway::before{right:0;}
+  .training-pathway::after{inset:-2rem -1.25rem -1.8rem -2rem;}
+  .training-pathway__rail{left:2.08rem;top:3.8rem;bottom:1.7rem;}
+  .training-pathway li{
+    min-height:3.5rem;
+    padding:.48rem 0 .52rem 1.85rem;
+    column-gap:1rem;
+  }
+  .training-pathway li::before{left:.73rem;}
+  .training-pathway li::after{left:2.55rem;}
+  .training-pathway__index{left:-.2rem;}
+  .training-pathway strong{font-size:1.34rem;}
+}
+
+/* Tablet/small laptop: keep the sequence open and edge-free when stacked. */
+@media(max-width:1100px){
+  .training-pathway{
+    width:min(100%,760px);
+    padding:1.3rem 0 1rem 1.1rem;
+  }
+  .training-pathway::before{right:.1rem;top:0;}
+  .training-pathway::after{inset:-1.5rem -1rem -1.3rem -1.4rem;}
+  .training-pathway__rail{left:1.85rem;top:3.5rem;bottom:1.5rem;}
+  .training-pathway li{
+    min-height:3.35rem;
+    padding:.45rem 0 .48rem 1.7rem;
+  }
+  .training-pathway li::before{left:.62rem;}
+  .training-pathway li::after{left:2.35rem;}
+  .training-pathway__index{left:-.25rem;}
+}
+
+/* Phone: the pathway becomes a compact editorial spine, still without a card. */
+@media(max-width:760px){
+  .training-pathway{
+    width:100%;
+    padding:1.1rem .1rem .55rem .7rem;
+  }
+  .training-pathway::before{
+    position:static;
+    display:block;
+    margin:0 0 .7rem .05rem;
+  }
+  .training-pathway::after{
+    inset:-1rem -.55rem -.9rem -.7rem;
+    filter:blur(5px);
+  }
+  .training-pathway__rail{
+    left:1.38rem;
+    top:3.2rem;
+    bottom:.9rem;
+  }
+  .training-pathway ol{padding-top:0;}
+  .training-pathway li{
+    min-height:3.05rem;
+    grid-template-columns:1.6rem minmax(0,1fr);
+    column-gap:.75rem;
+    padding:.38rem 0 .42rem 1.45rem;
+  }
+  .training-pathway li::before{
+    left:.44rem;
+    width:6px;
+    height:6px;
+    box-shadow:0 0 0 4px rgba(255,255,255,.36);
+  }
+  .training-pathway li::after{left:1.95rem;}
+  .training-pathway__index{
+    left:-.42rem;
+    font-size:.49rem;
+  }
+  .training-pathway strong{
+    font-size:1.12rem;
+    max-width:none;
+  }
 }
 
 /* ── EDITORIAL RESEARCH ENVIRONMENT ───────────────────────────── */
