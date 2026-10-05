@@ -147,23 +147,37 @@ for(const viewport of VIEWPORTS){
   }
 }
 
-test('P1.8 clinician and coordinator retain identical identity hierarchy',async({page})=>{
+test('P1.8 clinician and coordinator retain the same identity hierarchy with controlled long-name scaling',async({page})=>{
   await stubP1(page);
   await page.setViewportSize({width:1440,height:900});
 
   await page.goto('/team/?person=francisco-mendez-salazar');
-  const clinician=await page.locator('#teamProfileSheet').evaluate(el=>({
-    width:el.getBoundingClientRect().width,
-    heading:parseFloat(getComputedStyle(el.querySelector('#teamProfileName')).fontSize)
-  }));
+  const clinician=await page.locator('#teamProfileSheet').evaluate(el=>{
+    const heading=getComputedStyle(el.querySelector('#teamProfileName'));
+    return {
+      width:el.getBoundingClientRect().width,
+      heading:parseFloat(heading.fontSize),
+      family:heading.fontFamily,
+      weight:heading.fontWeight
+    };
+  });
 
   await page.goto('/team/?person=airway-coordinator');
-  const coordinator=await page.locator('#teamProfileSheet').evaluate(el=>({
-    width:el.getBoundingClientRect().width,
-    heading:parseFloat(getComputedStyle(el.querySelector('#teamProfileName')).fontSize)
-  }));
+  const coordinator=await page.locator('#teamProfileSheet').evaluate(el=>{
+    const heading=getComputedStyle(el.querySelector('#teamProfileName'));
+    return {
+      width:el.getBoundingClientRect().width,
+      heading:parseFloat(heading.fontSize),
+      family:heading.fontFamily,
+      weight:heading.fontWeight
+    };
+  });
 
   expect(Math.abs(clinician.width-coordinator.width)).toBeLessThanOrEqual(1);
-  expect(Math.abs(clinician.heading-coordinator.heading)).toBeLessThanOrEqual(.1);
+  expect(coordinator.family).toBe(clinician.family);
+  expect(coordinator.weight).toBe(clinician.weight);
+  expect(coordinator.heading).toBeLessThanOrEqual(clinician.heading);
+  expect(coordinator.heading).toBeGreaterThanOrEqual(clinician.heading*.78);
+  await expect(page.locator('#teamProfileContent')).toHaveClass(/has-long-name/);
   await expect(page.locator('.team-profile__section--leadership')).toBeVisible();
 });
