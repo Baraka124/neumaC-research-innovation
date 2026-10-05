@@ -1495,3 +1495,63 @@ for (const viewport of [
     await expectNoHorizontalOverflow(page);
   });
 }
+
+
+test('Formación final laptop composition is contained and media-led at 1918x928', async ({ page }) => {
+  await page.setViewportSize({ width:1918, height:928 });
+  await page.goto('/formacion/');
+
+  const hero = page.locator('.training-hero__grid');
+  const environment = page.locator('.training-environment__grid');
+  const media = page.locator('.training-media');
+  const mediaImage = media.locator('img');
+  const development = page.locator('.training-development .container');
+
+  await expect(hero).toBeVisible();
+  await expect(environment).toBeVisible();
+  await expect(media).toBeVisible();
+  await expect(mediaImage).toBeVisible();
+  await expect(development).toBeVisible();
+
+  const imageState = await mediaImage.evaluate(img => ({
+    complete: img.complete,
+    naturalWidth: img.naturalWidth,
+    naturalHeight: img.naturalHeight
+  }));
+  expect(imageState.complete).toBeTruthy();
+  expect(imageState.naturalWidth).toBeGreaterThanOrEqual(700);
+  expect(imageState.naturalHeight).toBeGreaterThanOrEqual(250);
+
+  const geometry = await page.evaluate(() => {
+    const env = document.querySelector('.training-environment__grid').getBoundingClientRect();
+    const media = document.querySelector('.training-media').getBoundingClientRect();
+    const envHeading = document.querySelector('.training-environment__copy h2');
+    const devHeading = document.querySelector('.training-section-head h2');
+    const firstRow = document.querySelector('.training-register__row');
+    const rowTitle = firstRow.querySelector('h3').getBoundingClientRect();
+    const rowCopy = firstRow.querySelector('p').getBoundingClientRect();
+    return {
+      viewport: innerWidth,
+      envLeft: env.left,
+      envRight: env.right,
+      mediaRatio: media.width / media.height,
+      envHeadingSize: parseFloat(getComputedStyle(envHeading).fontSize),
+      devHeadingSize: parseFloat(getComputedStyle(devHeading).fontSize),
+      registerGap: rowCopy.left - rowTitle.right
+    };
+  });
+
+  expect(geometry.envLeft).toBeGreaterThanOrEqual(-1);
+  expect(geometry.envRight).toBeLessThanOrEqual(geometry.viewport + 1);
+  expect(geometry.mediaRatio).toBeGreaterThan(1.45);
+  expect(geometry.envHeadingSize).toBeLessThanOrEqual(68);
+  expect(geometry.devHeadingSize).toBeLessThanOrEqual(68);
+  expect(geometry.registerGap).toBeGreaterThanOrEqual(12);
+  expect(geometry.registerGap).toBeLessThanOrEqual(110);
+
+  const visibleText = await page.locator('body').innerText();
+  expect(visibleText).not.toContain('neumACT');
+  expect(visibleText).toContain('neumACt');
+
+  await expectNoHorizontalOverflow(page);
+});
