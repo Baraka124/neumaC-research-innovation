@@ -66,6 +66,30 @@
   }
 
 
+  var MOBILE_DESTINATIONS={
+    research:'/clinical/',
+    innovation:'/innovation/',
+    articles:'/news/',
+    training:'/formacion/',
+    team:'/team/'
+  };
+
+  function enableDirectPhoneNavigation(){
+    var panel=document.getElementById('globalIndex');
+    if(!panel||panel.dataset.directPhoneNav==='true')return;
+    panel.dataset.directPhoneNav='true';
+    panel.addEventListener('click',function(e){
+      if(window.innerWidth>MOBILE_DISCLOSURE)return;
+      var chapter=e.target.closest('[data-index-chapter]');
+      if(!chapter)return;
+      var href=MOBILE_DESTINATIONS[chapter.dataset.indexChapter||''];
+      if(!href)return;
+      e.preventDefault();
+      e.stopPropagation();
+      window.location.assign(href);
+    },true);
+  }
+
   function activeChapter(){
     var current=document.querySelector('[data-index-chapter][aria-pressed="true"],[data-index-chapter].is-current');
     return current&&current.dataset.indexChapter||'research';
@@ -151,6 +175,7 @@
     prepareMobileTrigger();
     placeDesktopIndex();
     var indexReady=ensureLinesDisclosure();
+    enableDirectPhoneNavigation();
     cleanMobileInstitutionDuplication();
     return indexReady;
   }
