@@ -2128,3 +2128,46 @@ body.pub-reader-open[data-page="news"] .pub-feature-lead:not(.is-reader-origin){
 @media(max-width:390px){
   body[data-page="news"] .pub-line-filter{font-size:.64rem}
 }
+
+
+/* ============================================================
+   FINAL WORKSTATION QA — Publications
+   Long live records must never collide with year, authors or context.
+   ============================================================ */
+@media(min-width:1600px){
+  body[data-page="news"] .pub-year-group{
+    grid-template-columns:96px minmax(0,1fr);
+    gap:1.75rem;
+  }
+  body[data-page="news"] .pub-year-group__year{
+    top:calc(var(--hdr,76px) + var(--h2-rail,24px) + 1rem);
+    z-index:1;
+    width:max-content;
+    max-width:100%;
+    padding:.35rem .7rem .35rem 0;
+    background:#fbfaf7;
+  }
+  body[data-page="news"] .pub-item--publication{
+    grid-template-columns:64px minmax(0,1fr) minmax(220px,250px) minmax(180px,215px);
+    gap:1.65rem;
+  }
+  body[data-page="news"] .pub-item--article,
+  body[data-page="news"] .pub-item--highlight,
+  body[data-page="news"] .pub-item--update{
+    grid-template-columns:64px 96px minmax(0,1fr) minmax(190px,220px);
+    gap:1.35rem;
+  }
+}
+body[data-page="news"] .pub-item>*,
+body[data-page="news"] .pub-publication__identity,
+body[data-page="news"] .pub-publication__source,
+body[data-page="news"] .pub-publication__context,
+body[data-page="news"] .pub-editorial__context{
+  min-width:0;
+}
+body[data-page="news"] .pub-publication__authors,
+body[data-page="news"] .pub-publication__line,
+body[data-page="news"] .pub-editorial__context strong,
+body[data-page="news"] .pub-editorial__context span{
+  overflow-wrap:anywhere;
+}
