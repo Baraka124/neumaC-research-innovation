@@ -143,7 +143,7 @@ test('phone Index opens as a compact editorial sheet with useful research conten
 
   await page.locator('#mobToggle').click();
   await expect(page.locator('#globalIndex')).toHaveAttribute('aria-hidden', 'false');
-  await expect(page.locator('.global-index__chapter')).toHaveCount(4);
+  await expect(page.locator('.global-index__chapter')).toHaveCount(5);
 
   const disclosure = page.locator('.global-index__lines-toggle');
   await expect(disclosure).toBeVisible();
@@ -1469,5 +1469,89 @@ test('INIBIC plaque remains visually restrained on phone after glass refinement'
   expect(data.right).toBeLessThanOrEqual(data.viewport + 1);
   expect(data.radius).toBeLessThanOrEqual(6);
   expect(data.backdrop).toMatch(/blur\(/);
+  await expectNoHorizontalOverflow(page);
+});
+
+
+for (const viewport of [
+  { width:390, height:844, label:'phone' },
+  { width:1440, height:900, label:'laptop' },
+  { width:2048, height:1152, label:'workstation' }
+]) {
+  test(`Formación remains contained and visually complete on ${viewport.label}`, async ({ page }) => {
+    await page.setViewportSize({ width:viewport.width, height:viewport.height });
+    await page.goto('/formacion/');
+
+    await expect(page.locator('.training-hero')).toBeVisible();
+    await expect(page.locator('.training-pathway')).toBeVisible();
+    await expect(page.locator('.training-media img')).toBeVisible();
+    await expect(page.locator('.training-media img')).toHaveAttribute('src','/assets/training/neumact-training-research-clinicians.webp');
+    await expect(page.locator('.training-register__row')).toHaveCount(4);
+    await expect(page.locator('.training-innovation__process li')).toHaveCount(5);
+
+    await expectContainedInViewport(page.locator('.training-hero__grid'), viewport.width);
+    await expectContainedInViewport(page.locator('.training-environment__grid'), viewport.width);
+    await expectContainedInViewport(page.locator('.training-development .container'), viewport.width);
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
+
+test('Formación final laptop composition is contained and media-led at 1918x928', async ({ page }) => {
+  await page.setViewportSize({ width:1918, height:928 });
+  await page.goto('/formacion/');
+
+  const hero = page.locator('.training-hero__grid');
+  const environment = page.locator('.training-environment__grid');
+  const media = page.locator('.training-media');
+  const mediaImage = media.locator('img');
+  const development = page.locator('.training-development .container');
+
+  await expect(hero).toBeVisible();
+  await expect(environment).toBeVisible();
+  await expect(media).toBeVisible();
+  await expect(mediaImage).toBeVisible();
+  await expect(development).toBeVisible();
+
+  const imageState = await mediaImage.evaluate(img => ({
+    complete: img.complete,
+    naturalWidth: img.naturalWidth,
+    naturalHeight: img.naturalHeight
+  }));
+  expect(imageState.complete).toBeTruthy();
+  expect(imageState.naturalWidth).toBeGreaterThanOrEqual(700);
+  expect(imageState.naturalHeight).toBeGreaterThanOrEqual(250);
+
+  const geometry = await page.evaluate(() => {
+    const env = document.querySelector('.training-environment__grid').getBoundingClientRect();
+    const media = document.querySelector('.training-media').getBoundingClientRect();
+    const envHeading = document.querySelector('.training-environment__copy h2');
+    const devHeading = document.querySelector('.training-section-head h2');
+    const firstRow = document.querySelector('.training-register__row');
+    const rowTitle = firstRow.querySelector('h3').getBoundingClientRect();
+    const rowCopy = firstRow.querySelector('p').getBoundingClientRect();
+    return {
+      viewport: innerWidth,
+      envLeft: env.left,
+      envRight: env.right,
+      mediaRatio: media.width / media.height,
+      envHeadingSize: parseFloat(getComputedStyle(envHeading).fontSize),
+      devHeadingSize: parseFloat(getComputedStyle(devHeading).fontSize),
+      registerGap: rowCopy.left - rowTitle.right
+    };
+  });
+
+  expect(geometry.envLeft).toBeGreaterThanOrEqual(-1);
+  expect(geometry.envRight).toBeLessThanOrEqual(geometry.viewport + 1);
+  expect(geometry.mediaRatio).toBeGreaterThan(1.45);
+  expect(geometry.envHeadingSize).toBeLessThanOrEqual(68);
+  expect(geometry.devHeadingSize).toBeLessThanOrEqual(68);
+  expect(geometry.registerGap).toBeGreaterThanOrEqual(12);
+  expect(geometry.registerGap).toBeLessThanOrEqual(110);
+
+  const visibleText = await page.locator('body').innerText();
+  expect(visibleText).not.toContain('neumACT');
+  expect(visibleText).toContain('neumACt');
+
   await expectNoHorizontalOverflow(page);
 });

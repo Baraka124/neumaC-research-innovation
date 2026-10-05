@@ -26,7 +26,7 @@ async function noOverflow(page){
   expect(g.b).toBeLessThanOrEqual(g.v+2);
 }
 
-test('Scientific Search opens with authored four-domain discovery registry',async({page})=>{
+test('Scientific Search opens with authored five-domain discovery registry',async({page})=>{
   await stubSearchApi(page);
   await page.setViewportSize({width:1440,height:900});
   await page.goto('/innovation/');
@@ -35,12 +35,13 @@ test('Scientific Search opens with authored four-domain discovery registry',asyn
   await expect(page.locator('#globalIndex')).toHaveClass(/is-search/);
   await expect(page.locator('#globalIndexSearchInput')).toBeFocused();
   await expect(page.locator('.global-search__discovery')).toBeVisible();
-  await expect(page.locator('.global-search__scope')).toHaveCount(4);
+  await expect(page.locator('.global-search__scope')).toHaveCount(5);
   await expect(page.locator('.global-search__discovery')).toContainText(/Discover across the neumACt programme|Explorar el programa neumACt/);
   await expect(page.locator('.global-search__scope-list')).toContainText(/Research|Investigación/);
   await expect(page.locator('.global-search__scope-list')).toContainText(/People|Personas/);
   await expect(page.locator('.global-search__scope-list')).toContainText(/Publications|Publicaciones/);
   await expect(page.locator('.global-search__scope-list')).toContainText(/Innovation|Innovación/);
+  await expect(page.locator('.global-search__scope-list')).toContainText(/Training|Formación/);
   const geometry=await page.evaluate(()=>{
     const view=document.querySelector('#globalIndexSearchView').getBoundingClientRect();
     const discovery=document.querySelector('.global-search__discovery').getBoundingClientRect();
@@ -73,7 +74,7 @@ test('Scientific Search preserves unified data-driven results and filters',async
   await noOverflow(page);
 });
 
-test('Phone Scientific Search keeps discovery registry contained and single-column',async({page})=>{
+test('Phone Scientific Search keeps five-domain discovery registry contained and single-column',async({page})=>{
   await stubSearchApi(page);
   await page.setViewportSize({width:390,height:844});
   await page.goto('/team/');
@@ -81,10 +82,10 @@ test('Phone Scientific Search keeps discovery registry contained and single-colu
 
   await expect(page.locator('#globalIndex')).toHaveClass(/is-search/);
   await expect(page.locator('.global-search__discovery')).toBeVisible();
-  await expect(page.locator('.global-search__scope')).toHaveCount(4);
+  await expect(page.locator('.global-search__scope')).toHaveCount(5);
 
   const rows=await page.locator('.global-search__scope').evaluateAll(items=>items.map(el=>Math.round(el.getBoundingClientRect().top)));
-  expect(new Set(rows).size).toBe(4);
+  expect(new Set(rows).size).toBe(5);
   const surfaceBackground=await page.locator('#globalIndexSurface').evaluate(el=>getComputedStyle(el).backgroundColor);
   expect(surfaceBackground).toMatch(/^rgb\(/);
   await noOverflow(page);

@@ -84,15 +84,20 @@ test('Scientific Index uses page-aware centre content on Publications and Team',
   await noOverflow(page);
 });
 
-test('Phone Index keeps four chapter controls and chapter-aware centre content',async({page})=>{
+test('Phone Index keeps five chapter controls and chapter-aware centre content',async({page})=>{
   await stubIndexApi(page);
   await page.setViewportSize({width:390,height:844});
   await page.goto('/innovation/');
   await page.locator('#mobToggle').click();
 
-  await expect(page.locator('[data-index-chapter]')).toHaveCount(4);
+  await expect(page.locator('[data-index-chapter]')).toHaveCount(5);
   await expect(page.locator('[data-index-chapter="innovation"]')).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('#globalIndexLinesTitle')).toContainText(/Innovation pathway|Ruta de innovación/);
+
+  await page.locator('[data-index-chapter="training"]').click();
+  await expect(page.locator('#globalIndexLinesTitle')).toContainText(/Training & research development|Formación y desarrollo investigador/);
+  await expect(page.locator('#globalIndexChapterOpen')).toHaveAttribute('href','/formacion/');
+  await expect(page.locator('#globalIndexLines')).toContainText(/Research environment|Entorno investigador/);
 
   await page.locator('[data-index-chapter="team"]').click();
   await expect(page.locator('#globalIndexLinesTitle')).toContainText(/People & programme|Personas y programa/);

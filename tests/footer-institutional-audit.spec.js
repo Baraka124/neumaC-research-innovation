@@ -31,7 +31,7 @@ for(const vp of [
 
     await expect(page.locator('.footer-brand-plate')).toBeVisible();
     await expect(page.locator('.footer-logo-img')).toHaveAttribute('src','/logo.svg');
-    await expect(page.locator('.footer-col-nav nav a')).toHaveCount(4);
+    await expect(page.locator('.footer-col-nav nav a')).toHaveCount(5);
     await expect(page.locator('.footer-legal-nav a')).toHaveCount(3);
 
     const geo=await page.evaluate(()=>{
