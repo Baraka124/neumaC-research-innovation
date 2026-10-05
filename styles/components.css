@@ -3440,3 +3440,47 @@ body[data-page="home"] .hdr--scientific.scrolled .hdr-context{
     transition:none!important;
   }
 }
+
+
+/* ============================================================
+   FINAL VIDEO QA — wide-desktop scientific masthead geometry
+   Source corridor: 1918px desktop capture.
+   Keep the institutional lockup readable while centring primary
+   navigation independently from the brand and utility clusters.
+   ============================================================ */
+@media(min-width:1600px){
+  .hdr--scientific .hdr-inner{
+    max-width:none;
+    display:grid;
+    grid-template-columns:minmax(500px,1fr) auto minmax(250px,1fr);
+    column-gap:clamp(1.2rem,1.75vw,2rem);
+    padding-inline:clamp(1.15rem,1.55vw,1.85rem);
+  }
+  .hdr--scientific .hdr-logo{
+    flex:none;
+    min-width:0;
+    justify-self:start;
+  }
+  .hdr--scientific .hdr-brand-meta{
+    padding-left:.86rem;
+  }
+  .hdr--scientific .hdr-brand-title{
+    letter-spacing:.082em;
+  }
+  .hdr--scientific .hdr-brand-org{
+    font-size:.505rem;
+    letter-spacing:.054em;
+    color:rgba(255,255,255,.62);
+    white-space:nowrap;
+  }
+  .hdr--scientific .hdr-nav{
+    flex:none;
+    justify-self:center;
+    transform:none;
+  }
+  .hdr--scientific .hdr-right{
+    justify-self:end;
+    margin-left:0;
+    padding-left:.72rem;
+  }
+}
