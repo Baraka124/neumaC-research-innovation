@@ -25,10 +25,14 @@ for(const width of [320,390,430,620]){
     await expect(trigger).toBeVisible();
     await trigger.click();
 
-    await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded','true');
-    await expect(page.locator('#globalIndexLines')).toBeVisible();
+    await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded','false');
+    await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-collapsed/);
 
     await page.locator('[data-index-chapter="team"]').click();
+    await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded','false');
+    await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-collapsed/);
+
+    await page.locator('.global-index__lines-toggle').click();
     await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded','true');
     await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-expanded/);
     await expect(page.locator('#globalIndexLines')).toContainText(/Multidisciplinary team|Equipo multidisciplinar/);
