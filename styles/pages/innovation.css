@@ -64,7 +64,7 @@ body[data-page="innovation"] main{overflow-x:clip;}
 .innovation-context__system span{padding:1rem 0;font:500 .65rem/1.35 var(--ff-mono);letter-spacing:.07em;text-transform:uppercase;color:#566a80;border-bottom:1px solid #d7dcdf;}
 
 /* Collaboration — same dark close and progressive disclosure as Research */
-.innovation-contact{padding:clamp(3.4rem,4.6vw,4.6rem) 0;background:#061a30;color:#fff;border-top:1px solid rgba(255,255,255,.08);}
+.innovation-contact{padding:clamp(3.4rem,4.6vw,4.6rem) 0;background:var(--institutional-anchor-deep);color:#fff;border-top:1px solid rgba(255,255,255,.08);}
 .innovation-contact__grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(360px,.7fr);gap:clamp(2.5rem,6vw,6rem);align-items:center;}
 .innovation-contact h2{max-width:12ch;color:#fff;}
 .innovation-contact__copy>p{max-width:46rem;margin:1rem 0 0;color:rgba(255,255,255,.64);line-height:1.68;}
