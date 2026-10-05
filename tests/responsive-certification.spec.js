@@ -1734,6 +1734,8 @@ for (const viewport of [
     expect(geo.shadow).toBe('none');
     expect(geo.paneWidth / geo.viewport).toBeLessThan(0.94);
     expect(geo.titleWidth / geo.viewport).toBeLessThan(0.88);
+    const titleSize=await title.evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+    expect(titleSize).toBeLessThanOrEqual(viewport.width<=390?43:49);
     await expectNoHorizontalOverflow(page);
   });
 }
