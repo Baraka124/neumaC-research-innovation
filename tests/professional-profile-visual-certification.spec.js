@@ -52,7 +52,7 @@ const people = [
     ]
   },
   {
-    id:'p1-coordinator', full_name:'Dra. Airway Coordinator', is_public:true,
+    id:'p1-coordinator', full_name:'Dra. Alexandra Airway Coordinator', is_public:true,
     staff_type:'attending_physician', specialization:'Neumología',
     primary_dept_name:'Servicio de Neumología',
     coordinates_line:line,
@@ -104,7 +104,7 @@ const PROFILES=[
   ['clinician','francisco-mendez-salazar'],
   ['nurse','ana-research-nurse'],
   ['engineer','luis-biomedical-engineer'],
-  ['coordinator','airway-coordinator'],
+  ['coordinator','alexandra-airway-coordinator'],
   ['leader','department-leader']
 ];
 
@@ -162,7 +162,7 @@ test('P1.8 clinician and coordinator retain the same identity hierarchy with con
     };
   });
 
-  await page.goto('/team/?person=airway-coordinator');
+  await page.goto('/team/?person=alexandra-airway-coordinator');
   const coordinator=await page.locator('#teamProfileSheet').evaluate(el=>{
     const heading=getComputedStyle(el.querySelector('#teamProfileName'));
     return {
