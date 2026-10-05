@@ -1428,3 +1428,28 @@ body[data-page="clinical"] .research-contact.is-inquiry-open .research-contact__
   body[data-page="clinical"] .research-contact__form-kicker,
   body[data-page="clinical"] .research-contact .form-group label{font-size:.60rem}
 }
+
+
+/* FINAL WORKSTATION CERTIFICATION — 2048px hospital desktop */
+@media(min-width:1800px){
+  body[data-page="clinical"] .research-hero__sheet{
+    width:min(calc(100% - 5rem),1500px);
+    max-width:1500px;
+  }
+
+  body[data-page="clinical"] .research-lines-section>.container,
+  body[data-page="clinical"] .research-section>.container,
+  body[data-page="clinical"] .research-context>.container,
+  body[data-page="clinical"] .research-contact>.container{
+    max-width:1500px;
+  }
+
+  body[data-page="clinical"] .research-line-row{
+    grid-template-columns:190px minmax(0,1fr) minmax(220px,.42fr);
+    gap:1.7rem;
+  }
+
+  body[data-page="clinical"] .research-line__summary{
+    font-size:.82rem;
+  }
+}
