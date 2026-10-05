@@ -378,8 +378,8 @@ body.team-profile-open{overflow:hidden;}
   .team-profile-backdrop,.team-profile-sheet,body.team-profile-open #mainContent{transition:none;}
 }
 
-/* Phase 7.12.1 — final hierarchy cleanup */
-.team-profile-sheet__chrome{justify-content:flex-end;}
+/* Phase 7.12.1 — profile chrome now carries dossier context + close action. */
+.team-profile-sheet__chrome{justify-content:space-between;}
 
 
 /* ============================================================
