@@ -177,6 +177,21 @@
    untouched.
    ============================================================ */
 @media(max-width:620px){
+  /* Phone Index: navigation first, contextual exploration second. */
+  .global-index__index-view{
+    display:flex!important;
+    flex-direction:column;
+  }
+  .global-index__chapters{order:1;}
+  .global-index__utilities{order:2;}
+  .global-index__lines{order:3;}
+  .global-index__chapter{
+    min-height:46px!important;
+  }
+  .global-index__chapter-name{
+    font-size:clamp(1.2rem,6.3vw,1.38rem)!important;
+  }
+
   /* A publication-like sheet: direct, quiet movement rather than card zoom. */
   .global-index__surface{
     transform:translateY(6px)!important;
@@ -190,11 +205,11 @@
     position:sticky;
     top:0;
     z-index:6;
-    background:rgba(251,250,247,.94)!important;
-    backdrop-filter:blur(18px) saturate(112%);
-    -webkit-backdrop-filter:blur(18px) saturate(112%);
+    background:rgba(251,250,247,.96)!important;
+    backdrop-filter:blur(14px) saturate(108%);
+    -webkit-backdrop-filter:blur(14px) saturate(108%);
     border-bottom:1px solid rgba(12,56,104,.09);
-    box-shadow:0 8px 24px rgba(7,36,61,.035)!important;
+    box-shadow:0 3px 12px rgba(7,36,61,.025)!important;
   }
   .global-index__close--mobile{
     background:rgba(255,255,255,.62)!important;
@@ -240,9 +255,10 @@
     display:grid!important;
     grid-template-columns:minmax(0,1fr) minmax(0,1fr);
     column-gap:.9rem;
-    margin-top:.28rem!important;
-    padding:.16rem 0 0!important;
+    margin:.1rem 0 .42rem!important;
+    padding:.12rem 0 .42rem!important;
     border-top:1px solid #d6e0e3!important;
+    border-bottom:1px solid #d6e0e3!important;
   }
   .global-index__utility-label{display:none!important;}
   .global-index__utility-link{
