@@ -177,9 +177,9 @@ body[data-page="training"] .container{
 .training-environment__copy{max-width:670px;}
 .training-environment__copy h2,.training-section-head h2{
   margin:0;
-  font-size:clamp(2.85rem,3.85vw,4.2rem);
-  line-height:.96;
-  letter-spacing:-.042em;
+  font-size:clamp(2.75rem,3.35vw,3.9rem);
+  line-height:.97;
+  letter-spacing:-.038em;
 }
 .training-environment__copy h2{max-width:16ch;}
 .training-environment__copy>p{
