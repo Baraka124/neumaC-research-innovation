@@ -1563,7 +1563,8 @@ for (const viewport of [
     await expect(page.locator('.training-participation')).toBeVisible();
     await expect(page.locator('.training-media img')).toHaveCount(0);
     await expect(page.locator('.training-register__row')).toHaveCount(4);
-    await expect(page.locator('.training-innovation__process li')).toHaveCount(5);
+    await expect(page.locator('.training-participation--profiles article')).toHaveCount(3);
+    await expect(page.locator('.training-original article')).toHaveCount(3);
 
     await expectContainedInViewport(page.locator('.training-hero__grid'), viewport.width);
     await expectContainedInViewport(page.locator('.training-environment__grid'), viewport.width);
@@ -1590,7 +1591,7 @@ test('Formación final hospital-desktop composition is contained and editorial a
 
   const geometry = await page.evaluate(() => {
     const env = document.querySelector('.training-environment__grid').getBoundingClientRect();
-    const participation = document.querySelector('.training-participation').getBoundingClientRect();
+    const participation = document.querySelector('.training-participation--profiles').getBoundingClientRect();
     const envHeading = document.querySelector('.training-environment__copy h2');
     const devHeading = document.querySelector('.training-section-head h2');
     const innovationHeading = document.querySelector('.training-innovation__head h2');
