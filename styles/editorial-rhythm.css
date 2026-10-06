@@ -177,6 +177,20 @@ html body[data-page="team"] .team-lead__body h3{
   line-height:1.02;
 }
 
+/* Innovation + Publications responsive calibration.
+   Workstation desktop remains unchanged; laptop gets only a restrained reduction. */
+@media(min-width:901px) and (max-width:1450px){
+  body[data-page="innovation"],
+  body[data-page="news"]{
+    --editorial-heading:clamp(38px,3.05vw,44px);
+  }
+
+  html body[data-page="innovation"] .innovation-hero h1,
+  html body[data-page="news"] .pub-hero__identity h1{
+    font-size:clamp(48px,4.3vw,62px);
+  }
+}
+
 /* ------------------------------------------------------------
    Tablet
    ------------------------------------------------------------ */
@@ -229,6 +243,16 @@ html body[data-page="team"] .team-lead__body h3{
     font-size:clamp(2.58rem,11.2vw,3.34rem);
     line-height:.94;
     letter-spacing:-.044em;
+  }
+
+  body[data-page="innovation"],
+  body[data-page="news"]{
+    --editorial-heading:clamp(31px,8.2vw,36px);
+  }
+
+  html body[data-page="innovation"] .innovation-hero h1,
+  html body[data-page="news"] .pub-hero__identity h1{
+    font-size:clamp(36px,10.4vw,44px);
   }
 
   html body[data-page="home"] .home-hero-lead,
