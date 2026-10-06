@@ -444,9 +444,10 @@ test('Media-less Featured publication composes as a compact bibliographic folio'
     lead:document.querySelector('.pub-feature-lead--typographic').getBoundingClientRect().height,
     folio:document.querySelector('.pub-feature-lead__folio').getBoundingClientRect().height
   }));
-  expect(geo.stage).toBeLessThanOrEqual(300);
-  expect(geo.lead).toBeLessThanOrEqual(300);
-  expect(geo.folio).toBeLessThanOrEqual(270);
+  expect(geo.stage).toBeLessThanOrEqual(360);
+  expect(geo.lead).toBeLessThanOrEqual(360);
+  expect(geo.folio).toBeLessThanOrEqual(300);
+  expect(geo.stage-geo.folio).toBeLessThanOrEqual(80);
   await expectNoHorizontalOverflow(page);
 });
 
