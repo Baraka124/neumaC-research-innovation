@@ -1575,6 +1575,48 @@ for (const viewport of [
 }
 
 
+
+for (const viewport of [
+  { width:390, height:844, label:'phone' },
+  { width:1366, height:768, label:'laptop' }
+]) {
+  test(`Training and Team typography remain proportionate on ${viewport.label}`, async ({ page }) => {
+    await page.setViewportSize({ width:viewport.width, height:viewport.height });
+
+    await page.goto('/formacion/');
+    const trainingSizes=await page.evaluate(()=>({
+      hero:parseFloat(getComputedStyle(document.querySelector('.training-hero h1')).fontSize),
+      environment:parseFloat(getComputedStyle(document.querySelector('.training-environment__copy h2')).fontSize),
+      development:parseFloat(getComputedStyle(document.querySelector('.training-section-head h2')).fontSize)
+    }));
+    if(viewport.width<=390){
+      expect(trainingSizes.hero).toBeLessThanOrEqual(36);
+      expect(trainingSizes.environment).toBeLessThanOrEqual(36);
+      expect(trainingSizes.development).toBeLessThanOrEqual(36);
+    }else{
+      expect(trainingSizes.hero).toBeLessThanOrEqual(58);
+      expect(trainingSizes.environment).toBeLessThanOrEqual(46);
+      expect(trainingSizes.development).toBeLessThanOrEqual(46);
+    }
+    await expect(page.locator('body')).not.toContainText('Development areas');
+    await expect(page.locator('body')).not.toContainText('Research development');
+    await expectNoHorizontalOverflow(page);
+
+    await page.goto('/team/');
+    const teamSizes=await page.evaluate(()=>({
+      hero:parseFloat(getComputedStyle(document.querySelector('.team-hero h1')).fontSize),
+      section:parseFloat(getComputedStyle(document.querySelector('.team-section-head h2')).fontSize)
+    }));
+    if(viewport.width<=390){
+      expect(teamSizes.hero).toBeLessThanOrEqual(46);
+      expect(teamSizes.section).toBeLessThanOrEqual(36);
+    }else{
+      expect(teamSizes.hero).toBeLessThanOrEqual(78);
+    }
+    await expectNoHorizontalOverflow(page);
+  });
+}
+
 test('Formación final hospital-desktop composition is contained and editorial at 1918x928', async ({ page }) => {
   await page.setViewportSize({ width:1918, height:928 });
   await page.goto('/formacion/');
