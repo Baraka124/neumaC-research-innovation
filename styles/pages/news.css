@@ -2298,3 +2298,20 @@ body[data-page="news"] .pub-editorial__context span{
     font-size:clamp(31px,8.2vw,36px);
   }
 }
+
+
+/* Media-less Featured records size to their bibliographic content rather than a media placeholder. */
+body[data-page="news"] .pub-feature__stage.is-typographic{
+  min-height:0;
+}
+@media(min-width:1600px){
+  body[data-page="news"] .pub-feature__stage.is-typographic{
+    min-height:0;
+  }
+  body[data-page="news"] .pub-feature__stage.is-typographic .pub-feature-lead--typographic{
+    min-height:320px;
+  }
+  body[data-page="news"] .pub-feature__stage.is-typographic .pub-feature-lead__folio{
+    min-height:300px;
+  }
+}
