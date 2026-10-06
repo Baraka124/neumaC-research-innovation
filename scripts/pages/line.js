@@ -13,15 +13,6 @@
   }[ch]));
   const bi = (en, es) => `<span lang="en">${esc(en)}</span><span lang="es">${esc(es)}</span>`;
 
-  const lineLabels = {
-    1:['Transplantation & Pulmonary Hypertension','Trasplante e hipertensión pulmonar'],
-    2:['Airway Diseases','Enfermedades de la vía aérea'],
-    3:['Interventional Pneumology & Lung Cancer','Neumología intervencionista y cáncer de pulmón'],
-    4:['Respiratory Failure & Sleep Medicine','Insuficiencia respiratoria y medicina del sueño'],
-    5:['Innovation in Thoracic Surgery','Innovación en cirugía torácica'],
-    6:['Precision Medicine & Clinical Innovation','Medicina de precisión e innovación clínica']
-  };
-
   const staffRoleLabels = {
     attending_physician:['Physician','Médico/a'],
     specialist_physician:['Physician','Médico/a'],
@@ -50,9 +41,9 @@
   }
 
   function linePair(line){
-    const n = Number(line?.line_number || 0);
-    const mapped = lineLabels[n];
-    if (mapped) return mapped;
+    if (typeof institutionalResearchLinePair === 'function') {
+      return institutionalResearchLinePair(line);
+    }
     const raw = String(line?.short_name || line?.name || '').trim();
     return [raw, raw];
   }
