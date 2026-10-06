@@ -188,3 +188,36 @@ for (const viewport of VIEWPORTS) {
     await captureSection(page,viewport,'networks','#lineNetworksSection');
   });
 }
+
+
+test('Research and Line surfaces use the same canonical institutional name for Line 6', async ({ page }) => {
+  const line6 = {
+    id:'r6-cert-line',
+    line_number:6,
+    name:'Precision Medicine',
+    short_name:'Precision Medicine',
+    description:'Fixture description.',
+    keywords:[],
+    team:[]
+  };
+
+  await page.route('**/api/**', async route => {
+    const url = route.request().url();
+    if (url.includes('/api/research-lines/r6-cert-line/website')) return route.fulfill({ json:{data:line6} });
+    if (url.includes('/api/research-lines/website')) return route.fulfill({ json:{data:[line6]} });
+    if (url.includes('/api/team/website')) return route.fulfill({ json:{data:[]} });
+    if (url.includes('/api/clinical-trials/website')) return route.fulfill({ json:{data:[]} });
+    if (url.includes('/api/innovation-projects/website')) return route.fulfill({ json:{data:[]} });
+    if (url.includes('/api/news/website')) return route.fulfill({ json:{data:[]} });
+    return route.fulfill({ json:{data:[]} });
+  });
+
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/line/?id=r6-cert-line');
+
+  await expect(page.locator('#lineTitle')).toContainText('Personalised Respiratory Medicine, Management & Clinical Innovation');
+
+  await page.goto('/clinical/');
+  await expect(page.locator('#researchLinesList')).toContainText('Personalised Respiratory Medicine, Management & Clinical Innovation');
+  await expect(page.locator('select[name="area_of_interest"] option[value="06"]')).toHaveText('Personalised Respiratory Medicine, Management & Clinical Innovation');
+});
