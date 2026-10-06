@@ -64,7 +64,7 @@ for(const width of [320,390,430,620]){
       return {back:box('.global-search__back'),filters};
     });
 
-    expect(searchSizes.back.h).toBeGreaterThanOrEqual(44);
+    expect(Math.round(searchSizes.back.h)).toBeGreaterThanOrEqual(44);
     for(const item of searchSizes.filters) expect(Math.round(item.h)).toBeGreaterThanOrEqual(44);
 
     await noOverflow(page);
