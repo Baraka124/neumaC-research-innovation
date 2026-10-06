@@ -453,7 +453,7 @@ async function loadTrials(filters = {}) {
       window._trialData[t.id] = t;
       const statusClass = STATUS_CLASS[t.status] || 'active';
       const line = t.research_line || (t.additional_lines || [])[0] || null;
-      const lineText = line ? escHtml(line.short_name || line.name) : '—';
+      const lineText = line ? escHtml(institutionalResearchLineLabel(line)) : '—';
       const phaseText = t.phase ? escHtml(t.phase) : '—';
       const hiddenClass = index >= 6 ? ' is-collapsed' : '';
       return `
@@ -640,7 +640,7 @@ async function loadTeamLeads() {
     grid.innerHTML = leads.map((m,i) => {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const lineNum = m.coordinates_line?.line_number ? String(m.coordinates_line.line_number).padStart(2,'0') : '';
-      const lineName = m.coordinates_line?.name || '';
+      const lineName = m.coordinates_line ? institutionalResearchLineLabel(m.coordinates_line) : '';
       const expertise = _getExpertise(m.id);
       const isAffiliated = m.is_external;
       const leadInitialsId = 'lav' + Math.random().toString(36).slice(2, 9);
@@ -1274,7 +1274,7 @@ window.openTrialModal = function(id, origin) {
 
   const statusClass = STATUS_CLASS[t.status] || 'active';
   const statusLabel = STATUS_LABEL_EN[t.status] || t.status;
-  const lineName = t.research_line?.name || '—';
+  const lineName = t.research_line ? institutionalResearchLineLabel(t.research_line) : '—';
   const lineNum  = t.research_line?.line_number ? `0${t.research_line.line_number}`.slice(-2) : '—';
 
   if (tmMeta) tmMeta.innerHTML = `
@@ -1678,7 +1678,7 @@ async function loadHomepageCurrentWork() {
       const es = dt.toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'});
       return `<span lang="en">${escHtml(en)}</span><span lang="es">${escHtml(es)}</span>`;
     };
-    const lineName = record => record?.research_line?.short_name || record?.research_line?.name || '';
+    const lineName = record => record?.research_line ? institutionalResearchLineLabel(record.research_line) : '';
 
     const publicationHtml = publication ? (() => {
       const image = publication.featured_image_url || (Array.isArray(publication.image_urls) ? publication.image_urls[0] : '') || '';
