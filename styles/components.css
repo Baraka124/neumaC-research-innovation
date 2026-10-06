@@ -2528,6 +2528,16 @@ body[data-page="team"] .team-contact h2{
   text-wrap:balance;
 }
 
+@media(max-width:640px){
+  body[data-page="team"] .team-section-head h2,
+  body[data-page="team"] .team-network h2,
+  body[data-page="team"] .team-contact h2{
+    font-size:clamp(31px,7vw,36px);
+    line-height:.99;
+    letter-spacing:-.032em;
+  }
+}
+
 body[data-page="home"] .home-section,
 body[data-page="clinical"] .research-section,
 body[data-page="innovation"] .innovation-start,
