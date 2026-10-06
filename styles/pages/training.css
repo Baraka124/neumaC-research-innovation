@@ -747,7 +747,7 @@ body[data-page="training"] .container{
   .training-hero__grid{grid-template-columns:minmax(0,1.05fr) minmax(390px,.74fr);gap:2.8rem;}
   .training-hero h1{
     max-width:11ch;
-    font-size:clamp(3.25rem,4.25vw,4.45rem);
+    font-size:clamp(3.05rem,3.95vw,4.15rem);
     line-height:.94;
   }
   .training-pathway{transform:translateX(-.2rem);}
@@ -755,12 +755,12 @@ body[data-page="training"] .container{
   .training-environment__copy h2,
   .training-section-head h2{
     max-width:19ch;
-    font-size:clamp(2.45rem,3.05vw,3.15rem);
+    font-size:clamp(2.3rem,2.8vw,2.95rem);
     line-height:.98;
   }
   .training-innovation__head h2{
     max-width:18ch;
-    font-size:clamp(2.7rem,3.45vw,3.55rem);
+    font-size:clamp(2.5rem,3.15vw,3.3rem);
     line-height:.96;
   }
   .training-participation{min-height:430px;}
@@ -800,7 +800,7 @@ body[data-page="training"] .container{
     text-wrap:balance;
   }
   .training-hero h1{
-    font-size:clamp(2.35rem,9.8vw,3.3rem);
+    font-size:clamp(2.22rem,8.9vw,2.95rem);
     line-height:.96;
     letter-spacing:-.042em;
   }
@@ -839,7 +839,7 @@ body[data-page="training"] .container{
 
   .training-environment{padding:4.2rem 0;}
   .training-environment__copy h2,.training-section-head h2{
-    font-size:clamp(2.05rem,8vw,2.8rem);
+    font-size:clamp(1.95rem,7.2vw,2.45rem);
     line-height:.98;
     letter-spacing:-.034em;
   }
@@ -870,7 +870,7 @@ body[data-page="training"] .container{
   .training-innovation{padding:4.4rem 0;}
   .training-innovation__head{grid-template-columns:1fr;gap:1.2rem;}
   .training-innovation__head h2{
-    font-size:clamp(2.15rem,8.9vw,3.05rem);
+    font-size:clamp(2rem,7.7vw,2.6rem);
     line-height:.98;
     letter-spacing:-.036em;
   }
@@ -881,10 +881,10 @@ body[data-page="training"] .container{
 
 @media(max-width:390px){
   body[data-page="training"] .container{width:calc(100% - 1.4rem);}
-  .training-hero h1{font-size:clamp(2.2rem,9.5vw,2.75rem);}
+  .training-hero h1{font-size:clamp(2.08rem,8.7vw,2.55rem);}
   .training-environment__copy h2,
   .training-section-head h2,
-  .training-innovation__head h2{font-size:clamp(2rem,8.7vw,2.55rem);}
+  .training-innovation__head h2{font-size:clamp(1.92rem,7.6vw,2.35rem);}
   .training-register__row h3,
   .training-pathway strong,
   .training-innovation__process strong{
