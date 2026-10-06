@@ -122,7 +122,7 @@ body[data-page="team"] main{overflow:hidden;}
   }
   .team-hero::before{display:none;}
   .team-hero__grid{max-width:100%;padding-inline:1rem;}
-  .team-hero h1{font-size:clamp(3.6rem,17vw,5.25rem);}
+  .team-hero h1{font-size:clamp(2.65rem,10.4vw,3.45rem);}
   .team-hero__lead{margin-top:1rem;font-size:.98rem;}
   .team-hero__context{padding-top:.9rem;}
   .team-hero__context>p{font-size:.82rem;line-height:1.7;}
@@ -249,7 +249,7 @@ body[data-page="team"] main{overflow:hidden;}
   .team-roster__grid::after{display:none;}
 }
 @media(max-width:640px){
-  .team-hero h1{font-size:clamp(3rem,13vw,4.2rem);}
+  .team-hero h1{font-size:clamp(2.65rem,10.4vw,3.45rem);}
   .team-lead{grid-template-columns:110px minmax(0,1fr);gap:1rem;}
   .team-lead__portrait{width:110px;}
   .team-lead__body h3{font-size:clamp(1.7rem,7.5vw,2.25rem);}
@@ -261,7 +261,7 @@ body[data-page="team"] main{overflow:hidden;}
   .team-person__portrait{width:72px;}
   .team-person__name{font-size:1.22rem;}
   .team-network__system{grid-template-columns:1fr;}
-  .team-contact h2{font-size:clamp(2.4rem,11vw,3.5rem);}
+  .team-section-head h2,.team-network h2,.team-contact h2{font-size:clamp(2rem,7.8vw,2.6rem);line-height:.99;letter-spacing:-.034em;}
 }
 
 
@@ -435,6 +435,10 @@ body[data-page="team"] .team-hero__context>p{
   body[data-page="team"] .team-hero__grid{
     max-width:min(1420px,calc(100vw - 3.5rem));
     grid-template-columns:minmax(0,1fr) minmax(340px,.50fr);
+  }
+  body[data-page="team"] .team-hero h1{
+    font-size:clamp(3.5rem,5.35vw,5.15rem);
+    line-height:.94;
   }
 }
 
