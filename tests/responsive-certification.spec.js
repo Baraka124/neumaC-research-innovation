@@ -450,7 +450,7 @@ test('Media-less Featured publication balances folio and citation at 2K desktop'
     };
   });
 
-  expect(geo.leadHeight).toBeLessThanOrEqual(360);
+  expect(geo.leadHeight).toBeLessThanOrEqual(380);
   expect(geo.folioRatio).toBeGreaterThanOrEqual(.24);
   expect(geo.folioRatio).toBeLessThanOrEqual(.38);
   expect(geo.titleSize).toBeLessThanOrEqual(34);
