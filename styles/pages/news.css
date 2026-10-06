@@ -2248,3 +2248,70 @@ body[data-page="news"] .pub-editorial__context span{
     margin-left:auto;
   }
 }
+
+
+/* Featured publication without media: bibliographic folio, not an empty media surrogate. */
+@media(min-width:821px) and (max-width:1599px){
+  body[data-page="news"] .pub-feature-lead--typographic{
+    grid-template-columns:minmax(220px,.46fr) minmax(0,1.54fr);
+    gap:clamp(2rem,3.6vw,4rem);
+    min-height:260px;
+    align-items:center;
+  }
+  body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__folio{
+    min-height:260px;
+    padding:1rem 1.8rem 1rem 0;
+  }
+  body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__folio-year{
+    margin-top:1rem;
+    font-size:clamp(3.2rem,5vw,4.7rem);
+  }
+  body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__copy{
+    padding:.8rem 0 1rem;
+  }
+  body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__title{
+    max-width:22ch;
+    font-size:clamp(1.85rem,2.45vw,2.75rem);
+  }
+}
+@media(max-width:820px){
+  body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__folio{
+    padding:.8rem 0 1rem;
+  }
+  body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__folio-year{
+    margin-top:.8rem;
+    font-size:clamp(42px,12vw,58px);
+  }
+  body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__title{
+    font-size:clamp(26px,7vw,34px);
+    line-height:1.04;
+  }
+}
+@media(max-width:620px){
+  body[data-page="news"] .pub-reader__header h1{
+    font-size:clamp(26px,7.6vw,34px);
+    line-height:1.04;
+    letter-spacing:-.034em;
+  }
+  body[data-page="news"] .pub-section-heading h2,
+  body[data-page="news"] .pub-index__head h2{
+    font-size:clamp(31px,8.2vw,36px);
+  }
+}
+
+
+/* Media-less Featured records size to their bibliographic content rather than a media placeholder. */
+body[data-page="news"] .pub-feature__stage.is-typographic{
+  min-height:0;
+}
+@media(min-width:1600px){
+  body[data-page="news"] .pub-feature__stage.is-typographic{
+    min-height:0;
+  }
+  body[data-page="news"] .pub-feature__stage.is-typographic .pub-feature-lead--typographic{
+    min-height:320px;
+  }
+  body[data-page="news"] .pub-feature__stage.is-typographic .pub-feature-lead__folio{
+    min-height:300px;
+  }
+}

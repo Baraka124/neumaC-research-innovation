@@ -231,6 +231,16 @@ html body[data-page="team"] .team-lead__body h3{
     letter-spacing:-.044em;
   }
 
+  body[data-page="innovation"],
+  body[data-page="news"]{
+    --editorial-heading:clamp(31px,8.2vw,36px);
+  }
+
+  html body[data-page="innovation"] .innovation-hero h1,
+  html body[data-page="news"] .pub-hero__identity h1{
+    font-size:clamp(36px,10.4vw,44px);
+  }
+
   html body[data-page="home"] .home-hero-lead,
   html body[data-page="clinical"] .research-hero__lead,
   html body[data-page="innovation"] .innovation-hero__lead,

@@ -420,6 +420,57 @@ test('Publications populated Selection preserves authored feature stage', async 
   await expectNoHorizontalOverflow(page);
 });
 
+test('Media-less Featured publication composes as a compact bibliographic folio', async ({ page }) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.route('**/api/news/website**',async route=>route.fulfill({json:{data:[{
+    id:'compact-feature-1',
+    post_type:'publication',
+    title:'Smoking exposure on diagnosis and survival of pulmonary arterial hypertension and chronic thromboembolic pulmonary hypertension: Data from REHAP registry',
+    authors_text:'Author One, Author Two, Author Three',
+    journal_name:'Pulmonology',
+    published_at:'2026-01-15T00:00:00Z',
+    is_featured:true,
+    research_line:{id:'line-1',line_number:1,name:'Transplantation'}
+  }]}}));
+  await page.goto('/news/');
+
+  const stage=page.locator('.pub-feature__stage');
+  const lead=page.locator('.pub-feature-lead--typographic');
+  await expect(stage).toHaveClass(/is-typographic/);
+  await expect(lead).toBeVisible();
+
+  const geo=await page.evaluate(()=>({
+    stage:document.querySelector('.pub-feature__stage').getBoundingClientRect().height,
+    lead:document.querySelector('.pub-feature-lead--typographic').getBoundingClientRect().height,
+    folio:document.querySelector('.pub-feature-lead__folio').getBoundingClientRect().height
+  }));
+  expect(geo.stage).toBeLessThanOrEqual(360);
+  expect(geo.lead).toBeLessThanOrEqual(360);
+  expect(geo.folio).toBeLessThanOrEqual(300);
+  expect(geo.stage-geo.folio).toBeLessThanOrEqual(80);
+  await expectNoHorizontalOverflow(page);
+});
+
+test('Publications reader keeps a long publication title controlled on phone', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.route('**/api/news/website**',async route=>route.fulfill({json:{data:[{
+    id:'reader-long-title-1',
+    post_type:'publication',
+    title:'Smoking exposure on diagnosis and survival of pulmonary arterial hypertension and chronic thromboembolic pulmonary hypertension: Data from REHAP registry',
+    authors_text:'Author One, Author Two, Author Three',
+    journal_name:'Pulmonology',
+    published_at:'2026-01-15T00:00:00Z',
+    is_featured:true
+  }]}}));
+  await page.goto('/news/');
+  await page.locator('.pub-feature-lead').click();
+  await expect(page.locator('.pub-reader__header h1')).toBeVisible();
+
+  const size=await page.locator('.pub-reader__header h1').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+  expect(size).toBeLessThanOrEqual(34);
+  await expectNoHorizontalOverflow(page);
+});
+
 test('Publications feed remains flat after folio recomposition', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.route('**/api/news/website**',async route=>route.fulfill({json:{data:[{
@@ -1261,6 +1312,22 @@ for (const width of [390, 620, 768, 1024]) {
     await expectNoHorizontalOverflow(page);
   });
 }
+
+test('Innovation long project title remains controlled on phone', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.route('**/api/innovation-projects/website**',async route=>route.fulfill({json:{data:[{
+    id:'innovation-long-title-1',
+    title:'CBI-EPOC — Development and Validation of the Corticosteroid Burden Index in Patients Hospitalised for COPD Exacerbation',
+    current_stage:'Validation',
+    is_featured:true
+  }]}}));
+  await page.goto('/innovation/');
+  const title=page.locator('.innovation-project__title').first();
+  await expect(title).toBeVisible();
+  const size=await title.evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+  expect(size).toBeLessThanOrEqual(27);
+  await expectNoHorizontalOverflow(page);
+});
 
 test('Innovation phone uses a vertical process spine', async ({ page }) => {
   await page.setViewportSize({ width:390, height:844 });
