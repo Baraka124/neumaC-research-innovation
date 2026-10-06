@@ -904,3 +904,12 @@
     max-height:min(650px,calc(100dvh - var(--index-h2-anchor) - var(--index-h2-air)))!important;
   }
 }
+
+
+/* Final phone ownership: Home is a first-class destination in the direct-only Index.
+   This must follow the desktop-default hide rule above. */
+@media(max-width:620px){
+  .global-index__chapter--home{
+    display:grid!important;
+  }
+}
