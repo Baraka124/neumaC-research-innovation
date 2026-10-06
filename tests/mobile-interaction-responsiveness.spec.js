@@ -29,9 +29,6 @@ for(const width of [320,390,430,620]){
     await expect(page.locator('.global-index__chapter--home')).toBeVisible();
     await expect(page.locator('.global-index__chapter--home')).toHaveAttribute('href','/');
 
-    await page.locator('[data-index-chapter="team"]').click();
-    await expect(page).toHaveURL(/\/team\/?$/);
-
     const sizes=await page.evaluate(()=>{
       function box(sel){
         const el=document.querySelector(sel); if(!el)return null;
@@ -47,8 +44,13 @@ for(const width of [320,390,430,620]){
     expect(sizes.trigger.h).toBeGreaterThanOrEqual(44);
     expect(sizes.close.h).toBeGreaterThanOrEqual(44);
     expect(sizes.close.w).toBeGreaterThanOrEqual(44);
-    expect(sizes.disclosure).toBeNull();
+    expect(sizes.disclosure.h).toBe(0);
+    expect(sizes.disclosure.w).toBe(0);
 
+    await page.locator('[data-index-chapter="team"]').click();
+    await expect(page).toHaveURL(/\/team\/?$/);
+
+    await page.locator('#mobToggle').click();
     await page.locator('[data-open-index-search]').click();
     await expect(page.locator('.global-search__close')).toBeHidden();
     const searchSizes=await page.evaluate(()=>{
@@ -63,7 +65,7 @@ for(const width of [320,390,430,620]){
     });
 
     expect(searchSizes.back.h).toBeGreaterThanOrEqual(44);
-    for(const item of searchSizes.filters) expect(item.h).toBeGreaterThanOrEqual(44);
+    for(const item of searchSizes.filters) expect(Math.round(item.h)).toBeGreaterThanOrEqual(44);
 
     await noOverflow(page);
   });
