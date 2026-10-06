@@ -420,6 +420,43 @@ test('Publications populated Selection preserves authored feature stage', async 
   await expectNoHorizontalOverflow(page);
 });
 
+test('Media-less Featured publication balances folio and citation at 2K desktop', async ({ page }) => {
+  await page.setViewportSize({ width:2048, height:1152 });
+  await page.route('**/api/news/website**',async route=>route.fulfill({json:{data:[{
+    id:'desktop-feature-balance-1',
+    post_type:'publication',
+    title:'Smoking exposure on diagnosis and survival of pulmonary arterial hypertension and chronic thromboembolic pulmonary hypertension: Data from REHAP registry',
+    authors_text:'Khilzi K, Blanco I, Piccari L, Barberà JA, López-Reyes R, Otero-González I, et al.',
+    journal_name:'Pulmonology',
+    published_at:'2026-01-15T00:00:00Z',
+    is_featured:true,
+    research_line:{id:'line-1',line_number:1,name:'Transplantation'}
+  }]}}));
+  await page.goto('/news/');
+
+  const lead=page.locator('.pub-feature-lead--typographic');
+  await expect(lead).toBeVisible();
+
+  const geo=await page.evaluate(()=>{
+    const lead=document.querySelector('.pub-feature-lead--typographic').getBoundingClientRect();
+    const folio=document.querySelector('.pub-feature-lead__folio').getBoundingClientRect();
+    const title=document.querySelector('.pub-feature-lead__title');
+    const year=document.querySelector('.pub-feature-lead__folio-year');
+    return {
+      leadHeight:lead.height,
+      folioRatio:folio.width/lead.width,
+      titleSize:parseFloat(getComputedStyle(title).fontSize),
+      yearSize:parseFloat(getComputedStyle(year).fontSize)
+    };
+  });
+
+  expect(geo.leadHeight).toBeLessThanOrEqual(360);
+  expect(geo.folioRatio).toBeLessThanOrEqual(.32);
+  expect(geo.titleSize).toBeLessThanOrEqual(38);
+  expect(geo.yearSize).toBeLessThanOrEqual(70);
+  await expectNoHorizontalOverflow(page);
+});
+
 test('Publications feed remains flat after folio recomposition', async ({ page }) => {
   await page.setViewportSize({ width:1440, height:900 });
   await page.route('**/api/news/website**',async route=>route.fulfill({json:{data:[{
