@@ -44,7 +44,8 @@ for(const width of [320,390,430,620]){
     expect(sizes.trigger.h).toBeGreaterThanOrEqual(44);
     expect(sizes.close.h).toBeGreaterThanOrEqual(44);
     expect(sizes.close.w).toBeGreaterThanOrEqual(44);
-    expect(sizes.disclosure).toBeNull();
+    expect(sizes.disclosure.h).toBe(0);
+    expect(sizes.disclosure.w).toBe(0);
 
     await page.locator('[data-index-chapter="team"]').click();
     await expect(page).toHaveURL(/\/team\/?$/);
