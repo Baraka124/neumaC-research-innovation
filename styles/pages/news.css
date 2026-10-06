@@ -2255,11 +2255,11 @@ body[data-page="news"] .pub-editorial__context span{
   body[data-page="news"] .pub-feature-lead--typographic{
     grid-template-columns:minmax(220px,.46fr) minmax(0,1.54fr);
     gap:clamp(2rem,3.6vw,4rem);
-    min-height:230px;
+    min-height:260px;
     align-items:center;
   }
   body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__folio{
-    min-height:230px;
+    min-height:260px;
     padding:1rem 1.8rem 1rem 0;
   }
   body[data-page="news"] .pub-feature-lead--typographic .pub-feature-lead__folio-year{
