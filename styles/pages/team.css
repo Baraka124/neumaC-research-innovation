@@ -1621,3 +1621,16 @@ body[data-page="team"] .team-network__system span:first-child{
     max-width:104px!important;
   }
 }
+
+
+/* Final mobile ownership: keep Team section headings subordinate to the hero.
+   Placed last to prevent earlier phase rules from re-expanding them. */
+@media(max-width:640px){
+  body[data-page="team"] .team-section-head h2,
+  body[data-page="team"] .team-network h2,
+  body[data-page="team"] .team-contact h2{
+    font-size:clamp(1.95rem,7.2vw,2.22rem);
+    line-height:.99;
+    letter-spacing:-.032em;
+  }
+}
