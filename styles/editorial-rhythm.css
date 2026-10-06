@@ -72,6 +72,16 @@ html body[data-page="team"] .team-contact h2{
   text-wrap:balance;
 }
 
+@media(max-width:640px){
+  html body[data-page="team"] .team-section-head h2,
+  html body[data-page="team"] .team-network h2,
+  html body[data-page="team"] .team-contact h2{
+    font-size:clamp(31px,7vw,36px);
+    line-height:.99;
+    letter-spacing:-.032em;
+  }
+}
+
 /* ------------------------------------------------------------
    Introductory prose
    Reading measure is deliberately restrained even as the canvas expands.
