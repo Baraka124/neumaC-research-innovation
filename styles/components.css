@@ -2532,7 +2532,7 @@ body[data-page="team"] .team-contact h2{
   body[data-page="team"] .team-section-head h2,
   body[data-page="team"] .team-network h2,
   body[data-page="team"] .team-contact h2{
-    font-size:clamp(1.68rem,7vw,2.05rem);
+    font-size:clamp(31px,7vw,36px);
     line-height:.99;
     letter-spacing:-.032em;
   }
