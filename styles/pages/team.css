@@ -1624,8 +1624,12 @@ body[data-page="team"] .team-network__system span:first-child{
 
 
 /* Final mobile ownership: keep Team section headings subordinate to the hero.
-   Placed last to prevent earlier phase rules from re-expanding them. */
+   Override the page-level section type token so the later shared typography
+   owner resolves to the intended phone scale as well. */
 @media(max-width:640px){
+  body[data-page="team"]{
+    --type-section:clamp(31px,7vw,36px);
+  }
   body[data-page="team"] .team-section-head h2,
   body[data-page="team"] .team-network h2,
   body[data-page="team"] .team-contact h2{
