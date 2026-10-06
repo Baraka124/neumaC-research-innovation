@@ -315,3 +315,18 @@ body[data-page="innovation"] .innovation-question:last-child::before{
     gap:2.2rem;
   }
 }
+
+
+/* Responsive title calibration: preserve workstation scale, restrain long project names on smaller screens. */
+@media(min-width:901px) and (max-width:1450px){
+  body[data-page="innovation"] .innovation-project__title{
+    font-size:clamp(1.4rem,1.65vw,1.78rem);
+  }
+}
+@media(max-width:640px){
+  body[data-page="innovation"] .innovation-project__title{
+    font-size:clamp(22px,6.6vw,27px);
+    line-height:1.06;
+    letter-spacing:-.023em;
+  }
+}
