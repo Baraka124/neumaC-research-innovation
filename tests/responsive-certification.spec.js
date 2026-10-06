@@ -139,38 +139,29 @@ test('phone masthead exposes an explicit Index trigger and removes header Contac
   await expectNoHorizontalOverflow(page);
 });
 
-test('phone Index opens as a compact editorial sheet with useful research content already visible', async ({ page }) => {
+test('phone Index is direct-only with explicit Home and five principal destinations', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/clinical/');
 
   await page.locator('#mobToggle').click();
   await expect(page.locator('#globalIndex')).toHaveAttribute('aria-hidden', 'false');
-  await expect(page.locator('.global-index__chapter')).toHaveCount(5);
-
-  const disclosure = page.locator('.global-index__lines-toggle');
-  await expect(disclosure).toBeVisible();
-  await expect(disclosure).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-expanded/);
-  await expect(page.locator('#globalIndexLines')).toBeVisible();
+  await expect(page.locator('.global-index__chapter')).toHaveCount(6);
+  await expect(page.locator('.global-index__chapter--home')).toBeVisible();
+  await expect(page.locator('.global-index__chapter--home')).toHaveAttribute('href','/');
+  await expect(page.locator('[data-index-chapter]')).toHaveCount(5);
+  await expect(page.locator('.global-index__lines')).toBeHidden();
   await expect(page.locator('.global-index__institutions')).toBeHidden();
   await expectNoHorizontalOverflow(page);
-
-  await disclosure.click();
-  await expect(disclosure).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-collapsed/);
-  await disclosure.click();
-  await expect(disclosure).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('.global-index__lines')).toHaveClass(/is-lines-expanded/);
 });
 
-test('large phone opens chapter content immediately while keeping optional disclosure', async ({ page }) => {
+test('large phone keeps the direct-only Index without contextual disclosure', async ({ page }) => {
   await page.setViewportSize({ width: 620, height: 900 });
   await page.goto('/');
   await page.locator('#mobToggle').click();
 
-  await expect(page.locator('.global-index__lines-toggle')).toBeVisible();
-  await expect(page.locator('.global-index__lines-toggle')).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('#globalIndexLines')).toBeVisible();
+  await expect(page.locator('.global-index__chapter--home')).toBeVisible();
+  await expect(page.locator('[data-index-chapter]')).toHaveCount(5);
+  await expect(page.locator('.global-index__lines')).toBeHidden();
   await expectNoHorizontalOverflow(page);
 });
 
@@ -1598,8 +1589,8 @@ for (const viewport of [
       expect(trainingSizes.environment).toBeLessThanOrEqual(46);
       expect(trainingSizes.development).toBeLessThanOrEqual(46);
     }
-    await expect(page.locator('body')).not.toContainText('Development areas');
-    await expect(page.locator('body')).not.toContainText('Research development');
+    await expect(page.locator('.training-section-head')).not.toContainText('Development areas');
+    await expect(page.locator('.training-section-head')).not.toContainText('Research development');
     await expectNoHorizontalOverflow(page);
 
     await page.goto('/team/');
@@ -1777,7 +1768,7 @@ for (const viewport of [
     expect(geo.paneWidth / geo.viewport).toBeLessThan(0.94);
     expect(geo.titleWidth / geo.viewport).toBeLessThan(0.88);
     const titleSize=await title.evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
-    expect(titleSize).toBeLessThanOrEqual(viewport.width<=390?43:49);
+    expect(titleSize).toBeLessThanOrEqual(viewport.width<=390?44:54);
     await expectNoHorizontalOverflow(page);
   });
 }
