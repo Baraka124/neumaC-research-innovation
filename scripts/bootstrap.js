@@ -4,7 +4,7 @@
  */
 (function(){
   window.NEUMAC_CONFIG = Object.freeze({
-    apiBase: 'https://neumac-manage-back-end-production.up.railway.app',
+    apiBase: 'https://api.neumact.org',
     siteBase: 'https://neumact.org'
   });
 
