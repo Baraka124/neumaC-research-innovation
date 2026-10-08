@@ -34,4 +34,26 @@
   }).catch(function(){
     document.getElementById('rptPubList').innerHTML='<li class="report-empty">Data unavailable.</li>';
   });
+  function txt(p,key){ var en=p[key+'_en']; if(en!=null&&String(en).trim())return String(en).trim(); var v=p[key]; if(v&&typeof v==='object'&&v.en)return String(v.en).trim(); return (v!=null&&typeof v!=='object')?String(v).trim():''; }
+  j('/api/innovation-projects/website').then(function(res){
+    var projects = (res.data||[]).filter(Boolean);
+    document.getElementById('rptProjects').textContent = projects.length || '—';
+    var ol = document.getElementById('rptProjectList');
+    if(!projects.length){
+      ol.innerHTML = '<li class="report-empty"><span lang="en">No public innovation projects recorded yet.</span><span lang="es">Aún no hay proyectos públicos de innovación.</span></li>';
+      return;
+    }
+    function esc(s){ var d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML; }
+    projects.sort(function(a,b){ return (b.is_featured?1:0)-(a.is_featured?1:0); });
+    ol.innerHTML = projects.map(function(p){
+      var title = txt(p,'title') || 'Innovation project';
+      var stage = txt(p,'development_stage') || txt(p,'current_stage');
+      var category = txt(p,'category');
+      return '<li>'+esc(title)+
+        (stage ? ' <span class="rp-j">'+esc(stage)+'</span>' : '')+
+        (category ? '<span class="rp-a">'+esc(category)+'</span>' : '')+'</li>';
+    }).join('');
+  }).catch(function(){
+    var ol=document.getElementById('rptProjectList'); if(ol) ol.innerHTML='<li class="report-empty">Data unavailable.</li>';
+  });
 })();
