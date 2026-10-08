@@ -244,7 +244,7 @@ for f in js_files:
     check(f'{f} no generated inline style attributes', not re.search(r'\bstyle\s*=', c, re.I))
 
 # Runtime endpoint configuration has one owner.
-api_literal='https://neumac-manage-back-end-production.up.railway.app'
+api_literal='https://api.neumact.org'
 site_literal='https://neumact.org'
 all_js=sorted(set(Path('.').glob('*.js')) | set(Path('scripts').rglob('*.js')))
 api_owners=[f.as_posix() for f in all_js if api_literal in f.read_text(encoding='utf-8')]
