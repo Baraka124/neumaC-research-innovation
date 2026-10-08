@@ -128,6 +128,29 @@ function showApiDownBanner() {
   document.body.appendChild(b);
 }
 
+/* Public maintenance notice. The public site stays up during internal
+   maintenance, so this doesn't block anything — it just tells visitors
+   some features or data may be temporarily unavailable. Best-effort. */
+async function checkMaintenanceNotice() {
+  try {
+    const res = await fetch(`${API_BASE}/api/public/status`, { cache: 'no-store' });
+    if (!res.ok) return;
+    const d = await res.json();
+    if (d && d.maintenance_mode === true && !document.getElementById('maintNotice')) {
+      const b = document.createElement('div');
+      b.id = 'maintNotice';
+      b.setAttribute('role', 'status');
+      b.className = 'api-down-banner maint-notice';
+      b.innerHTML =
+        '<span lang="en">Scheduled maintenance in progress — some features or data may be temporarily unavailable.</span>' +
+        '<span lang="es">Mantenimiento programado en curso: algunas funciones o datos pueden no estar disponibles temporalmente.</span>' +
+        '<button class="api-notice__dismiss" aria-label="Dismiss">×</button>';
+      b.querySelector('.api-notice__dismiss')?.addEventListener('click', () => b.remove());
+      document.body.appendChild(b);
+    }
+  } catch (_) { /* best-effort */ }
+}
+
 // ─────────────────────────────────────────────
 // STATUS / CATEGORY MAPS
 // ─────────────────────────────────────────────
@@ -1589,6 +1612,7 @@ window.openContactForm = function(triggerId, bodyId) {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  checkMaintenanceNotice();
   switch (PAGE) {
     case 'index':
       loadResearchLines();
