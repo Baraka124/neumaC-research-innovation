@@ -133,8 +133,24 @@
         </div>
         <p><span lang="en">Current and recent projects show how respiratory-care needs can bring clinical expertise together with data, engineering and new approaches to care delivery.</span><span lang="es">Los proyectos actuales y recientes muestran cómo las necesidades de la atención respiratoria pueden reunir conocimiento clínico, datos, ingeniería y nuevas formas de prestar atención.</span></p>
       </div>
+      <div class="study-toolbar reveal" aria-label="Project filters">
+        <div class="study-toolbar__summary"><strong id="projectsCount">—</strong> <span lang="en">projects</span><span lang="es">proyectos</span></div>
+        <details class="study-filters">
+          <summary><span lang="en">Filter</span><span lang="es">Filtrar</span><span class="study-filters__chevron" aria-hidden="true">+</span></summary>
+          <div class="study-filters__grid">
+            <label><span lang="en">Research line</span><span lang="es">Línea</span><select id="filterProjLine"><option value="all">All lines</option></select></label>
+            <label><span lang="en">Stage</span><span lang="es">Etapa</span><select id="filterProjStage"><option value="all">All stages</option><option value="concept">Concept</option><option value="development">Development</option><option value="pilot">Pilot</option><option value="validation">Validation</option><option value="scaling">Scale-up</option><option value="completed">Completed</option></select></label>
+            <label><span lang="en">Search</span><span lang="es">Buscar</span><span class="study-search"><input type="text" id="filterProjSearch" placeholder="Title, category or keyword…"></span></label>
+          </div>
+        </details>
+      </div>
+
       <div id="projectsGrid" class="innovation-projects" aria-live="polite">
         <div class="api-skeleton api-skeleton--innovation-row"></div><div class="api-skeleton api-skeleton--innovation-row"></div><div class="api-skeleton api-skeleton--innovation-row"></div>
+      </div>
+      <div class="study-list__footer reveal">
+        <button type="button" id="projectsExpandBtn" class="study-expand" hidden aria-label="Show more or fewer projects"><span lang="en">Show more projects</span><span lang="es">Mostrar más proyectos</span></button>
+        <a href="#contact" class="research-text-link"><span lang="en">Collaboration enquiry</span><span lang="es">Consulta de colaboración</span></a>
       </div>
     </div>
   </section>
@@ -179,6 +195,17 @@
       </div>
     </div>
   </section>
+
+  <div class="trial-modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <div class="trial-modal__overlay" onclick="closeProjectModal(true)"></div>
+    <div class="trial-modal__dialog" tabindex="-1">
+      <div class="trial-modal__header"><div><div class="trial-modal__protocol" id="pmKicker"></div><div class="trial-modal__title" id="pmTitle"></div></div><button class="trial-modal__icon-close" onclick="closeProjectModal(true)" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+      <div class="trial-modal__meta" id="pmMeta"></div>
+      <div class="trial-modal__description" id="pmDesc"></div>
+      <div class="trial-modal__registry" id="pmLink"></div>
+      <div class="trial-modal__actions"><a href="#contact" onclick="closeProjectModal(false)" class="research-modal-contact"><span lang="en">Ask about this project</span><span lang="es">Consultar sobre este proyecto</span></a><button class="trial-modal__secondary-close" onclick="closeProjectModal(true)"><span lang="en">Close</span><span lang="es">Cerrar</span></button></div>
+    </div>
+  </div>
 </main>
 
 

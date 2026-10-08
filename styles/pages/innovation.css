@@ -315,3 +315,47 @@ body[data-page="innovation"] .innovation-question:last-child::before{
     gap:2.2rem;
   }
 }
+
+/* ── Innovation library: filter toolbar, clickable rows, detail modal ──
+   Classes shared with the clinical page (defined there in clinical.css);
+   the base rules are mirrored here so the innovation page is self-contained. */
+.study-toolbar{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:.78rem 0;border-top:1px solid #d7dfe3;border-bottom:1px solid #d7dfe3;}
+.study-toolbar__summary{font:400 .64rem/1.4 var(--ff-mono);letter-spacing:.07em;text-transform:uppercase;color:#7b8795;}
+.study-toolbar__summary strong{font-family:var(--ff-display);font-size:1.65rem;font-weight:700;letter-spacing:-.03em;color:#0c3868;margin-right:.32rem;}
+.study-filters{position:relative;}
+.study-filters summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;font-size:.78rem;font-weight:600;color:#0b6671;}
+.study-filters summary::-webkit-details-marker{display:none;}
+.study-filters__chevron{display:inline-grid;place-items:center;width:19px;height:19px;font-size:.9rem;font-weight:400;transition:transform .18s;}
+.study-filters[open] .study-filters__chevron{transform:rotate(45deg);}
+.study-filters__grid{position:absolute;z-index:15;right:0;top:calc(100% + .75rem);width:min(820px,calc(100vw - 2rem));padding:1.1rem;background:#fff;border:1px solid #dfe4e7;box-shadow:0 18px 44px rgba(8,43,79,.12);display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;}
+.study-filters__grid label{display:flex;flex-direction:column;gap:.42rem;font:500 .56rem/1.2 var(--ff-mono);letter-spacing:.08em;text-transform:uppercase;color:#7c8795;}
+.study-filters__grid select,.study-filters__grid input{width:100%;min-height:42px;border:1px solid #d6dde3;background:#fbfcfd;padding:.64rem .68rem;font:400 .8rem/1.2 var(--ff-body);color:#19324d;outline:none;}
+.study-filters__grid select:focus,.study-filters__grid input:focus{border-color:var(--teal);box-shadow:var(--ring);}
+.study-list__footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:1rem;}
+.study-expand{border:0;background:none;padding:.2rem 0;font-size:.78rem;font-weight:600;color:#0c5c68;cursor:pointer;border-bottom:1px solid rgba(12,92,104,.25);}
+
+/* innovation-project-row is now a <button> — reset chrome, keep the grid */
+.innovation-project-row{appearance:none;-webkit-appearance:none;border-left:0;border-right:0;border-top:0;background:transparent;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;transition:background .15s;}
+.innovation-project-row:hover,.innovation-project-row:focus-visible{background:#f4f8f8;outline:none;}
+.innovation-project-row:hover .innovation-project__title,.innovation-project-row:focus-visible .innovation-project__title{color:#087883;}
+.innovation-project-row.is-collapsed{display:none;}
+.innovation-projects.show-all .innovation-project-row.is-collapsed{display:grid;}
+.innovation-project__more{margin-top:auto;display:inline-flex;align-items:center;gap:.4rem;font:600 .72rem/1 var(--ff-body);color:#0b6671;}
+
+/* Detail modal (shared visual language with the clinical trial modal) */
+.trial-modal{display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;padding:1rem;}
+.trial-modal__overlay{position:absolute;inset:0;background:rgba(4,18,34,.82);backdrop-filter:blur(7px);}
+.trial-modal__dialog{position:relative;z-index:1;background:#fff;max-width:700px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 28px 90px rgba(0,0,0,.32);}
+.trial-modal__header{display:flex;justify-content:space-between;gap:1rem;padding:1.6rem 1.8rem 1.2rem;border-bottom:1px solid #e5e8ea;}
+.trial-modal__protocol{font:500 .62rem/1.3 var(--ff-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.35rem;}
+.trial-modal__title{font-family:var(--ff-display);font-size:1.6rem;font-weight:700;line-height:1.2;color:#0d3155;}
+.trial-modal__icon-close{width:34px;height:34px;flex:0 0 auto;border:1px solid #e0e5e8;background:#fff;cursor:pointer;font-size:1.25rem;}
+.trial-modal__meta{padding:1.25rem 1.8rem;display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.trial-meta-item__label{font:500 .56rem/1.2 var(--ff-mono);letter-spacing:.08em;text-transform:uppercase;color:#7c8795;margin-bottom:.3rem;}
+.trial-meta-item__value{font:500 .86rem/1.3 var(--ff-body);color:#1b3350;}
+.trial-modal__registry{display:none;padding:0 1.8rem 1rem;}
+.trial-modal__description{display:none;padding:0 1.8rem 1rem;color:#5e6e7e;line-height:1.7;}
+.trial-modal__actions{display:flex;align-items:center;gap:1rem;padding:1rem 1.8rem 1.35rem;border-top:1px solid #e5e8ea;}
+.research-modal-contact{color:var(--teal);font-weight:600;text-decoration:none;}
+.trial-modal__secondary-close{border:0;background:none;color:#6f7d8b;cursor:pointer;}
+@media(max-width:720px){.study-toolbar{align-items:flex-start;flex-direction:column;gap:.6rem}.study-filters{width:100%}.study-filters__grid{position:static;margin-top:.7rem;width:100%;grid-template-columns:1fr 1fr;box-shadow:none;}.trial-modal__meta{grid-template-columns:1fr;}}
