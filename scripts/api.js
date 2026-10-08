@@ -379,18 +379,20 @@ async function loadResearchLines() {
     window._researchLineMap = {};
     data.forEach(line => { window._researchLineMap[String(line.line_number)] = line.id; });
 
-    const filterLineEl = document.getElementById('filterLine');
-    if (filterLineEl && filterLineEl.options.length <= 1) {
-      data.forEach(line => {
-        const opt = document.createElement('option');
-        opt.value = String(line.line_number);
-        const pair = institutionalResearchLinePair(line);
-        opt.dataset.labelEn = pair[0];
-        opt.dataset.labelEs = pair[1];
-        opt.textContent = institutionalResearchLineLabel(line);
-        filterLineEl.appendChild(opt);
-      });
-    }
+    ['filterLine', 'filterProjLine'].forEach(selId => {
+      const el = document.getElementById(selId);
+      if (el && el.options.length <= 1) {
+        data.forEach(line => {
+          const opt = document.createElement('option');
+          opt.value = String(line.line_number);
+          const pair = institutionalResearchLinePair(line);
+          opt.dataset.labelEn = pair[0];
+          opt.dataset.labelEs = pair[1];
+          opt.textContent = institutionalResearchLineLabel(line);
+          el.appendChild(opt);
+        });
+      }
+    });
 
     if (clinicalList) {
       clinicalList.style.transition = 'none';
@@ -528,9 +530,10 @@ async function loadTrials(filters = {}) {
 // 3. INNOVATION PROJECTS (innovation.html)
 // ─────────────────────────────────────────────
 
-async function loadProjects() {
+async function loadProjects(filters = {}) {
   const host = document.getElementById('projectsGrid');
   if (!host) return;
+  if (!host.querySelector('.innovation-project-row')) setLoading(host, 3);
 
   const readText = (project, key, lang) => {
     const direct = project?.[`${key}_${lang}`];
@@ -561,31 +564,71 @@ async function loadProjects() {
       await new Promise(r => setTimeout(r, 500));
       ({ data } = await apiFetch('/api/innovation-projects/website'));
     }
-    const projects = Array.isArray(data) ? data.filter(Boolean) : [];
+    const all = Array.isArray(data) ? data.filter(Boolean) : [];
+    all.forEach(p => { window._projectData[p.id] = p; });
+
+    // Client-side filters — the website endpoint returns the full governed set.
+    const lineId = filters.line && filters.line !== 'all' ? (window._researchLineMap && window._researchLineMap[filters.line]) : null;
+    const q = (filters.search || '').trim().toLowerCase();
+    const stageOrder = { concept:0, development:1, pilot:2, validation:3, scaling:4, completed:5 };
+    let projects = all.filter(p => {
+      if (lineId && String(p.research_line_id || p.research_line?.id || '') !== String(lineId)) return false;
+      const stage = p.current_stage || p.development_stage || '';
+      if (filters.stage && filters.stage !== 'all' && stage !== filters.stage) return false;
+      if (q) {
+        const hay = [readText(p,'title','en'), readText(p,'title','es'), readText(p,'description','en'), readText(p,'category','en'), (p.target_diseases||[]).join(' ')].join(' ').toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    projects.sort((a,b) => (b.is_featured?1:0)-(a.is_featured?1:0) || (stageOrder[a.current_stage||a.development_stage] ?? 9)-(stageOrder[b.current_stage||b.development_stage] ?? 9));
+
+    const countEl = document.getElementById('projectsCount');
+    if (countEl) countEl.textContent = projects.length;
+    const expandBtn = document.getElementById('projectsExpandBtn');
+
     if (!projects.length) {
-      host.innerHTML = `<p class="innovation-projects__empty"><span lang="en">No public innovation projects are available right now.</span><span lang="es">No hay proyectos públicos de innovación disponibles en este momento.</span></p>`;
+      host.innerHTML = `<p class="innovation-projects__empty"><span lang="en">No innovation projects match the current filters.</span><span lang="es">No hay proyectos de innovación que coincidan con los filtros actuales.</span></p>`;
+      if (expandBtn) expandBtn.hidden = true;
       return;
     }
 
-    host.innerHTML = projects.map(project => {
+    host.classList.remove('show-all');
+    host.innerHTML = projects.map((project, index) => {
       const category = readText(project, 'category', 'en');
       const stage = readText(project, 'development_stage', 'en') || readText(project, 'current_stage', 'en');
       const needs = partnerNeeds(project);
-      const url = safeProjectUrl(project);
       const meta = [category, project.is_featured ? 'Featured' : ''].filter(Boolean);
-      return `<article class="innovation-project-row">
+      const hiddenClass = index >= 6 ? ' is-collapsed' : '';
+      return `<button type="button" class="innovation-project-row${hiddenClass}" data-project-id="${escHtml(project.id)}">
         <div class="innovation-project__main">
-          ${meta.length ? `<p class="innovation-project__meta">${meta.map((m, i) => i === 1 ? `<span><span lang="en">Featured project</span><span lang="es">Proyecto destacado</span></span>` : `<span>${escHtml(m)}</span>`).join('')}</p>` : ''}
+          ${meta.length ? `<p class="innovation-project__meta">${meta.map(m => (project.is_featured && m === 'Featured') ? `<span><span lang="en">Featured project</span><span lang="es">Proyecto destacado</span></span>` : `<span>${escHtml(m)}</span>`).join('')}</p>` : ''}
           <h3 class="innovation-project__title">${localised(project, 'title', 'Innovation project')}</h3>
           ${readText(project, 'description', 'en') || readText(project, 'description', 'es') ? `<p class="innovation-project__desc">${localised(project, 'description', '')}</p>` : ''}
         </div>
         <aside class="innovation-project__side">
           ${stage ? `<div class="innovation-project__fact"><span><span lang="en">Current stage</span><span lang="es">Etapa actual</span></span><p>${escHtml(stage)}</p></div>` : ''}
           ${needs ? `<div class="innovation-project__fact"><span><span lang="en">Collaboration sought</span><span lang="es">Colaboración buscada</span></span><p>${escHtml(needs)}</p></div>` : ''}
-          ${url ? `<a class="innovation-project__link" href="${escHtml(url)}" target="_blank" rel="noopener"><span lang="en">Project information</span><span lang="es">Información del proyecto</span><span aria-hidden="true">↗</span></a>` : ''}
+          <span class="innovation-project__more"><span lang="en">View detail</span><span lang="es">Ver detalle</span><span aria-hidden="true">→</span></span>
         </aside>
-      </article>`;
+      </button>`;
     }).join('');
+
+    host.querySelectorAll('.innovation-project-row[data-project-id]').forEach(row => {
+      row.addEventListener('click', () => openProjectModal(row.dataset.projectId, row));
+    });
+
+    if (expandBtn) {
+      expandBtn.hidden = projects.length <= 6;
+      if (!expandBtn.hidden) {
+        const collapsed = projects.length - 6;
+        const setLabel = (open) => { expandBtn.innerHTML = open
+          ? `<span lang="en">Show fewer projects</span><span lang="es">Mostrar menos proyectos</span>`
+          : `<span lang="en">Show ${collapsed} more project${collapsed===1?'':'s'}</span><span lang="es">Mostrar ${collapsed} proyecto${collapsed===1?' más':'s más'}</span>`; };
+        setLabel(false);
+        expandBtn.onclick = () => { const open = host.classList.toggle('show-all'); setLabel(open); };
+      }
+    }
   } catch (err) {
     console.error('Projects load failed:', err);
     host.innerHTML = `<p class="innovation-projects__empty innovation-projects__empty--error"><span lang="en">Current innovation work could not be loaded. Please try again later.</span><span lang="es">No se pudo cargar la innovación en curso. Inténtelo de nuevo más tarde.</span></p>`;
@@ -1398,8 +1441,94 @@ window.closeTrialModal = function(restoreFocus = true) {
   }, 220);
 };
 
+// ── Innovation project detail modal (mirrors the clinical trial modal) ──
+window._projectData = {};
+let _projectModalOrigin = null;
+let _projectModalCloseTimer = null;
+
+window.openProjectModal = function(id, origin) {
+  const p = window._projectData[id];
+  const modal = document.getElementById('projectModal');
+  if (!p || !modal) return;
+  if (_projectModalCloseTimer) { clearTimeout(_projectModalCloseTimer); _projectModalCloseTimer = null; }
+  _projectModalOrigin = origin && origin.isConnected ? origin : null;
+
+  const pick = (key) => {
+    const en = (p[`${key}_en`] != null && String(p[`${key}_en`]).trim()) ? String(p[`${key}_en`]).trim()
+      : (p[key] && typeof p[key] === 'object' ? (p[key].en || '') : (p[key] != null && typeof p[key] !== 'object' ? String(p[key]).trim() : ''));
+    const es = (p[`${key}_es`] != null && String(p[`${key}_es`]).trim()) ? String(p[`${key}_es`]).trim()
+      : (p[key] && typeof p[key] === 'object' ? (p[key].es || en) : en);
+    return { en, es };
+  };
+  const titleV = pick('title');
+  const descV = pick('description');
+  const category = pick('category').en;
+  const stage = pick('development_stage').en || pick('current_stage').en;
+  const line = p.research_line ? institutionalResearchLineLabel(p.research_line) : '';
+  const lineNum = p.research_line?.line_number ? `0${p.research_line.line_number}`.slice(-2) : '';
+  const needs = Array.isArray(p.partner_needs) ? p.partner_needs.map(v => String(v||'').trim()).filter(Boolean).join(' · ') : '';
+  const focus = Array.isArray(p.target_diseases) && p.target_diseases.length ? p.target_diseases.join(' · ') : '';
+  const url = String(p.public_url || p.website_url || p.url || '').trim();
+  const safeUrl = /^https?:\/\//i.test(url) ? url : '';
+
+  const kicker = document.getElementById('pmKicker');
+  const tEl = document.getElementById('pmTitle');
+  if (kicker) kicker.innerHTML = p.is_featured ? '<span lang="en">Featured project</span><span lang="es">Proyecto destacado</span>' : '<span lang="en">Clinical innovation</span><span lang="es">Innovación clínica</span>';
+  if (tEl) tEl.textContent = titleV.en || 'Innovation project';
+
+  const item = (labelEn, labelEs, value) => value ? `<div class="trial-meta-item"><div class="trial-meta-item__label"><span lang="en">${escHtml(labelEn)}</span><span lang="es">${escHtml(labelEs)}</span></div><span class="trial-meta-item__value">${escHtml(value)}</span></div>` : '';
+  const meta = document.getElementById('pmMeta');
+  if (meta) meta.innerHTML = [
+    item('Current stage','Etapa actual', stage),
+    item('Category','Categoría', category),
+    p.trl_level ? item('Maturity','Madurez', 'TRL ' + p.trl_level) : '',
+    (line ? `<div class="trial-meta-item"><div class="trial-meta-item__label"><span lang="en">Research line</span><span lang="es">Línea de investigación</span></div><span class="trial-meta-item__value">${escHtml((lineNum?lineNum+' — ':'')+line)}</span></div>` : ''),
+    item('Clinical focus','Enfoque clínico', focus),
+    item('Collaboration sought','Colaboración buscada', needs)
+  ].join('');
+
+  const desc = document.getElementById('pmDesc');
+  if (desc) {
+    if (descV.en || descV.es) { desc.innerHTML = `<span lang="en">${escHtml(descV.en)}</span><span lang="es">${escHtml(descV.es || descV.en)}</span>`; desc.style.display = 'block'; }
+    else desc.style.display = 'none';
+  }
+  const linkWrap = document.getElementById('pmLink');
+  if (linkWrap) {
+    if (safeUrl) { linkWrap.innerHTML = `<a href="${escHtml(safeUrl)}" target="_blank" rel="noopener" class="research-modal-contact"><span lang="en">Project information ↗</span><span lang="es">Información del proyecto ↗</span></a>`; linkWrap.style.display = 'block'; }
+    else linkWrap.style.display = 'none';
+  }
+
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => { modal.classList.add('is-open'); const d = modal.querySelector('.trial-modal__dialog'); if (d) d.focus({preventScroll:true}); });
+};
+
+window.closeProjectModal = function(restoreFocus = true) {
+  const modal = document.getElementById('projectModal');
+  const origin = _projectModalOrigin; _projectModalOrigin = null;
+  document.body.style.overflow = '';
+  if (!modal) { if (restoreFocus && origin && origin.isConnected) origin.focus({preventScroll:true}); return; }
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden','true');
+  _projectModalCloseTimer = setTimeout(() => { modal.style.display = 'none'; _projectModalCloseTimer = null; if (restoreFocus && origin && origin.isConnected) { try { origin.focus({preventScroll:true}); } catch (_e) { origin.focus(); } } }, 220);
+};
+
+function initProjectFilters() {
+  const host = document.getElementById('projectsGrid');
+  if (!host) return;
+  const line = document.getElementById('filterProjLine');
+  const stage = document.getElementById('filterProjStage');
+  const search = document.getElementById('filterProjSearch');
+  let timer = null;
+  const run = () => loadProjects({ line: line?.value || 'all', stage: stage?.value || 'all', search: (search?.value || '').trim() });
+  [line, stage].forEach(el => el?.addEventListener('change', run));
+  search?.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(run, 220); });
+  run();
+}
+
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') window.closeTrialModal(true);
+  if (e.key === 'Escape') { window.closeTrialModal(true); window.closeProjectModal(true); }
 });
 // ─────────────────────────────────────────────
 
@@ -1625,7 +1754,8 @@ document.addEventListener('DOMContentLoaded', () => {
       initContactForm();
       break;
     case 'innovation':
-      loadProjects();
+      loadResearchLines();
+      initProjectFilters();
       initContactForm();
       break;
     case 'news':
