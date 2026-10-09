@@ -81,6 +81,9 @@
   // Resolve grammatical gender from the person's honorific (Dr./Dra., Sr./Sra.),
   // falling back to a leading honorific in the display name. Returns 'm', 'f', or null.
   function roleGender(p){
+    const gx=String((p&&p.gender)||'').toLowerCase().trim();
+    if(gx==='female')return 'f';
+    if(gx==='male')return 'm';
     let t=String((p&&p.title)||'').toLowerCase().replace(/\./g,'').trim();
     if(!t){const m=String((p&&p.display_name)||'').trim().match(/^([A-Za-zÁÉÍÓÚáéíóúñ]+)\.?\s/);if(m)t=m[1].toLowerCase();}
     if(t==='dra'||t==='sra'||t==='srta')return 'f';

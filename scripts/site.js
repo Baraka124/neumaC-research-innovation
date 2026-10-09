@@ -93,6 +93,9 @@
     return [en,es];
   }
   function ixRoleGender(p){
+    var gx=String((p&&p.gender)||'').toLowerCase().trim();
+    if(gx==='female')return 'f';
+    if(gx==='male')return 'm';
     var t=String((p&&p.title)||'').toLowerCase().replace(/\./g,'').trim();
     if(!t){var m=String((p&&p.display_name)||'').trim().match(/^([A-Za-zÁÉÍÓÚáéíóúñ]+)\.?\s/);if(m)t=m[1].toLowerCase();}
     if(t==='dra'||t==='sra'||t==='srta')return 'f';
