@@ -92,8 +92,25 @@
     var es=ixReadLocalized(l,'short_name','es')||ixReadLocalized(l,'name','es')||mapped[1]||en;
     return [en,es];
   }
+  function ixRoleGender(p){
+    var gx=String((p&&p.gender)||'').toLowerCase().trim();
+    if(gx==='female')return 'f';
+    if(gx==='male')return 'm';
+    var t=String((p&&p.title)||'').toLowerCase().replace(/\./g,'').trim();
+    if(!t){var m=String((p&&p.display_name)||'').trim().match(/^([A-Za-zÁÉÍÓÚáéíóúñ]+)\.?\s/);if(m)t=m[1].toLowerCase();}
+    if(t==='dra'||t==='sra'||t==='srta')return 'f';
+    if(t==='dr'||t==='sr')return 'm';
+    return null;
+  }
+  function ixGenderizeRole(pair,p){
+    if(!pair)return pair;
+    var g=ixRoleGender(p);
+    if(!g||pair[1].indexOf('/a')===-1)return pair;
+    var es=g==='f'?pair[1].replace(/o\/a/g,'a').replace(/\/a/g,'a'):pair[1].replace(/\/a/g,'');
+    return [pair[0],es];
+  }
   function ixPersonRolePair(p){
-    if(p&&IX_ROLE_LABELS[p.staff_type])return IX_ROLE_LABELS[p.staff_type];
+    if(p&&IX_ROLE_LABELS[p.staff_type])return ixGenderizeRole(IX_ROLE_LABELS[p.staff_type],p);
     var raw=String(p&&p.public_role||p&&p.specialization||'').trim();
     if(/^neumolog[ií]a$/i.test(raw)||/^pulmonology$/i.test(raw))return ['Pulmonology','Neumología'];
     if(/^medicina de familia$/i.test(raw)||/^family medicine$/i.test(raw))return ['Family Medicine','Medicina de Familia'];
