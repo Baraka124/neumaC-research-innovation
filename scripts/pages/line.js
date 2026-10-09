@@ -48,9 +48,25 @@
     return [raw, raw];
   }
 
+  // Resolve grammatical gender from the person's honorific (Dr./Dra., Sr./Sra.),
+  // falling back to a leading honorific in the display name. Returns 'm', 'f', or null.
+  function roleGender(person){
+    let t=String((person&&person.title)||'').toLowerCase().replace(/\./g,'').trim();
+    if(!t){const m=String((person&&person.display_name)||'').trim().match(/^([A-Za-zÁÉÍÓÚáéíóúñ]+)\.?\s/);if(m)t=m[1].toLowerCase();}
+    if(t==='dra'||t==='sra'||t==='srta')return 'f';
+    if(t==='dr'||t==='sr')return 'm';
+    return null;
+  }
+  function genderizeRole(pair,person){
+    if(!pair)return pair;
+    const g=roleGender(person);
+    if(!g||pair[1].indexOf('/a')===-1)return pair;
+    const es=g==='f'?pair[1].replace(/o\/a/g,'a').replace(/\/a/g,'a'):pair[1].replace(/\/a/g,'');
+    return [pair[0],es];
+  }
   function rolePair(person){
     const mapped = staffRoleLabels[person?.staff_type];
-    if (mapped) return mapped;
+    if (mapped) return genderizeRole(mapped, person);
     const raw = String(person?.specialization || person?.public_role || '').trim();
     return raw ? [raw, raw] : ['Research contributor','Colaborador/a de investigación'];
   }

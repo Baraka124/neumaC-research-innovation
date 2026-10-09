@@ -78,8 +78,26 @@
   function documentaryPhotoUrl(p){return safeUrl(portraitOverrides[p?.id]||p?.public_photo_url||'');}
   function photoUrl(p){return documentaryPhotoUrl(p);}
   function hasDocumentaryPhoto(p){return Boolean(documentaryPhotoUrl(p));}
+  // Resolve grammatical gender from the person's honorific (Dr./Dra., Sr./Sra.),
+  // falling back to a leading honorific in the display name. Returns 'm', 'f', or null.
+  function roleGender(p){
+    let t=String((p&&p.title)||'').toLowerCase().replace(/\./g,'').trim();
+    if(!t){const m=String((p&&p.display_name)||'').trim().match(/^([A-Za-zÁÉÍÓÚáéíóúñ]+)\.?\s/);if(m)t=m[1].toLowerCase();}
+    if(t==='dra'||t==='sra'||t==='srta')return 'f';
+    if(t==='dr'||t==='sr')return 'm';
+    return null;
+  }
+  // Turn a "Médico/a" style Spanish label into the correct gendered form when known;
+  // leave the neutral "/a" form when gender is unknown (Prof., no honorific, …).
+  function genderizeRole(pair,p){
+    if(!pair)return pair;
+    const g=roleGender(p);
+    if(!g||pair[1].indexOf('/a')===-1)return pair;
+    const es=g==='f'?pair[1].replace(/o\/a/g,'a').replace(/\/a/g,'a'):pair[1].replace(/\/a/g,'');
+    return [pair[0],es];
+  }
   function rolePair(p){
-    if(roleLabels[p?.staff_type])return roleLabels[p.staff_type];
+    if(roleLabels[p?.staff_type])return genderizeRole(roleLabels[p.staff_type],p);
     const raw=String(p?.public_role||p?.specialization||'').trim();
     return raw?[raw,raw]:['Research team','Equipo de investigación'];
   }
