@@ -75,7 +75,9 @@
     if(raw.startsWith('/'))return raw;
     try{const u=new URL(raw,location.origin);return ['https:','http:'].includes(u.protocol)?u.href:'';}catch{return '';}
   }
-  function documentaryPhotoUrl(p){return safeUrl(portraitOverrides[p?.id]||p?.public_photo_url||'');}
+  // neumACt (medical_staff.public_photo_url) is the source of truth; local
+  // portraits are a fallback only for records the platform has not filled yet.
+  function documentaryPhotoUrl(p){return safeUrl(p?.public_photo_url||portraitOverrides[p?.id]||'');}
   function photoUrl(p){return documentaryPhotoUrl(p);}
   function hasDocumentaryPhoto(p){return Boolean(documentaryPhotoUrl(p));}
   // Resolve grammatical gender from the person's honorific (Dr./Dra., Sr./Sra.),
