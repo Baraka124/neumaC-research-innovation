@@ -242,9 +242,9 @@ function institutionalResearchLineLabel(line, lang = document.documentElement.da
   return lang === 'en' ? pair[0] : pair[1];
 }
 
-// Phase 6.0 — public coordinator media can be overridden by an approved
-// editorial asset without changing the backend person record. Backend
-// public_photo_url remains the default source for everyone else.
+// neumACt is the source of truth: backend public_photo_url always wins.
+// These local editorial assets are a fallback only when the platform record
+// has no photo yet.
 const LINE_COORDINATOR_MEDIA = {
   'marina blanco aparicio': '/assets/research/coordinators/marina-blanco-aparicio.jpg',
   'angélica consuegra vanegas': '/assets/research/coordinators/angelica-consuegra-vanegas.jpg',
@@ -284,7 +284,7 @@ const NEUMACT_PI_STAFF_ID = 'c290a7e5-7bea-4652-a0ef-251fbc73184d';
 function coordinatorEditorialPhoto(person) {
   if (!person) return '';
   const key = String(person.full_name || '').trim().toLowerCase();
-  return LINE_COORDINATOR_MEDIA[key] || person.public_photo_url || '';
+  return person.public_photo_url || LINE_COORDINATOR_MEDIA[key] || '';
 }
 
 function coordinatorEditorialBio(person, line) {
