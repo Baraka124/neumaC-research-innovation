@@ -228,7 +228,7 @@
     if(fp.visibility&&fp.visibility!=='approved_public')return '';
     if(fp.person_approval&&fp.person_approval!=='approved')return '';
     const metrics=[
-      fp.publications!=null?['Publications','Publicaciones',fp.publications]:null,
+      fp.publications!=null?['Indexed publications','Publicaciones indexadas',fp.publications]:null,
       fp.citations!=null?['Citations','Citas',fp.citations]:null,
       fp.h_index!=null?['h-index','Índice h',fp.h_index]:null
     ].filter(Boolean);
